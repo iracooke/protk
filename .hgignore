@@ -1,0 +1,5 @@
+# use glob syntax.
+syntax: regexp
+
+config.yml$
+mascot_.*

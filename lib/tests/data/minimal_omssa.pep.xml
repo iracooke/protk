@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE msms_pipeline_analysis PUBLIC "-//NCBI//pepXML/EN" "pepXML.dtd">
+<msms_pipeline_analysis date="2010-12-16T11:51:59" summary_xml="/sharedData/TPP/Data/microTOF/1010/mt164/mt164-CD14LPS_RD4_01_3733.d_raw.pep.xml">
+	<msms_run_summary base_name="/sharedData/TPP/Data/microTOF/1010/mt164/mt164-CD14LPS_RD4_01_3733.d_raw.pep.xml" raw_data_type="raw" raw_data=".mzXML">
+		<sample_enzyme name="Trypsin">
+			<specificity sense="C" cut="KR" no_cut="P"/>
+		</sample_enzyme>
+		<search_summary base_name="/sharedData/TPP/Data/microTOF/1010/mt164/mt164-CD14LPS_RD4_01_3733.d_raw.pep.xml" search_engine="OMSSA" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" out_data_type="n/a" out_data="n/a" search_id="1">
+			<search_database local_path="/var/www/ISB/data/Databases/OnMascot//SPHuman/sphuman_20101013_DECOY.fasta" size_in_db_entries="40516" type="AA"/>
+			<enzymatic_search_constraint enzyme="Trypsin" max_num_internal_cleavages="2" min_number_termini="2"/>
+		</search_summary>
+	</msms_run_summary>
+</msms_pipeline_analysis>
