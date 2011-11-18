@@ -41,7 +41,6 @@ require 'constants'
 require 'command_runner'
 require 'search_tool'
 require 'rest_client'
-require 'uuidtools'
 
 # Environment with global constants
 #
