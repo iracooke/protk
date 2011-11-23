@@ -136,7 +136,8 @@ def run_peptide_prophet(genv,prophet_tool,cmd,output_path,engine)
   else
     jobscript_path="#{output_path}.pbs.sh"
     job_params={:jobid=>engine, :vmem=>"900mb", :queue => "lowmem"}
-    prophet_tool.run(cmd,genv,job_params,jobscript_path)
+    code=prophet_tool.run(cmd,genv,job_params,jobscript_path)
+    throw "Command failed with exit code #{code}" unless code==0
   end
 end
 

@@ -78,7 +78,6 @@ input_ext=Pathname.new(filename).extname
 
 output_path="#{convert_tool.input_base_path(filename.chomp)}.mgf"
 
-
 p output_path
 # See if the original file is an mzML rather than mgf, because if it is we will need to convert it.
 # 
@@ -91,17 +90,20 @@ basedir=Pathname.new(filename).dirname.to_s
 relative_filename=Pathname.new(filename).basename
 
 if ( convert_tool.maldi )
-  runner.run_local("cd #{basedir}; #{genv.general_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --mgf")
+  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --mgf")
 else
   if ( !convert_tool.no_charges )
-    runner.run_local("cd #{basedir}; #{genv.general_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --mgf")
+    runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --mgf")
   else
-    runner.run_local("cd #{basedir}; #{genv.general_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --mgf")
+    runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --mgf")
   end
 end
 
 cmd = "cd #{basedir}; mv #{output_path}  #{convert_tool.explicit_output}"
 p cmd
-runner.run_local(cmd)
+code =runner.run_local(cmd)
+throw "Command failed with exit code #{code}" unless code==0
 
+
+throw "Failed to create output file #{convert_tool.explicit_output}" unless ( FileTest.exists?(convert_tool.explicit_output) && (convert_tool.explicit_output!=nil))
 

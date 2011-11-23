@@ -263,8 +263,8 @@ ARGV.each do |filename|
     job_params= {:jobid => search_tool.jobid_from_filename(filename)}
     job_params[:queue]="lowmem"
     job_params[:vmem]="900mb"
-    search_tool.run(cmd,genv,job_params,jobscript_path)
-
+    code = search_tool.run(cmd,genv,job_params,jobscript_path)
+    throw "Command failed with exit code #{code}" unless code==0
   else
     genv.log("Skipping search on existing file #{output_path}",:warn)        
   end

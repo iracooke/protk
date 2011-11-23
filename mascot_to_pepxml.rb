@@ -75,6 +75,6 @@ ARGV.each do |file_name|
 #  exit()
   p cmd
     
-  tool.run(cmd,genv,nil,nil)
-
+  code = tool.run(cmd,genv,nil,nil)
+  throw "Command failed with exit code #{code}" unless code==0
 end
