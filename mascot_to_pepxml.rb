@@ -60,12 +60,12 @@ ARGV.each do |file_name|
   # Rename the mascot dat file
   #
   if ( tool.explicit_output==nil )
-    new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}"      
+    new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}_mascot2xml"      
     cmd="cp #{name} #{new_basename}.dat"
     cmd << "; #{genv.tpp_bin}/Mascot2XML #{new_basename}.dat -D#{tool.current_database :fasta}"
     
   else 
-    new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}"
+    new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}_mascot2xml"
     cmd="cp #{name} #{new_basename}.dat"
     cmd << "; #{genv.tpp_bin}/Mascot2XML #{new_basename}.dat -D#{tool.current_database :fasta}"
     cmd << "; mv #{new_basename}.pep.xml #{tool.explicit_output}"    

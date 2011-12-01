@@ -107,6 +107,8 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
   
   cmd="#{genv.tpp_bin}/xinteract -N#{output}  -l7 -eT -D#{database} "
 
+#  cmd="#{genv.tpp_bin}/InteractParser #{output}" 
+
   if prophet_tool.glyco 
     cmd << " -Og "
   end
@@ -127,6 +129,16 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
   else
     cmd << " #{inputs}"
   end
+  #Command: /usr/local/tpp-4-4-0/bin/xinteract -Npeptide_prophet_output.pep.xml  -l7 -eT -D/var/www/ISB/data/Databases/plasmodb_pfalciparum_sphuman/plasmodb_pfalciparum_sphuman_20111102.fasta -Op -P -ddecoy  /var/www/galaxy/database/files/001/dataset_1018.dat.pep.xml started
+   
+  #/usr/local/tpp-4-4-0/bin/InteractParser 'peptide_prophet_output.pep.xml' '/var/www/galaxy/database/files/001/dataset_1018.dat.pep.xml' -D'/var/www/ISB/data/Databases/plasmodb_pfalciparum_sphuman/plasmodb_pfalciparum_sphuman_20111102.fasta' -L'7' -E'trypsin'
+
+  #/usr/local/tpp-4-4-0/bin/PeptideProphetParser 'peptide_prophet_output.pep.xml' DECOY=decoy
+  #/usr/local/tpp-4-4-0/bin/ProphetModels.pl -i peptide_prophet_output.pep.xml -d decoy
+  #/usr/local/tpp-4-4-0/bin/RefreshParser 'peptide_prophet_output.pep.xml' '/var/www/ISB/data/Databases/plasmodb_pfalciparum_sphuman/plasmodb_pfalciparum_sphuman_20111102.fasta'
+  
+  
+  
   cmd
 end
 
@@ -140,7 +152,6 @@ def run_peptide_prophet(genv,prophet_tool,cmd,output_path,engine)
     throw "Command failed with exit code #{code}" unless code==0
   end
 end
-
 
 
 cmd=""

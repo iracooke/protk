@@ -70,7 +70,7 @@ if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   cmd << " #{inputs.join(" ")} #{output_file}"
 
-  p cmd
+  genv.log("Running #{cmd}",:info)
 
   # Run the analysis
   #

@@ -162,6 +162,8 @@ postdict[:FILE]=File.new(ARGV[0])
 postdict[:FORMVER]='1.01'
 postdict[:INTERMEDIATE]=''
 
+genv.log("Sending #{postdict}",:info)
+
 search_response=RestClient.post "#{mascot_cgi}/nph-mascot.exe?1",  postdict
 
 genv.log("Mascot search response was #{search_response}",:info)
@@ -171,6 +173,7 @@ error_result= /Sorry, your search could not be performed(.*)/.match(search_respo
 if ( error_result != nil )
   p error_result[0]
   genv.log("Mascot search failed with response #{search_response}",:warn)
+  throw "Mascot search failed with response #{search_response}"
 else
 
   # Search for the location of the mascot data file in the response
