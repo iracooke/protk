@@ -68,7 +68,9 @@ ARGV.each do |file_name|
     new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}_mascot2xml"
     cmd="cp #{name} #{new_basename}.dat"
     cmd << "; #{genv.tpp_bin}/Mascot2XML #{new_basename}.dat -D#{tool.current_database :fasta}"
-    cmd << "; mv #{new_basename}.pep.xml #{tool.explicit_output}"    
+    cmd << "; mv #{new_basename}.pep.xml #{tool.explicit_output}; rm #{new_basename}.dat"
+    repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"     
+    cmd << "; #{repair_script} #{tool.explicit_output}"
   end
 
 #  p new_basename

@@ -84,6 +84,12 @@ search_tool.option_parser.parse!
 # Set search engine specific parameters on the SearchTool object
 #
 tandem_bin="#{genv.tpp_bin}/tandem.exe"
+
+if ( !FileTest.exists?(tandem_bin))
+  tandem_bin="#{genv.tpp_bin}/tandem"
+  throw "Could not find X!Tandem executable" unless FileTest.exists?(tandem_bin)
+end
+
 tandem_params=search_tool.tandem_params
 current_db=search_tool.current_database :fasta
 
@@ -242,10 +248,11 @@ ARGV.each do |filename|
     #
     cmd= "#{tandem_bin} #{params_path}"
 
-    # pepXML conversion
+    # pepXML conversion and repair
     #
     unless search_tool.no_pepxml
-      cmd << "; #{genv.tpp_bin}/Tandem2XML #{output_path} #{pepxml_path}; rm #{output_path}"
+      repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"      
+      cmd << "; #{genv.tpp_bin}/Tandem2XML #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}; rm #{output_path}"
     end
 
     # Add a cleanup command unless the user wants to keep params files

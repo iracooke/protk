@@ -73,7 +73,8 @@ genv=Constants.new
 omssa_bin="#{genv.omssa_executable}/omssacl"
 omssa2pepxml_bin="#{genv.omssa_executable}/omssa2pepXML"
 ## TODO: Refactor into a separate tool
-rt_correct_bin="#{genv.protk_bin}/correct_omssa_retention_times.rb"
+rt_correct_bin="#{File.dirname(__FILE__)}/correct_omssa_retention_times.rb"
+repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"      
 current_db=search_tool.current_database :fasta
 fragment_tol = search_tool.fragment_tol
 precursor_tol = search_tool.precursor_tol
@@ -152,6 +153,10 @@ ARGV.each do |filename|
     if (search_tool.options.add_retention_times)
       cmd << "; #{rt_correct_bin} #{output_path} #{input_path} "
     end
+    
+    # Correct the pepXML file 
+    #
+    cmd << "; #{repair_script_bin} -N #{input_path} -R mgf #{output_path}"
     
     # Run the search
     #
