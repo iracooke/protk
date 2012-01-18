@@ -157,6 +157,7 @@ ARGV.each do |filename|
     # Correct the pepXML file 
     #
     cmd << "; #{repair_script_bin} -N #{input_path} -R mgf #{output_path}"
+    genv.log("Running repair script command #{cmd}",:info)
     
     # Run the search
     #
