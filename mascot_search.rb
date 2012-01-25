@@ -98,6 +98,10 @@ postdict[:CHARGE]=search_tool.allowed_charges
 #
 postdict[:CLE]=search_tool.enzyme
 
+# PFA
+#
+postdict[:PFA]=search_tool.missed_cleavages
+
 # COM (Search title)
 # 
 postdict[:COM]="Protk"
