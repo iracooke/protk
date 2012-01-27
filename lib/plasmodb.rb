@@ -22,15 +22,27 @@ class PlasmoDB
 
 
     def get_entry_for_name(name)
-      result=@db_object.extract_gene_info(name,10000)
-      if result==nil
-        if ( @genv!=nil)
-          @genv.log("Failed to find PlasmoDB entry for gene named #{name} in database",:warn)
+      
+      @genv.log("Getting entry for #{name}",:info)
+      
+      begin
+        result=nil 
+        result=@db_object.extract_gene_info(name,10000)
+        
+      rescue
+        
+        
+        if result==nil
+          if ( @genv!=nil)
+            @genv.log("Failed to find PlasmoDB entry for gene named #{name} in database",:warn)
+          end
         end
-        return nil
-      else
+        
+        
         return result
       end
+        
+        
     end
   
 end
