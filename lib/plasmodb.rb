@@ -14,9 +14,11 @@ class PlasmoDB
       @genv=Constants.new
     end
 
-    throw "The plasmodb database at \"#{@genv.plasmodb_dat}\" does not exist"  if ( @genv.plasmodb_dat==nil || !FileTest.exist?(@genv.plasmodb_dat) )
+    database_file="#{@genv.protein_database_root}/plasmodb_data/PfalciparumGene_PlasmoDB-8.0.txt"
 
-    @db_object=EuPathDBGeneInformationFileExtractor.new(@genv.plasmodb_dat)
+    throw "The plasmodb database at \"#{database_file}\" does not exist"  if ( database_file==nil || !FileTest.exist?(database_file) )
+
+    @db_object=EuPathDBGeneInformationFileExtractor.new(database_file)
 
   end
 

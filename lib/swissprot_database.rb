@@ -14,9 +14,9 @@ class SwissprotDatabase
     end
 
     if ( database=="swissprot")
-      @db_object=Bio::FlatFileIndex.new(@genv.swissprot_dat)
+      @db_object=Bio::FlatFileIndex.new("#{@genv.protein_database_root}/uniprot_data/uniprot_sprot.db")
     else
-      @db_object=Bio::FlatFileIndex.new(@genv.trembl_dat)
+      @db_object=Bio::FlatFileIndex.new("#{@genv.protein_database_root}/uniprot_data/uniprot_trembl.db")
     end
     
     @db_object.always_check_consistency=false

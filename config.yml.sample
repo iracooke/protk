@@ -13,10 +13,10 @@ galaxy:
     message_level: info
     tpp_bin: /usr/local/tpp-4-4-0/bin
     general_bin: /usr/local/localapps/bin/
-    tpp_protein_dbroot: /var/www/ISB/data/Databases/
-    mascot_machine: www.matrixscience.com
+    protein_database_root: /var/www/ISB/data/Databases/
+    default_mascot_server: www.matrixscience.com
     has_pbs: true
-    omssa_executable: /usr/local/localapps/bin/omssa-2.1.9.linux/
+    omssa_bin: /usr/local/localapps/bin/omssa-2.1.9.linux/
     log_file: /var/www/galaxy/Logs/protk.log
     swissprot_dat: /var/www/ISB/data/Databases/uniprot_data/uniprot_sprot.db
     trembl_dat: /var/www/ISB/data/Databases/uniprot_data/uniprot_trembl.db

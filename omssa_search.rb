@@ -34,6 +34,7 @@ exit 1
 #! ruby
 #
 
+$VERBOSE=nil
 
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
 
@@ -70,8 +71,8 @@ genv=Constants.new
 
 # Set search engine specific parameters on the SearchTool object
 #
-omssa_bin="#{genv.omssa_executable}/omssacl"
-omssa2pepxml_bin="#{genv.omssa_executable}/omssa2pepXML"
+omssa_bin="#{genv.omssa_bin}/omssacl"
+omssa2pepxml_bin="#{genv.omssa_bin}/omssa2pepXML"
 ## TODO: Refactor into a separate tool
 rt_correct_bin="#{File.dirname(__FILE__)}/correct_omssa_retention_times.rb"
 repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"      

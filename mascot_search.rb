@@ -53,7 +53,7 @@ search_tool.jobid_prefix="o"
 search_tool.option_parser.banner = "Run a Mascot msms search on a set of mgf input files.\n\nUsage: mascot_search.rb [options] file1.mgf file2.mgf ..."
 search_tool.options.output_suffix="_mascot"
 
-search_tool.options.mascot_server="#{genv.mascot_machine}/mascot/cgi"
+search_tool.options.mascot_server="#{genv.default_mascot_server}/mascot/cgi"
 search_tool.option_parser.on( '-S', '--server url', 'The url to the cgi directory of the mascot server' ) do |url| 
   search_tool.options.mascot_server=url
 end

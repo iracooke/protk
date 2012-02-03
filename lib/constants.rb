@@ -7,6 +7,7 @@
 require 'yaml'
 require 'logger'
 require 'pathname'
+require 'ftools'
 
 class Constants
 
@@ -83,22 +84,11 @@ class Constants
   end
 
 
-
-  # Based on the database shortname and global database path, find the most current version of the required database
-  # This function returns the path of the database with an extension appropriate to the database type
-  # Always returns a valid database or throws an error
-  #
-  def current_database_for_name_and_type(dbname,db_type,db_suffix="")
-    dbroot=self.tpp_protein_dbroot
-    
-    # Remove any trailing slashes or spaces from the end of dbroot if present
-    #
-    dbroot.sub!(/(\/*\s*)$/,"")
+  def path_for_builtin_database(dbroot,dbname,db_type,db_suffix="")
     
     current_dbroot=Pathname.new("#{dbroot}/#{dbname}")
     throw "Error: Specified database #{current_dbroot.to_s} does not exist" unless current_dbroot.exist?
     
-
     candidates=current_dbroot.children
     
     # Filter candidates with the right filenames
@@ -134,6 +124,86 @@ class Constants
      "#{dbroot}/#{dbname}/#{dbname.downcase}_#{maxdate}#{db_suffix}#{extension}"
    end
 
+   # Runs the given command in a local shell
+   # 
+   def run_local(command_string)
+     self.log("Command: #{command_string} started",:info)
+     status = Open4::popen4("#{command_string} ") do |pid, stdin, stdout, stderr|
+       puts "PID #{pid}" 
 
+       stdout.each { |line| self.log(line.chomp,:info) }
+
+       stderr.each { |line| self.log(line.chomp,:warn) }
+
+     end
+     if ( status!=0 )
+       # We terminated with some error code so log as an error
+       self.log( "Command: #{command_string} exited with status #{status.to_s}",:error)
+     else
+       self.log( "Command: #{command_string} exited with status #{status.to_s}",:info)      
+     end
+     status     
+   end
+
+   def import_fasta_database(dbroot,path_to_fasta_file)
+     
+     tmp_dbroot=Pathname.new("#{dbroot}/tmp/")
+
+     dest_fasta_file_name=Pathname.new(path_to_fasta_file).basename
+     dest_fasta_file_path=Pathname.new("#{tmp_dbroot}#{dest_fasta_file_name}")
+
+     if ( !dest_fasta_file_path.exist? )
+
+       Dir.mkdir(tmp_dbroot) unless tmp_dbroot.exist? && tmp_dbroot.directory?
+
+       throw "Unable to make temporary database directory #{tmp_dbroot}" unless tmp_dbroot.exist?
+       
+       link_cmd = "ln -s #{path_to_fasta_file} #{dest_fasta_file_path}"
+       
+       result= %x[#{link_cmd}]
+       p result
+     end
+
+     check_cmd="#{self.ncbi_tools_bin}/blastdbcmd -info -db #{dest_fasta_file_path}"
+     result = %x[#{check_cmd}]
+
+     if ( result=="")
+       
+       throw "Unable to create temporary database #{dest_fasta_file_path}" unless dest_fasta_file_path.exist?
+       cmd="#{self.ncbi_tools_bin}/makeblastdb -in #{dest_fasta_file_path} -parse_seqids"
+       p cmd
+       self.run_local(cmd)
+       
+     end
+
+     return dest_fasta_file_path.to_s
+     
+   end
+
+
+  # Based on the database shortname and global database path, find the most current version of the required database
+  # If dbname corresponds to a folder in the dbroot this function returns the path of the database with an extension 
+  # appropriate to the database type
+  #
+  # If dbname is a full path to a file this tool will first import the file as a temporary database 
+  # and will then return its full path
+  #
+  def current_database_for_name_and_type(dbname,db_type,db_suffix="")
+    dbroot=self.protein_database_root
+    
+    throw "Protein database directory not specified" unless dbroot!=nil
+    throw "Protein database directory #{dbroot} does not exist" unless Pathname(dbroot).exist?
+    
+    # Remove any trailing slashes or spaces from the end of dbroot if present
+    #
+    dbroot.sub!(/(\/*\s*)$/,"")
+    
+    if ( dbname=~/^\//) # An absolute path
+      return import_fasta_database(dbroot,dbname)
+    else 
+      return path_for_builtin_database(dbroot,dbname,db_type,db_suffix)
+    end
+
+  end
 
 end
