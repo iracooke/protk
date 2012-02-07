@@ -36,6 +36,7 @@ exit 1
 #! ruby
 #
 
+$VERBOSE=nil
 
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
 

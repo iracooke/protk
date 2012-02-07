@@ -88,6 +88,8 @@ genv.log("Var mods #{search_tool.var_mods} and fixed #{search_tool.fix_mods}",:i
 var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
 fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
 
+
+
 postdict={}
 
 # CHARGE
