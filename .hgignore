@@ -2,3 +2,6 @@
 syntax: regexp
 
 config.yml$
+Databases/
+bin/
+Logs/

@@ -7,19 +7,14 @@
 
 # Set to one of the user-defined environment below
 #
-run_setting: galaxy
-    
-galaxy:
+run_setting: test
+
+test:
     message_level: info
-    tpp_bin: /usr/local/tpp-4-4-0/bin
-    general_bin: /usr/local/localapps/bin/
-    protein_database_root: /var/www/ISB/data/Databases/
+    tpp_bin: ./bin/tpp
+    protein_database_root: ./Databases
     default_mascot_server: www.matrixscience.com
-    has_pbs: true
-    omssa_bin: /usr/local/localapps/bin/omssa-2.1.9.linux/
-    log_file: /var/www/galaxy/Logs/protk.log
-    swissprot_dat: /var/www/ISB/data/Databases/uniprot_data/uniprot_sprot.db
-    trembl_dat: /var/www/ISB/data/Databases/uniprot_data/uniprot_trembl.db
-    plasmodb_dat: /var/www/ISB/data/Databases/plasmodb_data/PfalciparumGene_PlasmoDB-8.0.txt
-    
-    
+    has_pbs: false
+    omssa_bin: ./bin/omssa
+    ncbi_tools_bin: ./bin/ncbi
+    log_file: ./Logs/protk.log

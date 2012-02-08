@@ -29,12 +29,33 @@ class Constants
 
 
   # Provides direct access to constants through methods of the same name
+  # This will be used for all constants other than paths
   #
   def method_missing(method)
     @env[method.to_s]
   end
 
-
+  # Some constants are paths. They need to be translated into real paths before being returned
+  #
+  def tpp_bin
+    "#{File.dirname(__FILE__)}/../#{@env['tpp_bin']}"
+  end
+  
+  def omssa_bin
+    "#{File.dirname(__FILE__)}/../#{@env['omssa_bin']}"
+  end
+  
+  def protein_database_root
+    "#{File.dirname(__FILE__)}/../#{@env['protein_database_root']}"
+  end
+  
+  def ncbi_tools_bin
+    "#{File.dirname(__FILE__)}/../#{@env['ncbi_tools_bin']}"    
+  end
+  
+  def log_file
+    "#{File.dirname(__FILE__)}/../#{@env['log_file']}"
+  end
 
 
   # Read the global constants file and initialize our class @env variable
@@ -54,9 +75,9 @@ class Constants
     throw "No data found for run setting #{run_setting} in config file" unless @env!=nil
 
     @stdout_logger=Logger.new(STDOUT)
-    @file_logger=Logger.new(@env['log_file'],'daily')
+    @file_logger=Logger.new(self.log_file,'daily')
 
-    throw "Unable to create file logger at path #{@env['log_file']}" unless @file_logger!=nil
+    throw "Unable to create file logger at path #{self.log_file}" unless @file_logger!=nil
     throw "Unable to create stdout logger " unless @stdout_logger!=nil
 
   
