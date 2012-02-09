@@ -45,7 +45,7 @@ require 'search_tool'
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new({:msms_search=>true,:background=>false,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:maldi=>true})
+search_tool=SearchTool.new({:msms_search=>true,:background=>false,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:maldi=>true,:msms_search_detailed_options=>true})
 search_tool.option_parser.banner = "Run an OMSSA msms search on a set of mgf input files.\n\nUsage: omssa_search.rb [options] file1.mgf file2.mgf ..."
 search_tool.options.output_suffix="_omssa"
 
@@ -67,8 +67,6 @@ search_tool.option_parser.parse!
 #
 genv=Constants.new
 
-
-
 # Set search engine specific parameters on the SearchTool object
 #
 omssa_bin="#{genv.omssa_bin}/omssacl"
@@ -82,17 +80,7 @@ precursor_tol = search_tool.precursor_tol
 
 
 
-# Set the search type (monoisotopic vs average masses)
-#
-if ( search_tool.precursor_search_type=="monoisotopic")
-  if ( search_tool.strict_monoisotopic_mass )
-    search_type_option="-tem 0 -teppm"
-  else
-    search_type_option="-tem 4 -teppm"  
-  end
-else
-  search_type_option="-tem 1"
-end
+
 
 throw "When --output is set only one file at a time can be run" if  ( ARGV.length> 1 ) && ( search_tool.explicit_output!=nil ) 
 
@@ -123,31 +111,80 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd= "#{omssa_bin} -d #{current_db} -to #{fragment_tol} #{search_type_option} -te #{search_tool.precursor_tol}  -v #{search_tool.missed_cleavages} -fm #{input_path} -op #{output_path} -he 100000 -w"
+    cmd= "#{omssa_bin} -d #{current_db} -fm #{input_path} -op #{output_path} -he 100000 -w"
 
-    p cmd
-
-    # Add options related to peptide modifications
+    #Missed cleavages
     #
-    if ( search_tool.glyco )
-      cmd << " -mv 119 "
+    cmd << " -v #{search_tool.missed_cleavages}"
+
+    # Precursor tolerance
+    #
+    if ( search_tool.precursor_tolu=="ppm")
+      cmd << " -teppm"
+    end
+    cmd << " -te #{search_tool.precursor_tol}"
+    
+    # Fragment ion tolerance
+    #
+    cmd << " -to #{fragment_tol}" #Always in Da
+    
+    # Set the search type (monoisotopic vs average masses) and whether to use strict monoisotopic masses
+    #
+    if ( search_tool.precursor_search_type=="monoisotopic")
+      if ( search_tool.strict_monoisotopic_mass )
+        cmd << " -tem 0"
+      else
+        cmd << " -tem 4 -ti #{search_tool.num_peaks_for_multi_isotope_search}"
+        
+      end
+    else
+      cmd << " -tem 1"
+    end
+    
+    # Enzyme
+    #
+    if ( search_tool.enzyme!="Trypsin")
+      cmd << " -e #{search_tool.enzyme}"
     end
 
+    # Variable Modifications
+    #
+    if ( search_tool.var_mods !="" ) # This overrides the glyco option
+      var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
+      cmd << " -mv #{var_mods}"
+    else 
+      # Add options related to peptide modifications
+      #
+      if ( search_tool.glyco )
+        cmd << " -mv 119 "
+      end
+    end
+
+    if ( search_tool.fix_mods !="" )
+      fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
+      cmd << " -mf #{fix_mods}"    
+    else
+      if ( search_tool.has_modifications )
+        cmd << " -mf "
+        if ( search_tool.carbamidomethyl )
+          cmd<<"3 "
+        end
+
+        if ( search_tool.methionine_oxidation )
+          cmd<<"1 "
+        end
+
+      end
+    end
+    
+    # Fixed modifications
+    #
     if ( search_tool.respect_precursor_charges )
       cmd << " -zcc 1"
     end
-
-    if ( search_tool.has_modifications )
-      cmd << " -mf "
-      if ( search_tool.carbamidomethyl )
-        cmd<<"3 "
-      end
-
-      if ( search_tool.methionine_oxidation )
-        cmd<<"1 "
-      end
-
-    end
+    
+    # Up to here we've formulated the omssa command. The rest is cleanup
+    p "Running:#{cmd}"
     
     # Add retention time corrections
     #

@@ -48,12 +48,12 @@ class SearchTool < Tool
        
        
        @options.var_mods = ""
-        @option_parser.on('--var-mods vm', 'Variable modifications' ) do |vm|
+        @option_parser.on('--var-mods vm', 'Variable modifications (Overrides -g)' ) do |vm|
           @options.var_mods = vm
         end
 
         @options.fix_mods = ""
-        @option_parser.on('--fix-mods fm', 'Variable modifications' ) do |fm|
+        @option_parser.on('--fix-mods fm', 'Fixed modifications (Overrides -c and -m options)' ) do |fm|
           @options.fix_mods = fm
         end
         
@@ -75,6 +75,11 @@ class SearchTool < Tool
         @options.username=""
         @option_parser.on('--username un', 'Username.') do |un|
           @options.username = un
+        end
+
+        @options.num_peaks_for_multi_isotope_search="0"
+        @option_parser.on("--num-peaks-for-multi-isotope-search np","Number of peaks to include in multi-isotope search") do |np|
+          @options.num_peaks_for_multi_isotope_search=np
         end
 
        

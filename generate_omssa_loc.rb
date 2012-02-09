@@ -59,7 +59,8 @@ loc_output << "#\n"
 loc_output << "#\n"
 
 acceptable_mods.each { |am| 
-  loc_output << "#{am[1]}\t#{am[0]}\n"
+  key = am[1].downcase.gsub(" ","").gsub("\(","\_").gsub("\)","\_").gsub("\:","\_").gsub("\-\>","\_")
+  loc_output << "#{am[1]}\t#{key}_\t#{am[0]}\t#{key}_\n"
 }
 
 loc_output.close
