@@ -38,23 +38,48 @@ class Constants
   # Some constants are paths. They need to be translated into real paths before being returned
   #
   def tpp_bin
-    "#{File.dirname(__FILE__)}/../#{@env['tpp_bin']}"
+    path=@env['tpp_bin']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{File.dirname(__FILE__)}/../#{@env['tpp_bin']}"
+    end
   end
   
   def omssa_bin
-    "#{File.dirname(__FILE__)}/../#{@env['omssa_bin']}"
+    path=@env['omssa_bin']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{File.dirname(__FILE__)}/../#{@env['omssa_bin']}"
+    end
   end
   
   def protein_database_root
-    "#{File.dirname(__FILE__)}/../#{@env['protein_database_root']}"
+    path=@env['protein_database_root']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{File.dirname(__FILE__)}/../#{@env['protein_database_root']}"
+    end
   end
   
   def ncbi_tools_bin
-    "#{File.dirname(__FILE__)}/../#{@env['ncbi_tools_bin']}"    
+    path=@env['ncbi_tools_bin']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{File.dirname(__FILE__)}/../#{@env['ncbi_tools_bin']}"   
+    end 
   end
   
   def log_file
-    "#{File.dirname(__FILE__)}/../#{@env['log_file']}"
+    path=@env['log_file']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{File.dirname(__FILE__)}/../#{@env['log_file']}"
+    end
   end
 
 
