@@ -134,8 +134,7 @@ ARGV.each do |filename|
       if ( search_tool.strict_monoisotopic_mass )
         cmd << " -tem 0"
       else
-        cmd << " -tem 4 -ti #{search_tool.num_peaks_for_multi_isotope_search}"
-        
+        cmd << " -tem 4 -ti #{search_tool.num_peaks_for_multi_isotope_search}"        
       end
     else
       cmd << " -tem 1"

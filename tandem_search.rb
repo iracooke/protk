@@ -57,7 +57,7 @@ genv=Constants.new
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new({:msms_search=>true,:background=>true,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true})
+search_tool=SearchTool.new({:msms_search=>true,:background=>true,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
 search_tool.jobid_prefix="x"
 search_tool.option_parser.banner = "Run an X!Tandem msms search on a set of mzML input files.\n\nUsage: tandem_search.rb [options] file1.mzML file2.mzML ..."
 search_tool.options.output_suffix="_tandem"
@@ -152,7 +152,10 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
 
   pmass_err_units=std_params.find('/bioml/note[@type="input" and @label="spectrum, parent monoisotopic mass error units"]')
   throw "Exactly one spectrum, parent monoisotopic mass error units note is required in the parameter file. Got #{pmass_err_units.length}" unless pmass_err_units.length==1
-    
+  
+  
+  # FIXME: Respect input parameters
+  #
   if ( search_tool.precursor_search_type == "average" ) # If precursor error type is average then mass error is expected to be in Dalton, otherwise in ppm
     pmass_err_units[0].content="Dalton"
     search_tool.options.strict_monoisotopic_mass=false
@@ -170,6 +173,8 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   end
   
   
+  # FIXME: Respect input parameters
+  #
   # Fixed and Variable Modifications
   #
   unless search_tool.carbamidomethyl 
