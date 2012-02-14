@@ -148,9 +148,11 @@ ARGV.each do |filename|
 
     # Variable Modifications
     #
-    if ( search_tool.var_mods !="" ) # This overrides the glyco option
+    if ( search_tool.var_mods !="" && search_tool.var_mods !="None") # Checking for none is to cope with galaxy input
       var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
-      cmd << " -mv #{var_mods}"
+      if ( var_mods !="")
+        cmd << " -mv #{var_mods}"
+      end
     else 
       # Add options related to peptide modifications
       #
@@ -159,9 +161,11 @@ ARGV.each do |filename|
       end
     end
 
-    if ( search_tool.fix_mods !="" )
+    if ( search_tool.fix_mods !="" && search_tool.fix_mods!="None")
       fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
-      cmd << " -mf #{fix_mods}"    
+      if ( fix_mods !="")
+        cmd << " -mf #{fix_mods}"    
+      end
     else
       if ( search_tool.has_modifications )
         cmd << " -mf "
