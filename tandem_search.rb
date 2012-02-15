@@ -54,7 +54,6 @@ include LibXML
 #
 genv=Constants.new
 
-
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
 search_tool=SearchTool.new({:msms_search=>true,:background=>true,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
@@ -106,6 +105,17 @@ std_params=params_parser.parse
 taxo_parser=XML::Parser.file("#{File.dirname(__FILE__)}/params/taxonomy_template.xml")
 taxo_doc=taxo_parser.parse
 
+# Galaxy changes things like @ to __at__ we need to change it back
+#
+def decode_modification_string(mstring)
+  mstring.gsub!("__at__","@")
+  mstring.gsub!("__oc__","{")
+  mstring.gsub!("__cc__","}")
+  mstring.gsub!("__ob__","[")
+  mstring.gsub!("__cb__","]")
+  mstring
+end
+
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
   
   
@@ -154,17 +164,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   throw "Exactly one spectrum, parent monoisotopic mass error units note is required in the parameter file. Got #{pmass_err_units.length}" unless pmass_err_units.length==1
   
   
-  # FIXME: Respect input parameters
-  #
-  if ( search_tool.precursor_search_type == "average" ) # If precursor error type is average then mass error is expected to be in Dalton, otherwise in ppm
-    pmass_err_units[0].content="Dalton"
-    search_tool.options.strict_monoisotopic_mass=false
-    throw "Maximum value for precursor mass error is 10 Da but got #{precursor_tol}" unless precursor_tol <= 10
-  else
-    throw "Precursor search type must be either average or monoisotopic" unless search_tool.precursor_search_type=="monoisotopic"
-    pmass_err_units[0].content="ppm"
-  end
-  
+  pmass_err_units[0].content=search_tool.precursor_tolu
 
   if search_tool.strict_monoisotopic_mass
     isotopic_error=std_params.find('/bioml/note[@type="input" and @label="spectrum, parent monoisotopic mass isotope error"]')
@@ -173,8 +173,6 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   end
   
   
-  # FIXME: Respect input parameters
-  #
   # Fixed and Variable Modifications
   #
   unless search_tool.carbamidomethyl 
@@ -192,6 +190,45 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     mods.each{ |node| node.remove!}        
   end  
   
+  var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }
+  var_mods=var_mods.collect {|mod| decode_modification_string(mod) }
+  fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }
+  fix_mods=fix_mods.collect {|mod| decode_modification_string(mod)}
+  
+  root_bioml_node=std_params.find('/bioml')[0]
+  
+  mod_id=1
+  var_mods.each do |vm|
+
+    mod_type="potential modification mass"
+    mod_type = "potential modification motif" if ( vm=~/[\[\]\(\)\{\}\!]/ )      
+    mod_id_label = "custom-variable-mod-#{mod_id.to_s}"
+    mod_id=mod_id+1
+    mnode=XML::Node.new('node')
+    mnode["id"]=mod_id_label
+    mnode["type"]="input"
+    mnode["label"]="residue, #{mod_type}"
+    mnode.content=vm
+    
+    root_bioml_node << mnode
+  end
+  
+  mod_id=1
+  fix_mods.each do |fm|
+    mod_type="modification mass"
+    mod_type = "modification motif" if ( fm=~/[\[\]\(\)\{\}\!]/ )      
+    mod_id_label = "custom-fixed-mod-#{mod_id.to_s}"
+    mod_id=mod_id+1
+    mnode=XML::Node.new('node')
+    mnode["id"]=mod_id_label
+    mnode["type"]="input"
+    mnode["label"]="residue, #{mod_type}"
+    mnode.content=fm
+    
+    root_bioml_node << mnode
+  end
+
+  #p root_bioml_node
   std_params
   
 end
@@ -230,6 +267,7 @@ ARGV.each do |filename|
   if ( search_tool.no_pepxml && Pathname.new(output_path).exist? )
     output_exists=true
   end
+  
   
   p search_tool.over_write
   p output_exists
