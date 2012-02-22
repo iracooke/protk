@@ -2,7 +2,7 @@
 # This file is part of protk
 # Created by Ira Cooke 18/1/2011
 #
-# Runs the PeptideProphet tool on a set of pep.xml files
+# Convert a pepXML file to a tab delimited table
 #
 #
 

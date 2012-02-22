@@ -2,28 +2,22 @@
 
 
 ***
-## Development Status
+## What is it?
 
-protk is still in development. Only some of the tools work. None of them should be relied upon for production use yet.
+Protk is a wrapper for various proteomics tools. Initially it focusses on MS/MS database search and validation but other tools will be added over time
 
-***
+## Why do we need a wrapper around these tools
 
-## Design Goals
-
-The overall goal of protk is to provide;
-
-* A consistent command-line interface for proteomics tools
-* The ability to run tools in the background (via pbs)
-* Automatic configuration of as many aspects of tool input as possible
+The tools themselves typically have their own command-line interfaces, each of which is designed to accept different kinds of inputs.  The aim of protk is present an interface to each tool that is as uniform as possible with common options that work across tools. In addition, protk provides built-in support for submitting jobs to a cluster, and for management tasks such as database installation. 
 
 ***
-## Dependencies
 
-### *TPP* 
-http://sourceforge.net/projects/sashimi/files/
+## Installation
 
-### *OMSSA* 
-http://pubchem.ncbi.nlm.nih.gov/omssa/linux.htm
+The hardest part about installing protk is likely to be installation of its dependencies, particularly the trans proteomic pipeline, which is large and complex.
+
+To start the installation simply run the script "setup.sh".  This script will attempt to install all required ruby dependencies and will check for other required binaries. If you have the required binaries in your PATH a link to it will be created in ./bin .  If the requirement is missing instructions will be displayed on how to install it.
+
 
 ### *Sequence Databases*
 
@@ -32,17 +26,3 @@ http://pubchem.ncbi.nlm.nih.gov/omssa/linux.htm
 * NCBI tools can be downloaded here ftp://ftp.ncbi.nih.gov/blast/executables/LATEST
 * For each database fasta file run
 runmakeblastdb -in mydbname.fasta -parse_seqids
-
-### Ruby 
-On Ubuntu
-
-* sudo apt-get install ruby
-* sudo apt-get install rubygems
-
-### Gems
-open4
-rest-client
-libxml-ruby
-bio
-spreadsheet
-logger

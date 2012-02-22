@@ -2,7 +2,7 @@
 # This file is part of protk
 # Created by Ira Cooke 18/1/2011
 #
-# Runs the PeptideProphet tool on a set of pep.xml files
+# A wrapper for PeptideProphet
 #
 #
 
@@ -51,11 +51,6 @@ prophet_tool.options.output_suffix="_pproph"
 prophet_tool.options.one_ata_time = false
 prophet_tool.option_parser.on( '-F', '--one-ata-time', 'Create a separate pproph output file for each analysis' ) do 
   prophet_tool.options.one_ata_time = true
-end
-
-prophet_tool.options.database = "SPHuman"
-prophet_tool.option_parser.on( '-D', '--database db', 'The Database used in the search (required for phenyx results only)' ) do |db|
-  prophet_tool.options.database = db
 end
 
 prophet_tool.option_parser.parse!
@@ -107,8 +102,6 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
   
   cmd="#{genv.tpp_bin}/xinteract -N#{output}  -l7 -eT -D#{database} "
 
-#  cmd="#{genv.tpp_bin}/InteractParser #{output}" 
-
   if prophet_tool.glyco 
     cmd << " -Og "
   end
@@ -128,16 +121,7 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
     cmd << " #{inputs.join(" ")}"  
   else
     cmd << " #{inputs}"
-  end
-  #Command: /usr/local/tpp-4-4-0/bin/xinteract -Npeptide_prophet_output.pep.xml  -l7 -eT -D/var/www/ISB/data/Databases/plasmodb_pfalciparum_sphuman/plasmodb_pfalciparum_sphuman_20111102.fasta -Op -P -ddecoy  /var/www/galaxy/database/files/001/dataset_1018.dat.pep.xml started
-   
-  #/usr/local/tpp-4-4-0/bin/InteractParser 'peptide_prophet_output.pep.xml' '/var/www/galaxy/database/files/001/dataset_1018.dat.pep.xml' -D'/var/www/ISB/data/Databases/plasmodb_pfalciparum_sphuman/plasmodb_pfalciparum_sphuman_20111102.fasta' -L'7' -E'trypsin'
-
-  #/usr/local/tpp-4-4-0/bin/PeptideProphetParser 'peptide_prophet_output.pep.xml' DECOY=decoy
-  #/usr/local/tpp-4-4-0/bin/ProphetModels.pl -i peptide_prophet_output.pep.xml -d decoy
-  #/usr/local/tpp-4-4-0/bin/RefreshParser 'peptide_prophet_output.pep.xml' '/var/www/ISB/data/Databases/plasmodb_pfalciparum_sphuman/plasmodb_pfalciparum_sphuman_20111102.fasta'
-  
-  
+  end 
   
   cmd
 end
@@ -170,12 +154,9 @@ else
   if (prophet_tool.explicit_output==nil)
     output_file_name="#{prophet_tool.output_prefix}#{engine}_interact#{prophet_tool.output_suffix}.pep.xml"
   else
-    #    output_file_name=Pathname.new(prophet_tool.explicit_output).basename
 
     output_file_name=prophet_tool.explicit_output
 
-    # Check for interact- as prefix and remove it
-#    throw "Explicitly named outputs must begin with interact_" unless (info[1][:engine]==engine) && (info[1][:database])
   end
   cmd=generate_command(genv,prophet_tool,inputs,output_file_name,database,engine)
 

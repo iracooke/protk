@@ -78,8 +78,6 @@ precursor_tol = search_tool.precursor_tol
 
 mascot_cgi=search_tool.mascot_server
 
-## For testing this is all hard coded
-# Add command-line options to allow all these to be specified
 #
 RestClient.proxy=search_tool.http_proxy
 
@@ -88,7 +86,7 @@ genv.log("Var mods #{search_tool.var_mods} and fixed #{search_tool.fix_mods}",:i
 var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
 fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
 
-# None is given by a an empty galaxy multi-select list. 
+# None is given by a an empty galaxy multi-select list and we need to turn it into an empty string
 #
 var_mods=""  if var_mods=="None"
 fix_mods="" if fix_mods=="None"
@@ -139,7 +137,7 @@ postdict[:MASS]=search_tool.precursor_search_type
 #
 postdict[:MODS]=fix_mods
 
-# REPORT (What to include in the search report. For command-line searches this is pretty much irrelevant)
+# REPORT (What to include in the search report. For command-line searches this is pretty much irrelevant because we retrieve the entire results file anyway)
 #
 postdict[:REPORT]="AUTO"
 
@@ -199,6 +197,8 @@ else
     output_path="#{results_file}"
   end
 
+  # Download the results
+  #
   require 'open-uri'
   open("#{output_path}", 'wb') do |file|
     file << open("#{get_url}").read

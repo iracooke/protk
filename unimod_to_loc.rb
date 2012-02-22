@@ -2,7 +2,7 @@
 # This file is part of MSLIMS
 # Created by Ira Cooke 12/4/2010
 #
-# Finds molecular features in profile spectra
+# Reads a unimod xml file (eg from a Mascot installation) and produces a loc file with names of allowable chemical modifications
 #
 #!/bin/sh
 # -------+---------+---------+-------- + --------+---------+---------+---------+
@@ -126,8 +126,6 @@ umd.each { |mod|
 
 
 all_mods=all_mods.sort {|a,b| a.downcase <=> b.downcase}
-
-#all_mods.each { |am| p am.downcase.gsub(" ","").gsub("\(","\_").gsub("\)","\_").gsub("\:","\_").gsub("\-\>","\_") }
 
 loc_output=File.new("mascot_mods.loc",'w')
 

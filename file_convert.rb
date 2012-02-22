@@ -2,7 +2,7 @@
 # This file is part of protk
 # Created by Ira Cooke 14/12/2010
 #
-# Runs an MS/MS search using the OMSSA search engine
+# Wrapper for msconvert
 #
 
 #!/bin/sh
@@ -42,12 +42,12 @@ require 'command_runner'
 require 'tool'
 
 
-# Setup specific command-line options for this tool. Other options are inherited from SearchTool
+# Setup specific command-line options for this tool. Other options are inherited from Tool
 #
 convert_tool=Tool.new({:explicit_output=>true,:over_write=>true,:maldi=>true})
 convert_tool.option_parser.banner = "Convert files between different formats.\n\nUsage: file_convert.rb [options] input_file output_file"
 
-# Special case. Use lowercase l here to mimick maldi option in the search_tool class
+# Special case (usually tool specific options use capitals). Use lowercase l here to mimick maldi option in the search_tool class
 #
 convert_tool.options.maldi=false
 convert_tool.option_parser.on( '-l', '--maldi', 'Input Files are MALDI Spectra' ) do 
@@ -57,12 +57,6 @@ end
 convert_tool.options.output_format="mgf"
 convert_tool.option_parser.on( '-F', '--format fmt', 'Convert to a specified format' ) do |fmt| 
   convert_tool.options.output_format=fmt
-end
-
-
-convert_tool.options.no_charges=false
-convert_tool.option_parser.on( '-C', '--no-charges', 'Input Files are Missing Charge Information' ) do 
-  search_tool.options.no_charges=true
 end
 
 
@@ -76,11 +70,7 @@ genv=Constants.new
 filename=ARGV[0]
 input_ext=Pathname.new(filename).extname
 
-output_path="#{convert_tool.input_base_path(filename.chomp)}.mgf"
-
-p output_path
-# See if the original file is an mzML rather than mgf, because if it is we will need to convert it.
-# 
+output_path="#{convert_tool.input_base_path(filename.chomp)}.#{convert_tool.output_format}"
 
 throw "Input format is the same as output format" if ( input_ext==".#{convert_tool.output_format}" )
   
@@ -90,20 +80,18 @@ basedir=Pathname.new(filename).dirname.to_s
 relative_filename=Pathname.new(filename).basename
 
 if ( convert_tool.maldi )
+  #For MALDI we know the charge is 1 so set it explicitly. Sometimes it is missing from the data
   runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --mgf")
 else
-  if ( !convert_tool.no_charges )
-    runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --mgf")
-  else
-    runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --mgf")
-  end
+  # This will break if input file is missing charges
+  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --mgf")
 end
 
+# Cleanup after converting
 cmd = "cd #{basedir}; mv #{output_path}  #{convert_tool.explicit_output}"
-p cmd
+
 code =runner.run_local(cmd)
+
 throw "Command failed with exit code #{code}" unless code==0
 
-
 throw "Failed to create output file #{convert_tool.explicit_output}" unless ( FileTest.exists?(convert_tool.explicit_output) && (convert_tool.explicit_output!=nil))
-

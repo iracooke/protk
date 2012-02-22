@@ -4,9 +4,6 @@
 #
 # Runs an MS/MS search using the X!Tandem search engine
 #
-
-
-
 #!/bin/sh
 # -------+---------+---------+-------- + --------+---------+---------+---------+
 #     /  This section is a safe way to find the interpretter for ruby,  \
@@ -267,11 +264,7 @@ ARGV.each do |filename|
   if ( search_tool.no_pepxml && Pathname.new(output_path).exist? )
     output_exists=true
   end
-  
-  
-  p search_tool.over_write
-  p output_exists
-  
+    
   # Only proceed if the output file is not present or we have opted to over-write it
   #
   if ( search_tool.over_write || !output_exists )

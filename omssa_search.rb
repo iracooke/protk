@@ -45,18 +45,13 @@ require 'search_tool'
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new({:msms_search=>true,:background=>false,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:maldi=>true,:msms_search_detailed_options=>true})
+search_tool=SearchTool.new({:msms_search=>true,:background=>false,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
 search_tool.option_parser.banner = "Run an OMSSA msms search on a set of mgf input files.\n\nUsage: omssa_search.rb [options] file1.mgf file2.mgf ..."
 search_tool.options.output_suffix="_omssa"
 
 search_tool.options.add_retention_times=true
-search_tool.option_parser.on( '-R', '--no-add-retention-times', 'Post process the output to add retention times' ) do 
+search_tool.option_parser.on( '-R', '--no-add-retention-times', 'Don\'t post process the output to add retention times' ) do 
   search_tool.options.add_retention_times=false
-end
-
-search_tool.options.no_charges=false
-search_tool.option_parser.on( '-C', '--no-charges', 'Input Files are Missing Charge Information' ) do 
-  search_tool.options.no_charges=true
 end
 
 
@@ -71,15 +66,12 @@ genv=Constants.new
 #
 omssa_bin="#{genv.omssa_bin}/omssacl"
 omssa2pepxml_bin="#{genv.omssa_bin}/omssa2pepXML"
-## TODO: Refactor into a separate tool
+
 rt_correct_bin="#{File.dirname(__FILE__)}/correct_omssa_retention_times.rb"
 repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"      
 current_db=search_tool.current_database :fasta
 fragment_tol = search_tool.fragment_tol
 precursor_tol = search_tool.precursor_tol
-
-
-
 
 
 throw "When --output is set only one file at a time can be run" if  ( ARGV.length> 1 ) && ( search_tool.explicit_output!=nil ) 

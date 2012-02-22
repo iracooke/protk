@@ -122,7 +122,6 @@ end
 
 throw "No run summary found" unless run_summary[0]!=nil
 
-#<msms_run_summary base_name="/home/iracooke/galaxy-proteomics/database/files/000/dataset_7.dat" raw_data_type="raw" raw_data=".mzXML">
 run_summary[0].attributes['base_name']=new_base_name
 run_summary[0].attributes['raw_data']=raw_data_type
 
