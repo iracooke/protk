@@ -75,7 +75,7 @@ output_path="#{convert_tool.input_base_path(filename.chomp)}.#{convert_tool.outp
 if ( convert_tool.explicit_output )
   final_output_path=convert_tool.explicit_output
 else
-  final_output_path=output_format
+  final_output_path=output_path
 end
 
 throw "Input format is the same as output format" if ( input_ext==".#{convert_tool.output_format}" )
