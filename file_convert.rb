@@ -83,7 +83,7 @@ end
 
 # Create a uniquely named directory to hold the output. This is the only way to know the output of msconvert 
 #
-output_dir=Pathname.new(Tempfile.new("file_convert").path).basename.to_s
+output_dir="#{base_output_dir}/#{Pathname.new(Tempfile.new("file_convert").path).basename.to_s}"
 Dir.mkdir(output_dir)
 
 
