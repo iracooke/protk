@@ -94,7 +94,7 @@ else
 end
 
 # Cleanup after converting
-cmd = "cd #{basedir}; mv #{output_path}  #{final_output_path}"
+cmd = "cd #{basedir}; mv #{Pathname.new(output_path).basename}  #{Pathname.new(final_output_path).basename}"
 
 code =runner.run_local(cmd)
 
