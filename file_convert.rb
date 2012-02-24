@@ -40,7 +40,7 @@ $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
 require 'constants'
 require 'command_runner'
 require 'tool'
-
+require 'tempfile'
 
 # Setup specific command-line options for this tool. Other options are inherited from Tool
 #
@@ -70,16 +70,22 @@ genv=Constants.new
 filename=ARGV[0]
 input_ext=Pathname.new(filename).extname
 input_relative_filename=Pathname.new(filename).basename.to_s
-output_dir=Pathname.new(filename).dirname.to_s #Default output dir is input dir
+
+base_output_dir=Pathname.new(filename).dirname.to_s #Default output dir is input dir
+
 output_basename=input_relative_filename.gsub(/#{input_ext}$/,"").to_s
-tmp_output_filename="#{output_basename}.#{convert_tool.output_format}" #msconvert creates output files based on input filenames
-output_filename=tmp_output_filename #Default
 
 if ( convert_tool.explicit_output )
   output_filepath=Pathname.new(convert_tool.explicit_output)
-  output_dir=output_filepath.dirname.to_s
+  base_output_dir=output_filepath.dirname.to_s
   output_filename=output_filepath.basename.to_s
 end
+
+# Create a uniquely named directory to hold the output. This is the only way to know the output of msconvert 
+#
+output_dir=Pathname.new(Tempfile.new("file_convert").path).basename.to_s
+Dir.mkdir(output_dir)
+
 
 throw "Input format is the same as output format" if ( input_ext==".#{convert_tool.output_format}" )
   
@@ -95,11 +101,15 @@ else
   runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --#{convert_tool.output_format} -o #{output_dir}")
 end
 
+# Find out what the output name was
+#
+tmp_output_filename=Dir.entries(output_dir)[2]
+
 # Cleanup after converting
-cmd = "cd #{output_dir}; mv #{tmp_output_filename}  #{output_filename}"
+cmd = "cd #{output_dir}; mv #{tmp_output_filename}  #{base_output_dir}/#{output_filename}; cd ../; rm -r #{output_dir}"
 
 code =runner.run_local(cmd)
 
 throw "Command failed with exit code #{code}" unless code==0
 
-throw "Failed to create output file #{output_dir}/#{output_filename}" unless ( FileTest.exists?("#{output_dir}/#{output_filename}") )
+throw "Failed to create output file #{base_output_dir}/#{output_filename}" unless ( FileTest.exists?("#{base_output_dir}/#{output_filename}") )
