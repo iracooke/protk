@@ -5,3 +5,4 @@ config.yml$
 Databases/
 bin/
 Logs/
+test_data/

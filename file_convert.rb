@@ -72,6 +72,12 @@ input_ext=Pathname.new(filename).extname
 
 output_path="#{convert_tool.input_base_path(filename.chomp)}.#{convert_tool.output_format}"
 
+if ( convert_tool.explicit_output )
+  final_output_path=convert_tool.explicit_output
+else
+  final_output_path=output_format
+end
+
 throw "Input format is the same as output format" if ( input_ext==".#{convert_tool.output_format}" )
   
 genv.log("Converting #{filename} to #{convert_tool.output_format}",:info)
@@ -81,17 +87,17 @@ relative_filename=Pathname.new(filename).basename
 
 if ( convert_tool.maldi )
   #For MALDI we know the charge is 1 so set it explicitly. Sometimes it is missing from the data
-  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --mgf")
+  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --#{convert_tool.output_format}")
 else
   # This will break if input file is missing charges
-  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --mgf")
+  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --#{convert_tool.output_format}")
 end
 
 # Cleanup after converting
-cmd = "cd #{basedir}; mv #{output_path}  #{convert_tool.explicit_output}"
+cmd = "cd #{basedir}; mv #{output_path}  #{final_output_path}"
 
 code =runner.run_local(cmd)
 
 throw "Command failed with exit code #{code}" unless code==0
 
-throw "Failed to create output file #{convert_tool.explicit_output}" unless ( FileTest.exists?(convert_tool.explicit_output) && (convert_tool.explicit_output!=nil))
+throw "Failed to create output file #{final_output_path}" unless ( FileTest.exists?(final_output_path) )
