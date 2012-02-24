@@ -69,35 +69,37 @@ genv=Constants.new
 
 filename=ARGV[0]
 input_ext=Pathname.new(filename).extname
-
-output_path="#{convert_tool.input_base_path(filename.chomp)}.#{convert_tool.output_format}"
+input_relative_filename=Pathname.new(filename).basename.to_s
+output_dir=Pathname.new(filename).dirname.to_s #Default output dir is input dir
+output_basename=input_relative_filename.gsub(/#{input_ext}$/,"").to_s
+tmp_output_filename="#{output_basename}.#{convert_tool.output_format}" #msconvert creates output files based on input filenames
+output_filename=tmp_output_filename #Default
 
 if ( convert_tool.explicit_output )
-  final_output_path=convert_tool.explicit_output
-else
-  final_output_path=output_path
+  output_filepath=Pathname.new(convert_tool.explicit_output)
+  output_dir=output_filepath.dirname.to_s
+  output_filename=output_filepath.basename.to_s
 end
 
 throw "Input format is the same as output format" if ( input_ext==".#{convert_tool.output_format}" )
   
 genv.log("Converting #{filename} to #{convert_tool.output_format}",:info)
 runner=CommandRunner.new(genv)
-basedir=Pathname.new(filename).dirname.to_s
-relative_filename=Pathname.new(filename).basename
+basedir=Pathname.new(filename).dirname.to_s #Where we run the tool
 
 if ( convert_tool.maldi )
   #For MALDI we know the charge is 1 so set it explicitly. Sometimes it is missing from the data
-  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --#{convert_tool.output_format}")
+  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --#{convert_tool.output_format} -o #{output_dir}")
 else
   # This will break if input file is missing charges
-  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --#{convert_tool.output_format}")
+  runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --#{convert_tool.output_format} -o #{output_dir}")
 end
 
 # Cleanup after converting
-cmd = "cd #{basedir}; mv #{Pathname.new(output_path).basename}  #{Pathname.new(final_output_path).basename}"
+cmd = "cd #{output_dir}; mv #{tmp_output_filename}  #{output_filename}"
 
 code =runner.run_local(cmd)
 
 throw "Command failed with exit code #{code}" unless code==0
 
-throw "Failed to create output file #{final_output_path}" unless ( FileTest.exists?(final_output_path) )
+throw "Failed to create output file #{output_dir}/#{output_filename}" unless ( FileTest.exists?("#{output_dir}/#{output_filename}") )
