@@ -59,6 +59,12 @@ convert_tool.option_parser.on( '-F', '--format fmt', 'Convert to a specified for
   convert_tool.options.output_format=fmt
 end
 
+#convert_tool.options.missing_charge_state="false"
+#convert_tool.option_parser.on( '-C', '--missing-charges', 'No attempt will be made to write charge states. Leads to better looking spectrum names' ) do |fmt| 
+#  convert_tool.options.output_format=fmt
+#end
+#end
+
 
 
 convert_tool.option_parser.parse!
@@ -71,13 +77,16 @@ filename=ARGV[0]
 input_ext=Pathname.new(filename).extname
 input_relative_filename=Pathname.new(filename).basename.to_s
 
-base_output_dir=Pathname.new(filename).dirname.to_s #Default output dir is input dir
+base_output_dir=Pathname.new(filename).dirname.realpath.to_s #Default output dir is input dir
 
 output_basename=input_relative_filename.gsub(/#{input_ext}$/,"").to_s
 
 if ( convert_tool.explicit_output )
   output_filepath=Pathname.new(convert_tool.explicit_output)
   base_output_dir=output_filepath.dirname.to_s
+  # Convert base_output_dir to realpath
+  #
+  base_output_dir=Pathname.new(base_output_dir).realpath.to_s
   output_filename=output_filepath.basename.to_s
 end
 
@@ -97,7 +106,8 @@ if ( convert_tool.maldi )
   #For MALDI we know the charge is 1 so set it explicitly. Sometimes it is missing from the data
   runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --#{convert_tool.output_format} -o #{output_dir}")
 else
-  # This will break if input file is missing charges
+  # If input file is missing charges we will end up with spectrum names that end in a dot
+  #
   runner.run_local("cd #{basedir}; #{genv.tpp_bin}/msconvert #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --#{convert_tool.output_format} -o #{output_dir}")
 end
 
@@ -106,7 +116,7 @@ end
 tmp_output_filename=Dir.entries(output_dir)[2]
 
 # Cleanup after converting
-cmd = "cd #{output_dir}; mv #{tmp_output_filename}  #{base_output_dir}/#{output_filename}; cd ../; rm -r #{output_dir}"
+cmd = "cd #{output_dir};pwd; mv #{tmp_output_filename}  #{base_output_dir}/#{output_filename}; cd ../; pwd;rm -r #{output_dir}"
 
 code =runner.run_local(cmd)
 
