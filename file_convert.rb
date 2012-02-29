@@ -84,10 +84,15 @@ output_basename=input_relative_filename.gsub(/#{input_ext}$/,"").to_s
 if ( convert_tool.explicit_output )
   output_filepath=Pathname.new(convert_tool.explicit_output)
   base_output_dir=output_filepath.dirname.to_s
-  # Convert base_output_dir to realpath
-  #
-  base_output_dir=Pathname.new(base_output_dir).realpath.to_s
+
+  if ( convert_tool.explicit_output=~/^\//) # It's an absolute path so use absolute path as output dir
+    # Convert base_output_dir to realpath
+    #
+    base_output_dir=Pathname.new(base_output_dir).realpath.to_s
+  end
+
   output_filename=output_filepath.basename.to_s
+  
 end
 
 # Create a uniquely named directory to hold the output. This is the only way to know the output of msconvert 
@@ -113,7 +118,13 @@ end
 
 # Find out what the output name was
 #
-tmp_output_filename=Dir.entries(output_dir)[2]
+tmp_output_filename=""
+Dir.foreach(output_dir) { |entry_name| 
+  if ( entry_name=~/^\.$/ || entry_name=~/^\.\.$/ )
+  else
+    tmp_output_filename=entry_name
+  end
+}
 
 # Cleanup after converting
 cmd = "cd #{output_dir};pwd; mv #{tmp_output_filename}  #{base_output_dir}/#{output_filename}; cd ../; pwd;rm -r #{output_dir}"
