@@ -59,6 +59,8 @@ input_file=ARGV[0]
 
 output_file="#{input_file}.txt"
 
+output_file = tool.explicit_output if tool.explicit_output!=nil
+
 output_fh=File.new("#{output_file}",'w')
 
 output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\tpeptideprophet_prob\tinterprophet_prob\n"
