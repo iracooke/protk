@@ -61,7 +61,7 @@ output_file="#{input_file}.txt"
 
 output_fh=File.new("#{output_file}",'w')
 
-output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\n"
+output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\tpeptideprophet_prob\tinterprophet_prob\n"
 
 pepxml_parser=XML::Parser.file("#{input_file}")
 pepxml_doc=pepxml_parser.parse
@@ -79,8 +79,27 @@ spectrum_queries.each do |query|
   calc_neutral_pep_mass=top_search_hit.attributes['calc_neutral_pep_mass']
   start_scan=query.attributes['start_scan']
   end_scan=query.attributes['end_scan']
+
+  search_engine=""
+  search_score_names=top_search_hit.find('./xmlns:search_score/@name','xmlns:http://regis-web.systemsbiology.net/pepXML').collect {|s| s.to_s}
+
+  if ( search_score_names.length==2 && search_score_names.grep(/^name.*=.*pvalue/))
+    search_engine="omssa" 
+  elsif ( search_score_names.grep(/^name.*=.*ionscore/))
+    search_engine="mascot"
+  elsif ( search_score_names.grep(/^name.*=.*hyperscore/) )
+    search_engine="x!tandem"
+  end
+
+  pp_result=top_search_hit.find('./xmlns:analysis_result/xmlns:peptideprophet_result/@probability','xmlns:http://regis-web.systemsbiology.net/pepXML')
+  ip_result=top_search_hit.find('./xmlns:analysis_result/xmlns:interprophet_result/@probability','xmlns:http://regis-web.systemsbiology.net/pepXML')
   
-  output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\n"
+  peptide_prophet_prob=""
+  interprophet_prob=""
+  peptide_prophet_prob=pp_result[0].value if ( pp_result.length>0 )
+  interprophet_prob=ip_result[0].value if ( ip_result.length>0)
+  
+  output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t#{peptide_prophet_prob}\t#{interprophet_prob}\n"
 
 end
 
