@@ -14,6 +14,8 @@
 	<note> DEFAULT PARAMETERS. The value of "isb_default_input_kscore.xml" is recommended. Change to "isb_default_input_native.xml" for native X!Tandem scoring.</note> 
 	<note type="input" label="list path, default parameters">/usr/local/tpp-4-4-0/bin/isb_default_input_kscore.xml</note>
 
+	<note> FRAGMENT MASS TOLERANCES </note>
+ 	<note type="input" label="spectrum, fragment monoisotopic mass error">0.65</note>
 
 	<note> PRECURSOR MASS TOLERANCES. In the example below, a -2.0 Da to 4.0 Da (monoisotopic mass) window is searched for peptide candidates. Since this is monoisotopic mass, so for non-accurate-mass instruments, for which the precursor is often taken nearer to the isotopically averaged mass, an asymmetric tolerance (-2.0 Da to 4.0 Da) is preferable. This somewhat imitates a (-3.0 Da to 3.0 Da) window for averaged mass (but not exactly)</note>
  	<note type="input" label="spectrum, parent monoisotopic mass error minus">100</note>

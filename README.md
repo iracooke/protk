@@ -16,7 +16,7 @@ The tools themselves typically have their own command-line interfaces, each of w
 
 The hardest part about installing protk is likely to be installation of its dependencies, particularly the trans proteomic pipeline, which is large and complex.
 
-To start the installation simply run the script "setup.sh".  This script will attempt to install all required ruby dependencies and will check for other required binaries. If you have the required binaries in your PATH a link to it will be created in ./bin .  If the requirement is missing instructions will be displayed on how to install it.
+To start the installation simply run the script "setup.sh".  This script will attempt to install all required ruby dependencies and will check for other required binaries. If you have the required binaries in your PATH a link will be created for each in ./bin .  If the requirement is missing, instructions will be displayed on how to install it.
 
 
 ### *Sequence Databases*

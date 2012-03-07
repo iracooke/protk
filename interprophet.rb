@@ -48,6 +48,38 @@ require 'prophet_tool'
 prophet_tool=ProphetTool.new({:explicit_output=>true})
 prophet_tool.option_parser.banner = "Run InterProphet on a set of pep.xml input files.\n\nUsage: interprophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_iproph"
+
+
+prophet_tool.options.no_nss=""
+prophet_tool.option_parser.on( '--no-nss', 'Don\'t use NSS (Number of Sibling Searches) in Model' ) do 
+  prophet_tool.options.no_nss="NONSS"
+end
+
+prophet_tool.options.no_nrs=""
+prophet_tool.option_parser.on('--no-nrs', 'Don\'t use NRS (Number of Replicate Spectra) in Model' ) do
+  prophet_tool.options.no_nrs="NONRS"
+end
+
+prophet_tool.options.no_nse=""
+prophet_tool.option_parser.on('--no-nse', 'Don\'t use NSE (Number of Sibling Experiments) in Model' ) do
+  prophet_tool.options.no_nse="NONSE"
+end
+
+prophet_tool.options.no_nsi=""
+prophet_tool.option_parser.on("--no-nsi",'Don\'t use NSE (Number of Sibling Ions) in Model' ) do
+  prophet_tool.options.no_nsi="NONSI"
+end
+
+prophet_tool.options.no_nsm=""
+prophet_tool.option_parser.on("--no-nsm",'Don\'t use NSE (Number of Sibling Modifications) in Model' ) do
+  prophet_tool.options.no_nsm="NONSM"
+end
+
+prophet_tool.options.min_prob=""
+prophet_tool.option_parser.on("--minprob mp","Minimum probability cutoff ") do |mp|
+  prophet_tool.options.min_prob=mp
+end
+
 prophet_tool.option_parser.parse!
 
 
@@ -62,7 +94,8 @@ end
 
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
-  cmd="#{genv.tpp_bin}/InterProphetParser "
+  cmd="#{genv.tpp_bin}/InterProphetParser #{prophet_tool.options.no_nss} #{prophet_tool.options.no_nrs} #{prophet_tool.options.no_nse} #{prophet_tool.options.no_nsi} #{prophet_tool.options.no_nsm}"
+  cmd << " MINPROB=#{min_prob}" if ( prophet_tool.options.min_prob !="" )
 
   inputs = ARGV.collect {|file_name| 
     file_name.chomp

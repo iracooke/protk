@@ -71,6 +71,7 @@ pepxml_doc=pepxml_parser.parse
 spectrum_queries=pepxml_doc.find('//xmlns:spectrum_query','xmlns:http://regis-web.systemsbiology.net/pepXML')
 
 spectrum_queries.each do |query| 
+
   retention_time=query.attributes['retention_time_sec']
   neutral_mass=query.attributes['precursor_neutral_mass']
   assumed_charge=query.attributes['assumed_charge']

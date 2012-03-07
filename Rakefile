@@ -52,7 +52,7 @@ end
 # TPP
 #
 
-tpp_files=FileList['xinteract','msconvert']
+tpp_files=FileList['xinteract','msconvert','tandem','isb_default_input_kscore.xml','Tandem2XML','Mascot2XML']
 directory "#{config['tpp_bin']}"
 
 task :tpp => ["#{config['tpp_bin']}"]

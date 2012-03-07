@@ -143,6 +143,12 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   taxo_notes[0].content=taxo_path
 
   fragment_tol = search_tool.fragment_tol
+  
+  fmass=std_params.find('/bioml/note[@type="input" and @label="spectrum, fragment monoisotopic mass error"]')
+  p fmass
+  throw "Exactly one spectrum, fragment monoisotopic mass error note is required in the parameter file" unless fmass.length==1
+  fmass[0].content=fragment_tol.to_s
+  
   precursor_tol = search_tool.precursor_tol
   ptol_plus=precursor_tol*0.5
   ptol_minus=precursor_tol*0.5
