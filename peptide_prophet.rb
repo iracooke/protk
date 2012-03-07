@@ -48,10 +48,85 @@ prophet_tool=ProphetTool.new({:glyco=>true,:explicit_output=>true})
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_pproph"
 
+#<param name="phospho" type="boolean" label="Use phospho information" truevalue="-H" falsevalue=""/>
+#<param name="usepi" type="boolean" label="Use pI information" truevalue="-I" falsevalue=""/>
+#<param name="usert" type="boolean" label="Use hydrophobicity / RT information" truevalue="-R" falsevalue=""/>
+#<param name="accurate_mass" type="boolean" label="Use accurate mass binning" truevalue="-A" falsevalue=""/>
+#<param name="no_ntt" type="boolean" label="Don't use NTT model" truevalue="-N" falsevalue=""/>
+#<param name="no_nmc" type="boolean" label="Don't use NMC model" truevalue="-M" falsevalue=""/>
+#<param name="use_gamma" type="boolean" label="Use Gamma distribution to model the negatives" help="Applies only to X!Tandem results" truevalue="-G" falsevalue=""/>
+#<param name="use_only_expect" type="boolean" label="Only use Expect Score as the discriminant" help="Applies only to X!Tandem results. 
+#      Helpful for data with homologous top hits e.g. phospho or glyco" truevalue="-E" falsevalue=""/>
+#<param name="force_fit" type="boolean" label="Force fitting" help="Bypasses automatic mixture model checks and forces fitting of a mixture model" truevalue="-F" falsevalue=""/>
+#<param name="allow_alt_instruments" type="boolean" label="Allow multiple instrument types" help="Warning instead of exit with error if instrument types between runs is different" truevalue="-w" falsevalue=""/>
+#<param name="maldi" type="boolean" label="Maldi data" truevalue="-m" falsevalue=""/>
+
+#<param name="useicat" type="boolean" label="Use icat information" truevalue="-i" falsevalue="-f"/>
+prophet_tool.options.useicat = false
+prophet_tool.option_parser.on( '--useicat',"Use icat information" ) do 
+  prophet_tool.options.useicat = true
+end
+
+prophet_tool.options.nouseicat = false
+prophet_tool.option_parser.on( '--no-useicat',"Do not use icat information" ) do 
+  prophet_tool.options.nouseicat = true
+end
+
+prophet_tool.options.phospho = false
+prophet_tool.option_parser.on( '--phospho',"Use phospho information" ) do 
+  prophet_tool.options.phospho = true
+end
+
+prophet_tool.options.usepi = false
+prophet_tool.option_parser.on( '--usepi',"Use pI information" ) do 
+  prophet_tool.options.usepi = true
+end
+
+prophet_tool.options.usert = false
+prophet_tool.option_parser.on( '--usert',"Use hydrophobicity / RT information" ) do 
+  prophet_tool.options.usert = true
+end
+
+prophet_tool.options.accurate_mass = false
+prophet_tool.option_parser.on( '--accurate-mass',"Use accurate mass binning" ) do 
+  prophet_tool.options.accurate_mass = true
+end
+
+prophet_tool.options.no_ntt = false
+prophet_tool.option_parser.on( '--no-ntt',"Don't use NTT model" ) do 
+  prophet_tool.options.no_ntt = true
+end
+
+prophet_tool.options.no_nmc = false
+prophet_tool.option_parser.on( '--no-nmc',"Don't use NMC model" ) do 
+  prophet_tool.options.no_nmc = true
+end
+
+prophet_tool.options.usegamma = false
+prophet_tool.option_parser.on( '--usegamma',"Use Gamma distribution to model the negatives" ) do 
+  prophet_tool.options.usegamma = true
+end
+
+prophet_tool.options.use_only_expect = false
+prophet_tool.option_parser.on( '--use-only-expect',"Only use Expect Score as the discriminant" ) do 
+  prophet_tool.options.use_only_expect = true
+end
+
+prophet_tool.options.force_fit = false
+prophet_tool.option_parser.on( '--force-fit',"Force fitting of mixture model and bypass checks" ) do 
+  prophet_tool.options.force_fit = true
+end
+
+prophet_tool.options.allow_alt_instruments=false
+prophet_tool.option_parser.on( '--allow-alt-instruments',"Warning instead of exit with error if instrument types between runs is different" ) do 
+  prophet_tool.options.allow_alt_instruments = true
+end
+
 prophet_tool.options.one_ata_time = false
 prophet_tool.option_parser.on( '-F', '--one-ata-time', 'Create a separate pproph output file for each analysis' ) do 
   prophet_tool.options.one_ata_time = true
 end
+
 
 prophet_tool.option_parser.parse!
 
@@ -104,6 +179,54 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
 
   if prophet_tool.glyco 
     cmd << " -Og "
+  end
+
+  if prophet_tool.phospho 
+    cmd << " -OH "
+  end
+
+  if prophet_tool.usepi
+    cmd << " -OI "
+  end
+  
+  if prophet_tool.usert
+    cmd << " -OR "
+  end
+  
+  if prophet_tool.accurate_mass
+    cmd << " -OA "
+  end
+
+  if prophet_tool.no_ntt
+    cmd << " -ON "
+  end
+  
+  if prophet_tool.no_nmc
+    cmd << " -OM "
+  end
+  
+  if prophet_tool.usegamma
+    cmd << " -OG "
+  end
+  
+  if prophet_tool.use_only_expect
+    cmd << " -OE "
+  end
+  
+  if prophet_tool.force_fit
+    cmd << " -OF "
+  end
+  
+  if prophet_tool.allow_alt_instruments
+    cmd << " -Ow "
+  end
+  
+  if prophet_tool.useicat
+    cmd << " -Oi "
+  end
+  
+  if prophet_tool.nouseicat
+    cmd << " -Of"
   end
   
   if prophet_tool.maldi
