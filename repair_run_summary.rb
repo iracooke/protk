@@ -66,11 +66,16 @@ tool.option_parser.on( '-R', '--raw-type type', 'Raw data type used for search' 
   tool.options.raw_data_type = type
 end
 
+tool.options.omssa_ion_tolerance=nil
+tool.option_parser.on('--omssa-itol fitol','Add a fragment ion tolerance parameter to the omssa search summary') do |fitol|
+  tool.options.omssa_ion_tolerance=fitol
+end
+
 tool.option_parser.parse!
 
 pepxml_file=ARGV[0]
 
-# Parse options from a parameter file (if provided), or from the default parameter file
+# Read the input file
 #
 parser=XML::Parser.file(pepxml_file)
 doc=parser.parse
@@ -116,13 +121,24 @@ run_summary=doc.find('//xmlns:msms_run_summary','xmlns:http://regis-web.systemsb
 if ( run_summary[0]==nil)
   # Try without namespace (OMSSA)
   run_summary=doc.find('//msms_run_summary')
+  
+  if ( tool.options.omssa_ion_tolerance !=nil)
+    search_summary=doc.find('//search_summary')[0]
+    p search_summary
+    pmnode=XML::Node.new('parameter')
+    pmnode["name"]="to"
+    pmnode["value"]=tool.options.omssa_ion_tolerance.to_s
+    search_summary << pmnode
+    
+  end
+  
   raw_data_type="mgf"
-  p run_summary[0]
 end
 
 throw "No run summary found" unless run_summary[0]!=nil
 
 run_summary[0].attributes['base_name']=new_base_name
 run_summary[0].attributes['raw_data']=raw_data_type
+
 
 doc.save(pepxml_file)
