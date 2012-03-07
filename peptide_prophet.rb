@@ -48,20 +48,6 @@ prophet_tool=ProphetTool.new({:glyco=>true,:explicit_output=>true})
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_pproph"
 
-#<param name="phospho" type="boolean" label="Use phospho information" truevalue="-H" falsevalue=""/>
-#<param name="usepi" type="boolean" label="Use pI information" truevalue="-I" falsevalue=""/>
-#<param name="usert" type="boolean" label="Use hydrophobicity / RT information" truevalue="-R" falsevalue=""/>
-#<param name="accurate_mass" type="boolean" label="Use accurate mass binning" truevalue="-A" falsevalue=""/>
-#<param name="no_ntt" type="boolean" label="Don't use NTT model" truevalue="-N" falsevalue=""/>
-#<param name="no_nmc" type="boolean" label="Don't use NMC model" truevalue="-M" falsevalue=""/>
-#<param name="use_gamma" type="boolean" label="Use Gamma distribution to model the negatives" help="Applies only to X!Tandem results" truevalue="-G" falsevalue=""/>
-#<param name="use_only_expect" type="boolean" label="Only use Expect Score as the discriminant" help="Applies only to X!Tandem results. 
-#      Helpful for data with homologous top hits e.g. phospho or glyco" truevalue="-E" falsevalue=""/>
-#<param name="force_fit" type="boolean" label="Force fitting" help="Bypasses automatic mixture model checks and forces fitting of a mixture model" truevalue="-F" falsevalue=""/>
-#<param name="allow_alt_instruments" type="boolean" label="Allow multiple instrument types" help="Warning instead of exit with error if instrument types between runs is different" truevalue="-w" falsevalue=""/>
-#<param name="maldi" type="boolean" label="Maldi data" truevalue="-m" falsevalue=""/>
-
-#<param name="useicat" type="boolean" label="Use icat information" truevalue="-i" falsevalue="-f"/>
 prophet_tool.options.useicat = false
 prophet_tool.option_parser.on( '--useicat',"Use icat information" ) do 
   prophet_tool.options.useicat = true

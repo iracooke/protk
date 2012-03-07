@@ -46,7 +46,69 @@ require 'prophet_tool'
 prophet_tool=ProphetTool.new({:glyco=>true,:explicit_output=>true})
 prophet_tool.option_parser.banner = "Run ProteinProphet on a set of pep.xml input files.\n\nUsage: protein_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_protproph"
+
+prophet_tool.options.iproph = false
+prophet_tool.option_parser.on( '--iprophet-input',"Inputs are from iProphet" ) do 
+  prophet_tool.options.iproph = true
+end
+
+prophet_tool.options.nooccam = false
+prophet_tool.option_parser.on( '--no-occam',"Do not attempt to derive the simplest protein list explaining observed peptides" ) do 
+  prophet_tool.options.nooccam = true
+end
+
+prophet_tool.options.groupwts = false
+prophet_tool.option_parser.on( '--group-wts',"Check peptide's total weight (rather than actual weight) in the Protein Group against the threshold" ) do 
+  prophet_tool.options.groupwts = true
+end
+
+prophet_tool.options.normprotlen = false
+prophet_tool.option_parser.on( '--norm-protlen',"Normalize NSP using Protein Length" ) do 
+  prophet_tool.options.normprotlen = true
+end
+
+prophet_tool.options.logprobs = false
+prophet_tool.option_parser.on( '--log-prob',"Use the log of probability in the confidence calculations" ) do 
+  prophet_tool.options.logprobs = true
+end
+
+prophet_tool.options.confem = false
+prophet_tool.option_parser.on( '--confem',"Use the EM to compute probability given the confidence" ) do 
+  prophet_tool.options.confem = true
+end
+
+prophet_tool.options.allpeps = false
+prophet_tool.option_parser.on( '--allpeps',"Consider all possible peptides in the database in the confidence model" ) do 
+  prophet_tool.options.allpeps = true
+end
+
+prophet_tool.options.unmapped = false
+prophet_tool.option_parser.on( '--unmapped',"Report results for unmapped proteins" ) do 
+  prophet_tool.options.unmapped = true
+end
+
+prophet_tool.options.instances = false
+prophet_tool.option_parser.on( '--instances',"Use Expected Number of Ion Instances to adjust the peptide probabilities prior to NSP adjustment" ) do 
+  prophet_tool.options.instances = true
+end
+
+prophet_tool.options.delude = false
+prophet_tool.option_parser.on( '--delude',"Do NOT use peptide degeneracy information when assessing proteins" ) do 
+  prophet_tool.options.delude = true
+end
+
+prophet_tool.options.minprob = 0.05
+prophet_tool.option_parser.on( '--minprob mp',"Minimum peptide prophet probability for peptides to be considered" ) do |mp|
+  prophet_tool.options.minprob = mp
+end
+
+prophet_tool.options.minindep = 0
+prophet_tool.option_parser.on( '--minindep mp',"Minimum percentage of independent peptides required for a protein" ) do |mp|
+  prophet_tool.options.minindep = mp
+end
+
 prophet_tool.option_parser.parse!
+
 
 # Obtain a global environment object
 genv=Constants.new
