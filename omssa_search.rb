@@ -172,11 +172,23 @@ ARGV.each do |filename|
       end
     end
     
-    # Fixed modifications
+    if ( search_tool.searched_ions !="" && search_tool.searched_ions!="None")
+      searched_ions=search_tool.searched_ions.split(",").collect{ |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
+      if ( searched_ions!="")
+        cmd << " -i #{searched_ions}"
+      end
+      
+    end
+    
+    # Infer precursor charges or respect charges in input file
     #
     if ( search_tool.respect_precursor_charges )
       cmd << " -zcc 1"
     end
+    
+    
+    
+    
     
     # Up to here we've formulated the omssa command. The rest is cleanup
     p "Running:#{cmd}"

@@ -104,9 +104,16 @@ ncbi_files.each do |fl|
 end
 
 #
+# Make Random
+#
+file "./bin/make_random" do
+  sh %{ gcc -o ./bin/make_random make_random.c -lm } 
+end
+
+#
 # Default task
 #
 
-task :default => ["libxml_ruby_gem","pure_ruby_gems","tpp","omssa","ncbi"] 
+task :default => ["libxml_ruby_gem","pure_ruby_gems","tpp","omssa","ncbi","./bin/make_random"] 
 
 

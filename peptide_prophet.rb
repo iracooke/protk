@@ -44,7 +44,7 @@ require 'prophet_tool'
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new({:glyco=>true,:explicit_output=>true})
+prophet_tool=ProphetTool.new({:glyco=>true,:explicit_output=>true,:maldi=>true})
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_pproph"
 

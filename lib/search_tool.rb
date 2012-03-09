@@ -56,6 +56,12 @@ class SearchTool < Tool
         @option_parser.on('--fix-mods fm', 'Fixed modifications (Overrides -c and -m options)' ) do |fm|
           @options.fix_mods = fm
         end
+
+        @options.searched_ions = ""
+        @option_parser.on('--searched-ions si', 'Ion series to search (default=b,y)' ) do |si|
+          @options.searched_ions = si
+        end
+
         
         @options.fragment_tolu="Da"
         @option_parser.on('--fragment-ion-tol-units tolu', 'Fragment ion mass tolerance units (Da or mmu). Default=Da' ) do |tolu|

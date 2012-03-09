@@ -37,6 +37,11 @@ class Constants
 
   # Some constants are paths. They need to be translated into real paths before being returned
   #
+  
+  def bin
+    return "#{File.dirname(__FILE__)}/../bin"
+  end
+  
   def tpp_bin
     path=@env['tpp_bin']
     if ( path =~ /^\// )
