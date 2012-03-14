@@ -69,6 +69,10 @@ class Constants
     end
   end
   
+  def database_downloads
+    return "#{self.protein_database_root}/downloads"
+  end
+  
   def ncbi_tools_bin
     path=@env['ncbi_tools_bin']
     if ( path =~ /^\// )
@@ -134,6 +138,15 @@ class Constants
     @file_logger.send(level,message)        
   end
 
+
+  def dbexist?(dbname)
+    Pathname.new("#{self.protein_database_root}/#{dbname}").exist?
+  end
+
+
+#
+# OLD DATABASE ACCESS/MANAGEMENT METHODS #
+#
 
   def path_for_builtin_database(dbroot,dbname,db_type,db_suffix="")
     

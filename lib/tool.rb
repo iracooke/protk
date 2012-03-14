@@ -40,7 +40,7 @@ class Tool
   # Creates an empty options object to hold commandline options
   # Also creates an option_parser with default options common to all tools
   #
-  def initialize(option_support={})
+  def initialize(option_support={:help=>true})
     @options = OpenStruct.new
     options.library = []
     options.inplace = false
@@ -97,12 +97,14 @@ class Tool
         
       end
       
+      if ( option_support[:help]==true)
        
-      opts.on( '-h', '--help', 'Display this screen' ) do
-        puts opts
-        exit
+        opts.on( '-h', '--help', 'Display this screen' ) do
+          puts opts
+          exit
+        end
       end
-            
+       
     end
     
   end
