@@ -41,6 +41,7 @@ $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
 require 'constants'
 require 'yaml'
 require 'manage_db_tool'
+require 'pp'
 
 command=ARGV[0]
 ARGV[0] = "--help" if ( command==nil || command=="-h" || command=="help")
@@ -57,7 +58,14 @@ end
 command=ARGV.shift
 dbname=ARGV.shift
 
+if ( dbname!=nil)
+  dbname=dbname.downcase
+  throw "Database name should contain no spaces" if ( dbname=~/\s/)
+end
+
 genv=Constants.new()
+
+dbdir="#{genv.protein_database_root}/#{dbname}"
 
 case command
 when "add"
@@ -81,8 +89,6 @@ when "add"
   dbspec[:decoy_prefix]=tool.decoy_prefix
   dbspec[:sources]=tool.sources
 
-  dbdir="#{genv.protein_database_root}/#{dbname}"
-
   # Create the database directory
   Dir.mkdir(dbdir) unless tool.update_spec
 
@@ -92,15 +98,45 @@ when "update"
   throw "Must specify a database name" if dbname==nil 
   throw "Database #{dbname} does not exist" if !genv.dbexist?(dbname) 
 
-  # Check for a database spec file
-  dbdir="#{genv.protein_database_root}/#{dbname}"
-
   throw "Could not find required spec file #{dbdir}/.protkdb.yaml" unless Pathname.new("#{dbdir}/.protkdb.yaml").exist?
   runner=CommandRunner.new(genv)
   runner.run_local("rake -f manage_db_rakefile.rake #{dbname}")
 
 when "list"
   
+  gw_file_handle=nil
+  if tool.galaxy_write
+    pepxml_loc = "#{genv.galaxy_root}/tool-data/pepxml_databases.loc"
+    if ( Pathname.new(pepxml_loc).exist?  )
+      gw_file_handle=File.open(pepxml_loc,'w')
+    end
+    throw "Could not find database loc file #{pepxml_loc}" unless Pathname.new(pepxml_loc).exist?
+  end
+  
+  
+  Dir.foreach(genv.protein_database_root) do |db_subdir|
+    db_specfile="#{genv.protein_database_root}/#{db_subdir}/.protkdb.yaml"
+    if ( Pathname.new(db_specfile).exist?)
+      spec=YAML.load_file(db_specfile)
+      case
+      when tool.galaxy || tool.galaxy_write
+        db_prettyname=db_subdir.gsub(/_/,' ').capitalize
+        loc_line= "#{db_prettyname}\t#{db_subdir}_\t#{db_subdir}\t#{db_subdir}_\n"
+        puts loc_line
+        if ( gw_file_handle )
+          gw_file_handle.write loc_line
+        end
+      when tool.verbose
+        puts "-- #{db_subdir} --\n"
+        PP.pp(spec)
+        puts "\n"
+      else
+        puts "#{db_subdir}\n"
+      end
+    end
+  end
+
+  gw_file_handle.close if ( gw_file_handle)
 
 end
 

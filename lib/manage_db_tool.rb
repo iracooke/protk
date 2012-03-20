@@ -81,6 +81,23 @@ class ManageDBTool < Tool
 
     when "list"
       @option_parser.banner = "List protein databases.\nUsage: manage_db.rb list"
+      
+      @options.verbose=false
+      @option_parser.on('-v', '--verbose', 'Display detailed specification for each installed database' ) do  
+        @options.verbose=true
+      end
+      
+      @options.galaxy=false
+      @option_parser.on('-g' ,'--generate-loc-file', 'Generate a galaxy loc file' ) do  
+        @options.galaxy=true
+      end
+
+      @options.galaxy_write=false
+      @option_parser.on('-G' ,'--write-loc-file', 'Update the pepxml_databases.loc file in galaxy if a galaxy_root directory has been configured and the file exists' ) do  
+        @options.galaxy_write=true
+      end
+      
+      
     when "update"
       @option_parser.banner = "Update protein databases.\nUsage: manage_db.rb update <dbname>"
     end
