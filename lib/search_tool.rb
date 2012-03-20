@@ -166,7 +166,7 @@ class SearchTool < Tool
   # This function returns the name of the database with an extension appropriate to the database type
   #
   def current_database(db_type,db=@options.database)
-    return Constants.new.current_database_for_name_and_type(db,db_type)
+    return Constants.new.current_database_for_name(db)
   end
     
 end

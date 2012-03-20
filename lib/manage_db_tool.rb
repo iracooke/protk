@@ -21,21 +21,18 @@ class ManageDBTool < Tool
     case command
     when "add"          
       
-      @options.db_sources=[]
+      @options.sources=[]
+      
       @option_parser.on( '--db-source dbname', 'A named database to use an an input source. Multiple db sources may be specified' ) do  |db|
-        @options.db_sources.push db
+        @options.sources.push db
       end
       
-      @options.file_sources=[]
       @option_parser.on( '--file-source fs', 'A file path to a fasta file to use as an input source. Multiple file sources may be specified' ) do  |fs|
-        @options.file_sources.push fs
+        @options.sources.push fs
       end
 
-      @options.ftp_sources=[]
       @option_parser.on( '--ftp-source fs', 'A space separated pair of urls. The first is an ftp url to a fasta file to use as an input source. The second is an ftp url to release notes file or other file which can be checked to see if the database requires an update. Multiple ftp sources may be specified' ) do  |ftps|
-        
-        
-        @options.ftp_sources.push ftps.split(/ /)
+        @options.sources.push ftps.split(/\s+/)
       end
 
       @options.include_filters=[]
@@ -46,6 +43,34 @@ class ManageDBTool < Tool
 
         @options.include_filters.push tx.split(/\/,\//)
       end
+      
+      @options.id_regexes=[]
+      @option_parser.on( '--id-regex rx', 'A regular expression with a single capture group for capturing the protein ID from a faster description line' ) do  |rx|
+        rx.gsub!(/^\//,'')
+        rx.gsub!(/\/$/,'')
+        @options.id_regexes.push rx
+      end
+      
+      @options.make_blast_index=false
+      @option_parser.on( '--make-blast-index', 'Create a blast index of the database (required for OMSSA searches)' ) do  
+        @options.make_blast_index=true
+      end      
+
+      @options.decoys=false
+      @option_parser.on( '--add-decoys', 'Add random sequences to be used as decoys to the database (required for OMSSA searches)' ) do  
+        @options.decoys=true
+      end      
+
+      @options.archive_old=false
+      @option_parser.on( '--archive-old', 'Don\'t delete old fasta files when updating to a newer version' ) do  
+        @options.archive_old=true
+      end
+
+      @options.decoy_prefix="decoy_"
+      @option_parser.on( '--decoy-prefix pref', 'Define a prefix string to prepend to protein ID\'s used as decoys' ) do  |pref|
+        @options.decoy_prefix=pref
+      end      
+
       
       @options.update_spec=false
       @option_parser.on( '--update-spec', 'Change the specification for an existing database by updating its spec file' ) do  

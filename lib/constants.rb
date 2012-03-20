@@ -138,9 +138,34 @@ class Constants
     @file_logger.send(level,message)        
   end
 
+  def path_for_builtin_database(dbname)
+    "#{self.protein_database_root}/#{dbname}/current.fasta"
+  end
+
 
   def dbexist?(dbname)
     Pathname.new("#{self.protein_database_root}/#{dbname}").exist?
+  end
+
+  # Based on the database shortname and global database path, find the most current version of the required database
+  # If dbname corresponds to a folder in the dbroot this function returns the path of the database with an extension 
+  # appropriate to the database type
+  #
+  # If dbname is a full path to a file this tool will first import the file as a temporary database 
+  # and will then return its full path
+  #
+  def current_database_for_name(dbname)
+    dbroot=self.protein_database_root
+    
+    throw "Protein database directory not specified" unless dbroot!=nil
+    throw "Protein database directory #{dbroot} does not exist" unless Pathname(dbroot).exist?
+    
+    # Remove any trailing slashes or spaces from the end of dbroot if present
+    #
+    dbroot.sub!(/(\/*\s*)$/,"")
+    
+    return path_for_builtin_database(dbname)
+  
   end
 
 
@@ -148,45 +173,45 @@ class Constants
 # OLD DATABASE ACCESS/MANAGEMENT METHODS #
 #
 
-  def path_for_builtin_database(dbroot,dbname,db_type,db_suffix="")
-    
-    current_dbroot=Pathname.new("#{dbroot}/#{dbname}")
-    throw "Error: Specified database #{current_dbroot.to_s} does not exist" unless current_dbroot.exist?
-    
-    candidates=current_dbroot.children
-    
-    # Filter candidates with the right filenames
-    #
-    candidates = candidates.find_all { |dbpath|
-      dbstring=dbpath.basename.to_s
-      /#{dbname}_(\d+)#{db_suffix}\./i.match(dbstring)!=nil
-    }
-    
-    dates=candidates.collect { |dbpath| 
-       dbstring=dbpath.basename.to_s
-       m=/#{dbname}_(\d+)#{db_suffix}\./i.match(dbstring)
-       m[1].to_i
-     }
-     
-     maxdate=dates[0]
-     dates.each { |d| 
-       if ( d > maxdate )
-         maxdate=d
-       end
-     }
-     extension=""
-     case db_type
-     when :fasta
-       extension=".fasta"
-     end
-
-     # Enabling this will force a transition to a new db naming scheme. Better one though
-     #
-     #   "#{dbroot}/#{dbname.downcase}/#{dbname.downcase}_#{maxdate}_DECOY#{extension}"
-
-          
-     "#{dbroot}/#{dbname}/#{dbname.downcase}_#{maxdate}#{db_suffix}#{extension}"
-   end
+#  def path_for_builtin_database(dbroot,dbname,db_type,db_suffix="")
+#    
+#    current_dbroot=Pathname.new("#{dbroot}/#{dbname}")
+#    throw "Error: Specified database #{current_dbroot.to_s} does not exist" unless current_dbroot.exist?
+#    
+#    candidates=current_dbroot.children
+#    
+#    # Filter candidates with the right filenames
+#    #
+#    candidates = candidates.find_all { |dbpath|
+#      dbstring=dbpath.basename.to_s
+#      /#{dbname}_(\d+)#{db_suffix}\./i.match(dbstring)!=nil
+#    }
+#    
+#    dates=candidates.collect { |dbpath| 
+#       dbstring=dbpath.basename.to_s
+#       m=/#{dbname}_(\d+)#{db_suffix}\./i.match(dbstring)
+#       m[1].to_i
+#     }
+#     
+#     maxdate=dates[0]
+#     dates.each { |d| 
+#       if ( d > maxdate )
+#         maxdate=d
+#       end
+#     }
+#     extension=""
+#     case db_type
+#     when :fasta
+#       extension=".fasta"
+#     end
+#
+#     # Enabling this will force a transition to a new db naming scheme. Better one though
+#     #
+#     #   "#{dbroot}/#{dbname.downcase}/#{dbname.downcase}_#{maxdate}_DECOY#{extension}"
+#
+#          
+#     "#{dbroot}/#{dbname}/#{dbname.downcase}_#{maxdate}#{db_suffix}#{extension}"
+#   end
 
    # Runs the given command in a local shell
    # 
@@ -245,29 +270,5 @@ class Constants
    end
 
 
-  # Based on the database shortname and global database path, find the most current version of the required database
-  # If dbname corresponds to a folder in the dbroot this function returns the path of the database with an extension 
-  # appropriate to the database type
-  #
-  # If dbname is a full path to a file this tool will first import the file as a temporary database 
-  # and will then return its full path
-  #
-  def current_database_for_name_and_type(dbname,db_type,db_suffix="")
-    dbroot=self.protein_database_root
-    
-    throw "Protein database directory not specified" unless dbroot!=nil
-    throw "Protein database directory #{dbroot} does not exist" unless Pathname(dbroot).exist?
-    
-    # Remove any trailing slashes or spaces from the end of dbroot if present
-    #
-    dbroot.sub!(/(\/*\s*)$/,"")
-    
-    if ( dbname=~/^\//) # An absolute path
-      return import_fasta_database(dbroot,dbname)
-    else 
-      return path_for_builtin_database(dbroot,dbname,db_type,db_suffix)
-    end
-
-  end
 
 end

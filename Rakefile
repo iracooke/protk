@@ -12,7 +12,7 @@ end
 
 desc "Install pure ruby gems"
 task :pure_ruby_gems do
-  sh %{ gem install open4 rest-client bio logger spreadsheet --no-rdoc --no-ri }
+  sh %{ gem install open4 rest-client bio logger spreadsheet net-ftp-list --no-rdoc --no-ri }
 end
 
 #

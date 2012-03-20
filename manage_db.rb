@@ -70,10 +70,16 @@ when "add"
 
   # Create the database specifiation dictionary
   dbspec={}
-  dbspec[:ftp_sources]=tool.ftp_sources
-  dbspec[:file_sources]=tool.file_sources
-  dbspec[:db_sources]=tool.db_sources
+#  dbspec[:ftp_sources]=tool.ftp_sources
+#  dbspec[:file_sources]=tool.file_sources
+#  dbspec[:db_sources]=tool.db_sources
   dbspec[:include_filters]=tool.include_filters
+  dbspec[:id_regexes]=tool.id_regexes
+  dbspec[:make_blast_index]=tool.make_blast_index
+  dbspec[:decoys]=tool.decoys
+  dbspec[:archive_old]=tool.archive_old
+  dbspec[:decoy_prefix]=tool.decoy_prefix
+  dbspec[:sources]=tool.sources
 
   dbdir="#{genv.protein_database_root}/#{dbname}"
 

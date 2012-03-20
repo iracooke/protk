@@ -18,7 +18,7 @@
 #include <math.h>
 
 #define AMINO_ACIDS "ARNDCEQGHILKMFPSTWYV"
-#define NOT_AMINO_ACIDS "BJOUXZ"
+#define NOT_AMINO_ACIDS "BJOUXZ*"
 #define MAX_SEQUENCE_LENGTH 20000
 #define MAX_LINE_LENGTH 20000 /* large enough to read in long header lines */
 
@@ -159,9 +159,14 @@ int main(int argc, char *argv[])
 	{
 	  if(strpbrk(NOT_AMINO_ACIDS,(const char *)&one_sequence)==NULL)
 	    {
-	      a=20-strlen(strchr(AMINO_ACIDS,one_sequence[i])); /* current amino acid */
-	      MP[a][i]++;
-	      measured_aa_freq[a]++;
+            if ( strchr(AMINO_ACIDS,one_sequence[i])==NULL)
+            {
+            printf("Unknown amino acid %c",one_sequence[i]);                
+            } else {
+                a=20-strlen(strchr(AMINO_ACIDS,one_sequence[i])); /* current amino acid */
+                MP[a][i]++;
+                measured_aa_freq[a]++;
+            }
 	    }
 	  else {a=floor(20*(float)rand()/RAND_MAX);MP[a][i]++; measured_aa_freq[a]++;} /* replace B, X, Z etc. with random amino acid to preserve size distribution*/
 	}
@@ -213,7 +218,7 @@ int main(int argc, char *argv[])
 		
 	      random_sequence_output[k]='\0';
 	      if (!(k%61)) random_sequence_output[k-1]='\0'; /* remove extra newline for sequence length multiple of 60 */
-          fprintf(outp,">sp|%srp%li|\n%s\n",prefix_string,protein,random_sequence_output);
+          fprintf(outp,">%srp%li\n%s\n",prefix_string,protein,random_sequence_output);
 	      break;
 	    }
 	}

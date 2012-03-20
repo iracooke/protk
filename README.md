@@ -19,10 +19,15 @@ The hardest part about installing protk is likely to be installation of its depe
 To start the installation simply run the script "setup.sh".  This script will attempt to install all required ruby dependencies and will check for other required binaries. If you have the required binaries in your PATH a link will be created for each in ./bin .  If the requirement is missing, instructions will be displayed on how to install it.
 
 
-### *Sequence Databases*
+### *Installing sequence databases*
 
-* Download and install fasta files for sequence databases you want to use. 
-* For OMSSA you will need to install the ncbi tools to create databases in the correct format. 
-* NCBI tools can be downloaded here ftp://ftp.ncbi.nih.gov/blast/executables/LATEST
-* For each database fasta file run
-runmakeblastdb -in mydbname.fasta -parse_seqids
+After running the setup.sh script you should run manage_db.rb to install specific sequence databases for use by the search engines. For example
+
+   manage_db.rb -h
+
+   manage_db.rb add -h #Get help on adding a database
+
+   # Add a swissprot human database
+
+   manage_db.rb add --ftp-source 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt' --include-filters '/OS=Homo\ssapiens/' --id-regex 'sp\|.*\|(.*?)\s' --add-decoys --make-blast-index --update-spec --archive-old sphuman
+
