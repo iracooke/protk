@@ -15,7 +15,8 @@ dbname=ARGV[0]
 #
 $genv=Constants.new()
 dbdir="#{$genv.protein_database_root}/#{dbname}"
-dbspec=YAML.load_file "#{dbdir}/.protkdb.yaml"
+dbspec_file="#{dbdir}/.protkdb.yaml"
+dbspec=YAML.load_file "#{dbspec_file}"
 
 # Output database filename
 #
@@ -93,7 +94,7 @@ def check_ftp_release_notes(release_notes)
       FileUtils.mkpath(Pathname.new(rn_path).dirname.to_s)
       File.open(rn_path, "w") {|file| file.puts(rn_data) }
     else
-      p "Downloaded files are up to date"
+      p "Release notes are up to date"
     end  
   end
 end
@@ -219,22 +220,16 @@ def ftp_source(ftpsource)
 
     case
     when data_file_path=~/\*/ # Multiple files to unzip/concatenate and we don't know what they are yet
-      component_files=Dir.glob(data_file_path)
-      unzipcmd= "gunzip -f "
-      component_files.each do |cf|
-        if ( cf =~ /\.gz$/)
-          unzipcmd << " #{cf}"
-        end
-      end
-      p "Unzipping ... "
+      file_pattern = Pathname.new(data_file_path).basename.to_s
+      unzipcmd="gunzip -vdf #{file_pattern}"
+      p "Unzipping #{unzipcmd} ... this could take a while"
       sh %{ cd #{Pathname.new(data_file_path).dirname}; #{unzipcmd}  }             
 
+
+      file_pattern.gsub!(/\.gz$/,'')
+      catcmd="cat #{file_pattern} > #{unpacked_data_path}"
       
-      catcmd="cat "
-      component_files.each {|cf| catcmd << "#{cf.gsub(/\.gz$/,'')} " }
-      catcmd << " > #{unpacked_data_path}"
-      
-      p "Concatenating files #{catcmd}"
+      p "Concatenating files #{catcmd} ... this could take a while"
       sh %{ cd #{Pathname.new(data_file_path).dirname}; #{catcmd}  }
       
     else # Simple case. A single file
@@ -265,7 +260,7 @@ end
 
 raw_db_filename = "#{dbdir}/raw.fasta"
 
-file raw_db_filename => source_files do  
+file raw_db_filename => [source_files,dbspec_file] do  
   
 
   archive_fasta_file(raw_db_filename) if dbspec[:archive_old]
@@ -336,7 +331,7 @@ file decoy_db_filename => raw_db_filename do
     db_length=db_length+1 
   end
   
-  p "Generating decoy sequences"  
+  p "Generating decoy sequences ... this could take a while"  
   # Make decoys, concatenate and delete decoy only file
   cmd = "#{$genv.bin}/make_random #{raw_db_filename} #{db_length} #{decoys_filename} #{decoy_prefix}"
   cmd << "; cat #{raw_db_filename} #{decoys_filename} >> #{decoy_db_filename}; rm #{decoys_filename}"
