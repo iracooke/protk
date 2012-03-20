@@ -41,6 +41,9 @@ def check_ftp_release_notes(release_notes)
     rn_file=Pathname.new(rn_uri.path).basename.to_s
     ftp.chdir(rn_dir)
 
+    ftp.passive=true
+
+
     p "Checking release notes"
     
     # Is the last path component a wildcard expression (we only allow *)
@@ -80,11 +83,16 @@ def check_ftp_release_notes(release_notes)
     existing_digest=nil
     existing_digest=Digest::MD5.hexdigest(File.read(rn_path))  if  Pathname.new(rn_path).exist? 
 
+
+
     rn_data=""
     dl_file=Tempfile.new("rn_file")
+        
     ftp.getbinaryfile(rn_file,dl_file.path) { |data|  rn_data << data }
 
     rn_digest=Digest::MD5.hexdigest(rn_data)
+
+    p "Done Downloading release notes #{ftp} #{rn_file} to #{dl_file.path} #{ftp.pwd}"
 
     throw "No release notes data at #{release_notes}" unless rn_digest!=nil
 
@@ -112,6 +120,8 @@ def download_ftp_file(ftp,file_name,dest_dir)
   pc_complete=0
   last_time=Time.new
   p "Downloading #{file_name}"
+  ftp.passive=true
+  
   ftp.getbinaryfile(file_name,dest_path,1024) { |data| 
     
     progress=i*1024
@@ -139,6 +149,7 @@ def download_ftp_source(source)
   Net::FTP.open(data_uri.host) do |ftp|
     p "Connected to #{data_uri.host}"
     ftp.login
+    
     ftp.chdir(Pathname.new(data_uri.path).dirname.to_s)
 
     last_path_component=Pathname.new(data_uri.path).basename.to_s
@@ -146,7 +157,7 @@ def download_ftp_source(source)
     case 
     when last_path_component=~/\*/  # A wildcard match. Need to download them all
       p "Getting directory listing for #{last_path_component}"
-      
+      ftp.passive=true
       matching_items=ftp.list(last_path_component)
       
       PP.pp(matching_items)

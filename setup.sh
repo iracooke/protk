@@ -51,7 +51,7 @@ if [ ! -f "config.yml" ]
 fi
 
 # Now that we have rvm installed the remaining installation is done with rake
-rvm ruby-1.8.7 do rake
+rvm ruby-1.8.7 do rake default $@
 
 if [ $? -ne 0 ]
     then echo "Installation failed"

@@ -4,10 +4,12 @@ config = YAML.load_file "config.yml"
 run_setting=config['run_setting']
 config=config[run_setting]
 
+extra_args=ARGV[1]
  
 desc "Install Lib xml ruby"
 task :libxml_ruby_gem do
-  sh %{ gem install libxml-ruby --no-rdoc --no-ri }
+  install_command="gem install libxml-ruby --no-rdoc --no-ri -- #{extra_args}"
+  sh %{ #{install_command} }
 end
 
 desc "Install pure ruby gems"
