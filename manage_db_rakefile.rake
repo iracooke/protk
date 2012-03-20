@@ -271,7 +271,7 @@ end
 
 raw_db_filename = "#{dbdir}/raw.fasta"
 
-file raw_db_filename => [source_files,dbspec_file] do  
+file raw_db_filename => [source_files,dbspec_file].flatten do  
   
 
   archive_fasta_file(raw_db_filename) if dbspec[:archive_old]
