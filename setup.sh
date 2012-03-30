@@ -7,10 +7,11 @@ if [ $? -ne 0 ]
     then
     # No rvm ask the user if they want it
     echo "rvm (Ruby enVironment Manager) is not installed. This script can automatically install rvm for you. \nIf you choose to install, all files will be installed under ~/.rvm/ and your ~/.profile or ~/.bash_profile will be modified. Would you like to install rvm now?"
-    select yn in "Yes" "No"; do
-        case $yn in
-            Yes ) bash -s stable < <(curl -sk https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer );source "$HOME/.rvm/scripts/rvm"; break;;
-            No ) exit;;
+    options=("Yes","No")
+    select opt in "${options[@]}"; do
+        case $opt in
+            "Yes" ) bash -s stable < <(curl -sk https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer );source "$HOME/.rvm/scripts/rvm"; break;;
+            "No" ) exit;;
         esac
     done
     source "$HOME/.rvm/scripts/rvm"
