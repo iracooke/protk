@@ -15,7 +15,7 @@ if [ $? -ne 0 ]
     done
 else
     echo "Found rvm in $result"
-    source "$HOME/.rvm/scripts/rvm"
+#    source "$HOME/.rvm/scripts/rvm"
 fi
 
 # Check for git (required by rvm)
