@@ -23,8 +23,9 @@ if [ -z "$PROTK_RUBY_PATH" ] ; then
   done
   
   if [ -z "$PROTK_RUBY_PATH" ] ; then
-    echo "Unable to find a 'ruby' interpretter!"   >&2
-    exit 1
+    PROTK_RUBY_PATH=`which ruby`
+#    echo "Unable to find a 'ruby' interpretter!"   >&2
+#    exit 1
   fi
 fi
 
@@ -68,8 +69,15 @@ omssa_bin="#{genv.omssa_bin}/omssacl"
 omssa2pepxml_bin="#{genv.omssa_bin}/omssa2pepXML"
 
 rt_correct_bin="#{File.dirname(__FILE__)}/correct_omssa_retention_times.rb"
-repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"      
-current_db=search_tool.current_database :fasta
+repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"
+
+case 
+when Pathname.new(search_tool.database).exist? # It's an explicitly named db
+  current_db=Pathname.new(search_tool.database).realpath.to_s
+else
+  current_db=search_tool.current_database :fasta
+end
+
 fragment_tol = search_tool.fragment_tol
 precursor_tol = search_tool.precursor_tol
 
@@ -142,7 +150,7 @@ ARGV.each do |filename|
     #
     if ( search_tool.var_mods !="" && search_tool.var_mods !="None") # Checking for none is to cope with galaxy input
       var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
-      if ( var_mods !="")
+      if ( var_mods !="" )
         cmd << " -mv #{var_mods}"
       end
     else 

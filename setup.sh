@@ -13,9 +13,12 @@ if [ $? -ne 0 ]
             No ) exit;;
         esac
     done
-else
-    echo "Found rvm in $result"
     source "$HOME/.rvm/scripts/rvm"
+    
+else
+
+    echo "Found rvm in $result"
+
 fi
 
 # Check for git (required by rvm)
@@ -28,21 +31,30 @@ else
   echo "Found git in $result"  
 fi
 
-# Try to get rvm to install our required ruby
-#
-result=`rvm install ruby-1.8.7`
-if [ $? -ne 0 ] 
-    then echo "Failed to install protk's preferred version of ruby. Will try using the system default ruby";
-    result=`ruby --version`
-    if [ $? -ne 0 ]
-      then echo "No system ruby has been installed"
-      exit;  
+result=`rvm list | grep ruby-1.8.7`
+if [ $? -ne 0 ]
+    then
+    # Try to get rvm to install our required ruby
+    #
+    result=`rvm install ruby-1.8.7`
+    if [ $? -ne 0 ] 
+        then echo "Failed to install protk's preferred version of ruby. Will try using the system default ruby";
+        result=`ruby --version`
+        if [ $? -ne 0 ]
+            then echo "No system ruby has been installed"
+            exit;  
+        fi
+        result=`rvm --rvmrc --create system@protk`
+        echo "Created rvm project file based on system ruby $result"
+        #        cd ../`pwd`      
+    else
+        result=`rvm --rvmrc --create 1.8.7@protk`
+        echo "Created rvm project file $result"
+        cd `pwd`  
     fi
-    rvm use system
-else
-    result=`rvm use ruby-1.8.7`
-    echo "Using $result"  
 fi
+
+source /home/galaxy/.rvm/scripts/rvm
 
 # Check for a config file
 #
@@ -50,11 +62,20 @@ if [ ! -f "config.yml" ]
     then  `cp config.yml.sample config.yml`  
 fi
 
+cd `pwd`
+
+#Echo the ruby we're using
+echo `which ruby`
+
 # Now that we have rvm installed the remaining installation is done with rake
-rvm ruby-1.8.7 do rake default $@
+rvm 1.8.7 do rake default $@
 
 if [ $? -ne 0 ]
     then echo "Installation failed"
 else
-  echo "Installation was successful.\n\nDatabases still need to be installed\nUse the manage_db.rb tool to install databases"  
+  echo "Installation was successful."
+  echo "Databases still need to be installed. "
+  echo "The manage_db tool can be used to install databases. For further information;"
+  echo "   ./manage_db.rb -h"
+  echo "   ./manage_db.rb add -h"
 fi

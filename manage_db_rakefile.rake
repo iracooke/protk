@@ -307,7 +307,7 @@ file raw_db_filename => [source_files,dbspec_file].flatten do
               new_def="#{idmatch[1]}"
               entry.definition=new_def
               output_fh.puts(entry.to_s)
-              p entry.definition.to_s
+#              p entry.definition.to_s
             end
             break
           end
