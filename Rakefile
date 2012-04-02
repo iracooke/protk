@@ -18,14 +18,14 @@ def gemInstalled(gem_require_name)
   begin
     Gem::Specification.find_by_name(gem_require_name)
     hasit=true
-  rescue Gem::LoadError
+  rescue 
   end
   hasit
 end
  
 desc "Install Lib xml ruby"
 task :libxml_ruby_gem do
-  if ( !gemInstalled("libxml"))
+  if ( !gemInstalled("libxml-ruby"))
     install_command="gem install libxml-ruby --no-rdoc --no-ri -- #{extra_args}"
     sh %{ #{install_command} } do |ok,result| 
       if ( !ok)
@@ -39,7 +39,7 @@ desc "Install pure ruby gems"
 task :pure_ruby_gems do
   gems={"open4"=>"open4","rest-client"=>"rest_client","bio"=>"bio","logger"=>"logger","net-ftp-list"=>"net/ftp/list"}
   gems.each do |thegem|
-    if ( !gemInstalled(thegem[1]))
+    if ( !gemInstalled(thegem[0]))
       sh %{ gem install #{thegem[0]} --no-rdoc --no-ri } 
     end
   end
@@ -116,12 +116,13 @@ end
 
 # Make a directory for the Log file
 #
-directory "#{config['log_file']}"
+log_dir=Pathname.new("#{config['log_file']}").dirname.to_s
+directory log_dir
 
 #
 # Default task
 #
 
-task :default => ["libxml_ruby_gem","pure_ruby_gems",:tpp,"omssa","openms","ncbi","./bin/make_random","#{config['log_file']}"] 
+task :default => ["libxml_ruby_gem","pure_ruby_gems",:tpp,"omssa","openms","ncbi","./bin/make_random",log_dir] 
 
 
