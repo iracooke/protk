@@ -18,5 +18,5 @@ test:
     has_pbs: false
     omssa_bin: ./bin/omssa
     ncbi_tools_bin: ./bin/ncbi
-	openms_bin: ./bin/openms
+    openms_bin: ./bin/openms
     log_file: ./Logs/protk.log
