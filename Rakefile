@@ -63,12 +63,17 @@ def needs_bin_dir(binary_name,bin_dir,throw_message)
   end
 end
 
+directory "./bin"
+task :tpp => "./bin"
+task :omssa => "./bin"
+task :ncbi => "./bin"
+task :openms => "./bin"
 
 #
 # TPP
 #
 task :tpp => ["#{config['tpp_bin']}/xinteract"]  
-file "#{config['xinteract']}/xinteract" do
+file "#{config['tpp_bin']}/xinteract" do
   needs_bin_dir("xinteract",config['tpp_bin'],"Unable to find the Trans Proteomic Pipeline (TPP) which is required by protk\nTo resolve this error you will need to:\n   - Install the TPP or make sure you already have it installed. Look here http://tools.proteomecenter.org/wiki/index.php?title=Software:TPP for installation instructions\n   - Edit config.yml so that the tpp_bin variable points to the path where the TPP binaries are located or add this directory to your PATH")
 end
 
@@ -100,11 +105,6 @@ file "#{config['ncbi_tools_bin']}/makeblastdb" do
 end
 
 
-directory "./bin"
-task :tpp => "./bin"
-task :omssa => "./bin"
-task :ncbi => "./bin"
-task :openms => "./bin"
 
 #
 # Make Random
@@ -121,6 +121,6 @@ directory "#{config['log_file']}"
 # Default task
 #
 
-task :default => ["libxml_ruby_gem","pure_ruby_gems","tpp","omssa","openms","ncbi","./bin/make_random","#{config['log_file']}"] 
+task :default => ["libxml_ruby_gem","pure_ruby_gems",:tpp,"omssa","openms","ncbi","./bin/make_random","#{config['log_file']}"] 
 
 
