@@ -47,7 +47,9 @@ else
 
     else
         echo $cwd;
-        echo "export PATH=$cwd/:\${PATH}; $sourcing_command; rvm use 1.8.7" > env.sh;
+        echo "export PATH=$cwd/:\${PATH};" >> env.sh;
+        echo "$sourcing_command" >> env.sh;
+        echo "rvm use 1.8.7" >> env.sh;
     fi
       
     source ./env.sh

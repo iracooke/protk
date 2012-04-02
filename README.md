@@ -4,11 +4,11 @@
 ***
 ## What is it?
 
-Protk is a wrapper for various proteomics tools. Initially it focusses on MS/MS database search and validation but other tools will be added over time
+Protk is a wrapper for various proteomics tools. Initially it focusses on MS/MS database search and validation.
 
 ## Why do we need a wrapper around these tools
 
-The tools themselves typically have their own command-line interfaces, each of which is designed to accept different kinds of inputs.  The aim of protk is present an interface to each tool that is as uniform as possible with common options that work across tools. In addition, protk provides built-in support for submitting jobs to a cluster, and for managing protein databases for use across multiple search engines. 
+The aim of protk is present a consistent interface to numerous proteomics tools that is as uniform as possible. Protk also provides built-in support for submitting jobs to a cluster, and for managing protein databases. 
 
 ***
 
