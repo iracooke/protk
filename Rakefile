@@ -3,6 +3,7 @@ $VERBOSE=nil
 require 'fileutils'
 require 'yaml'
 require 'pathname'
+require 'rubygems'
 
 config = YAML.load_file "config.yml"
 run_setting=config['run_setting']
@@ -15,9 +16,9 @@ def gemInstalled(gem_require_name)
   "Testing gem #{gem_require_name}"
   hasit=false
   begin
-    require gem_require_name 
+    Gem::Specification.find_by_name(gem_require_name)
     hasit=true
-  rescue
+  rescue Gem::LoadError
   end
   hasit
 end
