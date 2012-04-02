@@ -40,7 +40,7 @@ task :pure_ruby_gems do
   gems={"open4"=>"open4","rest-client"=>"rest_client","bio"=>"bio","logger"=>"logger","net-ftp-list"=>"net/ftp/list"}
   gems.each do |thegem|
     if ( !gemInstalled(thegem[1]))
-      sh %{ gem #{thegem[0]} --no-rdoc --no-ri } 
+      sh %{ gem install #{thegem[0]} --no-rdoc --no-ri } 
     end
   end
     
