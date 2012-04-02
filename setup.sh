@@ -24,17 +24,49 @@ else
 
     echo "Found rvm in $result"
 
+    # Check for git (required by rvm)
+    #
+    resultg=`which git`
+    if [ $? -ne 0 ] 
+        then echo "git is not installed. Protk needs git to manage its internal packages. You can download and install git from here http://git-scm.com/";
+        exit;
+    else
+      echo "Found git in $resultg"  
+    fi
+
+    
+    # Construct an rvm sourcing line
+    rvm_script=${result%/bin/rvm}/scripts/rvm
+    
+    sourcing_command="[[ -s $rvm_script ]] && source $rvm_script"
+    cwd=`pwd`
+    
+    if [ -f ./env.sh ]
+        then
+        echo "Warning: Skipping creation of env.sh ... file exists. Delete env.sh to regenerate it using this script";
+
+    else
+        echo $cwd;
+        echo "export PATH=$cwd/:\${PATH}; $sourcing_command; rvm use 1.8.7" > env.sh;
+    fi
+      
+    source ./env.sh
+    if [ $? -ne 0 ]
+        then 
+        echo "Error: Unable to setup protk environment. You may need to manually modify the file 'env.sh' and then rerun setup.sh"; exit;
+    else
+      echo "Created shell setup script for protk in env.sh . Galaxy wrappers will automatically source this file. For commandline use you may wish to add the following to your login shell."
+      echo " "
+      echo "export PATH=$cwd/:\${PATH};"
+      echo "$sourcing_command" 
+      echo "rvm use 1.8.7";
+      echo " "
+      
+    fi
+
 fi
 
-# Check for git (required by rvm)
-#
-result=`which git`
-if [ $? -ne 0 ] 
-    then echo "git is not installed. Protk needs git to manage its internal packages. You can download and install git from here http://git-scm.com/";
-    exit;
-else
-  echo "Found git in $result"  
-fi
+
 
 result=`rvm list | grep ruby-1.8.7`
 if [ $? -ne 0 ]

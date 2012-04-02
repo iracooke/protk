@@ -99,6 +99,13 @@ file "#{config['ncbi_tools_bin']}/makeblastdb" do
   needs_bin_dir("makeblastdb",config['ncbi_tools_bin'],"Unable to find makeblastdb which is required by protk\n#makeblastdb is distributed as part of BLAST+.\nTo resolve this error you will need to:\n   - Install the BLAST+ executables or make sure you already have them installed. Look here http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download for installation instructions\n   - Edit config.yml so that the ncbi_bin variable points to the path where the BLAST+ binaries are located or add this directory to your PATH")
 end
 
+
+directory "./bin"
+task :tpp => "./bin"
+task :omssa => "./bin"
+task :ncbi => "./bin"
+task :openms => "./bin"
+
 #
 # Make Random
 #
