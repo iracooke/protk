@@ -19,8 +19,9 @@ if [ -z "$PROTK_RUBY_PATH" ] ; then
   done
   
   if [ -z "$PROTK_RUBY_PATH" ] ; then
-    echo "Unable to find a 'ruby' interpretter!"   >&2
-    exit 1
+    PROTK_RUBY_PATH=`which ruby`
+#    echo "Unable to find a 'ruby' interpretter!"   >&2
+#    exit 1
   fi
 fi
 

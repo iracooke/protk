@@ -59,6 +59,15 @@ class Constants
       return "#{File.dirname(__FILE__)}/../#{@env['omssa_bin']}"
     end
   end
+
+  def openms_bin
+    path=@env['openms_bin']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{File.dirname(__FILE__)}/../#{@env['openms_bin']}"
+    end
+  end
   
   def protein_database_root
     path=@env['protein_database_root']
