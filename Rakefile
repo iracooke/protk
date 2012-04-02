@@ -28,7 +28,7 @@ task :libxml_ruby_gem do
     install_command="gem install libxml-ruby --no-rdoc --no-ri -- #{extra_args}"
     sh %{ #{install_command} } do |ok,result| 
       if ( !ok)
-        puts "Failed to install libxml-ruby gem. If this occurred due to an out of date libxml locat the path to xml2-config then, then run ... \n./setup.sh -- --with-xml2-config=/path/to/xml2-config"
+        puts "Failed to install libxml-ruby gem. If this occurred due to an out of date libxml locate the path to xml2-config (you may need to install libxml2 first). Then run ... \n./setup.sh -- --with-xml2-config=/path/to/xml2-config"
       end
     end
   end
@@ -45,18 +45,6 @@ task :pure_ruby_gems do
     
 end
 
-#
-# Function to create links to binaries that are in the users path in the specified install directory
-#
-def needs_tpp_binary(binary_name,bin_dir)
-  result=%x[which #{binary_name}]
-  if ( $?.success? ) #Something to link
-    path=result.chomp!
-    sh %{ /bin/ln -s  #{path} #{bin_dir}/#{binary_name} }
-  else
-    throw "Unable to find #{binary_name} which is required by protk\n#{binary_name} is distributed as part of the trans proteomic pipeline (TPP).\nTo resolve this error you will need to:\n   - Install the TPP or make sure you already have it installed. Look here http://tools.proteomecenter.org/wiki/index.php?title=Software:TPP for installation instructions\n   - Edit config.yml so that the tpp_bin variable points to the path where the TPP binaries are located."
-  end
-end
 
 def needs_bin_dir(binary_name,bin_dir,throw_message)
   result=%x[which #{binary_name}]
@@ -75,43 +63,23 @@ def needs_bin_dir(binary_name,bin_dir,throw_message)
   end
 end
 
-def needs_ncbi_binary(binary_name,bin_dir)
-  result=%x[which #{binary_name}]
-  if ( $?.success? ) #Something to link
-    path=result.chomp!
-    sh %{ /bin/ln -s  #{path} #{bin_dir}/#{binary_name} }
-  else
-    throw "Unable to find #{binary_name} which is required by protk\n#{binary_name} is distributed as part of BLAST+.\nTo resolve this error you will need to:\n   - Install the BLAST+ executables or make sure you already have them installed. Look here http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download for installation instructions\n   - Edit config.yml so that the ncbi_bin variable points to the path where the BLAST+ binaries are located."
-  end
-end
 
 #
 # TPP
 #
-
-tpp_files=FileList['xinteract','msconvert','tandem','isb_default_input_kscore.xml','Tandem2XML','Mascot2XML']
-directory "#{config['tpp_bin']}"
-
-task :tpp => ["#{config['tpp_bin']}"]
-
-# Make a file dependency on each of the tpp binaries
-#
-tpp_files.each do |fl|
-  
-  file "#{config['tpp_bin']}/#{fl}" do
-    needs_tpp_binary(fl,config['tpp_bin'])
-  end
-  task :tpp => ["#{config['tpp_bin']}/#{fl}"]
-  
+task :tpp => ["#{config['tpp_bin']}/xinteract"]  
+file "#{config['xinteract']}/xinteract" do
+  needs_bin_dir("xinteract",config['tpp_bin'],"Unable to find the Trans Proteomic Pipeline (TPP) which is required by protk\nTo resolve this error you will need to:\n   - Install the TPP or make sure you already have it installed. Look here http://tools.proteomecenter.org/wiki/index.php?title=Software:TPP for installation instructions\n   - Edit config.yml so that the tpp_bin variable points to the path where the TPP binaries are located or add this directory to your PATH")
 end
+
+
 
 #
 # OMSSA
 #
-
 task :omssa => ["#{config['omssa_bin']}/omssacl"]  
 file "#{config['omssa_bin']}/omssacl" do
-  needs_bin_dir("omssacl",config['omssa_bin'],"Unable to find OMSSA which is required by protk\nTo resolve this error you will need to:\n   - Install OMSSA or make sure you already have it installed. Look here http://pubchem.ncbi.nlm.nih.gov/omssa/download.htm for installation instructions\n   - Edit config.yml so that the omssa_bin variable points to the path where the OMSSA binaries are located.")
+  needs_bin_dir("omssacl",config['omssa_bin'],"Unable to find OMSSA which is required by protk\nTo resolve this error you will need to:\n   - Install OMSSA or make sure you already have it installed. Look here http://pubchem.ncbi.nlm.nih.gov/omssa/download.htm for installation instructions\n   - Edit config.yml so that the omssa_bin variable points to the path where the OMSSA binaries are located or add this directory to your PATH")
 end
 
 
@@ -126,20 +94,10 @@ end
 #
 # NCBI
 #
-ncbi_files=FileList['makeblastdb']
-directory "#{config['ncbi_tools_bin']}"
-
-task :ncbi => ["#{config['ncbi_tools_bin']}"]
-
-ncbi_files.each do |fl|
-  
-  file "#{config['ncbi_tools_bin']}/#{fl}" do
-    needs_ncbi_binary(fl,config['ncbi_tools_bin'])
-  end
-  task :ncbi => ["#{config['ncbi_tools_bin']}/#{fl}"]
-  
+task :ncbi => ["#{config['ncbi_tools_bin']}/makeblastdb"]  
+file "#{config['ncbi_tools_bin']}/makeblastdb" do
+  needs_bin_dir("makeblastdb",config['ncbi_tools_bin'],"Unable to find makeblastdb which is required by protk\n#makeblastdb is distributed as part of BLAST+.\nTo resolve this error you will need to:\n   - Install the BLAST+ executables or make sure you already have them installed. Look here http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download for installation instructions\n   - Edit config.yml so that the ncbi_bin variable points to the path where the BLAST+ binaries are located or add this directory to your PATH")
 end
-
 
 #
 # Make Random
@@ -148,10 +106,14 @@ file "./bin/make_random" do
   sh %{ gcc -o ./bin/make_random make_random.c -lm } 
 end
 
+# Make a directory for the Log file
+#
+directory "#{config['log_file']}"
+
 #
 # Default task
 #
 
-task :default => ["libxml_ruby_gem","pure_ruby_gems","tpp","omssa","openms","ncbi","./bin/make_random"] 
+task :default => ["libxml_ruby_gem","pure_ruby_gems","tpp","omssa","openms","ncbi","./bin/make_random","#{config['log_file']}"] 
 
 
