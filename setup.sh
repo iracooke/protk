@@ -35,10 +35,23 @@ else
     fi
 
     
-    # Construct an rvm sourcing line
-    rvm_script=${result%/bin/rvm}/scripts/rvm
-    
-    sourcing_command="[[ -s $rvm_script ]] && source $rvm_script"
+    # Load RVM into a shell session *as a function*
+    if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
+
+        # First try to load from a user install
+        source "$HOME/.rvm/scripts/rvm";
+
+    elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
+
+        # Then try to load from a root install
+        source "/usr/local/rvm/scripts/rvm"
+
+    else
+
+        printf "ERROR: An RVM installation was not found.\n"
+
+    fi
+
     cwd=`pwd`
     
     if [ -f ./env.sh ]
@@ -52,22 +65,7 @@ else
         echo "rvm use 1.8.7" >> env.sh;
     fi
 
-    # Load RVM into a shell session *as a function*
-    if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
-
-      # First try to load from a user install
-      source "$HOME/.rvm/scripts/rvm";
-
-    elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
-
-      # Then try to load from a root install
-      source "/usr/local/rvm/scripts/rvm"
-
-    else
-
-      printf "ERROR: An RVM installation was not found.\n"
-
-    fi      
+     
 
     if [ $? -ne 0 ]
         then 
@@ -112,8 +110,6 @@ fi
 if [ ! -f "config.yml" ]
     then  `cp config.yml.sample config.yml`  
 fi
-
-cd `pwd`
 
 # Now that we have rvm installed the remaining installation is done with rake
 rvm 1.8.7 do rake default $@
