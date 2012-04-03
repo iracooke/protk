@@ -51,8 +51,24 @@ else
         echo "$sourcing_command" >> env.sh;
         echo "rvm use 1.8.7" >> env.sh;
     fi
-      
-    source ./env.sh
+
+    # Load RVM into a shell session *as a function*
+    if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
+
+      # First try to load from a user install
+      source "$HOME/.rvm/scripts/rvm";
+
+    elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
+
+      # Then try to load from a root install
+      source "/usr/local/rvm/scripts/rvm"
+
+    else
+
+      printf "ERROR: An RVM installation was not found.\n"
+
+    fi      
+
     if [ $? -ne 0 ]
         then 
         echo "Error: Unable to setup protk environment. You may need to manually modify the file 'env.sh' and then rerun setup.sh"; exit;
