@@ -14,60 +14,20 @@ The aim of protk is present a consistent interface to numerous proteomics tools 
 
 
 
-## (not so) basic installation
+## basic installation
 An installation script `setup.sh` is provided but it will not work unless some prior dependencies are already installed. You will need;
 
-1. __rvm__ (Ruby enVironment Manager). Required to setup a self-contained ruby interpreter for use with protk.
 
-	Install rvm with
-
-        bash -s stable < <(curl -sk https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer )
-        source "$HOME/.rvm/scripts/rvm"
-
-	After installing rvm you should read [instructions here](http://beginrescueend.com/rvm/install/ "rvm install") for further setup and install instructions. In particular you should run
-
-        rvm requirements
-
-	To see if additional packages need to be installed before rvm will work properly. (Don't skip this step!)
-
-
-2. __ruby 1.8.7__ (Specific version of ruby). Required to run protk scripts 
-
-    Install using rvm
-
-        rvm install ruby-1.8.7
-
-    And then switch to it using rvm.
-
-        rvm use 1.8.7
-
-    Note that if this step fails with the error "rvm is not a function" it means that you need to run a command similar to;
-
-        source "$HOME/.rvm/scripts/rvm"
-
-    To find out the exact command read `rvm requirements` which will also provide advice on adding this command to your login shell. Look for advice on adding a line similar to this one
-
-        [[ -s "/home/galaxy/.rvm/scripts/rvm" ]] && source "/home/galaxy/.rvm/scripts/rvm"
-
-    Take note of this line because it will be needed later for integration with galaxy
-
-3. __rake__ (Ruby Make). Required to manage protein databases and finish the setup script
-
-    Install using rvm
-
-        rvm install rake
-
-
-4. __TPP__ (Trans-Proteomic-Pipeline). Required to perform X!Tandem searches and to run PeptideProphet, iProphet and ProteinProphet
+1. __TPP__ (Trans-Proteomic-Pipeline). Required to perform X!Tandem searches and to run PeptideProphet, iProphet and ProteinProphet
     Follow the [installation instructions](http://tools.proteomecenter.org/wiki/index.php?title=Software:TPP "tpp install instructions") provided by the institute for systems biology. Note that you don't need to worry about setting up the TPP web application.  Only the command-line tools are needed.  After installing the TPP tools make sure that they are in your `$PATH`.
 
-5. __OMSSA__ (Search Engine). Required to perform OMSSA searches.
+2. __OMSSA__ (Search Engine). Required to perform OMSSA searches.
     Follow the [installation instructions](http://pubchem.ncbi.nlm.nih.gov/omssa/download.htm "omssa instructions") provided by NCBI.  After installing OMSSA make sure that the directory containing the OMSSA binaries (eg including the omssacl program ) is in your `$PATH`.
 
-6. __Blast+__ (Blast+ executables). Required to build databases for OMSSA searches
+3. __Blast+__ (Blast+ executables). Required to build databases for OMSSA searches
     Follow the [installation instructions](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download "blast install instructions") provided by NCBI (download Blast+ rather than the older legacy executables). After installing make sure that the directory containing the makeblastdb executable is in your `$PATH`.
 
-7. __Configure Protk__ Finish the installation by running
+4. __Configure Protk__ Finish the installation by running
 
         ./setup.sh 
 
