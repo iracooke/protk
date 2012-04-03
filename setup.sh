@@ -86,7 +86,7 @@ else
 fi
 
 echo -n "Checking rvm configuration: "
-install=`rvm requirements | grep -A99 "Additional Dependencies:" | sed "1 d" | grep "\bruby: " | sed 's/^\s*ruby:\s*//'` | sed 's/\s*#.*$//'`
+install=`rvm requirements | grep -A99 "Additional Dependencies:" | sed "1 d" | grep "\bruby: " | sed 's/^\s*ruby:\s*//' | sed 's/\s*#.*$//'`
 if [ "$install" ]; then
     echo "missing packages"
     echo "The following commands need to be run as the root user to correct the installation"
@@ -229,7 +229,7 @@ fi
 
 # Now that we have rvm installed the remaining installation is done with rake
 echo "Passing setup to rake"
-rvm install rake
+gem install rake --no-rdoc --no-ri
 rvm 1.8.7 do rake default $@
 
 if [ $? -ne 0 ]; then
