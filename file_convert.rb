@@ -6,14 +6,6 @@
 #
 
 #!/bin/sh
-# -------+---------+---------+-------- + --------+---------+---------+---------+
-#     /  This section is a safe way to find the interpretter for ruby,  \
-#    |   without caring about the user's setting of PATH.  This reduces  |
-#    |   the problems from ruby being installed in different places on   |
-#    |   various operating systems.  A much better solution would be to  |
-#    |   use  `/usr/bin/env -S-P' , but right now `-S-P' is available    |
-#     \  only on FreeBSD 5, 6 & 7.                        Garance/2005  /
-  
 if [ -z "$PROTK_RUBY_PATH" ] ; then
   PROTK_RUBY_PATH=`which ruby`
 fi

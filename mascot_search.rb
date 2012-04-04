@@ -4,29 +4,9 @@
 #
 # Runs an MS/MS search using the Mascot search engine
 #
-
 #!/bin/sh
-# -------+---------+---------+-------- + --------+---------+---------+---------+
-#     /  This section is a safe way to find the interpretter for ruby,  \
-#    |   without caring about the user's setting of PATH.  This reduces  |
-#    |   the problems from ruby being installed in different places on   |
-#    |   various operating systems.  A much better solution would be to  |
-#    |   use  `/usr/bin/env -S-P' , but right now `-S-P' is available    |
-#     \  only on FreeBSD 5, 6 & 7.                        Garance/2005  /
-# To specify a ruby interpreter set PROTK_RUBY_PATH in your environment. 
-# Otherwise standard paths will be searched for ruby
-#
 if [ -z "$PROTK_RUBY_PATH" ] ; then
-  
-  for fname in /usr/local/bin /opt/csw/bin /opt/local/bin /usr/bin ; do
-    if [ -x "$fname/ruby" ] ; then PROTK_RUBY_PATH="$fname/ruby" ; break; fi
-  done
-  
-  if [ -z "$PROTK_RUBY_PATH" ] ; then
-    PROTK_RUBY_PATH=`which ruby`
-#    echo "Unable to find a 'ruby' interpretter!"   >&2
-#    exit 1
-  fi
+  PROTK_RUBY_PATH=`which ruby`
 fi
 
 eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'

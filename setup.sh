@@ -212,7 +212,7 @@ fi
 # Make sure we're using the proper ruby
 #
 echo -n "Changing to ruby $rb_version: "
-result=`rvm use 1.8.7`
+rvm use 1.8.7
 if [ $? -ne 0 ]; then
     echo "failed"
     exit
