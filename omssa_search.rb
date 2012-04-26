@@ -35,6 +35,15 @@ search_tool.option_parser.on( '-R', '--no-add-retention-times', 'Don\'t post pro
   search_tool.options.add_retention_times=false
 end
 
+search_tool.options.max_hit_expect=1
+search_tool.option_parser.on(  '--max-hit-expect exp', 'Expect values less than this are considered to be hits' ) do |exp|
+  search_tool.options.max_hit_expect=exp
+end
+
+search_tool.options.intensity_cut_off=0.0005
+search_tool.option_parser.on(  '--intensity-cut-off co', 'Peak intensity cut-off as a fraction of maximum peak intensity' ) do |co|
+  search_tool.options.intensity_cut_off=co
+end
 
 
 search_tool.option_parser.parse!
@@ -91,7 +100,7 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd= "#{omssa_bin} -d #{current_db} -fm #{input_path} -op #{output_path} -he 100000 -w"
+    cmd= "#{omssa_bin} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
 
     #Missed cleavages
     #
@@ -175,8 +184,12 @@ ARGV.each do |filename|
     end
     
     
+    # Max expect
+    #
+    cmd << " -he #{search_tool.max_hit_expect}"
     
-    
+    # Intensity cut-off
+    cmd << " -ci #{search_tool.intensity_cut_off}"
     
     # Up to here we've formulated the omssa command. The rest is cleanup
     p "Running:#{cmd}"
