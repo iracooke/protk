@@ -54,7 +54,7 @@ This will update the database only if any of its source files (or ftp release no
 
 Although all the protk tools can be run directly from the command-line a nicer way to run them (and visualise outputs) is to use the galaxy web application.
 
-1. Check out and install the latest stable galaxy (\[see the official galaxy wiki for more detailed setup instructions\](http://wiki.g2.bx.psu.edu/Admin/Get%20Galaxy,"galaxy wiki"))
+1. Check out and install the latest stable galaxy [see the official galaxy wiki for more detailed setup instructions](http://wiki.g2.bx.psu.edu/Admin/Get%20Galaxy,"galaxy wiki")
 
         hg clone https://bitbucket.org/galaxy/galaxy-dist 
 		cd galaxy-dist
