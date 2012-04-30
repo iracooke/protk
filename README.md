@@ -15,8 +15,7 @@ The aim of protk is present a consistent interface to numerous proteomics tools 
 
 
 ## basic installation
-An installation script, setup.sh is provided but it will not work unless some prior dependencies are already installed. You will need;
-
+An installation script, setup.sh is provided but it will not work unless some prior dependencies are already installed. You will need
 
 1. __TPP__ (Trans-Proteomic-Pipeline). Required to perform X!Tandem searches and to run PeptideProphet, iProphet and ProteinProphet
     Follow the [installation instructions](http://tools.proteomecenter.org/wiki/index.php?title=Software:TPP "tpp install instructions") provided by the institute for systems biology. Note that you don't need to worry about setting up the TPP web application.  Only the command-line tools are needed.  After installing the TPP tools make sure that they are in your `$PATH`.
@@ -55,7 +54,7 @@ This will update the database only if any of its source files (or ftp release no
 
 Although all the protk tools can be run directly from the command-line a nicer way to run them (and visualise outputs) is to use the galaxy web application.
 
-1. Check out and install the latest stable galaxy ([see the official galaxy wiki for more detailed setup instructions](http://wiki.g2.bx.psu.edu/Admin/Get%20Galaxy,"galaxy wiki"))
+1. Check out and install the latest stable galaxy (\[see the official galaxy wiki for more detailed setup instructions\](http://wiki.g2.bx.psu.edu/Admin/Get%20Galaxy,"galaxy wiki"))
 
         hg clone https://bitbucket.org/galaxy/galaxy-dist 
 		cd galaxy-dist
