@@ -18,12 +18,15 @@ The aim of protk is present a consistent interface to numerous proteomics tools 
 An installation script, setup.sh is provided but it will not work unless some prior dependencies are already installed. You will need
 
 1. __TPP__ (Trans-Proteomic-Pipeline). Required to perform X!Tandem searches and to run PeptideProphet, iProphet and ProteinProphet
+
     Follow the [installation instructions](http://tools.proteomecenter.org/wiki/index.php?title=Software:TPP "tpp install instructions") provided by the institute for systems biology. Note that you don't need to worry about setting up the TPP web application.  Only the command-line tools are needed.  After installing the TPP tools make sure that they are in your `$PATH`.
 
 2. __OMSSA__ (Search Engine). Required to perform OMSSA searches.
+
     Follow the [installation instructions](http://pubchem.ncbi.nlm.nih.gov/omssa/download.htm "omssa instructions") provided by NCBI.  After installing OMSSA make sure that the directory containing the OMSSA binaries (eg including the omssacl program ) is in your `$PATH`.
 
 3. __Blast+__ (Blast+ executables). Required to build databases for OMSSA searches
+
     Follow the [installation instructions](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download "blast install instructions") provided by NCBI (download Blast+ rather than the older legacy executables). After installing make sure that the directory containing the makeblastdb executable is in your `$PATH`.
 
 4. __Configure Protk__ Finish the installation by running
