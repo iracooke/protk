@@ -17,7 +17,7 @@ The aim of protk is present a consistent interface to numerous proteomics tools 
 ## basic installation
 An installation script, setup.sh is provided but it will not work unless some prior dependencies are already installed. You will need
 
-1. __TPP__ (Trans-Proteomic-Pipeline). Required to perform X!Tandem searches and to run PeptideProphet, iProphet and ProteinProphet
+1. **TPP** (Trans-Proteomic-Pipeline). Required to perform X!Tandem searches and to run PeptideProphet, iProphet and ProteinProphet
 
     Follow the [installation instructions](http://tools.proteomecenter.org/wiki/index.php?title=Software:TPP "tpp install instructions") provided by the institute for systems biology. Note that you don't need to worry about setting up the TPP web application.  Only the command-line tools are needed.  After installing the TPP tools make sure that they are in your `$PATH`.
 
