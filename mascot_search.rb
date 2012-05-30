@@ -15,6 +15,7 @@ exit 1
 #! ruby
 #
 
+$VERBOSE=nil
 
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
 
@@ -22,6 +23,8 @@ require 'constants'
 require 'command_runner'
 require 'search_tool'
 require 'rest_client'
+require 'rubygems'
+require 'ruby-debug'
 
 # Environment with global constants
 #
@@ -31,18 +34,19 @@ genv=Constants.new
 #
 search_tool=SearchTool.new({:msms_search=>true,:background=>false,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
 search_tool.jobid_prefix="o"
+
 search_tool.option_parser.banner = "Run a Mascot msms search on a set of mgf input files.\n\nUsage: mascot_search.rb [options] file1.mgf file2.mgf ..."
 search_tool.options.output_suffix="_mascot"
 
-search_tool.options.mascot_server="#{genv.default_mascot_server}/mascot/cgi"
-search_tool.option_parser.on( '-S', '--server url', 'The url to the cgi directory of the mascot server' ) do |url| 
-  search_tool.options.mascot_server=url
-end
+search_tool.options.mascot_server="#{genv.default_mascot_server}/mascot/cgi/"
+#search_tool.option_parser.on( '-P', '--http-proxy url', 'The url to a proxy server' ) do |url| 
+#  search_tool.options.mascot_server=url
+#end
 
-search_tool.options.http_proxy="http://squid.latrobe.edu.au:8080"
-search_tool.option_parser.on( '-P', '--http-proxy url', 'The url to a proxy server' ) do |url| 
-  search_tool.options.http_proxy=url
-end
+#search_tool.options.http_proxy="http://squid.latrobe.edu.au:8080"
+#search_tool.option_parser.on( '-P', '--http-proxy url', 'The url to a proxy server' ) do |url| 
+#  search_tool.options.http_proxy=url
+#end
 
 search_tool.option_parser.parse!
 
@@ -124,7 +128,7 @@ postdict[:REPORT]="AUTO"
 
 # TAXONOMY (Blank because we don't allow taxonomy)
 #
-postdict[:TAXONOMY]=""
+postdict[:TAXONOMY]="All entries"
 
 # TOL (Precursor ion tolerance (Unit dependent))
 #
@@ -151,6 +155,12 @@ postdict[:FORMVER]='1.01'
 postdict[:INTERMEDIATE]=''
 
 genv.log("Sending #{postdict}",:info)
+
+postdict.each do |kv| 
+  p "#{kv}|\n"
+end
+
+debugger
 
 search_response=RestClient.post "#{mascot_cgi}/nph-mascot.exe?1",  postdict
 

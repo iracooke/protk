@@ -70,14 +70,6 @@ class Tool
           @options.explicit_output = out
         end
       end
-      
-      if ( option_support[:msnum]==true)
-      
-        @options.ms_number = ""
-        opts.on( '-n', '--ms-number num', 'The MT or MS Number of the experiment' ) do |num|
-          @options.ms_number = num
-        end
-      end
          
       if ( option_support[:over_write]==true)
             
@@ -91,7 +83,7 @@ class Tool
       if ( option_support[:background]==true)
 
         @options.background = false
-        opts.on( '-z', '--background', 'Run analyses in the background' ) do  
+        opts.on( '-z', '--background', 'Run jobs in the background using pbs' ) do  
           @options.background = true
         end
         

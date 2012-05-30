@@ -83,6 +83,16 @@ class SearchTool < Tool
           @options.username = un
         end
 
+        @options.mascot_server="www.matrixscience.com"
+        @option_parser.on( '-S', '--server url', 'The url to the cgi directory of the mascot server' ) do |url| 
+          @options.mascot_server=url
+        end
+
+        @options.mascot_server=""
+        @option_parser.on('--username un', 'Username.') do |un|
+          @options.username = un
+        end
+
         @options.num_peaks_for_multi_isotope_search="0"
         @option_parser.on("--num-peaks-for-multi-isotope-search np","Number of peaks to include in multi-isotope search") do |np|
           @options.num_peaks_for_multi_isotope_search=np
