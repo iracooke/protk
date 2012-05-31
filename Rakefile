@@ -11,21 +11,28 @@ config=config[run_setting]
 
 extra_args=ARGV[1]
 
-
-def gemInstalled(gem_require_name)
-  "Testing gem #{gem_require_name}"
-  hasit=false
-  begin
-    Gem::Specification.find_by_name(gem_require_name)
-    hasit=true
-  rescue 
-  end
-  hasit
+def gemInstalled?(name)
+   Gem::Specification.find_by_name(name)
+rescue Gem::LoadError
+   false
+rescue
+   Gem.available?(name)
 end
+
+#def gemInstalled?(gem_require_name)
+#  "Testing gem #{gem_require_name}"
+#  hasit=false
+#  begin
+#    Gem::Specification.find_by_name(gem_require_name)
+#    hasit=true
+#  rescue 
+#  end
+#  hasit
+#end
  
 desc "Install Lib xml ruby"
 task :libxml_ruby_gem do
-  if ( !gemInstalled("libxml-ruby"))
+  if ( !gemInstalled?("libxml-ruby"))
     install_command="gem install libxml-ruby --no-rdoc --no-ri -- #{extra_args}"
     sh %{ #{install_command} } do |ok,result| 
       if ( !ok)
@@ -39,7 +46,7 @@ desc "Install pure ruby gems"
 task :pure_ruby_gems do
   gems={"open4"=>"open4","rest-client"=>"rest_client","bio"=>"bio","logger"=>"logger","net-ftp-list"=>"net/ftp/list"}
   gems.each do |thegem|
-    if ( !gemInstalled(thegem[0]))
+    if ( !gemInstalled?(thegem[0]))
       sh %{ gem install #{thegem[0]} --no-rdoc --no-ri } 
     end
   end
