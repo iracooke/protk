@@ -146,7 +146,7 @@ if [ -f ./env.sh ]; then
 else
     echo `pwd`
     cat >env.sh <<EOF
-temp_file=`mktemp protkXXX`
+temp_file=\`mktemp protkXXX\`
 export temp_file
 
 bash << %%%
