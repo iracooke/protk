@@ -171,7 +171,7 @@ fi
 
 rvm 1.8.7
 
-export | grep 'declare -x' | sed 's/declare -x/export/g' >$temp_file
+export | grep 'declare -x' | sed 's/declare -x/export/g' >\$temp_file
 
 %%%
 
