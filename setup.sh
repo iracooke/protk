@@ -175,9 +175,9 @@ export | grep 'declare -x' | sed 's/declare -x/export/g' >$temp_file
 
 %%%
 
-. $temp_file
+. \$temp_file
 
-rm $temp_file
+rm \$temp_file
 EOF
 fi
 if [ $? -ne 0 ]; then 
