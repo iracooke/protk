@@ -70,7 +70,14 @@ if ( !FileTest.exists?(tandem_bin))
 end
 
 tandem_params=search_tool.tandem_params
-current_db=search_tool.current_database :fasta
+
+case
+when Pathname.new(search_tool.database).exist? # It's an explicitly named db  
+  current_db=Pathname.new(search_tool.database).realpath.to_s
+else
+  current_db=search_tool.current_database :fasta
+end
+
 
 
 
