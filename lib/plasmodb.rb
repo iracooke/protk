@@ -14,7 +14,7 @@ class PlasmoDB
       @genv=Constants.new
     end
 
-    database_file="#{@genv.protein_database_root}/plasmodb_data/PfalciparumGene_PlasmoDB-8.0.txt"
+    database_file="#{@genv.protein_database_root}/#{@genv.plasmodb_annotation_database}/raw.txt"
 
     throw "The plasmodb database at \"#{database_file}\" does not exist"  if ( database_file==nil || !FileTest.exist?(database_file) )
 

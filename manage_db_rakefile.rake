@@ -18,9 +18,10 @@ dbdir="#{$genv.protein_database_root}/#{dbname}"
 dbspec_file="#{dbdir}/.protkdb.yaml"
 dbspec=YAML.load_file "#{dbspec_file}"
 
+format = dbspec[:format]!=nil ? dbspec[:format] : "fasta"
 # Output database filename
 #
-db_filename="#{dbdir}/current.fasta"
+db_filename="#{dbdir}/current.#{format}"
 
 #####################
 # Utility Functions #
@@ -265,60 +266,71 @@ source_files=dbspec[:sources].collect do |raw_source|
   sf  
 end
 
-#####################
-#  Concat & Filter  #
-#####################
+########################
+#  Concat Filter Copy  #
+########################
 
-raw_db_filename = "#{dbdir}/raw.fasta"
+raw_db_filename = "#{dbdir}/raw.#{format}"
 
 file raw_db_filename => [source_files,dbspec_file].flatten do  
+
+  if ( format == "fasta" ) # We can perform concat and filter for fasta only
+
+    archive_fasta_file(raw_db_filename) if dbspec[:archive_old]
   
+    output_fh=File.open(raw_db_filename, "w")
 
-  archive_fasta_file(raw_db_filename) if dbspec[:archive_old]
-  
-  output_fh=File.open(raw_db_filename, "w")
+    source_filters=dbspec[:include_filters]
+    id_regexes=dbspec[:id_regexes]
+    source_i=0
+    throw "The number of source files #{source_files.length} should equal the number of source filters #{source_filters.length}" unless source_filters.length == source_files.length
+    throw "The number of source files #{source_files.length} should equal the number of id regexes #{id_regexes.length}" unless source_filters.length == id_regexes.length
 
-  source_filters=dbspec[:include_filters]
-  id_regexes=dbspec[:id_regexes]
-  source_i=0
-  throw "The number of source files #{source_files.length} should equal the number of source filters #{source_filters.length}" unless source_filters.length == source_files.length
-  throw "The number of source files #{source_files.length} should equal the number of id regexes #{id_regexes.length}" unless source_filters.length == id_regexes.length
+    source_files.each do |source|
+      # Open source as Fasta
+      #    
+      Bio::FlatFile.open(Bio::FastaFormat, source) do |ff|
+        p "Reading source file #{source}"
 
-  source_files.each do |source|
-    # Open source as Fasta
-    #    
-    Bio::FlatFile.open(Bio::FastaFormat, source) do |ff|
-      p "Reading source file #{source}"
+        n_match=0
 
-      n_match=0
-
-      filters=source_filters[source_i] #An array of filters for this input file
-      id_regex=/#{id_regexes[source_i]}/
+        filters=source_filters[source_i] #An array of filters for this input file
+        id_regex=/#{id_regexes[source_i]}/
       
-      ff.each do |entry|
-        filters.each do |filter|
-          if ( entry.definition =~ /#{filter}/)
-            n_match=n_match+1
-            idmatch=id_regex.match(entry.definition)
-            case 
-            when idmatch==nil || idmatch[1]==nil
-              p "No match to id regex #{id_regex} for #{entry.definition}. Skipping this entry"              
-            else
-              new_def="#{idmatch[1]}"
-              entry.definition=new_def
-              output_fh.puts(entry.to_s)
-#              p entry.definition.to_s
+        ff.each do |entry|
+          filters.each do |filter|
+            if ( entry.definition =~ /#{filter}/)
+              n_match=n_match+1
+              idmatch=id_regex.match(entry.definition)
+              case 
+              when idmatch==nil || idmatch[1]==nil
+                p "No match to id regex #{id_regex} for #{entry.definition}. Skipping this entry"              
+              else
+                new_def="#{idmatch[1]}"
+                entry.definition=new_def
+                output_fh.puts(entry.to_s)
+                #              p entry.definition.to_s
+              end
+              break
             end
-            break
           end
         end
+        p "Warning no match to any filter in #{filters} for source file #{source}" unless n_match > 0
       end
-      p "Warning no match to any filter in #{filters} for source file #{source}" unless n_match > 0
+      source_i=source_i+1
     end
-    source_i=source_i+1
+    output_fh.close
+  else # Other formats just copy a file across ... must be a single source
+    
+    throw "Only a single source file is permitted for formats other than fasta" unless source_files.length == 1
+    
+    sh "cp #{source_files[0]} #{raw_db_filename}" do |ok,res|
+      if ! ok 
+        puts "Unable to copy #{source_files[0]} to #{raw_db_filename}"
+      end
+    end
+    
   end
-  output_fh.close
-  
 end
 
 #####################
@@ -353,6 +365,7 @@ end
 #
 case dbspec[:decoys]
 when true
+  throw "Decoys are only supported for fasta formatted databases" unless format=="fasta"
   file db_filename => decoy_db_filename
 else
   file db_filename => raw_db_filename
@@ -367,22 +380,26 @@ end
 # Current database file should symlink to raw or decoy
 #
 file db_filename do
+  if ( dbspec[:is_annotation_db])
+    db_filename=raw_db_filename # For annotation databases we don't use symlinks at all
+  else
+    # if we are an annotation db we can't symlink so do nothing
 
-  # source db filename is either decoy or raw
-  #
-  case dbspec[:decoys]
-  when true
-    source_db_filename = decoy_db_filename
-  when false
-    source_db_filename = raw_db_filename
+    # source db filename is either decoy or raw
+    #
+    case dbspec[:decoys]
+    when true
+      source_db_filename = decoy_db_filename
+    when false
+      source_db_filename = raw_db_filename
+    end
+
+    p "Current db links to #{source_db_filename}"
+
+    # Symlink to the source file
+    #
+    File.symlink(source_db_filename,db_filename)
   end
-
-  p "Current db links to #{source_db_filename}"
-
-  # Symlink to the source file
-  #
-  File.symlink(source_db_filename,db_filename)
-
 end
 
 
@@ -395,7 +412,7 @@ if dbspec[:make_blast_index]
   #  task :make_blast_index => blast_index_files  do
   blast_index_files.each do |indfile|
     file indfile => db_filename do
-      cmd="cd #{dbdir}; #{$genv.ncbi_tools_bin}/makeblastdb -in #{db_filename} -parse_seqids"
+      cmd="cd #{dbdir}; #{$genv.ncbi_tools_bin}/makeblastdb -in #{db_filename} -parse_seqids -dbtype prot"
       p "Creating blast index"
       sh %{ #{cmd} }
     end
@@ -403,6 +420,23 @@ if dbspec[:make_blast_index]
   
   task dbname => blast_index_files
 
+end
+
+
+if format=="dat" && dbspec[:is_annotation_db]
+  dat_index_files=FileList.new(["config.dat","id_AC.index","key_ID.key"].collect {|file| "#{dbdir}/#{file}"}  )
+  
+  dat_index_files.each do |indexfile|
+    file indexfile => db_filename do
+      puts "Indexing annotation database"
+      dbclass=Bio::SPTR
+      parser = Bio::FlatFileIndex::Indexer::Parser.new(dbclass, nil, nil)
+      Bio::FlatFileIndex::Indexer::makeindexFlat(dbdir, parser, {}, db_filename)
+    end
+  end
+  
+  task dbname => dat_index_files
+  
 end
 
 #################

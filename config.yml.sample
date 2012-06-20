@@ -13,6 +13,9 @@ test:
     message_level: info
     tpp_bin: ./bin/tpp
     protein_database_root: ./Databases
+	plasmodb_annotation_database: plasmodb_annotation
+	uniprot_sprot_annotation_database: swissprot_annotation
+	uniprot_trembl_annotation_database: trembl_annotation
     galaxy_root: ../galaxy
     default_mascot_server: www.matrixscience.com
     has_pbs: false
