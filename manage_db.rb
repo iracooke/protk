@@ -60,10 +60,10 @@ when "add"
   dbspec={}
   dbspec[:is_annotation_db]=tool.is_annotation_db
   dbspec[:sources]=tool.sources
+  dbspec[:make_blast_index]= tool.make_blast_index
 
   dbspec[:include_filters]= tool.is_annotation_db ? [] : tool.include_filters
   dbspec[:id_regexes]= tool.is_annotation_db ? [] : tool.id_regexes
-  dbspec[:make_blast_index]=tool.is_annotation_db ? false :  tool.make_blast_index
   dbspec[:decoys]= tool.is_annotation_db ? false : tool.decoys
   dbspec[:archive_old]= tool.is_annotation_db ? false : tool.archive_old
   dbspec[:decoy_prefix]= tool.decoy_prefix

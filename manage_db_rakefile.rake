@@ -244,7 +244,7 @@ def ftp_source(ftpsource)
       p "Concatenating files #{catcmd} ... this could take a while"
       sh %{ cd #{Pathname.new(data_file_path).dirname}; #{catcmd}  }
       
-    else # Simple case. A single file
+    else # Simple case. A single file 
       p "Unzipping #{Pathname.new(data_file_path).basename} ... "
       sh %{ cd #{Pathname.new(data_file_path).dirname}; gunzip -f #{Pathname.new(data_file_path).basename}  }           
     end
@@ -274,13 +274,14 @@ raw_db_filename = "#{dbdir}/raw.#{format}"
 
 file raw_db_filename => [source_files,dbspec_file].flatten do  
 
-  if ( format == "fasta" ) # We can perform concat and filter for fasta only
+  source_filters=dbspec[:include_filters]
+
+  if ( format == "fasta" && source_filters.length > 0 ) # We can perform concat and filter for fasta only
 
     archive_fasta_file(raw_db_filename) if dbspec[:archive_old]
   
     output_fh=File.open(raw_db_filename, "w")
 
-    source_filters=dbspec[:include_filters]
     id_regexes=dbspec[:id_regexes]
     source_i=0
     throw "The number of source files #{source_files.length} should equal the number of source filters #{source_filters.length}" unless source_filters.length == source_files.length
