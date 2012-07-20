@@ -4,12 +4,12 @@ class GalaxyStager
   attr_accessor :staged_path
 
   def initialize(original_path, options = {})
-  	options = { :name => nil, :extension => '' }.merge(options)
-  	@original_path = Pathname.new(original_path)
-  	@wd = Dir.pwd
-  	staged_name = options[:name] || @original_path.basename
-  	@staged_path = File.join(@wd, "#{staged_name}#{options[:extension]}")
-  	File.symlink(@original_path, @staged_path)
+    options = { :name => nil, :extension => '' }.merge(options)
+    @original_path = Pathname.new(original_path)
+    @wd = Dir.pwd
+    staged_name = options[:name] || @original_path.basename
+    @staged_path = File.join(@wd, "#{staged_name}#{options[:extension]}")
+    File.symlink(@original_path, @staged_path)
   end
 
   def restore_references(in_file)
