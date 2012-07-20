@@ -77,6 +77,17 @@ class ManageDBTool < Tool
         @options.update_spec=true
       end
 
+      @options.is_annotation_db=false
+      @option_parser.on( '--annotation-db', 'This database is not for searching but for annotating search results (eg Swissprot .dat file)' ) do  
+        @options.is_annotation_db=true
+      end
+
+      @options.db_format="fasta"
+      @option_parser.on( '--db-format format', 'Format of the database file (fasta or dat). Default is fasta' ) do  |format|
+        @options.db_format=format
+      end
+
+
       @option_parser.banner = "Add new protein databases.\nUsage: manage_db.rb add [options] <dbname>"
 
     when "list"

@@ -77,5 +77,11 @@ Although all the protk tools can be run directly from the command-line a nicer w
 
             ln -s <path_where_protk_was_installed>/env.sh 1.0.0/env.sh
 
-4. Install the protk galaxy wrapper tools from the galaxy toolshed. 
+4. Install the protk galaxy wrapper tools from the galaxy toolshed. You will need to restart galaxy after doing so for the new datatype sniffers to be activated.
+
+5. After installing the protk wrapper tools from the toolshed it will be necessary to tell those tools about databases you have installed. Use the manage_db.rb tool to do this. To do this, first edit config.yml to make sure the `galaxy_root` setting points to the root directory of your galaxy installation (this will allow `manage_db.rb` to update the `pepxml_databases.loc` file inside `galaxy_root/tool-data`). The run the following command and then restart the galaxy server;
+
+		manage_db.rb list -G
+
+
 

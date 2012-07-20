@@ -58,17 +58,17 @@ when "add"
 
   # Create the database specifiation dictionary
   dbspec={}
-#  dbspec[:ftp_sources]=tool.ftp_sources
-#  dbspec[:file_sources]=tool.file_sources
-#  dbspec[:db_sources]=tool.db_sources
-  dbspec[:include_filters]=tool.include_filters
-  dbspec[:id_regexes]=tool.id_regexes
-  dbspec[:make_blast_index]=tool.make_blast_index
-  dbspec[:decoys]=tool.decoys
-  dbspec[:archive_old]=tool.archive_old
-  dbspec[:decoy_prefix]=tool.decoy_prefix
+  dbspec[:is_annotation_db]=tool.is_annotation_db
   dbspec[:sources]=tool.sources
+  dbspec[:make_blast_index]= tool.make_blast_index
 
+  dbspec[:include_filters]= tool.is_annotation_db ? [] : tool.include_filters
+  dbspec[:id_regexes]= tool.is_annotation_db ? [] : tool.id_regexes
+  dbspec[:decoys]= tool.is_annotation_db ? false : tool.decoys
+  dbspec[:archive_old]= tool.is_annotation_db ? false : tool.archive_old
+  dbspec[:decoy_prefix]= tool.decoy_prefix
+  dbspec[:format] = tool.db_format
+    
   # Create the database directory
   Dir.mkdir(dbdir) unless tool.update_spec
 
@@ -80,7 +80,7 @@ when "update"
 
   throw "Could not find required spec file #{dbdir}/.protkdb.yaml" unless Pathname.new("#{dbdir}/.protkdb.yaml").exist?
   runner=CommandRunner.new(genv)
-  runner.run_local("rake -f manage_db_rakefile.rake #{dbname}")
+  runner.run_local("rake -f #{File.dirname(__FILE__)}/manage_db_rakefile.rake #{dbname}")
 
 when "list"
   
