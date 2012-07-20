@@ -21,6 +21,19 @@ $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
 require 'constants'
 require 'command_runner'
 require 'prophet_tool'
+require 'galaxy_stager'
+require 'galaxy_util'
+
+for_galaxy = GalaxyUtil.for_galaxy
+
+if for_galaxy
+  # Stage files for galaxy
+  original_input_file = ARGV[0]
+  original_input_path = Pathname.new("#{original_input_file}")
+  input_stager = GalaxyStager.new("#{original_input_file}", :extension => '.pep.xml')
+  ARGV.push("-o")
+  ARGV.push("protein_prophet_results.prot.xml")  
+end
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
@@ -127,7 +140,11 @@ else
   genv.log("Protein Prophet output file #{output_file} already exists. Run with -r option to replace",:warn)   
 end
 
-
+if for_galaxy
+  # Restore references to peptide prophet xml so downstream tools like 
+  # libra can find it.
+  input_stager.restore_references("protein_prophet_results.prot.xml")
+end
 
 
 
