@@ -5,19 +5,9 @@
 # Convert mascot dat files to pepxml. A wrapper for Mascot2XML
 #
 #!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
-
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
+. `dirname \`readlink -f $0\``/protk_run.sh
 #! ruby
 #
-
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-
 
 require 'constants'
 require 'search_tool'
