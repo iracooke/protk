@@ -2,7 +2,6 @@ require 'rubygems'
 require 'rexml/document'
 require 'rexml/xpath'
 
-
 class ProtXML 
     
   attr_accessor :groups
@@ -59,6 +58,11 @@ class ProtXML
   def initialize(file_name)
     @doc=REXML::Document.new(File.new(file_name))
     @groups=self.init_groups
+  end
+
+  def find_pep_xml()
+    header = REXML::XPath.first(@doc, "//protein_summary_header")
+    source_file = header.attributes["source_files"]
   end
   
   def peptide_sequences_from_protein(prot)
