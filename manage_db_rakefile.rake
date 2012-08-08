@@ -8,6 +8,7 @@ require 'net/ftp/list'
 require 'bio'
 require 'tempfile'
 require 'pp'
+require 'set'
 
 dbname=ARGV[0]
 
@@ -287,6 +288,8 @@ file raw_db_filename => [source_files,dbspec_file].flatten do
     throw "The number of source files #{source_files.length} should equal the number of source filters #{source_filters.length}" unless source_filters.length == source_files.length
     throw "The number of source files #{source_files.length} should equal the number of id regexes #{id_regexes.length}" unless source_filters.length == id_regexes.length
 
+    added_ids=Set.new
+
     source_files.each do |source|
       # Open source as Fasta
       #    
@@ -308,8 +311,13 @@ file raw_db_filename => [source_files,dbspec_file].flatten do
                 p "No match to id regex #{id_regex} for #{entry.definition}. Skipping this entry"              
               else
                 new_def="#{idmatch[1]}"
-                entry.definition=new_def
-                output_fh.puts(entry.to_s)
+                if ( added_ids.include?(new_def) )
+                  p "Warning: Skipping duplicate definition for #{new_def}"
+                else
+                  entry.definition=new_def
+                  output_fh.puts(entry.to_s)
+                  added_ids.add new_def
+                end
                 #              p entry.definition.to_s
               end
               break

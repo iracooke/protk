@@ -36,7 +36,7 @@ class ManageDBTool < Tool
       end
 
       @options.include_filters=[]
-      @option_parser.on( '--include-filters rx', 'A comma separated series of regular expressions to use as filters. Each time this argument is encountered is adds a set of filters for another source file, in the order that source files were added' ) do  |tx|
+      @option_parser.on( '--include-filters rx', 'A comma separated series of regular expressions to use as filters. Each time this argument is encountered is adds a set of filters for another source file, in the order that source files were added. If you use multiple source files you will need multiple --incldue-filters' ) do  |tx|
 
         throw "Specified include filter #{tx} is not in the format /regex1/,/regex2/" unless match=tx.match(/\/(.*)\//)
         tx= match[1]
