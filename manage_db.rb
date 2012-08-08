@@ -23,6 +23,18 @@ require 'yaml'
 require 'manage_db_tool'
 require 'pp'
 
+def all_database_names(genv)
+  all_names=[]
+  Dir.foreach(genv.protein_database_root) do |db_subdir|
+          db_specfile="#{genv.protein_database_root}/#{db_subdir}/.protkdb.yaml"
+        if ( Pathname.new(db_specfile).exist?)
+          all_names.push db_subdir
+        end
+  end
+  return all_names
+end
+
+
 command=ARGV[0]
 ARGV[0] = "--help" if ( command==nil || command=="-h" || command=="help")
 tool=ManageDBTool.new(command)
@@ -45,11 +57,11 @@ end
 
 genv=Constants.new()
 
-dbdir="#{genv.protein_database_root}/#{dbname}"
 
 case command
 when "add"
   throw "Must specify a database name" if dbname==nil 
+  throw "all is a reserved word and cannot be used as a database name" if ( dbname=="all")
   throw "Database #{dbname} exists" if genv.dbexist?(dbname) && !tool.update_spec
   throw "Database #{dbname} cannot be updated because it doesn't exist" if !genv.dbexist?(dbname) && tool.update_spec
 
@@ -70,18 +82,26 @@ when "add"
   dbspec[:format] = tool.db_format
     
   # Create the database directory
+  dbdir="#{genv.protein_database_root}/#{dbname}"
   Dir.mkdir(dbdir) unless tool.update_spec
 
   File.open("#{dbdir}/.protkdb.yaml", "w") {|file| file.puts(dbspec.to_yaml) }
 
 when "update"
-  throw "Must specify a database name" if dbname==nil 
-  throw "Database #{dbname} does not exist" if !genv.dbexist?(dbname) 
-
-  throw "Could not find required spec file #{dbdir}/.protkdb.yaml" unless Pathname.new("#{dbdir}/.protkdb.yaml").exist?
-  runner=CommandRunner.new(genv)
-  runner.run_local("rake -f #{File.dirname(__FILE__)}/manage_db_rakefile.rake #{dbname}")
-
+  throw "Must specify a database name" if dbname==nil
+  if ( dbname=="all" )
+    dbnames=all_database_names(genv)
+  else
+    dbnames=[dbname]
+  end
+  p dbnames
+  dbnames.each { |db|  
+    throw "Database #{db} does not exist" if !genv.dbexist?(db) 
+    dbdir="#{genv.protein_database_root}/#{db}"
+    throw "Could not find required spec file #{dbdir}/.protkdb.yaml" unless Pathname.new("#{dbdir}/.protkdb.yaml").exist?
+   runner=CommandRunner.new(genv)
+    runner.run_local("rake -f #{File.dirname(__FILE__)}/manage_db_rakefile.rake #{db}")
+  } 
 when "list"
   
   gw_file_handle=nil
@@ -90,7 +110,7 @@ when "list"
     if ( Pathname.new(pepxml_loc).exist?  )
       gw_file_handle=File.open(pepxml_loc,'w')
     end
-    throw "Could not find database loc file #{pepxml_loc}" unless Pathname.new(pepxml_loc).exist?
+    p "Warning: Could not find database loc file #{pepxml_loc}" unless Pathname.new(pepxml_loc).exist?
   end
   
   
@@ -100,11 +120,13 @@ when "list"
       spec=YAML.load_file(db_specfile)
       case
       when tool.galaxy || tool.galaxy_write
-        db_prettyname=db_subdir.gsub(/_/,' ').capitalize
-        loc_line= "#{db_prettyname}\t#{db_subdir}_\t#{db_subdir}\t#{db_subdir}_\n"
-        puts loc_line
-        if ( gw_file_handle )
-          gw_file_handle.write loc_line
+        unless ( spec[:is_annotation_db] )
+          db_prettyname=db_subdir.gsub(/_/,' ').capitalize
+          loc_line= "#{db_prettyname}\t#{db_subdir}_\t#{db_subdir}\t#{db_subdir}_\n"
+          puts loc_line
+          if ( gw_file_handle )
+            gw_file_handle.write loc_line
+          end
         end
       when tool.verbose
         puts "-- #{db_subdir} --\n"
