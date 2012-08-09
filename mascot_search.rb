@@ -24,7 +24,6 @@ require 'command_runner'
 require 'search_tool'
 require 'rest_client'
 require 'rubygems'
-require 'ruby-debug'
 
 # Environment with global constants
 #
@@ -62,6 +61,10 @@ precursor_tol = search_tool.precursor_tol
 
 
 mascot_cgi=search_tool.mascot_server
+
+unless ( mascot_cgi =~ /^http:\/\//)
+  mascot_cgi  = "http://#{mascot_cgi}"
+end
 
 #
 RestClient.proxy=search_tool.http_proxy
@@ -159,8 +162,6 @@ genv.log("Sending #{postdict}",:info)
 postdict.each do |kv| 
   p "#{kv}|\n"
 end
-
-debugger
 
 search_response=RestClient.post "#{mascot_cgi}/nph-mascot.exe?1",  postdict
 
