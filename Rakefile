@@ -44,7 +44,7 @@ end
 
 desc "Install pure ruby gems"
 task :pure_ruby_gems do
-  gems={"open4"=>"open4","rest-client"=>"rest_client","bio"=>"bio","logger"=>"logger","net-ftp-list"=>"net/ftp/list"}
+  gems={"open4"=>"open4","rest-client"=>"rest_client","bio"=>"bio","logger"=>"logger","net-ftp-list"=>"net/ftp/list","spreadsheet"=>"spreadsheet"}
   gems.each do |thegem|
     if ( !gemInstalled?(thegem[0]))
       sh %{ gem install #{thegem[0]} --no-rdoc --no-ri } 

@@ -20,6 +20,7 @@ dbspec_file="#{dbdir}/.protkdb.yaml"
 dbspec=YAML.load_file "#{dbspec_file}"
 
 format = dbspec[:format]!=nil ? dbspec[:format] : "fasta"
+
 # Output database filename
 #
 db_filename="#{dbdir}/current.#{format}"
@@ -201,7 +202,7 @@ end
 
 def db_source(db_source)
   current_release_path = "#{$genv.protein_database_root}/#{db_source}/current.fasta"
-  throw "Database source #{db_source} does not exist" unless Pathname.new(current_release_path).exist?
+  throw "Database source #{current_release_path} does not exist" unless Pathname.new(current_release_path).exist?
   current_release_path  
 end
 
@@ -259,7 +260,7 @@ source_files=dbspec[:sources].collect do |raw_source|
   case 
   when raw_source.class==Array
     sf=ftp_source(raw_source)
-  when raw_source =~ /\.fasta$/
+  when (raw_source =~ /\.fasta$/ || raw_source =~ /\.txt$/ || raw_source =~ /\.dat$/ )
     sf=file_source(raw_source)
   else
     sf=db_source(raw_source)
