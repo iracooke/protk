@@ -56,6 +56,11 @@ class ManageDBTool < Tool
         @options.make_blast_index=true
       end      
 
+      @options.make_msgf_index=false
+      @option_parser.on( '--make-msgf-index', 'Create an index suitable for msgf plus (required for msgfplus searches)' ) do  
+        @options.make_msgf_index=true
+      end
+
       @options.decoys=false
       @option_parser.on( '--add-decoys', 'Add random sequences to be used as decoys to the database (required for OMSSA searches)' ) do  
         @options.decoys=true

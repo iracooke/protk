@@ -22,4 +22,5 @@ test:
     omssa_bin: ./bin/omssa
     ncbi_tools_bin: ./bin/ncbi
     openms_bin: ./bin/openms
+    msgf_bin: ./bin/msgf
     log_file: ./Logs/protk.log

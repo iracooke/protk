@@ -69,6 +69,15 @@ class Constants
     end
   end
   
+  def msgf_bin
+    path=@env['msgf_bin']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{File.dirname(__FILE__)}/../#{@env['msgf_bin']}"
+    end
+  end
+
   def protein_database_root
     path=@env['protein_database_root']
     if ( path =~ /^\// )

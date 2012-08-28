@@ -73,7 +73,7 @@ when "add"
   dbspec[:is_annotation_db]=tool.is_annotation_db
   dbspec[:sources]=tool.sources
   dbspec[:make_blast_index]= tool.make_blast_index
-
+  dbspec[:make_msgf_index]= tool.make_msgf_index
   dbspec[:include_filters]= tool.is_annotation_db ? [] : tool.include_filters
   dbspec[:id_regexes]= tool.is_annotation_db ? [] : tool.id_regexes
   dbspec[:decoys]= tool.is_annotation_db ? false : tool.decoys
