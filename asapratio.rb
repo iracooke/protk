@@ -1,7 +1,7 @@
 #
 # Created by John Chilton
 #
-# Run libra quantification against protein prophet results.
+# Run ASAPRatio against protein prophet results.
 #
 #
 #!/bin/sh
@@ -28,7 +28,5 @@ pepxml_path = protxml.find_pep_xml()
 
 genv=Constants.new
 
-condition_file = ARGV.shift
-
-command="#{genv.tpp_bin}/LibraPeptideParser '#{pepxml_path}' -c#{condition_file}; #{genv.tpp_bin}/LibraProteinRatioParser '#{protxml_path}' -c#{condition_file}"
+command="#{genv.tpp_bin}/ASAPRatioPeptideParser '#{pepxml_path}' #{ARGV.join(" ")} ; #{genv.tpp_bin}/ASAPRatioProteinRatioParser '#{protxml_path}'; #{genv.tpp_bin}/ASAPRatioPvalueParser '#{protxml_path}' "
 %x[#{command}]
