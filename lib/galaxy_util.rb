@@ -28,7 +28,7 @@ class GalaxyUtil
     pepxml_path = protxml.find_pep_xml()
 
     protxml_stager = GalaxyStager.new(protxml_path, :extension => ".prot.xml", :force_copy => true)
-    pepxml_stager = GalaxyStager.new(pepxml_path, :extension => ".pep.xml", :force_copy => true)
+    pepxml_stager = GalaxyStager.new(pepxml_path, :name => "interact", :extension => ".xml", :force_copy => true)
     pepxml_path = pepxml_stager.staged_path
     pepxml_stager.replace_references(protxml_path)
     runs = PepXML.new(pepxml_stager.staged_path).find_runs()

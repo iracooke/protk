@@ -3,7 +3,7 @@ if [ -z "$PROTK_RUBY_PATH" ] ; then
     PROTK_RUBY_PATH=`which ruby`
 fi
 
-DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIRECTORY="$( cd "$( dirname "$0" )" && pwd )"
 export RUBYLIB=$RUBYLIB:$DIRECTORY/lib
 
 eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'

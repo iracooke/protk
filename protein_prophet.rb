@@ -24,7 +24,7 @@ require 'prophet_tool'
 require 'galaxy_stager'
 require 'galaxy_util'
 
-for_galaxy = GalaxyUtil.for_galaxy
+for_galaxy = GalaxyUtil.for_galaxy?
 
 if for_galaxy
   # Stage files for galaxy

@@ -5,7 +5,7 @@
 #
 #
 #!/bin/sh
-PROTK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROTK_DIR="$( cd "$( dirname "$0" )" && pwd )"
 . $PROTK_DIR/run_protk.sh
 
 #! ruby
