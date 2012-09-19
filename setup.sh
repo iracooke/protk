@@ -227,6 +227,11 @@ if [ ! -f "config.yml" ]
     then  `cp config.yml.sample config.yml`  
 fi
 
+if [ ! -e Logs ];
+then
+    mkdir Logs
+fi
+
 # Now that we have rvm installed the remaining installation is done with rake
 echo "Passing setup to rake"
 gem install rake --no-rdoc --no-ri
