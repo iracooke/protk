@@ -93,6 +93,11 @@ prophet_tool.option_parser.on( '-F', '--one-ata-time', 'Create a separate pproph
   prophet_tool.options.one_ata_time = true
 end
 
+prophet_tool.options.decoy_prefix="decoy"
+prophet_tool.option_parser.on( '--decoy-prefix', 'Prefix for decoy sequences') do |prefix|
+  prophet_tool.options.decoy_prefix = prefix
+end  
+
 
 prophet_tool.option_parser.parse!
 
@@ -200,9 +205,9 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
   end
 
   if engine=="omssa" || engine=="phenyx"
-    cmd << "-Op -P -ddecoy "
+    cmd << "-Op -P -d#{prophet_tool.decoy_prefix} "
   else
-    cmd << "-ddecoy "
+    cmd << "-d#{prophet_tool.decoy_prefix} "
   end
   
   
