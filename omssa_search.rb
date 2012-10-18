@@ -22,7 +22,9 @@ $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
 require 'constants'
 require 'command_runner'
 require 'search_tool'
+require 'galaxy_util'
 
+for_galaxy = GalaxyUtil.for_galaxy?
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
@@ -105,6 +107,18 @@ ARGV.each do |filename|
     #Missed cleavages
     #
     cmd << " -v #{search_tool.missed_cleavages}"
+
+    # If this is for Galaxy and a data directory has been specified
+    # look for a common unimod.xml file.
+    if for_galaxy
+      galaxy_index_dir = search_tool.galaxy_index_dir
+      if galaxy_index_dir
+        galaxy_unimod = File.join(galaxy_index_dir, "unimod.xml")
+        if( !FileTest.exists?(galaxy_unimod) )      
+          cmd << " -mx #{galaxy_unimod}"
+        end
+      end
+    end
 
     # Precursor tolerance
     #
