@@ -47,6 +47,11 @@ search_tool.option_parser.on(  '--intensity-cut-off co', 'Peak intensity cut-off
   search_tool.options.intensity_cut_off=co
 end
 
+search_tool.options.galaxy_index_dir=nil
+search_tool.option_parser.on( '--galaxy-index-dir dir', 'Specify galaxy index directory, will search for mods file there.' ) do |dir|
+  search_tool.options.galaxy_index_dir=dir
+end
+
 
 search_tool.option_parser.parse!
 
