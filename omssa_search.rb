@@ -118,8 +118,8 @@ ARGV.each do |filename|
     if for_galaxy
       galaxy_index_dir = search_tool.galaxy_index_dir
       if galaxy_index_dir
-        galaxy_unimod = File.join(galaxy_index_dir, "unimod.xml")
-        if( !FileTest.exists?(galaxy_unimod) )      
+        galaxy_unimod = File.join(galaxy_index_dir, "mods.xml")
+        if( FileTest.exists?(galaxy_unimod) )      
           cmd << " -mx #{galaxy_unimod}"
         end
       end
