@@ -35,6 +35,16 @@ class Constants
     @env[method.to_s]
   end
 
+  # Simplify setup of ProtK, by not requiring absolute paths
+  # to executables
+  def build_path(bin_dir, executable)
+    if FileTest.exists?(bin_dir) or @env['force_absolute_path']
+      File.join(bin_dir, executable)
+    else
+      executable
+    end
+  end
+
   # Some constants are paths. They need to be translated into real paths before being returned
   #
   

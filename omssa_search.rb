@@ -61,15 +61,20 @@ genv=Constants.new
 
 # Set search engine specific parameters on the SearchTool object
 #
-omssa_bin="#{genv.omssa_bin}/omssacl"
-omssa2pepxml_bin="#{genv.omssa_bin}/omssa2pepXML"
+omssa_bin=genv.build_path(genv.omssa_bin, "omssacl")
+omssa2pepxml_bin=genv.build_path(genv.omssa_bin, "omssa2pepXML")
+makeblastdb_bin=genv.build_path(genv.ncbi_tools_bin, "makeblastdb")
 
 rt_correct_bin="#{File.dirname(__FILE__)}/correct_omssa_retention_times.rb"
 repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"
 
+cmd=""
 case 
 when Pathname.new(search_tool.database).exist? # It's an explicitly named db
   current_db=Pathname.new(search_tool.database).realpath.to_s
+  if(not FileTest.exists?("#{current_db}.phr"))
+    cmd << "#{makeblastdb_bin} -dbtype prot -parse_seqids -in #{current_db}; "
+  end
 else
   current_db=search_tool.current_database :fasta
 end
@@ -79,7 +84,6 @@ precursor_tol = search_tool.precursor_tol
 
 
 throw "When --output is set only one file at a time can be run" if  ( ARGV.length> 1 ) && ( search_tool.explicit_output!=nil ) 
-
 # Run the search engine on each input file
 #
 ARGV.each do |filename|
@@ -107,7 +111,7 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd= "#{omssa_bin} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
+    cmd << "#{omssa_bin} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
 
     #Missed cleavages
     #
@@ -118,9 +122,13 @@ ARGV.each do |filename|
     if for_galaxy
       galaxy_index_dir = search_tool.galaxy_index_dir
       if galaxy_index_dir
-        galaxy_unimod = File.join(galaxy_index_dir, "mods.xml")
-        if( FileTest.exists?(galaxy_unimod) )      
-          cmd << " -mx #{galaxy_unimod}"
+        galaxy_mods = File.join(galaxy_index_dir, "mods.xml")
+        if( FileTest.exists?(galaxy_mods) )      
+          cmd << " -mx #{galaxy_mods}"
+        end
+        galaxy_usermods = File.join(galaxy_index_dir, "usermods.xml")
+        if( FileTest.exists?(galaxy_usermods) )
+          cmd << " -mux #{galaxy_usermods}"
         end
       end
     end
