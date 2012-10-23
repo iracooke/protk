@@ -94,7 +94,7 @@ prophet_tool.option_parser.on( '-F', '--one-ata-time', 'Create a separate pproph
 end
 
 prophet_tool.options.decoy_prefix="decoy"
-prophet_tool.option_parser.on( '--decoy-prefix', 'Prefix for decoy sequences') do |prefix|
+prophet_tool.option_parser.on( '--decoy-prefix prefix', 'Prefix for decoy sequences') do |prefix|
   prophet_tool.options.decoy_prefix = prefix
 end  
 
