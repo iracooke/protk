@@ -73,6 +73,12 @@ search_tool.option_parser.on( '--algorithm algorithm', "Scoring algorithm (kscor
   search_tool.options.algorithm = algorithm
 end
 
+search_tool.options.cleavage_semi = false
+search_tool.option_parser.on( '--cleavage-semi' ) do 
+  search_tool.options.cleavage_semi = true
+end
+
+
 
 search_tool.option_parser.parse!
 
@@ -124,7 +130,9 @@ def set_option(std_params, tandem_key, value)
 end
 
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
-  
+
+  set_option("scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
+  set_option("protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
 
   # Set the input and output paths 
   #
