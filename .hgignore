@@ -2,7 +2,4 @@
 syntax: regexp
 
 config.yml$
-Databases/
-bin/
-Logs/
-test_data/
+.gem$
