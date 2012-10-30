@@ -1,9 +1,4 @@
-# Unit tests for the CommandRunner class
-#
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../")
-
-require 'command_runner'
+require 'protk/command_runner'
 
 
 describe CommandRunner do

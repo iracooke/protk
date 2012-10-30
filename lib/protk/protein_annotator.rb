@@ -1,15 +1,12 @@
 require 'rubygems'
 require 'spreadsheet'
-
-require 'swissprot_database'
-require 'bio_sptr_extensions'
-require 'protxml'
-require 'spreadsheet_extensions'
-require 'biotools_excel_converter'
-
-require 'plasmodb'
-
-require 'constants'
+require 'protk/swissprot_database'
+require 'protk/bio_sptr_extensions'
+require 'protk/protxml'
+require 'protk/spreadsheet_extensions'
+require 'protk/biotools_excel_converter'
+require 'protk/plasmodb'
+require 'protk/constants'
 
 
 class ProteinAnnotator < Object

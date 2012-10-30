@@ -7,7 +7,7 @@
 
 
 require 'open4'
-require 'constants'
+require 'protk/constants'
 
 class CommandRunner  
   

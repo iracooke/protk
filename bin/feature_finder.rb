@@ -66,7 +66,7 @@ ARGV.each do |filen|
     output_dir=Pathname.new(output_file).dirname.realpath.to_s
     output_base_filename=Pathname.new(output_file).basename.to_s
     cmd=""
-    cmd<<"#{genv.openms_bin}/FeatureFinderCentroided -in #{Pathname.new(input_file).realpath.to_s} -out #{output_dir}/#{output_base_filename} -ini #{ini_file}"
+    cmd<<"#{genv.openms_root}/FeatureFinderCentroided -in #{Pathname.new(input_file).realpath.to_s} -out #{output_dir}/#{output_base_filename} -ini #{ini_file}"
 
     run_ff(genv,tool,cmd,output_file,tool.jobid_from_filename(input_basename))
   

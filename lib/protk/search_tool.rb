@@ -11,7 +11,7 @@
 
 require 'optparse'
 require 'pathname'
-require 'tool'
+require 'protk/tool'
 
 class SearchTool < Tool
 

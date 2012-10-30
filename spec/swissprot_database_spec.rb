@@ -1,14 +1,14 @@
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../")
-
-require "swissprot_database"
+require "protk/swissprot_database"
 
 # We also test for this helper extension here
 #
 require 'bio'
-require 'bio_sptr_extensions'
+require 'protk/bio_sptr_extensions'
+require 'spec_helper'
 
+# All these tests are broken because they require that a swissprot database is actually installed
 
-describe SwissprotDatabase do
+describe SwissprotDatabase, :broken=>true do
 
   before do
 	end

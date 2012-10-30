@@ -1,32 +1,21 @@
+#!/usr/bin/env ruby
 #
 # This file is part of MSLIMS
 # Created by Ira Cooke 12/4/2010
 #
 # Generates files required by the omssa galaxy wrapper
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
 
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-
-require 'constants'
+require 'protk/constants'
 # Environment with global constants
 #
 genv=Constants.new
 
 # Set search engine specific parameters on the SearchTool object
 #
-omssa_bin="#{genv.omssa_bin}/omssacl"
+omssa_root="#{genv.omssa_root}/omssacl"
 # Get ommssa to print out a list of its acceptable modifications
-acceptable_mods=%x[#{omssa_bin} -ml].split(/\n/).collect do |mod|  
+acceptable_mods=%x[#{omssa_root} -ml].split(/\n/).collect do |mod|  
 
 mod_vals=mod.split(":") 
 [mod_vals[0].lstrip.rstrip,mod_vals[1].lstrip.rstrip]

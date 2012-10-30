@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 #
 # This file is part of MSLIMS
 # Created by Ira Cooke 21/7/2011
@@ -5,23 +6,10 @@
 # Takes an input file with a list of identified proteins and creates a table with swissprot/uniprot database details in various columns for each protein in the input file.
 #
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
-
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-require 'constants'
-require 'command_runner'
-require 'prophet_tool'
-require 'protein_annotator'
+require 'protk/constants'
+require 'protk/command_runner'
+require 'protk/prophet_tool'
+require 'protk/protein_annotator'
 
 
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 #
 # This file is part of protk
 # Created by Ira Cooke 18/1/2011
@@ -5,22 +6,10 @@
 # A wrapper for PeptideProphet
 #
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
 
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-
-require 'constants'
-require 'command_runner'
-require 'prophet_tool'
+require 'protk/constants'
+require 'protk/command_runner'
+require 'protk/prophet_tool'
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
@@ -141,7 +130,7 @@ end
 
 def generate_command(genv,prophet_tool,inputs,output,database,engine)
   
-  cmd="#{genv.tpp_bin}/xinteract -N#{output}  -l7 -eT -D#{database} "
+  cmd="#{genv.xinteract} -N#{output}  -l7 -eT -D#{database} "
 
   if prophet_tool.glyco 
     cmd << " -Og "

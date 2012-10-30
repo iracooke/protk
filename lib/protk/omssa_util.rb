@@ -1,5 +1,5 @@
 require 'libxml'
-require 'mascot_util'
+require 'protk/mascot_util'
 include LibXML
 
 

@@ -1,21 +1,10 @@
+#!/usr/bin/env ruby
 #
 # This file is part of MSLIMS
 # Created by Ira Cooke 12/4/2010
 #
 # Reads a unimod xml file (eg from a Mascot installation) and produces a loc file with names of allowable chemical modifications
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
-
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
-
 
 require 'libxml'
 

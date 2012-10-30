@@ -1,0 +1,10 @@
+# Lists applications and their package dependencies
+# For each application here include a shell script named install-appname.sh 
+#
+
+common:
+- wget
+- gd
+- libpng12
+- cpanm
+- libxml2

@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 #
 # This file is part of protk
 # Created by Ira Cooke 13/3/2012
@@ -5,34 +6,13 @@
 # Manage named protein databases
 #
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
 
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-
-require 'constants'
+require 'protk/constants'
+require 'protk/manage_db_tool'
 require 'yaml'
-require 'manage_db_tool'
 require 'pp'
 
-def all_database_names(genv)
-  all_names=[]
-  Dir.foreach(genv.protein_database_root) do |db_subdir|
-          db_specfile="#{genv.protein_database_root}/#{db_subdir}/.protkdb.yaml"
-        if ( Pathname.new(db_specfile).exist?)
-          all_names.push db_subdir
-        end
-  end
-  return all_names
-end
+
 
 
 command=ARGV[0]
@@ -62,35 +42,34 @@ case command
 when "add"
   throw "Must specify a database name" if dbname==nil 
   throw "all is a reserved word and cannot be used as a database name" if ( dbname=="all")
-  throw "Database #{dbname} exists" if genv.dbexist?(dbname) && !tool.update_spec
+  throw "Database #{dbname} exists. Use --update-spec to overwrite." if genv.dbexist?(dbname) && !tool.update_spec
   throw "Database #{dbname} cannot be updated because it doesn't exist" if !genv.dbexist?(dbname) && tool.update_spec
+
+  dbspec = tool.get_predefined_definition dbname
+  throw "#{dbname} is not a predefined database"  if tool.predefined && dbspec=={}
 
   genv.log("Adding new database #{dbname}",:info) if !tool.update_spec
   genv.log("Updating spec for #{dbname}",:info) if tool.update_spec
 
-  # Create the database specifiation dictionary
-  dbspec={}
-  dbspec[:is_annotation_db]=tool.is_annotation_db
-  dbspec[:sources]=tool.sources
-  dbspec[:make_blast_index]= tool.make_blast_index
-  dbspec[:make_msgf_index]= tool.make_msgf_index
-  dbspec[:include_filters]= tool.is_annotation_db ? [] : tool.include_filters
-  dbspec[:id_regexes]= tool.is_annotation_db ? [] : tool.id_regexes
-  dbspec[:decoys]= tool.is_annotation_db ? false : tool.decoys
-  dbspec[:archive_old]= tool.is_annotation_db ? false : tool.archive_old
-  dbspec[:decoy_prefix]= tool.decoy_prefix
-  dbspec[:format] = tool.db_format
-    
-  # Create the database directory
-  dbdir="#{genv.protein_database_root}/#{dbname}"
-  Dir.mkdir(dbdir) unless tool.update_spec
-
-  File.open("#{dbdir}/.protkdb.yaml", "w") {|file| file.puts(dbspec.to_yaml) }
+  if dbspec=={} 
+     # Create the database specifiation dictionary (or make ammendments if a predefinition was used)
+     dbspec[:is_annotation_db]=tool.is_annotation_db
+     dbspec[:sources]=tool.sources
+     dbspec[:make_blast_index]= tool.make_blast_index
+     dbspec[:make_msgf_index]= tool.make_msgf_index
+     dbspec[:include_filters]= tool.is_annotation_db ? [] : tool.include_filters
+     dbspec[:id_regexes]= tool.is_annotation_db ? [] : tool.id_regexes
+     dbspec[:decoys]= tool.is_annotation_db ? false : tool.decoys
+     dbspec[:archive_old]= tool.is_annotation_db ? false : tool.archive_old
+     dbspec[:decoy_prefix]= tool.decoy_prefix
+     dbspec[:format] = tool.db_format
+  end  
+  tool.add dbspec, dbname
 
 when "update"
   throw "Must specify a database name" if dbname==nil
   if ( dbname=="all" )
-    dbnames=all_database_names(genv)
+    dbnames=tool.all_database_names(genv)
   else
     dbnames=[dbname]
   end
@@ -100,7 +79,7 @@ when "update"
     dbdir="#{genv.protein_database_root}/#{db}"
     throw "Could not find required spec file #{dbdir}/.protkdb.yaml" unless Pathname.new("#{dbdir}/.protkdb.yaml").exist?
    runner=CommandRunner.new(genv)
-    runner.run_local("rake -f #{File.dirname(__FILE__)}/manage_db_rakefile.rake #{db}")
+    runner.run_local("rake -f #{tool.rakefile_path} #{db} ")
   } 
 when "list"
   

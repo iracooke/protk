@@ -1,8 +1,7 @@
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-require 'constants'
+require 'protk/constants'
+require 'protk/randomize'
 require 'uri'
 require 'digest/md5'
-require 'rubygems'
 require 'net/ftp'
 require 'net/ftp/list'
 require 'bio'
@@ -16,6 +15,7 @@ dbname=ARGV[0]
 #
 $genv=Constants.new()
 dbdir="#{$genv.protein_database_root}/#{dbname}"
+
 dbspec_file="#{dbdir}/.protkdb.yaml"
 dbspec=YAML.load_file "#{dbspec_file}"
 
@@ -209,36 +209,46 @@ end
 
 def ftp_source(ftpsource)
   
-  release_notes_url=ftpsource[1]
-  data_rn=URI.parse(release_notes_url)
-  release_notes_file_path="#{$genv.database_downloads}/#{data_rn.host}/#{data_rn.path}"
 
   data_uri=URI.parse(ftpsource[0])
   data_file_path="#{$genv.database_downloads}/#{data_uri.host}/#{data_uri.path}"
+  unpacked_data_path=data_file_path.gsub(/\.gz$/,'')
 
-  task :check_rn do
-    check_ftp_release_notes(release_notes_url) 
+  release_notes_url=ftpsource[1]
+  release_notes_exist=true
+  release_notes_exist=false if release_notes_url =~ /^\s*none\s*$/
+  if release_notes_exist
+    data_rn=URI.parse(release_notes_url) unless 
+    release_notes_file_path="#{$genv.database_downloads}/#{data_rn.host}/#{data_rn.path}"
+
+    task :check_rn do
+      check_ftp_release_notes(release_notes_url) 
+    end
+
+    file release_notes_file_path => :check_rn
+  else
+    task :check_date do
+
+    end
   end
 
-  file release_notes_file_path => :check_rn
-
-  unpacked_data_path=data_file_path.gsub(/\.gz$/,'')
   
   
   if ( data_file_path=~/\*/) # A wildcard
     unpacked_data_path=data_file_path.gsub(/\*/,"_all_").gsub(/\.gz$/,'')
   end
 
-  file unpacked_data_path => release_notes_file_path do #Unpacking. Includes unzipping and/or concatenating
+  file unpacked_data_path  do #Unpacking. Includes unzipping and/or concatenating
     download_ftp_source(ftpsource[0])
 
     case
     when data_file_path=~/\*/ # Multiple files to unzip/concatenate and we don't know what they are yet
       file_pattern = Pathname.new(data_file_path).basename.to_s
-      unzipcmd="gunzip -vdf #{file_pattern}"
-      p "Unzipping #{unzipcmd} ... this could take a while"
-      sh %{ cd #{Pathname.new(data_file_path).dirname}; #{unzipcmd}  }             
-
+      if file_pattern =~ /.gz$/
+        unzipcmd="gunzip -vdf #{file_pattern}"
+        p "Unzipping #{unzipcmd} ... this could take a while"
+        sh %{ cd #{Pathname.new(data_file_path).dirname}; #{unzipcmd}  }             
+      end
 
       file_pattern.gsub!(/\.gz$/,'')
       catcmd="cat #{file_pattern} > #{unpacked_data_path}"
@@ -247,10 +257,14 @@ def ftp_source(ftpsource)
       sh %{ cd #{Pathname.new(data_file_path).dirname}; #{catcmd}  }
       
     else # Simple case. A single file 
-      p "Unzipping #{Pathname.new(data_file_path).basename} ... "
-      sh %{ cd #{Pathname.new(data_file_path).dirname}; gunzip -f #{Pathname.new(data_file_path).basename}  }           
+      if file_pattern =~ /.gz$/
+        p "Unzipping #{Pathname.new(data_file_path).basename} ... "
+        sh %{ cd #{Pathname.new(data_file_path).dirname}; gunzip -f #{Pathname.new(data_file_path).basename}  }           
+      end
     end
   end
+
+  task release_notes_file_path => release_notes_file_path if release_notes_exist
 
   unpacked_data_path
 end
@@ -331,7 +345,7 @@ file raw_db_filename => [source_files,dbspec_file].flatten do
     end
     output_fh.close
   else # Other formats just copy a file across ... must be a single source
-    
+
     throw "Only a single source file is permitted for formats other than fasta" unless source_files.length == 1
     
     sh "cp #{source_files[0]} #{raw_db_filename}" do |ok,res|
@@ -366,8 +380,8 @@ file decoy_db_filename => raw_db_filename do
   
   p "Generating decoy sequences ... this could take a while"  
   # Make decoys, concatenate and delete decoy only file
-  cmd = "#{$genv.bin}/make_random #{raw_db_filename} #{db_length} #{decoys_filename} #{decoy_prefix}"
-  cmd << "; cat #{raw_db_filename} #{decoys_filename} >> #{decoy_db_filename}; rm #{decoys_filename}"
+  Randomize.make_decoys #{raw_db_filename} #{db_length} #{decoys_filename} #{decoy_prefix}"
+  cmd << "cat #{raw_db_filename} #{decoys_filename} >> #{decoy_db_filename}; rm #{decoys_filename}"
   sh %{ #{cmd} }
 end
 
@@ -422,7 +436,7 @@ if dbspec[:make_blast_index]
   #  task :make_blast_index => blast_index_files  do
   blast_index_files.each do |indfile|
     file indfile => db_filename do
-      cmd="cd #{dbdir}; #{$genv.ncbi_tools_bin}/makeblastdb -in #{db_filename} -parse_seqids -dbtype prot"
+      cmd="cd #{dbdir}; #{$genv.makeblastdb} -in #{db_filename} -parse_seqids -dbtype prot"
       p "Creating blast index"
       sh %{ #{cmd} }
     end

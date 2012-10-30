@@ -1,31 +1,16 @@
+#!/usr/bin/env ruby
 #
 # This file is part of protk
 # Created by Ira Cooke 17/12/2010
 #
 # Runs an MS/MS search using the X!Tandem search engine
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
 
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
-$VERBOSE=nil
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
-
-
-require 'constants'
-require 'command_runner'
-require 'search_tool'
+require 'protk/constants'
+require 'protk/command_runner'
+require 'protk/search_tool'
+require 'protk/xtandem_defaults'
 require 'libxml'
-
-
 
 include LibXML
 
@@ -40,8 +25,7 @@ search_tool.jobid_prefix="x"
 search_tool.option_parser.banner = "Run an X!Tandem msms search on a set of mzML input files.\n\nUsage: tandem_search.rb [options] file1.mzML file2.mzML ..."
 search_tool.options.output_suffix="_tandem"
 
-tandem_defaults="#{File.dirname(__FILE__)}/params/tandem_params.xml"
-
+tandem_defaults=XTandemDefaults.new.path
 search_tool.options.tandem_params=tandem_defaults
 search_tool.option_parser.on( '-T', '--tandem-params tandem', 'XTandem parameters to use' ) do |parms| 
   search_tool.options.tandem_params = parms
@@ -62,12 +46,9 @@ search_tool.option_parser.parse!
 
 # Set search engine specific parameters on the SearchTool object
 #
-tandem_bin="#{genv.tpp_bin}/tandem.exe"
+tandem_bin="#{genv.xtandem}"
 
-if ( !FileTest.exists?(tandem_bin))
-  tandem_bin="#{genv.tpp_bin}/tandem"
-  throw "Could not find X!Tandem executable" unless FileTest.exists?(tandem_bin)
-end
+throw "Could not find X!Tandem executable" unless FileTest.exists?(tandem_bin)
 
 tandem_params=search_tool.tandem_params
 
@@ -88,7 +69,7 @@ std_params=params_parser.parse
 
 # Parse taxonomy template file
 #
-taxo_parser=XML::Parser.file("#{File.dirname(__FILE__)}/params/taxonomy_template.xml")
+taxo_parser=XML::Parser.file(XTandemDefaults.new.taxonomy_path)
 taxo_doc=taxo_parser.parse
 
 # Galaxy changes things like @ to __at__ we need to change it back
@@ -119,7 +100,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   #
   scoring_notes=std_params.find('/bioml/note[@type="input" and @label="list path, default parameters"]')
   throw "Exactly one list path, default parameters note is required in the parameter file" unless scoring_notes.length==1
-  scoring_notes[0].content="#{genv.tpp_bin}/isb_default_input_kscore.xml"
+  scoring_notes[0].content="#{genv.tpp_root}/bin/isb_default_input_kscore.xml"
 
   # Taxonomy and Database
   #  
@@ -284,7 +265,7 @@ ARGV.each do |filename|
     #
     unless search_tool.no_pepxml
       repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"      
-      cmd << "; #{genv.tpp_bin}/Tandem2XML #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}; rm #{output_path}"
+      cmd << "; #{genv.tandem2xml} #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}; rm #{output_path}"
     end
 
     # Add a cleanup command unless the user wants to keep params files

@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'bio'
-require 'constants'
+require 'protk/constants'
 
 # Provides fast indexed access to a swissprot database in a flat .dat file
 #

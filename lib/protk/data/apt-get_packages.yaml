@@ -1,0 +1,47 @@
+# Lists applications and their package dependencies
+# For each application here include a shell script named install-appname.sh 
+#
+
+rvm:
+- curl
+- git
+- patch
+- build-essential
+- openssl
+- libreadline6
+- libreadline6-dev
+- openssl
+- libreadline6
+- libreadline6-dev
+- git-core
+- zlib1g
+- zlib1g-dev
+- libssl-dev
+- autoconf
+- libc6-dev
+- ncurses-dev
+- automake
+- libtool
+- bison
+- subversion
+- pkg-config
+
+galaxy:
+- mercurial
+
+tpp:
+- cpanminus
+- g++
+- subversion
+- libbz2-dev
+- swig
+- expat
+- libpng12-dev
+- gnuplot
+- libperl-dev
+- build-essential
+- libgd2-xpm
+- libfuse-dev
+- libcurl4-openssl-dev
+- libxml2-dev
+- libgd2-xpm-dev

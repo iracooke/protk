@@ -1,27 +1,15 @@
+#!/usr/bin/env ruby
 #
 # This file is part of protk
 # Created by Ira Cooke 14/12/2010
 #
 # Runs an MS/MS search using the OMSSA search engine
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
-
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
 $VERBOSE=nil
 
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-
-require 'constants'
-require 'command_runner'
-require 'search_tool'
+require 'protk/constants'
+require 'protk/command_runner'
+require 'protk/search_tool'
 
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
@@ -54,9 +42,6 @@ genv=Constants.new
 
 # Set search engine specific parameters on the SearchTool object
 #
-omssa_bin="#{genv.omssa_bin}/omssacl"
-omssa2pepxml_bin="#{genv.omssa_bin}/omssa2pepXML"
-
 rt_correct_bin="#{File.dirname(__FILE__)}/correct_omssa_retention_times.rb"
 repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"
 
@@ -100,7 +85,7 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd= "#{omssa_bin} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
+    cmd= "#{genv.omssacl} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
 
     #Missed cleavages
     #

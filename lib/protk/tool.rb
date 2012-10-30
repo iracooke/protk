@@ -8,7 +8,7 @@
 require 'ostruct'
 require 'optparse'
 require 'pathname'
-require 'command_runner'
+require 'protk/command_runner'
 
 class Tool
 
@@ -22,15 +22,24 @@ class Tool
 
   # Prefix for background jobs
   # x = X!Tandem, o=OMSSA, p="Phenyx", m="Mascot"
+  # Can't use attr_accessor here because we want this available to subclasses
   #
-  attr :jobid_prefix, "x"
-  
+  def jobid_prefix
+    @jobid_prefix
+  end
 
+  def jobid_prefix=(p)
+    @jobid_prefix=p
+  end
 
   # Provides direct access to options through methods of the same name
   #
-  def method_missing(method)
-    @options.send(method)
+  def method_missing(meth, *args, &block)
+    if ( args.length==0 && block==nil)
+      @options.send meth
+    else
+      super
+    end
   end
   
   
@@ -41,6 +50,7 @@ class Tool
   # Also creates an option_parser with default options common to all tools
   #
   def initialize(option_support={:help=>true})
+    @jobid_prefix = "x"
     @options = OpenStruct.new
     options.library = []
     options.inplace = false

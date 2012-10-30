@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bio'
-require 'constants'
-require 'eupathdb_gene_information_table'
+require 'protk/constants'
+require 'protk/eupathdb_gene_information_table'
 
 # Provides fast indexed access to a swissprot database in a flat .dat file
 #

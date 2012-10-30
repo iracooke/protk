@@ -1,0 +1,25 @@
+#
+# This is a predefined setup file for manage_db 
+#
+# Swissprot database filtered for human entries only and appending the CRAP database from gpmdb
+# Requires that CRAP is installed first
+#
+---
+:description: Swissprot database filtered for human entries only and appending the CRAP database from gpmdb
+:decoy_prefix: decoy_
+:make_msgf_index: true
+:make_blast_index: true
+:include_filters: 
+- - OS=Homo\ssapiens
+- - .*
+:format: fasta
+:id_regexes: 
+- sp\|.*\|(.*?)\s
+- sp\|(.*)\|
+:decoys: true
+:archive_old: true
+:sources: 
+- - ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+  - ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt
+- downloads/ftp.gpmdb.org/fasta/crap/crap.fasta
+:is_annotation_db: false

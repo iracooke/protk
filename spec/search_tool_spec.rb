@@ -1,9 +1,4 @@
-# Unit tests for the SearchTool class
-#
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../")
-
-require 'search_tool'
+require 'protk/search_tool'
 
 
 describe SearchTool do

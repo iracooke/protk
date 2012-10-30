@@ -1,6 +1,4 @@
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/../")
-
-require 'galaxy_stager'
+require 'protk/galaxy_stager'
 require 'tempfile'
 
 describe GalaxyStager do

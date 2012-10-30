@@ -13,20 +13,22 @@ class Constants
 
   # A Hash holding all the constants
   #
-  attr :env
+  @env
   
   # These are logger attributes with thresholds as indicated
   #  DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
   #Debug (development mode) or Info (production)
   #
-  attr :stdout_logger 
+  @stdout_logger 
   
   #Warn
   #
-  attr :file_logger 
+  @file_logger 
 
 
 
+  attr :info_level
+  attr :protk_dir
 
   # Provides direct access to constants through methods of the same name
   # This will be used for all constants other than paths
@@ -39,33 +41,65 @@ class Constants
   #
   
   def bin
-    return "#{File.dirname(__FILE__)}/../bin"
+    return "#{@protk_dir}/bin"
   end
   
-  def tpp_bin
-    path=@env['tpp_bin']
+  def tpp_root
+    path=@env['tpp_root']
     if ( path =~ /^\// )
       return path
     else
-      return "#{File.dirname(__FILE__)}/../#{@env['tpp_bin']}"
-    end
-  end
-  
-  def omssa_bin
-    path=@env['omssa_bin']
-    if ( path =~ /^\// )
-      return path
-    else
-      return "#{File.dirname(__FILE__)}/../#{@env['omssa_bin']}"
+      return "#{@protk_dir}/#{@env['tpp_root']}"
     end
   end
 
-  def openms_bin
-    path=@env['openms_bin']
+  def xinteract
+    return "#{self.tpp_root}/bin/xinteract"
+  end
+
+  def xtandem    
+    return "#{self.tpp_root}/bin/tandem"
+  end
+
+  def tandem2xml
+    return "#{self.tpp_root}/bin/Tandem2XML"
+  end
+  
+  def interprophetparser
+    return "#{self.tpp_root}/bin/InterProphetParser"
+  end
+
+  def proteinprophet
+    return "#{self.tpp_root}/bin/ProteinProphet"
+  end
+
+  def mascot2xml
+    return "#{self.tpp_root}/bin/Mascot2XML"
+  end
+  
+  def omssa_root
+    path=@env['omssa_root']
     if ( path =~ /^\// )
       return path
     else
-      return "#{File.dirname(__FILE__)}/../#{@env['openms_bin']}"
+      return "#{@protk_dir}/#{@env['omssa_root']}"
+    end
+  end
+
+  def omssacl
+    return "#{self.omssa_root}/omssacl"
+  end
+
+  def omssa2pepxml
+    return "#{self.omssa_root}/omssa2pepXML"
+  end
+
+  def openms_root
+    path=@env['openms_root']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{@protk_dir}/#{@env['openms_root']}"
     end
   end
   
@@ -74,7 +108,7 @@ class Constants
     if ( path =~ /^\// )
       return path
     else
-      return "#{File.dirname(__FILE__)}/../#{@env['msgf_bin']}"
+      return "#{@protk_dir}/#{@env['msgf_bin']}"
     end
   end
 
@@ -83,7 +117,7 @@ class Constants
     if ( path =~ /^\// )
       return path
     else
-      return "#{File.dirname(__FILE__)}/../#{@env['protein_database_root']}"
+      return "#{@protk_dir}/#{@env['protein_database_root']}"
     end
   end
   
@@ -91,13 +125,17 @@ class Constants
     return "#{self.protein_database_root}/downloads"
   end
   
-  def ncbi_tools_bin
-    path=@env['ncbi_tools_bin']
+  def blast_root
+    path=@env['blast_root']
     if ( path =~ /^\// )
       return path
     else
-      return "#{File.dirname(__FILE__)}/../#{@env['ncbi_tools_bin']}"   
+      return "#{@protk_dir}/#{@env['blast_root']}"   
     end 
+  end
+
+  def makeblastdb
+    return "#{self.blast_root}/bin/makeblastdb"
   end
   
   def log_file
@@ -105,7 +143,7 @@ class Constants
     if ( path =~ /^\// )
       return path
     else
-      return "#{File.dirname(__FILE__)}/../#{@env['log_file']}"
+      return "#{@protk_dir}/#{@env['log_file']}"
     end
   end
 
@@ -113,18 +151,25 @@ class Constants
   # Read the global constants file and initialize our class @env variable
   # Initialize loggers
   #
-  def initialize
-        
-    config_yml = YAML.load_file "#{File.dirname(__FILE__)}/../config.yml"
+  def initialize 
+
+    @protk_dir="#{Dir.home}/.protk"
 
 
-    throw "Unable to read the config file at #{File.dirname(__FILE__)}/../config.yml" unless config_yml!=nil
+    default_config_yml = YAML.load_file "#{File.dirname(__FILE__)}/data/default_config.yml"
+    throw "Unable to read the config file at #{File.dirname(__FILE__)}/data/default_config.yml" unless default_config_yml!=nil
 
-    run_setting=config_yml['run_setting']    
-    throw "No run_setting found in config file" unless run_setting!=nil
+    @env=default_config_yml
+    throw "No data found in config file" unless @env!=nil
+    @info_level=default_config_yml['message_level']
 
-    @env=config_yml[run_setting]    
-    throw "No data found for run setting #{run_setting} in config file" unless @env!=nil
+    
+  end
+
+
+  def initialize_loggers
+    log_dir = Pathname.new(self.log_file).dirname
+    log_dir.mkpath unless log_dir.exist?
 
     @stdout_logger=Logger.new(STDOUT)
     @file_logger=Logger.new(self.log_file,'daily')
@@ -133,9 +178,8 @@ class Constants
     throw "Unable to create stdout logger " unless @stdout_logger!=nil
 
   
-    info_level=config_yml['message_level']
 
-    case info_level
+    case @info_level
     when "info"
       @stdout_logger.level=Logger::INFO
     when "debug"    
@@ -143,15 +187,15 @@ class Constants
     when "warn"
       @stdout_logger.level=Logger::WARN      
     end
-    
+
   end
-
-
-
 
   # Write a message to all logger objects
   #
   def log(message,level)
+    if ( @stdout_logger == nil || @file_logger == nil)
+      initialize_loggers
+    end
     @stdout_logger.send(level,message)
     @file_logger.send(level,message)        
   end
@@ -186,50 +230,6 @@ class Constants
   
   end
 
-
-#
-# OLD DATABASE ACCESS/MANAGEMENT METHODS #
-#
-
-#  def path_for_builtin_database(dbroot,dbname,db_type,db_suffix="")
-#    
-#    current_dbroot=Pathname.new("#{dbroot}/#{dbname}")
-#    throw "Error: Specified database #{current_dbroot.to_s} does not exist" unless current_dbroot.exist?
-#    
-#    candidates=current_dbroot.children
-#    
-#    # Filter candidates with the right filenames
-#    #
-#    candidates = candidates.find_all { |dbpath|
-#      dbstring=dbpath.basename.to_s
-#      /#{dbname}_(\d+)#{db_suffix}\./i.match(dbstring)!=nil
-#    }
-#    
-#    dates=candidates.collect { |dbpath| 
-#       dbstring=dbpath.basename.to_s
-#       m=/#{dbname}_(\d+)#{db_suffix}\./i.match(dbstring)
-#       m[1].to_i
-#     }
-#     
-#     maxdate=dates[0]
-#     dates.each { |d| 
-#       if ( d > maxdate )
-#         maxdate=d
-#       end
-#     }
-#     extension=""
-#     case db_type
-#     when :fasta
-#       extension=".fasta"
-#     end
-#
-#     # Enabling this will force a transition to a new db naming scheme. Better one though
-#     #
-#     #   "#{dbroot}/#{dbname.downcase}/#{dbname.downcase}_#{maxdate}_DECOY#{extension}"
-#
-#          
-#     "#{dbroot}/#{dbname}/#{dbname.downcase}_#{maxdate}#{db_suffix}#{extension}"
-#   end
 
    # Runs the given command in a local shell
    # 
@@ -277,7 +277,7 @@ class Constants
      if ( result=="")
        
        throw "Unable to create temporary database #{dest_fasta_file_path}" unless dest_fasta_file_path.exist?
-       cmd="#{self.ncbi_tools_bin}/makeblastdb -in #{dest_fasta_file_path} -parse_seqids"
+       cmd="#{self.makeblastdb} -in #{dest_fasta_file_path} -parse_seqids"
        p cmd
        self.run_local(cmd)
        

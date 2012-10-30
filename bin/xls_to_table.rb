@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 #
 # This file is part of protk
 # Created by Ira Cooke 18/1/2011
@@ -5,22 +6,10 @@
 # Converts an Excel Spreadsheet to a tab delimited table
 #
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
 
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-
-require 'constants'
-require 'command_runner'
-require 'tool'
+require 'protk/constants'
+require 'protk/command_runner'
+require 'protk/tool'
 require 'spreadsheet'
 
 # Setup command-line options for this tool. 

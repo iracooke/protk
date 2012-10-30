@@ -1,26 +1,19 @@
 # This file is part of protk
 # Created by Ira Cooke 14/12/2010
 #
-# This file contains global constants and settings. 
-# You should edit these settings to reflect your system setup
+# This file contains default global constants and settings. 
+# User editable settings are found in ~/.protk/config.yml
 #
 
-# Set to one of the user-defined environment below
-#
-run_setting: test
-
-test:
-    message_level: info
-    tpp_bin: ./bin/tpp
-    protein_database_root: ./Databases
-    plasmodb_annotation_database: plasmodb_annotation
-    uniprot_sprot_annotation_database: swissprot_annotation
-    uniprot_trembl_annotation_database: trembl_annotation
-    galaxy_root: ../galaxy
-    default_mascot_server: www.matrixscience.com
-    has_pbs: false
-    omssa_bin: ./bin/omssa
-    ncbi_tools_bin: ./bin/ncbi
-    openms_bin: ./bin/openms
-    msgf_bin: ./bin/msgf
-    log_file: ./Logs/protk.log
+message_level: info
+protein_database_root: Databases
+plasmodb_annotation_database: plasmodb_annotation
+uniprot_sprot_annotation_database: swissprot_annotation
+uniprot_trembl_annotation_database: trembl_annotation
+galaxy_root: galaxy
+default_mascot_server: www.matrixscience.com
+tpp_root: tools/tpp
+omssa_root: tools/omssa
+openms_root: tools/openms
+blast_root: tools/blast
+log_file: Logs/protk.log

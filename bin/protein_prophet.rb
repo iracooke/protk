@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 #
 # This file is part of protk
 # Created by Ira Cooke 17/1/2011
@@ -5,24 +6,12 @@
 # Runs the Protein Prophet tool on a set of pep.xml files. Accepts input from peptide_prophet or interprophet.
 #
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
 
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
-
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-
-require 'constants'
-require 'command_runner'
-require 'prophet_tool'
-require 'galaxy_stager'
-require 'galaxy_util'
+require 'protk/constants'
+require 'protk/command_runner'
+require 'protk/prophet_tool'
+require 'protk/galaxy_stager'
+require 'protk/galaxy_util'
 
 for_galaxy = GalaxyUtil.for_galaxy
 
@@ -117,7 +106,7 @@ p output_file
 
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
-  cmd="#{genv.tpp_bin}/ProteinProphet "
+  cmd="#{genv.proteinprophet} "
 
   inputs = ARGV.collect {|file_name| 
     file_name.chomp

@@ -7,9 +7,62 @@
 
 require 'optparse'
 require 'ostruct'
-require 'tool'
+require 'protk/tool'
 
 class ManageDBTool < Tool
+
+  def add dbspec, dbname
+    genv=Constants.new()
+    dbdir="#{genv.protein_database_root}/#{dbname}"
+    %x[mkdir -p #{dbdir}]
+
+    File.open("#{dbdir}/.protkdb.yaml", "w") {|file| file.puts(dbspec.to_yaml) }
+  end
+
+  def predefined_databases_help
+    this_dir=File.dirname(__FILE__)
+    definition_files=Dir.glob("#{this_dir}/data/predefined_db.*")
+    help_string=""
+    for fn in definition_files
+      name=Pathname.new(fn).basename.to_s.split(".")[1]
+      desc=YAML.load(File.read(fn))[:description]
+      help_string << "\t\t\t\t\t#{name} : #{desc}\n"
+    end
+
+    help_string
+  end
+
+  def predefined_names
+    this_dir=File.dirname(__FILE__)
+    definition_files=Dir.glob("#{this_dir}/data/predefined_db.*")
+    definition_files.collect { |fn| Pathname.new(fn).basename.to_s.split(".")[1] }
+  end
+
+  def get_predefined_definition name
+    this_dir=File.dirname(__FILE__)
+    filename="#{this_dir}/data/predefined_db.#{name}.yaml"
+    return {} unless Pathname.new(filename).exist?
+    if predefined_names.include? name
+      return YAML.load(File.read(filename))
+    end
+    return {}
+  end
+
+
+  def all_database_names(genv)
+    all_names=[]
+    Dir.foreach(genv.protein_database_root) do |db_subdir|
+      db_specfile="#{genv.protein_database_root}/#{db_subdir}/.protkdb.yaml"
+      if ( Pathname.new(db_specfile).exist?)
+        all_names.push db_subdir
+      end
+    end
+    return all_names
+  end
+
+  def rakefile_path
+    "#{File.dirname(__FILE__)}/manage_db_rakefile.rake"
+  end
 
   # Initializes the commandline options
   def initialize(command)
@@ -22,6 +75,11 @@ class ManageDBTool < Tool
     when "add"          
       
       @options.sources=[]
+
+      @options.predefined=false
+      @option_parser.on( '--predefined', "Install a database from one of protk\'s predefined definitions.\n\t\t\t\t\tAvailable definitions are;\n#{predefined_databases_help}" ) do 
+        @options.predefined=true
+      end
       
       @option_parser.on( '--db-source dbname', 'A named database to use an an input source. Multiple db sources may be specified' ) do  |db|
         @options.sources.push db
@@ -31,12 +89,12 @@ class ManageDBTool < Tool
         @options.sources.push fs
       end
 
-      @option_parser.on( '--ftp-source fs', 'A space separated pair of urls. The first is an ftp url to a fasta file to use as an input source. The second is an ftp url to release notes file or other file which can be checked to see if the database requires an update. Multiple ftp sources may be specified' ) do  |ftps|
+      @option_parser.on( '--ftp-source fs', "A space separated pair of urls. \n\t\t\t\t\tThe first is an ftp url to a fasta file to use as an input source.\n\t\t\t\t\tThe second is an ftp url to release notes file or other file which can be checked to see if the database requires an update. If no such url exists type \"none\" \n\t\t\t\t\tMultiple ftp sources may be specified" ) do  |ftps|
         @options.sources.push ftps.split(/\s+/)
       end
 
       @options.include_filters=[]
-      @option_parser.on( '--include-filters rx', 'A comma separated series of regular expressions to use as filters. Each time this argument is encountered is adds a set of filters for another source file, in the order that source files were added. If you use multiple source files you will need multiple --incldue-filters' ) do  |tx|
+      @option_parser.on( '--include-filters rx', "A comma separated series of regular expressions to use as filters. \n\t\t\t\t\tEach time this argument is encountered is adds a set of filters for another source file, in the order that source files were added. \n\t\t\t\t\tIf you use multiple source files you will need multiple --include-filters" ) do  |tx|
 
         throw "Specified include filter #{tx} is not in the format /regex1/,/regex2/" unless match=tx.match(/\/(.*)\//)
         tx= match[1]

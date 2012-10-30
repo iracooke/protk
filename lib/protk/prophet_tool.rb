@@ -9,7 +9,7 @@ require 'optparse'
 require 'ostruct'
 require 'pathname'
 require 'libxml'
-require 'search_tool'
+require 'protk/search_tool'
 
 class ProphetTool < SearchTool
 

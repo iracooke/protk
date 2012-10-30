@@ -1,0 +1,20 @@
+#
+# This is a predefined setup file for manage_db 
+#
+# Swissprot_uniprot annotation database (full entries for each protein)
+#
+--- 
+:description: Swissprot_uniprot annotation database (full entries for each protein)
+:archive_old: false
+:is_annotation_db: true
+:decoy_prefix: decoy_
+:include_filters: []
+
+:format: dat
+:id_regexes: []
+
+:make_blast_index: false
+:sources: 
+- - ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.dat.gz
+  - ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt
+:decoys: false

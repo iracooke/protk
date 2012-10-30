@@ -1,0 +1,20 @@
+#
+# This is a predefined setup file for manage_db 
+#
+# Fasta files to be indexed for annotation (by protvis)
+#
+--- 
+:description: An indexed version of the swissprot database for annotation (sequences only)
+:archive_old: false
+:is_annotation_db: true
+:decoy_prefix: decoy_
+:make_blast_index: true
+:format: fasta
+:include_filters: []
+
+:id_regexes: []
+
+:sources: 
+- - ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+  - ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt
+:decoys: false

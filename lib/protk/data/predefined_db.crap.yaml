@@ -1,0 +1,19 @@
+#
+# This is a predefined setup file for manage_db 
+#
+# The crap database from gpmdb
+#
+--- 
+:description: The crap database from gpmdb
+:decoy_prefix: decoy_
+:make_blast_index: true
+:include_filters: []
+:format: fasta
+:id_regexes: 
+- sp\|(.*)\|
+:decoys: true
+:archive_old: true
+:sources: 
+- - ftp://ftp.thegpm.org/fasta/crap/crap.fasta
+  - none
+:is_annotation_db: false

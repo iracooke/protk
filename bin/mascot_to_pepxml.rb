@@ -1,27 +1,15 @@
+#!/usr/bin/env ruby
 #
 # This file is part of MSLIMS
 # Created by Ira Cooke 12/4/2010
 #
 # Convert mascot dat files to pepxml. A wrapper for Mascot2XML
 #
-#!/bin/sh
-if [ -z "$PROTK_RUBY_PATH" ] ; then
-  PROTK_RUBY_PATH=`which ruby`
-fi
-
-eval 'exec "$PROTK_RUBY_PATH" $PROTK_RUBY_FLAGS -rubygems -x -S $0 ${1+"$@"}'
-echo "The 'exec \"$PROTK_RUBY_PATH\" -x -S ...' failed!" >&2
-exit 1
-#! ruby
-#
 
 
-$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib/")
-
-
-require 'constants'
-require 'search_tool'
-require 'mascot_util'
+require 'protk/constants'
+require 'protk/search_tool'
+require 'protk/mascot_util'
 
 # Environment with global constants
 #
@@ -40,12 +28,12 @@ ARGV.each do |file_name|
   if ( tool.explicit_output==nil )
     new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}_mascot2xml"      
     cmd="cp #{name} #{new_basename}.dat"
-    cmd << "; #{genv.tpp_bin}/Mascot2XML #{new_basename}.dat -D#{tool.current_database :fasta}"
+    cmd << "; #{genv.mascot2xml} #{new_basename}.dat -D#{tool.current_database :fasta}"
     
   else  #Mascot2XML doesn't support explicitly named output files so we move the file to an appropriate output filename after finishing
     new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}_mascot2xml"
     cmd="cp #{name} #{new_basename}.dat"
-    cmd << "; #{genv.tpp_bin}/Mascot2XML #{new_basename}.dat -D#{tool.current_database :fasta}"
+    cmd << "; #{genv.mascot2xml} #{new_basename}.dat -D#{tool.current_database :fasta}"
     cmd << "; mv #{new_basename}.pep.xml #{tool.explicit_output}; rm #{new_basename}.dat"
     repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"     
     cmd << "; #{repair_script} #{tool.explicit_output}"
