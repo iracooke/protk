@@ -76,9 +76,9 @@ spectrum_queries.each do |query|
   if ( search_score_names.length==2 && search_score_names.grep(/^name.*=.*pvalue/))
     search_engine="omssa" 
   elsif ( search_score_names.grep(/^name.*=.*ionscore/))
-    search_engine="mascot"
-  elsif ( search_score_names.grep(/^name.*=.*hyperscore/) )
     search_engine="x!tandem"
+  elsif ( search_score_names.grep(/^name.*=.*hyperscore/) )
+    search_engine="mascot"
   end
 
   pp_result=top_search_hit.find("./#{pepxml_ns_prefix}analysis_result/#{pepxml_ns_prefix}peptideprophet_result/@probability",pepxml_ns)
