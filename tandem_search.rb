@@ -57,6 +57,23 @@ search_tool.option_parser.on( '-K', '--keep-params-files', 'Keep X!Tandem parame
   search_tool.options.keep_params_files = true
 end
 
+# In case want pepXML, but still want tandem output also.
+search_tool.options.tandem_output=nil
+search_tool.option_parser.on( '--tandem-output tandem_output', 'Keep X! Tandem Output') do |tandem_output|
+  search_tool.options.tandem_output=tandem_output
+end
+
+search_tool.options.thresholds_type = 'isb_kscore'
+search_tool.option_parser.on( '--thresholds-type thresholds_type', 'Threshold Type (tandem_default, isb_native, isb_kscore, scaffold)' ) do |thresholds_type|
+  search_tool.options.thresholds_type = thresholds_type
+end
+
+search_tool.options.algorithm = "kscore"
+search_tool.option_parser.on( '--algorithm algorithm', "Scoring algorithm (kscore or native)" ) do |algorithm|
+  search_tool.options.algorithm = algorithm
+end
+
+
 search_tool.option_parser.parse!
 
 
@@ -77,8 +94,6 @@ when Pathname.new(search_tool.database).exist? # It's an explicitly named db
 else
   current_db=search_tool.current_database :fasta
 end
-
-
 
 
 # Parse options from a parameter file (if provided), or from the default parameter file
@@ -102,9 +117,15 @@ def decode_modification_string(mstring)
   mstring
 end
 
+def set_option(std_params, tandem_key, value) 
+  notes = std_params.find("/bioml/note[@type=\"input\" and @label=\"#{tandem_key}\"]")
+  throw "Exactly one parameter named (#{tandem_key}) is required in parameter file" unless notes.length==1
+  notes[0].content=value
+end
+
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
   
-  
+
   # Set the input and output paths 
   #
   input_notes=std_params.find('/bioml/note[@type="input" and @label="spectrum, path"]')
@@ -119,7 +140,8 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   #
   scoring_notes=std_params.find('/bioml/note[@type="input" and @label="list path, default parameters"]')
   throw "Exactly one list path, default parameters note is required in the parameter file" unless scoring_notes.length==1
-  scoring_notes[0].content="#{genv.tpp_bin}/isb_default_input_kscore.xml"
+  scoring_notes[0].content="#{genv.tpp_bin}/isb_default_input_#{search_tool.algorithm}.xml"
+
 
   # Taxonomy and Database
   #  
@@ -154,8 +176,6 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
 
   pmass_err_units=std_params.find('/bioml/note[@type="input" and @label="spectrum, parent monoisotopic mass error units"]')
   throw "Exactly one spectrum, parent monoisotopic mass error units note is required in the parameter file. Got #{pmass_err_units.length}" unless pmass_err_units.length==1
-  
-  
   pmass_err_units[0].content=search_tool.precursor_tolu
 
   if search_tool.strict_monoisotopic_mass
@@ -163,7 +183,75 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     throw "Exactly one spectrum, parent monoisotopic mass isotope error is required in the parameter file" unless isotopic_error.length==1
     isotopic_error[0].content="no"
   end
-  
+
+  if search_tool.tandem_output
+    # If one is interested in the tandem output (e.g. for consumption by Scaffold)
+    # want to store additional information.
+    set_option(std_params, "output, spectra", "yes")
+  end
+
+  thresholds_type = search_tool.thresholds_type
+  maximum_valid_expectation_value = "0.1"
+  if thresholds_type == "scaffold"
+    maximum_valid_expectation_value = "1000"
+  end 
+
+  minimum_ion_count = "4"
+  case thresholds_type 
+  when "isb_kscore", "isb_native"
+    minimum_ion_count = "1"
+  when "scaffold"
+    minimum_ion_count = "0"
+  end
+
+  minimum_peaks = "15"
+  case thresholds_type
+  when "isb_native"
+    minimum_peaks = "6"
+  when "isb_kscore"
+    minimum_peaks = "10"
+  when "scaffold"
+    minimum_peaks = "0"
+  end
+
+  minimum_fragement_mz = "150"
+  case thresholds_type
+  when "isb_native"
+    minimum_fragement_mz = "50"
+  when "isb_kscore"
+    minimum_fragement_mz = "125"
+  when "scaffold"
+    minimum_fragement_mz = "0"
+  end
+
+  minimum_parent_mh = "500" # tandem and isb_native defaults
+  case thresholds_type
+  when "isb_kscore"
+    minimum_parent_mh = "600"
+  when "scaffold"
+    minimum_parent_mh = "0"
+  end
+
+  use_noise_suppression = "yes"
+  if thresholds_type == "isb_kscore" or thresholds_type == "scaffold"
+    use_noise_suppression = "no"
+  end
+
+  dynamic_range = "100.0"
+  case thresholds_type
+  when "isb_kscore"
+    dynamic_range = "10000.0"
+  when "scaffold"
+    dynamic_range = "1000.0"
+  end
+
+  set_option(std_params, "spectrum, dynamic range", dynamic_range)
+  set_option(std_params, "spectrum, use noise suppression", use_noise_suppression)
+  set_option(std_params, "spectrum, minimum parent m+h", minimum_parent_mh)
+  set_option(std_params, "spectrum, minimum fragment mz", minimum_fragement_mz)
+  set_option(std_params, "spectrum, minimum peaks", minimum_peaks)
+  set_option(std_params, "scoring, minimum ion count", minimum_ion_count)
+  set_option(std_params, "output, maximum valid expectation value", maximum_valid_expectation_value)
   
   # Fixed and Variable Modifications
   #
@@ -180,7 +268,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   unless search_tool.methionine_oxidation
     mods=std_params.find('/bioml/note[@type="input" and @id="methionine-oxidation-variable"]')
     mods.each{ |node| node.remove!}        
-  end  
+  end
   
   var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }
   var_mods=var_mods.collect {|mod| decode_modification_string(mod) }
@@ -283,9 +371,16 @@ ARGV.each do |filename|
     # pepXML conversion and repair
     #
     unless search_tool.no_pepxml
-      repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"      
-      cmd << "; #{genv.tpp_bin}/Tandem2XML #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}; rm #{output_path}"
+      repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"
+      cmd << "; #{genv.tpp_bin}/Tandem2XML #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}"
+      if search_tool.tandem_output 
+        cmd << "; cp #{output_path} #{search_tool.tandem_output}"
+      else
+        cmd << "; rm #{output_path}"
+      end
     end
+
+
 
     # Add a cleanup command unless the user wants to keep params files
     #
