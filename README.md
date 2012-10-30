@@ -8,47 +8,45 @@ Protk is a wrapper for various proteomics tools. Initially it focusses on MS/MS 
 
 ## Why do we need a wrapper around these tools
 
-The aim of protk is present a consistent interface to numerous proteomics tools that is as uniform as possible. Protk also provides built-in support for submitting jobs to a cluster, and for managing protein databases. 
+The aim of protk is present a consistent interface to numerous proteomics tools that is as uniform as possible. Protk also provides built-in support for managing protein databases. 
 
 ***
 
 
 
-## basic installation
-An installation script, setup.sh is provided but it will not work unless some prior dependencies are already installed. You will need
+## Basic Installation
+ 
+1. Install rvm
+curl -L https://get.rvm.io | bash -s stable
 
-1. __TPP__ (Trans-Proteomic-Pipeline). Required to perform X!Tandem searches and to run PeptideProphet, iProphet and ProteinProphet
-    Follow the [installation instructions](http://tools.proteomecenter.org/wiki/index.php?title=Software:TPP "tpp install instructions") provided by the institute for systems biology. Note that you don't need to worry about setting up the TPP web application.  Only the command-line tools are needed.  After installing the TPP tools make sure that they are in your `$PATH`.
+On OSX
+- rvm install 1.9.3 --with-gcc=clang
+- rvm use 1.9.3
+- gem install protk
+- protk_setup.rb all
 
-2. __OMSSA__ (Search Engine). Required to perform OMSSA searches.
-    Follow the [installation instructions](http://pubchem.ncbi.nlm.nih.gov/omssa/download.htm "omssa instructions") provided by NCBI.  After installing OMSSA make sure that the directory containing the OMSSA binaries (eg including the omssacl program ) is in your `$PATH`.
-
-3. __Blast+__ (Blast+ executables). Required to build databases for OMSSA searches
-    Follow the [installation instructions](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download "blast install instructions") provided by NCBI (download Blast+ rather than the older legacy executables). After installing make sure that the directory containing the makeblastdb executable is in your `$PATH`.
-
-4. __Configure Protk__ Finish the installation by running
-
-        ./setup.sh 
-
-    in the protk directory. This script will create symbolic links to TPP, OMSSA and Blast executables in `./bin/` (this can be changed by editing the config.yml script)
-
-
+On Linux
+- rvm install 1.9.3
+- rvm use 1.9.3
+- gem install protk
+- sudo protk_setup.rb system_dependencies
+- protk_setup all
 
 
 ## Sequence databases
 
-After running the setup.sh script you should run manage_db.rb to install specific sequence databases for use by the search engines. For example
+After running the setup.sh script you should run manage_db.rb to install specific sequence databases for use by the search engines. Protk comes with several predefined database configurations. For example, to install a database consisting of human entries from Swissprot plus known contaminants use the following command;
 
-    manage_db.rb -h
-    manage_db.rb add -h #Get help on adding a database
-    # Add a swissprot human database
+    manage_db.rb add sphuman
+
+You should now be able to run database searches, specifying this database by using the -d sphuman flag.  Every month or so swissprot will release a new database version. You can keep your database up to date using;
+
+    manage_db.rb update sphuman
+
+This will update the database only if any of its source files (or ftp release notes) have changed. The manage_db.rb tool also allows completely custom databases to be configured. Setup requires adding quite a few command-line options but once setup databases can easily be updated without further config. The example below shows the commandline arguments required to manually configure the sphuman database.
+
     manage_db.rb add --ftp-source 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt' --include-filters '/OS=Homo\ssapiens/' --id-regex 'sp\|.*\|(.*?)\s' --add-decoys --make-blast-index --archive-old sphuman
 
-After first creating a database you can update it easily by running
-
-    manage_db.rb update dbname
-
-This will update the database only if any of its source files (or ftp release notes) have changed.
 
 ## Galaxy integration
 
