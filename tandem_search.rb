@@ -78,7 +78,25 @@ search_tool.option_parser.on( '--cleavage-semi' ) do
   search_tool.options.cleavage_semi = true
 end
 
+search_tool.options.n_terminal_mod_mass=nil
+search_tool.option_parser.on('--n-terminal-mod-mass mass') do |mass|
+    search_tool.options.n_terminal_mod_mass = mass
+end
 
+search_tool.options.c_terminal_mod_mass=nil
+search_tool.option_parser.on('--c-terminal-mod-mass mass') do |mass|
+    search_tool.options.c_terminal_mod_mass = mass
+end
+
+search_tool.options.cleavage_n_terminal_mod_mass=nil
+search_tool.option_parser.on('--cleavage-n-terminal-mod-mass mass') do |mass|
+    search_tool.options.cleavage_n_terminal_mod_mass = mass
+end
+
+search_tool.options.cleavage_c_terminal_mod_mass=nil
+search_tool.option_parser.on('--cleavage-c-terminal-mod-mass mass') do |mass|
+    search_tool.options.cleavage_c_terminal_mod_mass = mass
+end
 
 search_tool.option_parser.parse!
 
@@ -131,8 +149,27 @@ end
 
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
 
-  set_option("scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
-  set_option("protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
+  set_option(std_params, "scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
+  set_option(std_params, "protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
+
+  if not search_tool.c_terminal_mod_mass.nil?
+    set_option(std_params, "C-terminal residue modification mass", search_tool.c_terminal_mod_mass)
+  end
+
+  if not search_tool.n_terminal_mod_mass.nil?
+    set_option(std_params, "N-terminal residue modification mass", search_tool.n_terminal_mod_mass)
+  end
+
+  if not search_tool.cleavage_c_terminal_mod_mass.nil?
+    set_option(std_params, "C-terminal residue modification mass", search_tool.cleavage_c_terminal_mod_mass)
+  end
+
+  if not search_tool.cleavage_n_terminal_mod_mass.nil?
+    set_option(std_params, "N-terminal residue modification mass", search_tool.cleavage_n_terminal_mod_mass)
+  end
+
+
+
 
   # Set the input and output paths 
   #

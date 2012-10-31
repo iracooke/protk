@@ -128,7 +128,7 @@ class Constants
     throw "No data found for run setting #{run_setting} in config file" unless @env!=nil
 
     @stdout_logger=Logger.new(STDOUT)
-    @file_logger=Logger.new(self.log_file,'daily')
+    @file_logger=Logger.new(self.log_file)
 
     throw "Unable to create file logger at path #{self.log_file}" unless @file_logger!=nil
     throw "Unable to create stdout logger " unless @stdout_logger!=nil
