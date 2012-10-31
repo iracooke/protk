@@ -418,7 +418,7 @@ end
 # Indexing        #
 ###################
 if dbspec[:make_blast_index] 
-  blast_index_files=FileList.new([".phr",".pin",".pog",".psd",".psi",".psq"].collect {|ext| "#{db_filename}#{ext}"  })
+  blast_index_files=FileList.new([".phr"].collect {|ext| "#{db_filename}#{ext}"  })
   #  task :make_blast_index => blast_index_files  do
   blast_index_files.each do |indfile|
     file indfile => db_filename do
@@ -432,6 +432,20 @@ if dbspec[:make_blast_index]
 
 end
 
+
+if dbspec[:make_msgf_index] 
+  msgf_index_files=FileList.new([".canno"].collect {|ext| "#{db_filename}#{ext}"  })
+  #  task :make_blast_index => blast_index_files  do
+  msgf_index_files.each do |indfile|
+    file indfile => db_filename do
+      cmd="cd #{dbdir}; java -Xmx3500M -cp #{$genv.msgf_bin}/MSGFPlus.jar edu.ucsd.msjava.msdbsearch.BuildSA -d #{db_filename} -tda 0"
+      p "Creating msgf index"
+      sh %{ #{cmd} }
+    end
+  end
+  
+  task dbname => msgf_index_files
+end
 
 if format=="dat" && dbspec[:is_annotation_db]
   dat_index_files=FileList.new(["config.dat","id_AC.index","key_ID.key"].collect {|file| "#{dbdir}/#{file}"}  )

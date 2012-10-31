@@ -76,6 +76,7 @@ task :tpp => "./bin"
 task :omssa => "./bin"
 task :ncbi => "./bin"
 task :openms => "./bin"
+task :msgf => "./bin"
 
 #
 # TPP
@@ -105,6 +106,14 @@ file "#{config['openms_bin']}/FeatureFinderCentroided" do
 end
 
 #
+# MSGF
+#
+task :msgf => ["#{config['msgf_bin']}/MSGFPlus.jar"]  
+file "#{config['msgf_bin']}/MSGFPlus.jar" do
+  needs_bin_dir("MSGFPlus",config['msgf_bin'],"Unable to find MSGFPlus which is required by protk\nTo resolve this error you will need to:\n   - Install MSGFPlus or make sure you already have it installed. Look here http://proteomics.ucsd.edu/Software/MSGFPlus.html for download and installation instructions\n   - Edit config.yml so that the msgf_bin variable points to the path where the MSGFPlus binaries are located.")
+end
+
+#
 # NCBI
 #
 task :ncbi => ["#{config['ncbi_tools_bin']}/makeblastdb"]  
@@ -130,6 +139,6 @@ directory log_dir
 # Default task
 #
 
-task :default => ["libxml_ruby_gem","pure_ruby_gems",:tpp,"omssa","openms","ncbi","./bin/make_random",log_dir] 
+task :default => ["libxml_ruby_gem","pure_ruby_gems",:tpp,"omssa","openms","msgf","ncbi","./bin/make_random",log_dir] 
 
 
