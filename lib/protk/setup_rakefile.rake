@@ -222,4 +222,24 @@ end
 
 task :blast => blast_installed_file
 
-task :all => [:tpp,:omssa,:blast]
+
+#
+# MSGFPlus
+#
+msgfplus_version="20120823"
+msgfplus_packagefile="MSGFPlus.20120823.zip"
+msgfplus_url="http://proteomics.ucsd.edu/Downloads/MSGFPlus.20120823.zip"
+msgfplus_installed_file="#{env.msgfplusjar}"
+
+download_task msgfplus_url, msgfplus_packagefile
+
+file msgfplus_installed_file => [@build_dir,"#{@download_dir}/#{msgfplus_packagefile}"] do
+	sh %{cp #{@download_dir}/#{msgfplus_packagefile} #{@build_dir}}
+    sh %{cd #{@build_dir}; unzip #{msgfplus_packagefile}}
+    sh %{mkdir -p #{env.msgfplus_root}}
+    sh %{cd #{@build_dir}; cp MSGFPlus.jar #{env.msgfplus_root}/}
+end
+
+task :msgfplus => msgfplus_installed_file
+
+task :all => [:tpp,:omssa,:blast,:msgfplus]

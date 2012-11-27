@@ -15,5 +15,6 @@ default_mascot_server: www.matrixscience.com
 tpp_root: tools/tpp
 omssa_root: tools/omssa
 openms_root: tools/openms
+msgfplus_root: tools/msgfplus
 blast_root: tools/blast
 log_file: Logs/protk.log

@@ -147,7 +147,7 @@ class SearchTool < Tool
     if ( option_support[:glyco]==true)
 
       @options.glyco = false
-      @option_parser.on( '-g', '--glyco', 'Use N-Glycosylation information' ) do 
+      @option_parser.on( '-g', '--glyco', 'Expect N-Glycosylation modifications as variable mod in a search or as a parameter when building statistical models' ) do 
         @options.glyco = true
       end
 

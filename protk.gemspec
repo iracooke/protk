@@ -26,9 +26,13 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 2.5'
 
   s.homepage    = 'http://rubygems.org/gems/protk'
-  s.executables = ['protk_setup.rb','manage_db.rb','tandem_search.rb','make_decoy.rb','repair_run_summary.rb']
-  s.executables = s.executables + ['annotate_ids.rb','correct_omssa_retention_times.rb','file_convert.rb']
-  s.executables = s.executables + ['generate_omssa_loc.rb','interprophet.rb','mascot_search.rb','mascot_to_pepxml.rb']
-  s.executables = s.executables + ['omssa_search.rb','peptide_prophet.rb','pepxml_to_table.rb','protein_prophet.rb']
-  s.executables = s.executables + ['unimod_to_loc.rb','xls_to_table.rb']
+  s.executables = ['protk_setup.rb','manage_db.rb']
+  s.executables = s.executables + ['tandem_search.rb','mascot_search.rb','omssa_search.rb','msgfplus_search.rb']
+  s.executables = s.executables + ['big_search.rb']
+  s.executables = s.executables + ['mascot_to_pepxml.rb','file_convert.rb']
+  s.executables = s.executables + ['make_decoy.rb']
+  s.executables = s.executables + ['correct_omssa_retention_times.rb','repair_run_summary.rb']
+  s.executables = s.executables + ['peptide_prophet.rb','interprophet.rb','protein_prophet.rb']
+  s.executables = s.executables + ['pepxml_to_table.rb','xls_to_table.rb','annotate_ids.rb']
+  s.executables = s.executables + ['unimod_to_loc.rb','generate_omssa_loc.rb']
 end

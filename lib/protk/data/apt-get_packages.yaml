@@ -45,3 +45,6 @@ tpp:
 - libcurl4-openssl-dev
 - libxml2-dev
 - libgd2-xpm-dev
+
+msgfplus:
+- java-1.7.0-openjdk

@@ -103,13 +103,17 @@ class Constants
     end
   end
   
-  def msgf_bin
-    path=@env['msgf_bin']
+  def msgfplus_root
+    path=@env['msgfplus_root']
     if ( path =~ /^\// )
       return path
     else
-      return "#{@protk_dir}/#{@env['msgf_bin']}"
+      return "#{@protk_dir}/#{@env['msgfplus_root']}"
     end
+  end
+
+  def msgfplusjar
+    return "#{self.msgfplus_root}/MSGFPlus.jar"
   end
 
   def protein_database_root

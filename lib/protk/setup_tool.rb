@@ -1,4 +1,3 @@
-
 require 'optparse'
 require 'pathname'
 require 'protk/tool'
