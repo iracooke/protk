@@ -9,11 +9,15 @@ $VERBOSE=nil
 require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/search_tool'
+require 'protk/galaxy_stager'
+require 'protk/galaxy_util'
 
+for_galaxy = GalaxyUtil.for_galaxy
+input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new({:msms_search=>true,:background=>false,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
+search_tool=SearchTool.new({:msms_search=>true,:background=>false,:glyco=>false,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
 search_tool.option_parser.banner = "Run an MSGFPlus msms search on a set of msms spectrum input files.\n\nUsage: msgfplus_search.rb [options] file1.mzML file2.mzML ..."
 search_tool.options.output_suffix="_msgfplus"
 
@@ -92,16 +96,26 @@ ARGV.each do |filename|
   if ( search_tool.explicit_output!=nil)
     output_path=search_tool.explicit_output
   else
-    output_path="#{search_tool.output_base_path(filename.chomp)}.mzid"
+    output_path="#{search_tool.output_base_path(filename.chomp)}.pepXML"
   end
-  
+
+
   # (*.mzML, *.mzXML, *.mgf, *.ms2, *.pkl or *_dta.txt)
   # Get the input file extension
   ext = Pathname.new(filename).extname
-
-
-
   input_path="#{search_tool.input_base_path(filename.chomp)}#{ext}"
+
+  mzid_output_path="#{search_tool.input_base_path(filename.chomp)}.mzid"
+
+
+  if for_galaxy
+    original_input_file = input_path
+    original_input_path = Pathname.new("#{original_input_file}")
+    input_stager = GalaxyStager.new("#{original_input_file}", :extension => '.mzML')
+    input_path = input_stager.staged_path
+  end
+
+
 
   # Only proceed if the output file is not present or we have opted to over-write it
   #
@@ -109,11 +123,10 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd= "java -Xmx#{search_tool.java_mem} -jar #{msgf_bin} -d #{current_db} -s #{input_path} -o #{output_path} "
-
+    cmd= "java -Xmx#{search_tool.java_mem} -jar #{msgf_bin} -d #{current_db} -s #{input_path} -o #{mzid_output_path} "
     #Missed cleavages
     #
-    throw "Maximum value for missed cleavages is 2" if ( search_tool.missed_cleavages > 2)
+    throw "Maximum value for missed cleavages is 2" if ( search_tool.missed_cleavages.to_i > 2)
     cmd << " -ntt #{search_tool.missed_cleavages}"
 
     # Precursor tolerance
@@ -121,8 +134,7 @@ ARGV.each do |filename|
     cmd << " -t #{search_tool.precursor_tol}#{search_tool.precursor_tolu}"
     
     # Instrument type
-    #
-    cmd << " -inst 2"
+    cmd << " -inst #{search_tool.instrument}"
     
 #    cmd << " -m 4"
 
@@ -134,55 +146,49 @@ ARGV.each do |filename|
   #      cmd << " -e #{search_tool.enzyme}"
   #    end
 
-  mods_path="#{search_tool.input_base_path(filename.chomp)}.msgfplus_mods.txt"
-  mods_file=File.open(mods_path,'w+')
+  mods_file_content = ""
 
     # Variable Modifications
     #
     if ( search_tool.var_mods !="" && !search_tool.var_mods =~/None/) # Checking for none is to cope with galaxy input
-      var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
+      var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join("\n")
       if ( var_mods !="" )
-        cmd << " -mv #{var_mods}"
-      end
-    else 
-      # Add options related to peptide modifications
-      #
-      if ( search_tool.glyco )
-        cmd << " -mv 119 "
+        mods_file_content << "#{var_mods}\n"
       end
     end
 
   # Fixed modifications
   #
     if ( search_tool.fix_mods !="" && !search_tool.fix_mods=~/None/)
-      fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
+      fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join("\n")
       if ( fix_mods !="")
-        cmd << " -mf #{fix_mods}"    
-      end
-    else
-      if ( search_tool.has_modifications )
-        cmd << " -mf "
-        if ( search_tool.carbamidomethyl )
-          cmd<<"3 "
-        end
-
-        if ( search_tool.methionine_oxidation )
-          cmd<<"1 "
-        end
-
+        mods_file_content << "#{fix_mods}"    
       end
     end
+
+    if ( mods_file_content != "")
+      mods_path="#{search_tool.input_base_path(filename.chomp)}.msgfplus_mods.txt"
+      mods_file=File.open(mods_path,'w+')
+      mods_file.write "NumMods=2\n#{mods_file_content}"
+      mods_file.close
+      cmd << " -mod #{mods_path}"
+    end
     
-    # Up to here we've formulated the omssa command. The rest is cleanup
+    # As a final part of the command we convert to pepxml
+    cmd << "; #{genv.idconvert} #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}"
+
+    #Then copy the pepxml to the final output path
+    cmd << "; cp #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
+
+    # Up to here we've formulated the command. The rest is cleanup
     p "Running:#{cmd}"
     
     # Run the search
     #
     job_params= {:jobid => search_tool.jobid_from_filename(filename) }
-    job_params[:queue]="lowmem"
-    job_params[:vmem]="900mb"    
     search_tool.run(cmd,genv,job_params)
 
+    input_stager.replace_references(output_path)
 
   else
     genv.log("Skipping search on existing file #{output_path}",:warn)       

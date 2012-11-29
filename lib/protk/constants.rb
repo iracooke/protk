@@ -116,6 +116,19 @@ class Constants
     return "#{self.msgfplus_root}/MSGFPlus.jar"
   end
 
+  def pwiz_root
+    path=@env['pwiz_root']
+    if ( path =~ /^\// )
+      return path
+    else
+      return "#{@protk_dir}/#{@env['pwiz_root']}"
+    end    
+  end
+
+  def idconvert
+    return "#{self.pwiz_root}/idconvert"
+  end
+
   def protein_database_root
     path=@env['protein_database_root']
     if ( path =~ /^\// )

@@ -17,4 +17,5 @@ omssa_root: tools/omssa
 openms_root: tools/openms
 msgfplus_root: tools/msgfplus
 blast_root: tools/blast
+pwiz_root: tools/pwiz
 log_file: Logs/protk.log

@@ -1,0 +1,65 @@
+---
+# This file contains the list of system-level packages and libraries.
+# The list is grouped by applications or application suites that require
+# the given package. See conf.yaml for top-level, applications' configuration.
+# Any package commented out here will not be installed on the target system.
+# It is OK to have packages listed in more than one place too - that way it is
+# easier to omit which applications not to install without affecting other stuff.
+common:
+- gcc.x86_64
+- gcc-c++.x86_64
+- git.x86_64
+- mercurial.x86_64
+- subversion.x86_64
+- unzip.x86_64
+- zlib.x86_64
+- zlib-devel.x86_64
+- make.x86_64
+- autoconf.noarch
+- automake.noarch
+- libtool.x86_64
+- bzip2.x86_64
+- bzip2-devel.x86_64
+- perl-ExtUtils-MakeMaker.x86_64
+- perl-ExtUtils-AutoInstall.noarch
+- perl-ExtUtils-CBuilder.x86_64
+- perl-CPAN.x86_64
+- gcc-gfortran.x86_64
+- patch.x86_64
+
+rvm:
+- gcc-c++
+- patch
+- zlib
+- zlib-devel
+- libyaml-devel
+- libffi-devel 
+- openssl-devel 
+- make 
+- bzip2 
+- autoconf 
+- automake 
+- libtool 
+- bison 
+- iconv-devel
+
+tpp:
+- libcurl-devel.x86_64
+- libcurl.x86_64
+- libxml2.x86_64
+- libxml2-devel.x86_64
+- expat-devel.x86_64
+- gd.x86_64
+- gd-devel.x86_64
+- expat.x86_64
+- gnuplot.x86_64
+- libxslt.x86_64
+- swig.x86_64
+
+openms:   
+- qt-devel.x86_64
+- qtwebkit-devel.x86_64
+- cmake.x86_64
+
+msgfplus:
+- java-1.7.0-openjdk

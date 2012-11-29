@@ -11,10 +11,18 @@ directory @build_dir
 directory @download_dir
 
 def package_manager_name 
-	if RbConfig::CONFIG['host_os'] =~ /darwin/ 
-		return 'brew'
+	package_managers = ["brew","yum","apt-get"]
+
+	package_managers.each do |pmname|  
+		if supports_package_manager pmname
+			return pmname
+		end
 	end
-	'apt-get'
+end
+
+def supports_package_manager name
+	res = %x[which #{name}]
+	(res == "")
 end
 
 def clean_build_dir
@@ -226,9 +234,9 @@ task :blast => blast_installed_file
 #
 # MSGFPlus
 #
-msgfplus_version="20120823"
-msgfplus_packagefile="MSGFPlus.20120823.zip"
-msgfplus_url="http://proteomics.ucsd.edu/Downloads/MSGFPlus.20120823.zip"
+msgfplus_version="20121116"
+msgfplus_packagefile="MSGFPlus.#{msgfplus_version}.zip"
+msgfplus_url="http://proteomics.ucsd.edu/Downloads/MSGFPlus.#{msgfplus_version}.zip"
 msgfplus_installed_file="#{env.msgfplusjar}"
 
 download_task msgfplus_url, msgfplus_packagefile
@@ -242,4 +250,40 @@ end
 
 task :msgfplus => msgfplus_installed_file
 
-task :all => [:tpp,:omssa,:blast,:msgfplus]
+#
+# pwiz
+#
+def pwiz_platform 
+	if RbConfig::CONFIG['host_os'] =~ /darwin/ 
+		return 'darwin-x86-xgcc40'
+	end
+	'linux-x86_64-gcc42'
+end
+
+def platform_bunzip
+	if RbConfig::CONFIG['host_os'] =~ /darwin/ 
+		return 'pbunzip2'
+	end
+	'bunzip2'
+end
+
+pwiz_version="3_0_4146"
+pwiz_packagefile="pwiz-bin-#{pwiz_platform}-release-#{pwiz_version}.tar.bz2"
+pwiz_url="https://dl.dropbox.com/u/226794/#{pwiz_packagefile}"
+pwiz_installed_file="#{env.idconvert}"
+
+download_task pwiz_url, pwiz_packagefile
+
+file pwiz_installed_file => [@build_dir,"#{@download_dir}/#{pwiz_packagefile}"] do 
+	sh %{cp #{@download_dir}/#{pwiz_packagefile} #{@build_dir}}
+    sh %{cd #{@build_dir}; #{platform_bunzip} -f #{pwiz_packagefile}}
+    sh %{cd #{@build_dir}; tar -xvf #{pwiz_packagefile.chomp('.bz2')}}
+    sh %{mkdir -p #{env.pwiz_root}}
+    sh %{cd #{@build_dir}; cp idconvert msconvert #{env.pwiz_root}/}
+end
+
+task :pwiz => pwiz_installed_file
+
+task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz]
+
+
