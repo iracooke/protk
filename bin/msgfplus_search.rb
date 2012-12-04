@@ -188,7 +188,7 @@ ARGV.each do |filename|
     job_params= {:jobid => search_tool.jobid_from_filename(filename) }
     search_tool.run(cmd,genv,job_params)
 
-    input_stager.replace_references(output_path)
+    input_stager.restore_references(output_path)
 
   else
     genv.log("Skipping search on existing file #{output_path}",:warn)       
