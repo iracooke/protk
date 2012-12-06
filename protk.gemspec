@@ -35,4 +35,5 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['peptide_prophet.rb','interprophet.rb','protein_prophet.rb']
   s.executables = s.executables + ['pepxml_to_table.rb','xls_to_table.rb','annotate_ids.rb']
   s.executables = s.executables + ['unimod_to_loc.rb','generate_omssa_loc.rb']
+  s.executables = s.executables + ['uniprot_mapper.rb']
 end
