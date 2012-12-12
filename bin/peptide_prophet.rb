@@ -82,6 +82,15 @@ prophet_tool.option_parser.on( '-F', '--one-ata-time', 'Create a separate pproph
   prophet_tool.options.one_ata_time = true
 end
 
+prophet_tool.options.decoy_prefix="decoy"
+prophet_tool.option_parser.on( '--decoy-prefix prefix', 'Prefix for decoy sequences') do |prefix|
+  prophet_tool.options.decoy_prefix = prefix
+end  
+
+prophet_tool.options.override_database=nil
+prophet_tool.option_parser.on( '--override-database database', 'Manually specify database') do |database|
+  prophet_tool.options.override_database = database
+end
 
 prophet_tool.option_parser.parse!
 
@@ -99,7 +108,11 @@ ARGV.each {|file_name|
   name=file_name.chomp
   
   engine=prophet_tool.extract_engine(name)
-  db_path=prophet_tool.extract_db(name)
+  if prophet_tool.override_database
+    db_path = prophet_tool.override_database
+  else
+    db_path=prophet_tool.extract_db(name)
+  end
   
   
   file_info[name]={:engine=>engine , :database=>db_path } 
@@ -130,7 +143,7 @@ end
 
 def generate_command(genv,prophet_tool,inputs,output,database,engine)
   
-  cmd="#{genv.xinteract} -N#{output}  -l7 -eT -D#{database} "
+  cmd="#{genv.xinteract} -N#{output}  -l7 -eT -D'#{database}' "
 
   if prophet_tool.glyco 
     cmd << " -Og "
@@ -189,9 +202,9 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
   end
 
   if engine=="omssa" || engine=="phenyx"
-    cmd << "-Op -P -ddecoy "
+    cmd << " -Op -P -d#{prophet_tool.decoy_prefix} "
   else
-    cmd << "-ddecoy "
+    cmd << " -d#{prophet_tool.decoy_prefix} "
   end
   
   

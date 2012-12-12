@@ -34,10 +34,20 @@ output_fh=File.new("#{output_file}",'w')
 
 output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\tpeptideprophet_prob\tinterprophet_prob\n"
 
-pepxml_parser=XML::Parser.file("#{input_file}")
-pepxml_doc=pepxml_parser.parse
+XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
 
-spectrum_queries=pepxml_doc.find('//xmlns:spectrum_query','xmlns:http://regis-web.systemsbiology.net/pepXML')
+pepxml_parser=XML::Parser.file("#{input_file}")
+
+pepxml_ns_prefix="xmlns:"
+pepxml_ns="xmlns:http://regis-web.systemsbiology.net/pepXML"
+ pepxml_doc=pepxml_parser.parse
+if not pepxml_doc.root.namespaces.default
+  pepxml_ns_prefix=""
+  pepxml_ns=nil
+end
+
+
+spectrum_queries=pepxml_doc.find("//#{pepxml_ns_prefix}spectrum_query", pepxml_ns)
 
 spectrum_queries.each do |query| 
 
@@ -45,7 +55,7 @@ spectrum_queries.each do |query|
   neutral_mass=query.attributes['precursor_neutral_mass']
   assumed_charge=query.attributes['assumed_charge']
 
-  top_search_hit=query.find('./xmlns:search_result/xmlns:search_hit','xmlns:http://regis-web.systemsbiology.net/pepXML')[0]
+  top_search_hit=query.find("./#{pepxml_ns_prefix}search_result/#{pepxml_ns_prefix}search_hit",pepxml_ns)[0]
   peptide=top_search_hit.attributes['peptide']
   protein=top_search_hit.attributes['protein']
   calc_neutral_pep_mass=top_search_hit.attributes['calc_neutral_pep_mass']
@@ -53,7 +63,7 @@ spectrum_queries.each do |query|
   end_scan=query.attributes['end_scan']
 
   search_engine=""
-  search_score_names=top_search_hit.find('./xmlns:search_score/@name','xmlns:http://regis-web.systemsbiology.net/pepXML').collect {|s| s.to_s}
+  search_score_names=top_search_hit.find("./#{pepxml_ns_prefix}search_score/@name",pepxml_ns).collect {|s| s.to_s}
 
   if ( search_score_names.length==2 && search_score_names.grep(/^name.*=.*pvalue/))
     search_engine="omssa" 
@@ -63,9 +73,10 @@ spectrum_queries.each do |query|
     search_engine="x!tandem"
   end
 
-  pp_result=top_search_hit.find('./xmlns:analysis_result/xmlns:peptideprophet_result/@probability','xmlns:http://regis-web.systemsbiology.net/pepXML')
-  ip_result=top_search_hit.find('./xmlns:analysis_result/xmlns:interprophet_result/@probability','xmlns:http://regis-web.systemsbiology.net/pepXML')
   
+  pp_result=top_search_hit.find("./#{pepxml_ns_prefix}analysis_result/#{pepxml_ns_prefix}peptideprophet_result/@probability",pepxml_ns)
+  ip_result=top_search_hit.find("./#{pepxml_ns_prefix}analysis_result/#{pepxml_ns_prefix}interprophet_result/@probability",pepxml_ns)
+
   peptide_prophet_prob=""
   interprophet_prob=""
   peptide_prophet_prob=pp_result[0].value if ( pp_result.length>0 )

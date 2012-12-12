@@ -13,7 +13,7 @@ require 'protk/prophet_tool'
 require 'protk/galaxy_stager'
 require 'protk/galaxy_util'
 
-for_galaxy = GalaxyUtil.for_galaxy
+for_galaxy = GalaxyUtil.for_galaxy?
 
 if for_galaxy
   # Stage files for galaxy

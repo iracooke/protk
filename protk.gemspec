@@ -27,6 +27,9 @@ Gem::Specification.new do |s|
 
   s.homepage    = 'http://rubygems.org/gems/protk'
   s.executables = ['protk_setup.rb','manage_db.rb']
+  s.executables = s.executables + ['asapratio.rb']
+  s.executables = s.executables + ['libra.rb']
+  s.executables = s.executables + ['xpress.rb']
   s.executables = s.executables + ['tandem_search.rb','mascot_search.rb','omssa_search.rb','msgfplus_search.rb']
   s.executables = s.executables + ['big_search.rb']
   s.executables = s.executables + ['mascot_to_pepxml.rb','file_convert.rb']

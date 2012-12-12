@@ -10,7 +10,9 @@ $VERBOSE=nil
 require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/search_tool'
+require 'protk/galaxy_util'
 
+for_galaxy = GalaxyUtil.for_galaxy?
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
@@ -33,6 +35,10 @@ search_tool.option_parser.on(  '--intensity-cut-off co', 'Peak intensity cut-off
   search_tool.options.intensity_cut_off=co
 end
 
+search_tool.options.galaxy_index_dir=nil
+search_tool.option_parser.on( '--galaxy-index-dir dir', 'Specify galaxy index directory, will search for mods file there.' ) do |dir|
+  search_tool.options.galaxy_index_dir=dir
+end
 
 search_tool.option_parser.parse!
 
@@ -45,9 +51,14 @@ genv=Constants.new
 rt_correct_bin="#{File.dirname(__FILE__)}/correct_omssa_retention_times.rb"
 repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"
 
+cmd=""
+
 case 
 when Pathname.new(search_tool.database).exist? # It's an explicitly named db
   current_db=Pathname.new(search_tool.database).realpath.to_s
+  if(not FileTest.exists?("#{current_db}.phr"))
+    cmd << "#{@genv.makeblastdb} -dbtype prot -parse_seqids -in #{current_db}; "
+  end
 else
   current_db=search_tool.current_database :fasta
 end
@@ -85,11 +96,28 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd= "#{genv.omssacl} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
+    cmd << "#{genv.omssacl} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
 
     #Missed cleavages
     #
     cmd << " -v #{search_tool.missed_cleavages}"
+
+    # If this is for Galaxy and a data directory has been specified
+    # look for a common unimod.xml file.
+    if for_galaxy
+      galaxy_index_dir = search_tool.galaxy_index_dir
+      if galaxy_index_dir
+        galaxy_mods = File.join(galaxy_index_dir, "mods.xml")
+        if( FileTest.exists?(galaxy_mods) )      
+          cmd << " -mx #{galaxy_mods}"
+        end
+        galaxy_usermods = File.join(galaxy_index_dir, "usermods.xml")
+        if( FileTest.exists?(galaxy_usermods) )
+          cmd << " -mux #{galaxy_usermods}"
+        end
+      end
+    end
+
 
     # Precursor tolerance
     #

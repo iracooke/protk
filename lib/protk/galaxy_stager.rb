@@ -4,12 +4,24 @@ class GalaxyStager
   attr_accessor :staged_path
 
   def initialize(original_path, options = {})
-    options = { :name => nil, :extension => '' }.merge(options)
+    options = { :name => nil, :extension => '', :force_copy => false }.merge(options)
+    @extension = options[:extension]
     @original_path = Pathname.new(original_path)
     @wd = Dir.pwd
-    staged_name = options[:name] || @original_path.basename
-    @staged_path = File.join(@wd, "#{staged_name}#{options[:extension]}")
-    File.symlink(@original_path, @staged_path)
+    @staged_name = options[:name] || @original_path.basename
+    @staged_base = File.join(@wd, @staged_name)
+    @staged_path = "#{@staged_base}#{@extension}"
+    if options[:force_copy]
+      FileUtils.copy(@original_path, @staged_path)
+    else
+      File.symlink(@original_path, @staged_path)
+    end
+  end
+
+  def replace_references(in_file, options = {})
+    options = { :base_only => false }.merge(options)
+    replacement = options[:base_only] ? @staged_base : @staged_path
+    GalaxyStager.replace_references(in_file, @original_path, replacement)
   end
 
   def restore_references(in_file)
@@ -17,6 +29,7 @@ class GalaxyStager
   end
 
   def self.replace_references(in_file, from_path, to_path)
+    puts "Replacing #{from_path} with #{to_path} in #{in_file}"
     cmd="ruby -pi -e \"gsub('#{from_path}', '#{to_path}')\" #{in_file}"
     %x[#{cmd}]
   end

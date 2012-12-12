@@ -73,6 +73,34 @@ class Constants
     return "#{self.tpp_root}/bin/ProteinProphet"
   end
 
+  def asapratiopeptideparser
+    return "#{self.tpp_root}/bin/ASAPRatioPeptideParser"
+  end
+
+  def asapratioproteinparser
+    return "#{self.tpp_root}/bin/ASAPRatioProteinRatioParser"
+  end
+
+  def asaprationpvalueparser
+    return "#{self.tpp_root}/bin/ASAPRatioPvalueParser"
+  end
+
+  def librapeptideparser
+    return "#{self.tpp_root}/bin/LibraPeptideParser"
+  end
+
+  def libraproteinratioparser
+    return "#{self.tpp_root}/bin/LibraProteinRatioParser"
+  end
+
+  def xpresspeptideparser
+    return "#{self.tpp_root}/bin/XPressPeptideParser"
+  end
+
+  def xpressproteinratioparser
+    return "#{self.tpp_root}/bin/XPressProteinRatioParser"
+  end
+
   def mascot2xml
     return "#{self.tpp_root}/bin/Mascot2XML"
   end
@@ -128,6 +156,11 @@ class Constants
   def idconvert
     return "#{self.pwiz_root}/idconvert"
   end
+
+  def msconvert
+    return "#{self.pwiz_root}/msconvert"
+  end
+
 
   def protein_database_root
     path=@env['protein_database_root']
@@ -189,7 +222,7 @@ class Constants
     log_dir.mkpath unless log_dir.exist?
 
     @stdout_logger=Logger.new(STDOUT)
-    @file_logger=Logger.new(self.log_file,'daily')
+    @file_logger=Logger.new(self.log_file)
 
     throw "Unable to create file logger at path #{self.log_file}" unless @file_logger!=nil
     throw "Unable to create stdout logger " unless @stdout_logger!=nil

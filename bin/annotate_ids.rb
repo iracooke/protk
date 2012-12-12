@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# This file is part of MSLIMS
+# This file is part of Protk
 # Created by Ira Cooke 21/7/2011
 #
 # Takes an input file with a list of identified proteins and creates a table with swissprot/uniprot database details in various columns for each protein in the input file.

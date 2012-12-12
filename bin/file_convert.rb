@@ -126,14 +126,14 @@ basedir=Pathname.new(filename).dirname.to_s #Where we run the tool
 
 if ( convert_tool.maldi )
   #For MALDI we know the charge is 1 so set it explicitly. Sometimes it is missing from the data
-  runner.run_local("cd #{basedir}; #{genv.tpp_root}/msconvert #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --#{convert_tool.output_format} -o #{output_dir}")
+  runner.run_local("cd #{basedir}; #{genv.msconvert} #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --#{convert_tool.output_format} -o #{output_dir}")
 else
   if ( has_charge_information(filename) )
-    runner.run_local("cd #{basedir}; #{genv.tpp_root}/msconvert #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --#{convert_tool.output_format} -o #{output_dir}")
+    runner.run_local("cd #{basedir}; #{genv.msconvert} #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.<ChargeState>\" --#{convert_tool.output_format} -o #{output_dir}")
   else
     # If input file is missing charges the best we can do is just assign charge=1. Search engines can choose to ignore this value anyway.
     #    
-    runner.run_local("cd #{basedir}; #{genv.tpp_root}/msconvert #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --#{convert_tool.output_format} -o #{output_dir}")
+    runner.run_local("cd #{basedir}; #{genv.msconvert} #{input_relative_filename} --filter \"titleMaker <RunId>.<ScanNumber>.<ScanNumber>.1\" --#{convert_tool.output_format} -o #{output_dir}")
   end
 end
 

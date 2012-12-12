@@ -41,6 +41,47 @@ search_tool.option_parser.on( '-K', '--keep-params-files', 'Keep X!Tandem parame
   search_tool.options.keep_params_files = true
 end
 
+# In case want pepXML, but still want tandem output also.
+search_tool.options.tandem_output=nil
+search_tool.option_parser.on( '--tandem-output tandem_output', 'Keep X! Tandem Output') do |tandem_output|
+  search_tool.options.tandem_output=tandem_output
+end
+
+search_tool.options.thresholds_type = 'isb_kscore'
+search_tool.option_parser.on( '--thresholds-type thresholds_type', 'Threshold Type (tandem_default, isb_native, isb_kscore, scaffold)' ) do |thresholds_type|
+  search_tool.options.thresholds_type = thresholds_type
+end
+
+search_tool.options.algorithm = "kscore"
+search_tool.option_parser.on( '--algorithm algorithm', "Scoring algorithm (kscore or native)" ) do |algorithm|
+  search_tool.options.algorithm = algorithm
+end
+
+search_tool.options.cleavage_semi = false
+search_tool.option_parser.on( '--cleavage-semi' ) do 
+  search_tool.options.cleavage_semi = true
+end
+
+search_tool.options.n_terminal_mod_mass=nil
+search_tool.option_parser.on('--n-terminal-mod-mass mass') do |mass|
+    search_tool.options.n_terminal_mod_mass = mass
+end
+
+search_tool.options.c_terminal_mod_mass=nil
+search_tool.option_parser.on('--c-terminal-mod-mass mass') do |mass|
+    search_tool.options.c_terminal_mod_mass = mass
+end
+
+search_tool.options.cleavage_n_terminal_mod_mass=nil
+search_tool.option_parser.on('--cleavage-n-terminal-mod-mass mass') do |mass|
+    search_tool.options.cleavage_n_terminal_mod_mass = mass
+end
+
+search_tool.options.cleavage_c_terminal_mod_mass=nil
+search_tool.option_parser.on('--cleavage-c-terminal-mod-mass mass') do |mass|
+    search_tool.options.cleavage_c_terminal_mod_mass = mass
+end
+
 search_tool.option_parser.parse!
 
 
@@ -58,8 +99,6 @@ when Pathname.new(search_tool.database).exist? # It's an explicitly named db
 else
   current_db=search_tool.current_database :fasta
 end
-
-
 
 
 # Parse options from a parameter file (if provided), or from the default parameter file
@@ -100,7 +139,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   #
   scoring_notes=std_params.find('/bioml/note[@type="input" and @label="list path, default parameters"]')
   throw "Exactly one list path, default parameters note is required in the parameter file" unless scoring_notes.length==1
-  scoring_notes[0].content="#{genv.tpp_root}/bin/isb_default_input_kscore.xml"
+  scoring_notes[0].content="#{genv.tpp_root}/bin/isb_default_input_#{search_tool.algorithm}.xml"
 
   # Taxonomy and Database
   #  
@@ -264,8 +303,13 @@ ARGV.each do |filename|
     # pepXML conversion and repair
     #
     unless search_tool.no_pepxml
-      repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"      
-      cmd << "; #{genv.tandem2xml} #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}; rm #{output_path}"
+      repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"
+      cmd << "; #{genv.tandem2xml} #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}"
+      if search_tool.tandem_output 
+        cmd << "; cp #{output_path} #{search_tool.tandem_output}"
+      else
+        cmd << "; rm #{output_path}"
+      end
     end
 
     # Add a cleanup command unless the user wants to keep params files
