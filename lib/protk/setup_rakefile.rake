@@ -140,7 +140,7 @@ download_task tpp_url, tpp_packagefile
 file tpp_installed_file => [:perl_locallib,@build_dir,"#{@download_dir}/#{tpp_packagefile}"] do
 	sh %{cp #{@download_dir}/#{tpp_packagefile} #{@build_dir}}
 	sh %{cpanm --local-lib=#{env.protk_dir}/perl5 XML::Parser}
-	sh %{cpanm --local-lib=#{env.protk_dir}/perl5 XML::CGI --force}
+	sh %{cpanm --local-lib=#{env.protk_dir}/perl5 CGI --force}
 
 	sh %{cd #{@build_dir};tar -xvzf TPP-#{tpp_version}.tgz}
 
