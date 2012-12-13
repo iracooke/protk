@@ -113,6 +113,9 @@ file perl_locallib_installed_file =>  [@build_dir,"#{@download_dir}/#{perl_local
 	if !Pathname.new("~/.bash_profile").exist? || File.read("~/.bash_profile") =~ /Mlocal::lib/
 		sh "echo 'eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})' >>~/.bash_profile"
 	end
+
+	sh "eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})"
+	sh "curl -L http://cpanmin.us | perl - --self-upgrade"
 end
 
 task :perl_locallib => [perl_locallib_installed_file]

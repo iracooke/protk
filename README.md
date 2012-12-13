@@ -4,11 +4,7 @@
 ***
 ## What is it?
 
-Protk is a wrapper for various proteomics tools. Initially it focusses on MS/MS database search and validation.
-
-## Why do we need a wrapper around these tools
-
-The aim of protk is present a consistent interface to numerous proteomics tools that is as uniform as possible. Protk also provides built-in support for managing protein databases. 
+Protk is a wrapper for various proteomics tools. It aims to present a consistent interface to a wide variety of tools and provides support for managing protein databases. 
 
 ***
 
@@ -16,21 +12,26 @@ The aim of protk is present a consistent interface to numerous proteomics tools 
 
 ## Basic Installation
  
-1. Install rvm
-curl -L https://get.rvm.io | bash -s stable
+Protk depends on ruby 1.9.  The recommended way to install ruby and manage ruby gems is with rvm. Install rvm using this command.
+    
+    curl -L https://get.rvm.io | bash -s stable
+
+Next install ruby and protk's dependencies
 
 On OSX
-- rvm install 1.9.3 --with-gcc=clang
-- rvm use 1.9.3
-- gem install protk
-- protk_setup.rb all
+
+    rvm install 1.9.3 --with-gcc=clang
+    rvm use 1.9.3
+    gem install protk
+    protk_setup.rb all
 
 On Linux
-- rvm install 1.9.3
-- rvm use 1.9.3
-- gem install protk
-- sudo protk_setup.rb system_dependencies
-- protk_setup all
+    
+    rvm install 1.9.3
+    rvm use 1.9.3
+    gem install protk
+    sudo protk_setup.rb system_dependencies
+    protk_setup all
 
 
 ## Sequence databases
