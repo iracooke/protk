@@ -36,8 +36,9 @@ On Linux
 
 ## Sequence databases
 
-After running the setup.sh script you should run manage_db.rb to install specific sequence databases for use by the search engines. Protk comes with several predefined database configurations. For example, to install a database consisting of human entries from Swissprot plus known contaminants use the following command;
+After running the setup.sh script you should run manage_db.rb to install specific sequence databases for use by the search engines. Protk comes with several predefined database configurations. For example, to install a database consisting of human entries from Swissprot plus known contaminants use the following commands;
 
+    manage_db.rb add crap
     manage_db.rb add sphuman
 
 You should now be able to run database searches, specifying this database by using the -d sphuman flag.  Every month or so swissprot will release a new database version. You can keep your database up to date using;
