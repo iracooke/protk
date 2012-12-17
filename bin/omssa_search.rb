@@ -51,13 +51,13 @@ genv=Constants.new
 rt_correct_bin="#{File.dirname(__FILE__)}/correct_omssa_retention_times.rb"
 repair_script_bin="#{File.dirname(__FILE__)}/repair_run_summary.rb"
 
-cmd=""
+make_blastdb_cmd=""
 
 case 
 when Pathname.new(search_tool.database).exist? # It's an explicitly named db
   current_db=Pathname.new(search_tool.database).realpath.to_s
   if(not FileTest.exists?("#{current_db}.phr"))
-    cmd << "#{@genv.makeblastdb} -dbtype prot -parse_seqids -in #{current_db}; "
+    make_blastdb_cmd << "#{@genv.makeblastdb} -dbtype prot -parse_seqids -in #{current_db}; "
   end
 else
   current_db=search_tool.current_database :fasta
@@ -96,7 +96,7 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd << "#{genv.omssacl} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
+    cmd = "#{make_blastdb_cmd} #{genv.omssacl} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
 
     #Missed cleavages
     #
@@ -229,5 +229,9 @@ ARGV.each do |filename|
   else
     genv.log("Skipping search on existing file #{output_path}",:warn)       
   end
+
+  # Reset this.  We only want to index the database at most once
+  #
+  make_blastdb_cmd=""
 
 end
