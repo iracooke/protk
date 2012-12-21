@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.1.0'
-  s.date        = '2012-10-19'
+  s.version     = '1.1.3'
+  s.date        = '2012-12-19'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
   s.description = "A bunch of tools for proteomics"

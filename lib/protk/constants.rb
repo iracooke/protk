@@ -121,15 +121,6 @@ class Constants
   def omssa2pepxml
     return "#{self.omssa_root}/omssa2pepXML"
   end
-
-  def openms_root
-    path=@env['openms_root']
-    if ( path =~ /^\// )
-      return path
-    else
-      return "#{@protk_dir}/#{@env['openms_root']}"
-    end
-  end
   
   def msgfplus_root
     path=@env['msgfplus_root']
@@ -161,6 +152,18 @@ class Constants
     return "#{self.pwiz_root}/msconvert"
   end
 
+  def openms_root
+    path=@env['openms_root']
+    if ( path =~ /^\//)
+      return path 
+    else
+      return "#{@protk_dir}/#{@env['openms_root']}"
+    end
+  end
+
+  def featurefinderisotopewavelet
+    return "#{self.openms_root}/bin/FeatureFinderIsotopeWavelet"
+  end
 
   def protein_database_root
     path=@env['protein_database_root']
