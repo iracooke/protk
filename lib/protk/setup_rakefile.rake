@@ -317,6 +317,20 @@ end
 
 task :openms => openms_installed_file
 
-task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz,:openms]
+#
+# Galaxy Environment
+#
+
+protk_galaxy_envfile = "#{env.protk_dir}/galaxy/env.sh"
+
+file protk_galaxy_envfile do
+	sh %{mkdir -p #{env.protk_dir}/galaxy}
+	this_dir=File.dirname(__FILE__)
+	sh %{cp #{this_dir}/data/galaxyenv.sh #{protk_galaxy_envfile}}
+end
+
+task :galaxy => protk_galaxy_envfile
+
+task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz,:openms,:galaxy]
 
 
