@@ -212,9 +212,16 @@ class Constants
     default_config_yml = YAML.load_file "#{File.dirname(__FILE__)}/data/default_config.yml"
     throw "Unable to read the config file at #{File.dirname(__FILE__)}/data/default_config.yml" unless default_config_yml!=nil
 
-    @env=default_config_yml
+    user_config_yml = YAML.load_file "#{@protk_dir}/config.yml"
+    if ( user_config_yml )
+      @env = default_config_yml.merge user_config_yml
+    else
+      @env=default_config_yml
+    end
+    
     throw "No data found in config file" unless @env!=nil
     @info_level=default_config_yml['message_level']
+
 
     
   end

@@ -1,3 +1,5 @@
+$VERBOSE=nil
+
 require 'pathname'
 
 class GalaxyStager 
