@@ -31,7 +31,6 @@ end
 
 
 throw "Cannot use explicit output in combination with multiple input files" if ( tool.explicit_output && ARGV.length>1)
-throw "The profile option is not yet implemented" if ( tool.profile )
 
 ini_file=OpenMSDefaults.new.featurefinderisotopewavelet
 

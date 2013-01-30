@@ -165,6 +165,10 @@ class Constants
     return "#{self.openms_root}/bin/FeatureFinderIsotopeWavelet"
   end
 
+  def executepipeline
+    return "#{self.openms_root}/bin/ExecutePipeline"
+  end
+
   def protein_database_root
     path=@env['protein_database_root']
     if ( path =~ /^\// )
