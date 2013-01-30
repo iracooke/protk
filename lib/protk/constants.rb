@@ -121,15 +121,6 @@ class Constants
   def omssa2pepxml
     return "#{self.omssa_root}/omssa2pepXML"
   end
-
-  def openms_root
-    path=@env['openms_root']
-    if ( path =~ /^\// )
-      return path
-    else
-      return "#{@protk_dir}/#{@env['openms_root']}"
-    end
-  end
   
   def msgfplus_root
     path=@env['msgfplus_root']
@@ -161,6 +152,22 @@ class Constants
     return "#{self.pwiz_root}/msconvert"
   end
 
+  def openms_root
+    path=@env['openms_root']
+    if ( path =~ /^\//)
+      return path 
+    else
+      return "#{@protk_dir}/#{@env['openms_root']}"
+    end
+  end
+
+  def featurefinderisotopewavelet
+    return "#{self.openms_root}/bin/FeatureFinderIsotopeWavelet"
+  end
+
+  def executepipeline
+    return "#{self.openms_root}/bin/ExecutePipeline"
+  end
 
   def protein_database_root
     path=@env['protein_database_root']
@@ -209,9 +216,16 @@ class Constants
     default_config_yml = YAML.load_file "#{File.dirname(__FILE__)}/data/default_config.yml"
     throw "Unable to read the config file at #{File.dirname(__FILE__)}/data/default_config.yml" unless default_config_yml!=nil
 
-    @env=default_config_yml
+    user_config_yml = YAML.load_file "#{@protk_dir}/config.yml"
+    if ( user_config_yml )
+      @env = default_config_yml.merge user_config_yml
+    else
+      @env=default_config_yml
+    end
+    
     throw "No data found in config file" unless @env!=nil
     @info_level=default_config_yml['message_level']
+
 
     
   end

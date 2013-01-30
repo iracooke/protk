@@ -287,6 +287,50 @@ end
 
 task :pwiz => pwiz_installed_file
 
-task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz]
+#
+# openms
+#
+
+def platform_cmake_args
+	if RbConfig::CONFIG['host_os'] =~ /darwin/ 
+		return '-D CMAKE_CXX_COMPILER=/usr/bin/g++'
+	end
+	''
+end
+
+openms_version="1.9.0"
+openms_packagefile="OpenMS-#{openms_version}.tar.gz"
+openms_url="https://dl.dropbox.com/u/226794/#{openms_packagefile}"
+openms_installed_file="#{env.featurefinderisotopewavelet}"
+
+download_task openms_url, openms_packagefile
+
+file openms_installed_file => [@build_dir,"#{@download_dir}/#{openms_packagefile}"] do 
+	sh %{cp #{@download_dir}/#{openms_packagefile} #{@build_dir}}
+    sh %{cd #{@build_dir}; gunzip -f #{openms_packagefile}}
+    sh %{cd #{@build_dir}; tar -xvf #{openms_packagefile.chomp('.gz')}}
+    sh %{mkdir -p #{env.openms_root}}
+    sh %{cd #{@build_dir}/OpenMS-#{openms_version}/contrib; cmake #{platform_cmake_args} .}
+    sh %{cd #{@build_dir}/OpenMS-#{openms_version}; cmake -D INSTALL_PREFIX=#{env.openms_root} .}
+    sh %{cd #{@build_dir}/OpenMS-#{openms_version}; make install}
+end
+
+task :openms => openms_installed_file
+
+#
+# Galaxy Environment
+#
+
+protk_galaxy_envfile = "#{env.protk_dir}/galaxy/env.sh"
+
+file protk_galaxy_envfile do
+	sh %{mkdir -p #{env.protk_dir}/galaxy}
+	this_dir=File.dirname(__FILE__)
+	sh %{cp #{this_dir}/data/galaxyenv.sh #{protk_galaxy_envfile}}
+end
+
+task :galaxy => protk_galaxy_envfile
+
+task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz,:openms,:galaxy]
 
 

@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.1.0'
-  s.date        = '2012-10-19'
+  s.version     = '1.1.4'
+  s.date        = '2013-01-29'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
   s.description = "A bunch of tools for proteomics"
@@ -39,4 +39,5 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['pepxml_to_table.rb','xls_to_table.rb','annotate_ids.rb']
   s.executables = s.executables + ['unimod_to_loc.rb','generate_omssa_loc.rb']
   s.executables = s.executables + ['uniprot_mapper.rb']
+  s.executables = s.executables + ['feature_finder.rb','toppas_pipeline.rb']
 end

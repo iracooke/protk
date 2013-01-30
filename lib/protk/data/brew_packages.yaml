@@ -8,3 +8,8 @@ common:
 - libpng12
 - cpanm
 - libxml2
+
+openms:
+- autoconf
+- automake
+- libtool
