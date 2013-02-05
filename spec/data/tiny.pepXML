@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<msms_pipeline_analysis date="2012-11-28T14:18:59" summary_xml="/Users/iracooke/Sources/protk-wk/spec/data/tiny.pepXML" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/pepXML/pepXML_v117.xsd">
+  <analysis_summary analysis="MS-GF+" version="1.0 (v8252)" time="2012-11-28T03:19:00Z"/>
+  <analysis_summary analysis="ProteoWizard" version="3.0.4140" time="2012-11-28T03:19:00Z"/>
+  <msms_run_summary base_name="tiny.mzML" raw_data_type="" raw_data="">
+    <sample_enzyme name="Trypsin" independent="false" fidelity="specific">
+      <specificity sense="C" cut="KR" no_cut="P" min_spacing="0"/>
+    </sample_enzyme>
+    <search_summary base_name="tiny.mzML" search_engine="MS-GF+" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" out_data_type="" out_data="">
+      <search_database local_path="/Users/iracooke/.protk/Databases/sphuman/current.fasta" database_name="SearchDB_1" size_in_db_entries="40596" type="NA"/>
+      <enzymatic_search_constraint enzyme="Trypsin" max_num_internal_cleavages="0" min_number_termini="2"/>
+      <aminoacid_modification aminoacid="C" massdiff="57.021465" mass="160.0306494778" variable="N"/>
+      <parameter name="MinIsotopeError" value="0"/>
+      <parameter name="MaxIsotopeError" value="1"/>
+      <parameter name="FragmentMethod" value="As written in the spectrum or CID if no info"/>
+      <parameter name="Instrument" value="TOF"/>
+      <parameter name="Protocol" value="NoProtocol"/>
+      <parameter name="NumTolerableTermini" value="0"/>
+      <parameter name="MinPepLength" value="6"/>
+      <parameter name="MaxPepLength" value="40"/>
+      <parameter name="MinCharge" value="2"/>
+      <parameter name="MaxCharge" value="3"/>
+    </search_summary>
+  </msms_run_summary>
+</msms_pipeline_analysis>

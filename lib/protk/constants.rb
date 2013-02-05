@@ -194,6 +194,10 @@ class Constants
   def makeblastdb
     return "#{self.blast_root}/bin/makeblastdb"
   end
+
+  def searchblastdb
+    return "#{self.blast_root}/bin/blastdbcmd"
+  end
   
   def log_file
     path=@env['log_file']
@@ -216,8 +220,9 @@ class Constants
     default_config_yml = YAML.load_file "#{File.dirname(__FILE__)}/data/default_config.yml"
     throw "Unable to read the config file at #{File.dirname(__FILE__)}/data/default_config.yml" unless default_config_yml!=nil
 
-    user_config_yml = YAML.load_file "#{@protk_dir}/config.yml"
-    if ( user_config_yml )
+    user_config_yml = nil
+    user_config_yml = YAML.load_file "#{@protk_dir}/config.yml" if File.exist? "#{@protk_dir}/config.yml"
+    if ( user_config_yml !=nil )
       @env = default_config_yml.merge user_config_yml
     else
       @env=default_config_yml
