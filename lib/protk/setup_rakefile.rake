@@ -266,7 +266,7 @@ end
 
 def platform_bunzip
 	if RbConfig::CONFIG['host_os'] =~ /darwin/ 
-		return 'pbunzip2'
+		return 'bunzip2'
 	end
 	'bunzip2'
 end
