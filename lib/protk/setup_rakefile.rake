@@ -22,7 +22,7 @@ end
 
 def supports_package_manager name
 	res = %x[which #{name}]
-	(res == "")
+	(res != "")
 end
 
 def clean_build_dir
@@ -53,9 +53,10 @@ task :package_manager do
 	end
 
 	if needs_homebrew
-		sh { "ruby -e \"$(curl -fsSkL raw.github.com/mxcl/homebrew/go)" }
-		sh { "brew update"}
-		sh { "brew tap homebrew/versions"}
+		puts "Installing Homebrew"
+		sh %{ ruby -e \"$(curl -fsSkL raw.github.com/mxcl/homebrew/go)\" }
+		sh %{ brew update}
+		sh %{ brew tap homebrew/versions}
 	end
 
 end
