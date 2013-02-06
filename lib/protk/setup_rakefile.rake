@@ -294,7 +294,7 @@ task :pwiz => pwiz_installed_file
 
 def platform_cmake_args
 	if RbConfig::CONFIG['host_os'] =~ /darwin/ 
-		return '-D CMAKE_CXX_COMPILER=/usr/bin/g++'
+		return '-D CMAKE_CXX_COMPILER=/usr/bin/g++ -D CMAKE_C_COMPILER=/usr/bin/gcc '
 	end
 	''
 end
