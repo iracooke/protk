@@ -38,10 +38,15 @@ tool.option_parser.on('--skip-index','Don\'t index sixframe translations (Index 
   tool.options.skip_fasta_indexing=true
 end
 
+tool.options.peptide_probability_threshold=0.95
+tool.option_parser.on('--threshold prob','Peptide Probability Threshold (Default 0.95)') do |thresh|
+  tool.options.peptide_probability_threshold=thresh.to_f
+end
+
 # Checking for required options
 begin
   tool.option_parser.parse!
-  mandatory = [:gff_predicted, :protxml,:sixframe] 
+  mandatory = [:protxml,:sixframe] 
   missing = mandatory.select{ |param| tool.send(param).nil? }
   if not missing.empty?                                            
     puts "Missing options: #{missing.join(', ')}"                  
@@ -54,6 +59,23 @@ rescue OptionParser::InvalidOption, OptionParser::MissingArgument
   exit                                                                   
 end
 
+gff_out_file="merged.gff"
+if ( tool.explicit_output != nil)
+  gff_out_file=tool.explicit_output
+end
+
+gff_db = Bio::GFF.new()
+if ( tool.gff_predicted !=nil)
+  p "Reading source gff file"
+  gff_db = Bio::GFF::GFF3.new(File.open(tool.gff_predicted))
+  # p gff_db.records[1].attributes
+  # exit
+end
+
+f = open(gff_out_file,'w+')
+gff_db.records.each { |rec| 
+  f.write(rec.to_s)
+}
 
 p "Parsing proteins from protxml"
 protxml_parser=XML::Parser.file(tool.protxml)
@@ -66,10 +88,8 @@ db_filename = Pathname.new(tool.sixframe).realpath.to_s
 if tool.skip_fasta_indexing 
   orf_lookup = FastaDB.new(db_filename)
 else
-  orf_lookup = FastaDB.create(db_filename,db_filename,'nucl')
+  orf_lookup = FastaDB.create(db_filename,db_filename,'prot')
 end
-
-p orf_lookup.get_by_id "lcl|scaffold_1_frame_1_orf_8"
 
 p "Aligning peptides and writing GFF data..."
 low_prob = 0
@@ -92,28 +112,83 @@ for prot in proteins
     prot_qualifiers = {"source" => "OBSERVATION", "score" => prot_prob, "ID" => 'pr' + protein_count.to_s}
     begin
       p "Looking up #{protein_name}"
-      scaffold = orf_lookup.get_by_id protein_name
-      if ( scaffold == nil)
+      orf = orf_lookup.get_by_id protein_name
+      if ( orf == nil)
         raise KeyError
       end
-      p scaffold.description
-      position = scaffold.description.split(' ')[1].split('|')
-      scaffold_name = scaffold.entry_id.scan(/^([^_]+_[^_]+).*/)
-      for peptide in peptides
-        total_peptides += 1
+
+
+      position = orf.identifiers.description.split('|').collect { |pos| pos.to_i }
+
+      if ( position.length != 2 )
+        raise EncodingError
       end
-      # scaffold_name = re.findall("^([^_]+_[^_]+).*", protein.attrib['protein_name'])[0]
-      # position = scaffold.description.split(' ')[1].split('|')
-      # position[0] = int(position[0])
-      # position[1] = int(position[1])
-    rescue KeyError
+      orf_name = orf.entry_id.scan(/lcl\|(.*)/)[0][0]
+      frame=orf_name.scan(/frame_(\d)/)[0][0]
+      scaffold_name = orf_name.scan(/(scaffold_\d+)/)[0][0]
+
+      # strand = frame > 3 ? -1 : 1 
+      strand = +1
+
+      prot_id = "pr#{protein_count.to_s}"
+      prot_attributes = [["ID",prot_id]]
+      prot_gff_line = Bio::GFF::GFF3::Record.new(seqid = scaffold_name,source="OBSERVATION",feature_type="protein",
+        start_position=position[0],end_position=position[1],score=prot_prob,strand=strand,frame=frame,attributes=prot_attributes)
+      gff_db.records += [prot_gff_line]
+
+      prot_seq = orf.aaseq.to_s
+      throw "Not amino_acids" if prot_seq != orf.seq.to_s
+
+
+      for peptide in peptides
+        pprob = peptide['nsp_adjusted_probability'].to_f
+        if ( pprob >= tool.peptide_probability_threshold )
+          total_peptides += 1
+          pep_seq = peptide['peptide_sequence']
+
+
+          start_indexes = [0]
+          prot_seq.scan /#{pep_seq}/  do |match| 
+              start_indexes << prot_seq.index(match,start_indexes.last)
+          end
+          start_indexes.delete_at(0)
+
+          # Now convert peptide coordinate to genome coordinates
+          # And create gff lines for each match
+          start_indexes.collect do |si|
+            pep_genomic_start = position[0] + 3*si
+            pep_genomic_end = pep_genomic_start + 3*pep_seq.length
+            peptide_count+=1
+            pep_attributes = [["ID","p#{peptide_count.to_s}"],["Parent",prot_id]]
+            pep_gff_line = Bio::GFF::GFF3::Record.new(seqid = scaffold_name,source="OBSERVATION",
+              feature_type="peptide",start_position=pep_genomic_start,end_position=pep_genomic_end,score=pprob,
+              strand=strand,frame=frame,attributes=pep_attributes)
+            gff_db.records += [pep_gff_line]
+            # p pep_gff_line
+
+          end
+
+
+        end
+      end
+
+    rescue KeyError,EncodingError
       skipped+=0
       p "Lookup failed for #{protein_name}"
-      exit
     end
+
+    # p orf_name
+    # p prot_gff_line
+    # exit
   end
 
 end
+
+f = open(gff_out_file,'w+')
+gff_db.records.each { |rec| 
+  f.write(rec.to_s)
+}
+f.close
 
 p "Finished."
 p "Proteins: #{protein_count}"
@@ -121,4 +196,4 @@ p "Skipped Decoys: #{skipped}"
 p "Total Peptides: #{total_peptides}"
 p "Peptides Written: #{total_peptides - low_prob}"
 p "Peptides Culled: #{low_prob}"
-
+exit(0)
