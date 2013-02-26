@@ -48,7 +48,18 @@ search_tool.option_parser.on( '--tandem-output tandem_output', 'Keep X! Tandem O
 end
 
 search_tool.options.thresholds_type = 'isb_kscore'
-search_tool.option_parser.on( '--thresholds-type thresholds_type', 'Threshold Type (tandem_default, isb_native, isb_kscore, scaffold)' ) do |thresholds_type|
+search_tool.option_parser.on( '--thresholds-type thresholds_type', 'Threshold Type (tandem_default, isb_native, isb_kscore, scaffold, system_default)' ) do |thresholds_type|
+  # This options sets up various X! Tandem thresholds. 
+  #  - system_default: Don't change any defaults just use
+  #      the defaults for this TPP install as is.
+  #  - tandem_default: These thresholds are found on the 
+  #      tandem api page. http://www.thegpm.org/tandem/api/index.html
+  #  - isb_native: These are the defaults found in 
+  #      isb_default_input_native.xml distributed with TPP 4.6.
+  #  - isb_kscore: These are the defaults found in 
+  #      isb_default_input_kscore.xml distributed with TPP 4.6.
+  #  - scaffold: These are the defaults recommend by Proteome Software
+  #      for use with Scaffold.
   search_tool.options.thresholds_type = thresholds_type
 end
 
@@ -122,9 +133,14 @@ def decode_modification_string(mstring)
   mstring
 end
 
+def set_option(std_params, tandem_key, value)
+  notes = std_params.find("/bioml/note[@type=\"input\" and @label=\"#{tandem_key}\"]")
+  throw "Exactly one parameter named (#{tandem_key}) is required in parameter file" unless notes.length==1
+  notes[0].content=value
+end
+
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
-  
-  
+
   # Set the input and output paths 
   #
   input_notes=std_params.find('/bioml/note[@type="input" and @label="spectrum, path"]')
@@ -184,6 +200,78 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     isotopic_error[0].content="no"
   end
   
+  if search_tool.tandem_output
+    # If one is interested in the tandem output (e.g. for consumption by Scaffold)
+    # want to store additional information.
+    set_option(std_params, "output, spectra", "yes")
+  end
+
+  thresholds_type = search_tool.thresholds_type
+
+  if thresholds_type == "system_default"
+
+    maximum_valid_expectation_value = "0.1"
+    if thresholds_type == "scaffold"
+      maximum_valid_expectation_value = "1000"
+    end 
+    
+    minimum_ion_count = "4"
+    case thresholds_type 
+    when "isb_kscore", "isb_native"
+      minimum_ion_count = "1"
+    when "scaffold"
+      minimum_ion_count = "0"
+    end
+    
+    minimum_peaks = "15"
+    case thresholds_type
+    when "isb_native"
+      minimum_peaks = "6"
+    when "isb_kscore"
+      minimum_peaks = "10"
+    when "scaffold"
+      minimum_peaks = "0"
+    end
+    
+    minimum_fragement_mz = "150"
+    case thresholds_type
+    when "isb_native"
+      minimum_fragement_mz = "50"
+    when "isb_kscore"
+      minimum_fragement_mz = "125"
+    when "scaffold"
+      minimum_fragement_mz = "0"
+    end
+    
+    minimum_parent_mh = "500" # tandem and isb_native defaults
+    case thresholds_type
+    when "isb_kscore"
+      minimum_parent_mh = "600"
+    when "scaffold"
+      minimum_parent_mh = "0"
+    end
+    
+    use_noise_suppression = "yes"
+    if thresholds_type == "isb_kscore" or thresholds_type == "scaffold"
+      use_noise_suppression = "no"
+    end
+    
+    dynamic_range = "100.0"
+    case thresholds_type
+    when "isb_kscore"
+      dynamic_range = "10000.0"
+    when "scaffold"
+      dynamic_range = "1000.0"
+    end
+
+    set_option(std_params, "spectrum, dynamic range", dynamic_range)
+    set_option(std_params, "spectrum, use noise suppression", use_noise_suppression)
+    set_option(std_params, "spectrum, minimum parent m+h", minimum_parent_mh)
+    set_option(std_params, "spectrum, minimum fragment mz", minimum_fragement_mz)
+    set_option(std_params, "spectrum, minimum peaks", minimum_peaks)
+    set_option(std_params, "scoring, minimum ion count", minimum_ion_count)
+    set_option(std_params, "output, maximum valid expectation value", maximum_valid_expectation_value)
+  end
   
   # Fixed and Variable Modifications
   #
