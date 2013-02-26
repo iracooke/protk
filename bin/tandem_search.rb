@@ -211,7 +211,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
 
   thresholds_type = search_tool.thresholds_type
 
-  if thresholds_type == "system_default"
+  if thresholds_type != "system_default"
 
     maximum_valid_expectation_value = "0.1"
     if thresholds_type == "scaffold"
