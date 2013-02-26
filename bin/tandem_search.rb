@@ -141,6 +141,8 @@ end
 
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
 
+  set_option(std_params, "scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
+
   # Set the input and output paths 
   #
   input_notes=std_params.find('/bioml/note[@type="input" and @label="spectrum, path"]')
