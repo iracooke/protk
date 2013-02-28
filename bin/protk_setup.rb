@@ -6,8 +6,19 @@
 # Post-install setup for protk. 
 # Installs third party tools
 #
-
 require 'protk/constants'
+
+toolname=ARGV[0]
+
+if ARGV[1]=='--change-location'
+	location=ARGV[2]
+	p "Changing default location for #{toolname} to #{location}"
+	env=Constants.new
+	env.update_user_config({"#{toolname}_root"=>location})
+	exit
+end
+
+
 require 'protk/setup_tool'
 require 'yaml'
 require 'pp'
@@ -26,28 +37,12 @@ if ( ARGV.length < 1)
 	exit
 end
 
-# Checking for required options
-# begin
-#   tool.option_parser.parse!
-#   mandatory = [:gff_predicted, :protxml,:sixframe] 
-#   missing = mandatory.select{ |param| tool.send(param).nil? }
-#   if not missing.empty?                                            
-#     puts "Missing options: #{missing.join(', ')}"                  
-#     puts tool.option_parser                                                  
-#     exit                                                           
-#   end                                                              
-# rescue OptionParser::InvalidOption, OptionParser::MissingArgument      
-#   puts $!.to_s                                                           
-#   puts tool.option_parser                                              
-#   exit                                                                   
-# end
-
-
-# Create install directory if it doesn't already exist
-#
 env=Constants.new
 
-ARGV.each do |toolname|
-	p toolname
-	tool.install toolname
-end
+toolname=ARGV.shift
+
+p ARGV
+p toolname
+
+p "Installing #{toolname}"
+tool.install toolname

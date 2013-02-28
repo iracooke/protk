@@ -216,6 +216,11 @@ class Constants
 
     @protk_dir="#{Dir.home}/.protk"
 
+    if ( ENV['PROTK_INSTALL_DIR']!=nil )
+      p "Using protk install dir from shell"
+      @protk_dir=ENV['PROTK_INSTALL_DIR']
+    end
+
 
     default_config_yml = YAML.load_file "#{File.dirname(__FILE__)}/data/default_config.yml"
     throw "Unable to read the config file at #{File.dirname(__FILE__)}/data/default_config.yml" unless default_config_yml!=nil
@@ -235,6 +240,16 @@ class Constants
     
   end
 
+  def update_user_config(dict)
+    user_config_yml = YAML.load_file "#{self.protk_dir}/config.yml" if File.exist? "#{self.protk_dir}/config.yml"
+
+    if ( user_config_yml !=nil )
+      dict = dict.merge user_config_yml
+    end
+
+    File.open("#{self.protk_dir}/config.yml", "w") {|file| file.puts(dict.to_yaml) }
+
+  end
 
   def initialize_loggers
     log_dir = Pathname.new(self.log_file).dirname

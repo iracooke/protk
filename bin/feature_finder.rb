@@ -72,7 +72,7 @@ ARGV.each do |filen|
   if ( tool.over_write || !Pathname.new(output_file).exist? )
     output_base_filename=Pathname.new(output_file).basename.to_s
     cmd=""
-    cmd<<"export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.protk/tools/openms/lib;
+    cmd<<"export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:#{genv.openms_root}/lib;
 #{genv.featurefinderisotopewavelet} -in #{Pathname.new(input_file).realpath.to_s} -out #{output_dir}/#{output_base_filename} -ini #{ini_file}"
   
     run_ff(genv,tool,cmd,output_file,tool.jobid_from_filename(input_basename))

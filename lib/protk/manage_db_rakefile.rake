@@ -445,8 +445,9 @@ end
 # Indexing        #
 ###################
 if dbspec[:make_blast_index] 
-  blast_index_files=FileList.new([".phr"].collect {|ext| "#{db_filename}#{ext}"  })
+#  blast_index_files=FileList.new([".phr"].collect {|ext| "#{db_filename}#{ext}"  })
   #  task :make_blast_index => blast_index_files  do
+  blast_index_files=["#{db_filename}.phr"]
   blast_index_files.each do |indfile|
     file indfile => db_filename do
       cmd="cd #{dbdir}; #{$genv.makeblastdb} -in #{db_filename} -parse_seqids -dbtype prot"

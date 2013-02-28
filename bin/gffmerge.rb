@@ -127,14 +127,14 @@ for prot in proteins
       frame=orf_name.scan(/frame_(\d)/)[0][0]
       scaffold_name = orf_name.scan(/(scaffold_\d+)/)[0][0]
 
-      # strand = frame > 3 ? -1 : 1 
-      strand = +1
+      strand = (frame.to_i > 3) ? '-' : '+'
+#      strand = +1
 
       prot_id = "pr#{protein_count.to_s}"
-      prot_attributes = [["ID",prot_id]]
+      prot_attributes = [["ID",prot_id],["Name",orf_name]]
       prot_gff_line = Bio::GFF::GFF3::Record.new(seqid = scaffold_name,source="OBSERVATION",feature_type="protein",
-        start_position=position[0],end_position=position[1],score=prot_prob,strand=strand,frame=frame,attributes=prot_attributes)
-      gff_db.records += [prot_gff_line]
+        start_position=position[0]+1,end_position=position[1],score=prot_prob,strand=strand,frame=nil,attributes=prot_attributes)
+      gff_db.records += ["##gff-version 3\n","##sequence-region #{scaffold_name} 1 160\n",prot_gff_line]
 
       prot_seq = orf.aaseq.to_s
       throw "Not amino_acids" if prot_seq != orf.seq.to_s
@@ -157,14 +157,17 @@ for prot in proteins
           # And create gff lines for each match
           start_indexes.collect do |si|
             pep_genomic_start = position[0] + 3*si
-            pep_genomic_end = pep_genomic_start + 3*pep_seq.length
+            pep_genomic_end = pep_genomic_start + 3*pep_seq.length - 1
             peptide_count+=1
-            pep_attributes = [["ID","p#{peptide_count.to_s}"],["Parent",prot_id]]
+            pep_id = "p#{peptide_count.to_s}"
+            pep_attributes = [["ID",pep_id],["Parent",prot_id]]
             pep_gff_line = Bio::GFF::GFF3::Record.new(seqid = scaffold_name,source="OBSERVATION",
               feature_type="peptide",start_position=pep_genomic_start,end_position=pep_genomic_end,score=pprob,
-              strand=strand,frame=frame,attributes=pep_attributes)
-            gff_db.records += [pep_gff_line]
-            # p pep_gff_line
+              strand=strand,frame=nil,attributes=pep_attributes)
+            fragment_gff_line = Bio::GFF::GFF3::Record.new(seqid = scaffold_name,source="OBSERVATION",
+              feature_type="fragment",start_position=pep_genomic_start,end_position=pep_genomic_end,score='',
+              strand=strand,frame=nil,attributes=[["Parent",pep_id],["ID",pep_seq]])
+            gff_db.records += [pep_gff_line,fragment_gff_line]
 
           end
 

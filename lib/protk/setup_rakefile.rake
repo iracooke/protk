@@ -101,7 +101,7 @@ file perl_locallib_installed_file =>  [@build_dir,"#{@download_dir}/#{perl_local
 	sh %{cp #{@download_dir}/#{perl_locallib_packagefile} #{@build_dir}}
 	perl_dir = "#{env.protk_dir}/perl5"
 
-	sh %{cd #{@build_dir}; gunzip local-lib-#{perl_locallib_version}.tar.gz } 
+	sh %{cd #{@build_dir}; gunzip -f local-lib-#{perl_locallib_version}.tar.gz } 
 	sh %{cd #{@build_dir}; tar -xf local-lib-#{perl_locallib_version}.tar } 
 	sh "cd #{@build_dir}/local-lib-#{perl_locallib_version}; perl Makefile.PL --bootstrap=#{perl_dir}; make install" do |ok,res|
 #		clean_build_dir if ok
@@ -330,8 +330,11 @@ file protk_galaxy_envfile do
 	sh %{cp #{this_dir}/data/galaxyenv.sh #{protk_galaxy_envfile}}
 end
 
-task :galaxy => protk_galaxy_envfile
+task :galaxyenv => protk_galaxy_envfile
 
-task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz,:openms,:galaxy]
+task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz,:openms,:galaxyenv]
 
+# Special task when installing via toolshed
+#
+task :galaxy => [:tpp,:omssa,:blast,:pwiz,:galaxyenv]
 

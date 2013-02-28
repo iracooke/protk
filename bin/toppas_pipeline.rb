@@ -66,7 +66,7 @@ trf_path = "#{tool.toppas_file}.trf"
 generate_trf(ARGV,trf_path)
 
 cmd=""
-cmd<<"export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.protk/tools/openms/lib;
+cmd<<"export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:#{genv.openms_root}/lib;
 #{genv.executepipeline} -in #{Pathname.new(tool.toppas_file).realpath.to_s} -out_dir #{Pathname.new(tool.outdir).realpath.to_s} -resource_file #{Pathname.new(trf_path).realpath.to_s}"
 
 run_pipeline(genv,tool,cmd,tool.outdir,tool.jobid_from_filename(tool.toppas_file))
