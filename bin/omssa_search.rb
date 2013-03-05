@@ -57,7 +57,7 @@ case
 when Pathname.new(search_tool.database).exist? # It's an explicitly named db
   current_db=Pathname.new(search_tool.database).realpath.to_s
   if(not FileTest.exists?("#{current_db}.phr"))
-    make_blastdb_cmd << "#{@genv.makeblastdb} -dbtype prot -parse_seqids -in #{current_db}; "
+    make_blastdb_cmd << "#{genv.makeblastdb} -dbtype prot -parse_seqids -in #{current_db}; "
   end
 else
   current_db=search_tool.current_database :fasta

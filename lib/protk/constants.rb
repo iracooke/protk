@@ -232,6 +232,16 @@ class Constants
     else
       @env=default_config_yml
     end
+
+    protk_roots = ["tpp","omssa","blast","pwiz","msgfplus","openms"]
+
+    protk_roots.each do |r|  
+      env_value = ENV["PROTK_#{r.upcase}_ROOT"]
+      if ( env_value!=nil)
+        p "Using #{r} root #{env_value}"
+        @env["#{r}_root"]=env_value
+      end
+    end
     
     throw "No data found in config file" unless @env!=nil
     @info_level=default_config_yml['message_level']
@@ -240,11 +250,12 @@ class Constants
     
   end
 
+
   def update_user_config(dict)
     user_config_yml = YAML.load_file "#{self.protk_dir}/config.yml" if File.exist? "#{self.protk_dir}/config.yml"
 
     if ( user_config_yml !=nil )
-      dict = dict.merge user_config_yml
+      dict = user_config_yml.merge dict 
     end
 
     File.open("#{self.protk_dir}/config.yml", "w") {|file| file.puts(dict.to_yaml) }

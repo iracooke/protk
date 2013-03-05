@@ -34,9 +34,12 @@ def download_buildfile url, file
 end
 
 def download_task url, packagefile
-	file "#{@download_dir}/#{packagefile}" => @download_dir do 
+	file "#{@download_dir}/#{packagefile}" => @download_dir do
+		p "Downloading from #{url}"
 		download_buildfile "#{url}", "#{packagefile}"
+		p "Done"
 	end
+	"#{@download_dir}/#{packagefile}"
 end
 
 #
@@ -90,16 +93,17 @@ end
 #
 # Perl local::lib
 #
-perl_locallib_version="1.008004"
+perl_locallib_version="1.008009"
 perl_locallib_packagefile="local-lib-#{perl_locallib_version}.tar.gz"
 perl_locallib_installed_file = "#{env.protk_dir}/perl5/lib/perl5/local/lib.pm"
 perl_locallib_url = "http://search.cpan.org/CPAN/authors/id/A/AP/APEIRON/local-lib-#{perl_locallib_version}.tar.gz"
+perl_dir = "#{env.protk_dir}/perl5"
 
 download_task perl_locallib_url, perl_locallib_packagefile
 
 file perl_locallib_installed_file =>  [@build_dir,"#{@download_dir}/#{perl_locallib_packagefile}"] do
 	sh %{cp #{@download_dir}/#{perl_locallib_packagefile} #{@build_dir}}
-	perl_dir = "#{env.protk_dir}/perl5"
+	
 
 	sh %{cd #{@build_dir}; gunzip -f local-lib-#{perl_locallib_version}.tar.gz } 
 	sh %{cd #{@build_dir}; tar -xf local-lib-#{perl_locallib_version}.tar } 
@@ -107,16 +111,15 @@ file perl_locallib_installed_file =>  [@build_dir,"#{@download_dir}/#{perl_local
 #		clean_build_dir if ok
 	end
 
-	if !Pathname.new("~/.bashrc").exist? || File.read("~/.bashrc") =~ /Mlocal::lib/
-		sh "echo 'eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})' >>~/.bashrc"
-	end
+	# if !Pathname.new("~/.bashrc").exist? || File.read("~/.bashrc") =~ /Mlocal::lib/
+	# 	sh "echo 'eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})' >>~/.bashrc"
+	# end
 
-	if !Pathname.new("~/.bash_profile").exist? || File.read("~/.bash_profile") =~ /Mlocal::lib/
-		sh "echo 'eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})' >>~/.bash_profile"
-	end
+	# if !Pathname.new("~/.bash_profile").exist? || File.read("~/.bash_profile") =~ /Mlocal::lib/
+	# 	sh "echo 'eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})' >>~/.bash_profile"
+	# end
 
-	sh "eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})"
-	sh "curl -L http://cpanmin.us | perl - --self-upgrade"
+	sh "eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir});curl -L http://cpanmin.us | perl - --self-upgrade"
 end
 
 task :perl_locallib => [perl_locallib_installed_file]
@@ -130,18 +133,18 @@ task :perl_locallib => [perl_locallib_installed_file]
 #
 # TPP
 #
-tpp_version="4.6.1"
+tpp_version="4.6.2"
 tpp_packagefile="TPP-#{tpp_version}.tgz"
 tpp_installed_file = "#{env.xinteract}"
-tpp_url = "https://dl.dropbox.com/u/226794/TPP-4.6.1.tgz"
+tpp_url = "https://dl.dropbox.com/u/226794/TPP-4.6.2.tgz"
 
-download_task tpp_url, tpp_packagefile
+tpp_download_file = download_task tpp_url, tpp_packagefile
 
 # Build
-file tpp_installed_file => [:perl_locallib,@build_dir,"#{@download_dir}/#{tpp_packagefile}"] do
+file tpp_installed_file => [:perl_locallib,@build_dir,tpp_download_file] do
 	sh %{cp #{@download_dir}/#{tpp_packagefile} #{@build_dir}}
-	sh %{cpanm --local-lib=#{env.protk_dir}/perl5 XML::Parser}
-	sh %{cpanm --local-lib=#{env.protk_dir}/perl5 CGI --force}
+	sh %{eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir});cpanm --local-lib=#{env.protk_dir}/perl5 XML::Parser}
+	sh %{eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir});cpanm --local-lib=#{env.protk_dir}/perl5 CGI --force}
 
 	sh %{cd #{@build_dir};tar -xvzf TPP-#{tpp_version}.tgz}
 
@@ -169,7 +172,7 @@ file tpp_installed_file => [:perl_locallib,@build_dir,"#{@download_dir}/#{tpp_pa
 			f.write subs_text
 		end
 	end
-	sh %{cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make; make install}
+	sh %{eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir});cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make; make install}
 
 end
 
@@ -238,7 +241,7 @@ task :blast => blast_installed_file
 #
 # MSGFPlus
 #
-msgfplus_version="20121116"
+msgfplus_version="20130227"
 msgfplus_packagefile="MSGFPlus.#{msgfplus_version}.zip"
 msgfplus_url="http://proteomics.ucsd.edu/Downloads/MSGFPlus.#{msgfplus_version}.zip"
 msgfplus_installed_file="#{env.msgfplusjar}"
@@ -271,8 +274,9 @@ def platform_bunzip
 	'bunzip2'
 end
 
-pwiz_version="3_0_4146"
-pwiz_packagefile="pwiz-bin-#{pwiz_platform}-release-#{pwiz_version}.tar.bz2"
+pwiz_version="3_0_4388"
+pwiz_folder_name="pwiz-bin-#{pwiz_platform}-release-#{pwiz_version}"
+pwiz_packagefile="#{pwiz_folder_name}.tar.bz2"
 pwiz_url="https://dl.dropbox.com/u/226794/#{pwiz_packagefile}"
 pwiz_installed_file="#{env.idconvert}"
 
@@ -283,7 +287,7 @@ file pwiz_installed_file => [@build_dir,"#{@download_dir}/#{pwiz_packagefile}"] 
     sh %{cd #{@build_dir}; #{platform_bunzip} -f #{pwiz_packagefile}}
     sh %{cd #{@build_dir}; tar -xvf #{pwiz_packagefile.chomp('.bz2')}}
     sh %{mkdir -p #{env.pwiz_root}}
-    sh %{cd #{@build_dir}; cp idconvert msconvert #{env.pwiz_root}/}
+    sh %{cd #{@build_dir}; cp ./#{pwiz_folder_name}/* #{env.pwiz_root}/}
 end
 
 task :pwiz => pwiz_installed_file

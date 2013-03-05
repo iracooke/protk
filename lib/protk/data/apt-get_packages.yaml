@@ -10,9 +10,6 @@ rvm:
 - openssl
 - libreadline6
 - libreadline6-dev
-- openssl
-- libreadline6
-- libreadline6-dev
 - git-core
 - zlib1g
 - zlib1g-dev
@@ -26,11 +23,14 @@ rvm:
 - subversion
 - pkg-config
 
+protk:
+- libxml2-dev
+- libxml2
+
 galaxy:
 - mercurial
 
 tpp:
-- cpanminus
 - g++
 - subversion
 - libbz2-dev

@@ -12,7 +12,7 @@ require 'protk/search_tool'
 require 'protk/galaxy_stager'
 require 'protk/galaxy_util'
 
-for_galaxy = GalaxyUtil.for_galaxy
+for_galaxy = GalaxyUtil.for_galaxy?
 input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
@@ -76,9 +76,22 @@ genv=Constants.new
 #
 msgf_bin="#{genv.msgfplusjar}"
 
+make_msgfdb_cmd=""
+
 case 
 when Pathname.new(search_tool.database).exist? # It's an explicitly named db
   current_db=Pathname.new(search_tool.database).realpath.to_s
+
+  # Must have fasta extension
+  if ( Pathname.new(current_db).extname.to_s.downcase != ".fasta" )
+    make_msgfdb_cmd << "ln -s #{current_db} #{current_db}.fasta;"
+    current_db="#{current_db}.fasta"
+  end
+
+  if(not FileTest.exists?("#{current_db}.canno"))
+    dbdir = Pathname.new(current_db).dirname.realpath.to_s
+    make_msgfdb_cmd << "cd #{dbdir}; java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{current_db} -tda 0; "
+  end
 else
   current_db=search_tool.current_database :fasta
 end
@@ -123,7 +136,7 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd= "java -Xmx#{search_tool.java_mem} -jar #{msgf_bin} -d #{current_db} -s #{input_path} -o #{mzid_output_path} "
+    cmd= "#{make_msgfdb_cmd} java -Xmx#{search_tool.java_mem} -jar #{msgf_bin} -d #{current_db} -s #{input_path} -o #{mzid_output_path} "
     #Missed cleavages
     #
     throw "Maximum value for missed cleavages is 2" if ( search_tool.missed_cleavages.to_i > 2)
@@ -188,10 +201,16 @@ ARGV.each do |filename|
     job_params= {:jobid => search_tool.jobid_from_filename(filename) }
     search_tool.run(cmd,genv,job_params)
 
+  if for_galaxy 
     input_stager.restore_references(output_path)
+  end
 
   else
     genv.log("Skipping search on existing file #{output_path}",:warn)       
   end
+
+  # Reset this.  We only want to index the database at most once
+  #
+  make_msgfdb_cmd=""
 
 end
