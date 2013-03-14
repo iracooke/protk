@@ -84,15 +84,15 @@ The preferred method for use of protk with galaxy is to install via the [galaxy 
     - Open the file `universe_wsgi.ini` in the `galaxy-dist` directory and set the configuration option `tool_dependency_dir` to point to the directory you just created
     - Create a protkgem directory inside `<tool_dependency_dir>`. 
 
-            ```sh
-            cd <tool_dependency_dir>
-            mkdir protkgem
-			cd protkgem
-            mkdir rvm193
-            ln -s rvm193 default
-            cd default
-            ln -s ~/.protk/galaxy/env.sh env.sh
-            ```
+        ```sh
+        cd <tool_dependency_dir>
+        mkdir protkgem
+		cd protkgem
+        mkdir rvm193
+        ln -s rvm193 default
+        cd default
+        ln -s ~/.protk/galaxy/env.sh env.sh
+        ```
 
 3. After installing the protk wrapper tools from the toolshed it will be necessary to tell those tools about databases you have installed. Use the manage_db.rb tool to do this.  In particular the manage_db.rb tool has a -G option to automatically tell galaxy about the location of its databases.  To use this though you will need to tell protk about the location of your galaxy install.  To do this
     - Create a file named `config.yml` inside your .protk directory
