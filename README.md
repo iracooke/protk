@@ -14,7 +14,9 @@ Protk is a wrapper for various proteomics tools. It aims to present a consistent
  
 Protk depends on ruby 1.9.  The recommended way to install ruby and manage ruby gems is with rvm. Install rvm using this command.
     
-    curl -L 'https://get.rvm.io' | bash -s stable
+```sh
+    curl -L https://get.rvm.io | bash -s stable
+```
 
 Next install ruby and protk's dependencies
 
