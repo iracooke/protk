@@ -40,6 +40,15 @@ search_tool.option_parser.on( '--galaxy-index-dir dir', 'Specify galaxy index di
   search_tool.options.galaxy_index_dir=dir
 end
 
+if ( ENV['PROTK_OMSSA_NTHREADS'] )
+  search_tool.options.nthreads=ENV['PROTK_OMSSA_NTHREADS']
+else
+  search_tool.options.nthreads=0
+end
+search_tool.option_parser.on( '--nthreads num', 'Number of search threads to use. Default is to use the value in environment variable PROTK_OMSSA_NTHREADS or else to autodetect' ) do |num|
+  search_tool.options.nthreads=num
+end
+
 search_tool.option_parser.parse!
 
 # Environment with global constants
@@ -96,7 +105,7 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd = "#{make_blastdb_cmd} #{genv.omssacl} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
+    cmd = "#{make_blastdb_cmd} #{genv.omssacl} -nt #{search_tool.nthreads} -d #{current_db} -fm #{input_path} -op #{output_path} -w"
 
     #Missed cleavages
     #
@@ -204,6 +213,9 @@ ARGV.each do |filename|
     # Intensity cut-off
     cmd << " -ci #{search_tool.intensity_cut_off}"
     
+    # Send output to logfile. OMSSA Logging does not play well with Ruby Open4
+    cmd << " -logfile omssa.log"
+
     # Up to here we've formulated the omssa command. The rest is cleanup
     p "Running:#{cmd}"
     
