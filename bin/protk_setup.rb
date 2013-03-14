@@ -41,8 +41,5 @@ env=Constants.new
 
 toolname=ARGV.shift
 
-p ARGV
-p toolname
-
 p "Installing #{toolname}"
 tool.install toolname
