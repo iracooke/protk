@@ -82,12 +82,15 @@ protxml_parser=XML::Parser.file(tool.protxml)
 protxml_doc=protxml_parser.parse
 proteins = protxml_doc.find('.//protxml:protein','protxml:http://regis-web.systemsbiology.net/protXML')
 
-p "Indexing sixframe translations"
-db_filename = Pathname.new(tool.sixframe).realpath.to_s
 
-if tool.skip_fasta_indexing 
+db_filename = Pathname.new(tool.sixframe).realpath.to_s
+db_indexfilename = "#{db_filename}.pin"
+
+if File.exist?(db_indexfilename)
+  p "Using existing indexed translations"
   orf_lookup = FastaDB.new(db_filename)
 else
+  p "Indexing sixframe translations"
   orf_lookup = FastaDB.create(db_filename,db_filename,'prot')
 end
 
@@ -114,6 +117,7 @@ for prot in proteins
       p "Looking up #{protein_name}"
       orf = orf_lookup.get_by_id protein_name
       if ( orf == nil)
+        p "Failed lookup for #{protein_name}"
         raise KeyError
       end
 
@@ -121,6 +125,7 @@ for prot in proteins
       position = orf.identifiers.description.split('|').collect { |pos| pos.to_i }
 
       if ( position.length != 2 )
+        p "Badly formatted entry #{orf}"
         raise EncodingError
       end
       orf_name = orf.entry_id.scan(/lcl\|(.*)/)[0][0]
@@ -177,7 +182,6 @@ for prot in proteins
 
     rescue KeyError,EncodingError
       skipped+=0
-      p "Lookup failed for #{protein_name}"
     end
 
     # p orf_name
