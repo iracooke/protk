@@ -6,8 +6,19 @@
 # Post-install setup for protk. 
 # Installs third party tools
 #
-
 require 'protk/constants'
+
+toolname=ARGV[0]
+
+if ARGV[1]=='--change-location'
+	location=ARGV[2]
+	p "Changing default location for #{toolname} to #{location}"
+	env=Constants.new
+	env.update_user_config({"#{toolname}_root"=>location})
+	exit
+end
+
+
 require 'protk/setup_tool'
 require 'yaml'
 require 'pp'
@@ -16,16 +27,19 @@ require 'pp'
 # Setup specific command-line options for this tool. Other options are inherited from Tool
 #
 tool=SetupTool.new
-if ( tool.option_parser.banner=="")
-  tool.option_parser.banner = "Post install tasks for protk.\nUsage: protk_setup.rb [options] toolname"
-end
+tool.option_parser.banner = "Post install tasks for protk.\nUsage: protk_setup.rb [options] toolname"
 
 tool.option_parser.parse!
 
-# Create install directory if it doesn't already exist
-#
+if ( ARGV.length < 1)
+	p "You must supply a setup task [all,system_packages]"
+	p tool.option_parser
+	exit
+end
+
 env=Constants.new
 
-ARGV.each do |toolname|
-  tool.install toolname
-end
+toolname=ARGV.shift
+
+p "Installing #{toolname}"
+tool.install toolname

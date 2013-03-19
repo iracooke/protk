@@ -4,12 +4,13 @@
 
 common:
 - wget
-- gd
-- libpng12
 - cpanm
 - libxml2
+- gd
+- libpng12
 
 openms:
 - autoconf
 - automake
 - libtool
+- cmake

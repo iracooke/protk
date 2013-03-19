@@ -194,6 +194,10 @@ class Constants
   def makeblastdb
     return "#{self.blast_root}/bin/makeblastdb"
   end
+
+  def searchblastdb
+    return "#{self.blast_root}/bin/blastdbcmd"
+  end
   
   def log_file
     path=@env['log_file']
@@ -212,15 +216,31 @@ class Constants
 
     @protk_dir="#{Dir.home}/.protk"
 
+    if ( ENV['PROTK_INSTALL_DIR']!=nil )
+      p "Using protk install dir from shell"
+      @protk_dir=ENV['PROTK_INSTALL_DIR']
+    end
+
 
     default_config_yml = YAML.load_file "#{File.dirname(__FILE__)}/data/default_config.yml"
     throw "Unable to read the config file at #{File.dirname(__FILE__)}/data/default_config.yml" unless default_config_yml!=nil
 
-    user_config_yml = YAML.load_file "#{@protk_dir}/config.yml"
-    if ( user_config_yml )
+    user_config_yml = nil
+    user_config_yml = YAML.load_file "#{@protk_dir}/config.yml" if File.exist? "#{@protk_dir}/config.yml"
+    if ( user_config_yml !=nil )
       @env = default_config_yml.merge user_config_yml
     else
       @env=default_config_yml
+    end
+
+    protk_roots = ["tpp","omssa","blast","pwiz","msgfplus","openms"]
+
+    protk_roots.each do |r|  
+      env_value = ENV["PROTK_#{r.upcase}_ROOT"]
+      if ( env_value!=nil)
+        p "Using #{r} root #{env_value}"
+        @env["#{r}_root"]=env_value
+      end
     end
     
     throw "No data found in config file" unless @env!=nil
@@ -230,6 +250,17 @@ class Constants
     
   end
 
+
+  def update_user_config(dict)
+    user_config_yml = YAML.load_file "#{self.protk_dir}/config.yml" if File.exist? "#{self.protk_dir}/config.yml"
+
+    if ( user_config_yml !=nil )
+      dict = user_config_yml.merge dict 
+    end
+
+    File.open("#{self.protk_dir}/config.yml", "w") {|file| file.puts(dict.to_yaml) }
+
+  end
 
   def initialize_loggers
     log_dir = Pathname.new(self.log_file).dirname
