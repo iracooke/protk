@@ -130,7 +130,7 @@ for prot in proteins
       end
       orf_name = orf.entry_id.scan(/lcl\|(.*)/)[0][0]
       frame=orf_name.scan(/frame_(\d)/)[0][0]
-      scaffold_name = orf_name.scan(/(scaffold_\d+)/)[0][0]
+      scaffold_name = orf_name.scan(/(scaffold_?\d+)_/)[0][0]
 
       strand = (frame.to_i > 3) ? '-' : '+'
 #      strand = +1
