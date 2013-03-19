@@ -40,6 +40,11 @@ search_tool.option_parser.on( '--galaxy-index-dir dir', 'Specify galaxy index di
   search_tool.options.galaxy_index_dir=dir
 end
 
+search_tool.options.omx_output=nil
+search_tool.option_parser.on( '--omx-output path', 'Specify path for additional OMX output (optional).' ) do |path|
+  search_tool.options.omx_output=path
+end
+
 if ( ENV['PROTK_OMSSA_NTHREADS'] )
   search_tool.options.nthreads=ENV['PROTK_OMSSA_NTHREADS']
 else
@@ -125,6 +130,10 @@ ARGV.each do |filename|
           cmd << " -mux #{galaxy_usermods}"
         end
       end
+    end
+
+    if ( search_tool.omx_output )
+      cmd << " -ox #{search_tool.omx_output} "
     end
 
 
