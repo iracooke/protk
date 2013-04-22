@@ -168,7 +168,7 @@ ARGV.each do |filename|
 
     # Variable Modifications
     #
-    if ( search_tool.var_mods !="" && !search_tool.var_mods =~/None/) # Checking for none is to cope with galaxy input
+    if ( search_tool.var_mods !="" && !(search_tool.var_mods =~/None/)) # Checking for none is to cope with galaxy input
       var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
       if ( var_mods !="" )
         cmd << " -mv #{var_mods}"
@@ -181,7 +181,7 @@ ARGV.each do |filename|
       end
     end
 
-    if ( search_tool.fix_mods !="" && !search_tool.fix_mods=~/None/)
+    if ( search_tool.fix_mods !="" && !(search_tool.fix_mods=~/None/))
       fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
       if ( fix_mods !="")
         cmd << " -mf #{fix_mods}"    
