@@ -41,4 +41,5 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['uniprot_mapper.rb']
   s.executables = s.executables + ['feature_finder.rb','toppas_pipeline.rb']
   s.executables = s.executables + ['gffmerge.rb','sixframe.rb']
+  s.executables = s.executables + ['uniprot_annotation.rb']
 end

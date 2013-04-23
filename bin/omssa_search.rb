@@ -170,6 +170,7 @@ ARGV.each do |filename|
     #
     if ( search_tool.var_mods !="" && !(search_tool.var_mods =~/None/)) # Checking for none is to cope with galaxy input
       var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
+
       if ( var_mods !="" )
         cmd << " -mv #{var_mods}"
       end
@@ -200,7 +201,7 @@ ARGV.each do |filename|
       end
     end
     
-    if ( search_tool.searched_ions !="" && !search_tool.searched_ions=~/None/)
+    if ( search_tool.searched_ions !="" && !(search_tool.searched_ions=~/None/))
       searched_ions=search_tool.searched_ions.split(",").collect{ |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
       if ( searched_ions!="")
         cmd << " -i #{searched_ions}"
@@ -231,13 +232,14 @@ ARGV.each do |filename|
     # Add retention time corrections
     #
     if (search_tool.options.add_retention_times)
-      cmd << "; #{rt_correct_bin} #{output_path} #{input_path} "
+      # TODO: Really correct rts
+#      cmd << "; #{rt_correct_bin} #{output_path} #{input_path} "
     end
     
     # Correct the pepXML file 
     #
-    cmd << "; #{repair_script_bin} -N #{input_path} -R mgf #{output_path} --omssa-itol #{search_tool.fragment_tol}"
-    genv.log("Running repair script command #{cmd}",:info)
+#    cmd << "; #{repair_script_bin} -N #{input_path} -R mgf #{output_path} --omssa-itol #{search_tool.fragment_tol}"
+#    genv.log("Running repair script command #{cmd}",:info)
     
     # Run the search
     #

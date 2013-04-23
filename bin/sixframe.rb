@@ -40,12 +40,6 @@ file.each do |entry|
         position_start = position
         position_end = position_start + orf.length*3 -1
 
-        if ( frame > 3)
-            position_start = length - (position - 1)
-            position_end = position_start - orf.length * 3 + 1          
-        end
-
-
         # Create accession compliant with NCBI naming standard
         # See http://www.ncbi.nlm.nih.gov/books/NBK7183/?rendertype=table&id=ch_demo.T5
         ncbi_scaffold_id = entry.entry_id.gsub('|','_').gsub(' ','_')

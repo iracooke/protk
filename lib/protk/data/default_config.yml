@@ -18,4 +18,5 @@ openms_root: tools/openms
 msgfplus_root: tools/msgfplus
 blast_root: tools/blast
 pwiz_root: tools/pwiz
+tandem_root: tools/tandem
 log_file: Logs/protk.log

@@ -51,8 +51,8 @@ protk_setup.rb tpp omssa blast msgfplus pwiz openms galaxyenv
 After running the setup.sh script you should run manage_db.rb to install specific sequence databases for use by the search engines. Protk comes with several predefined database configurations. For example, to install a database consisting of human entries from Swissprot plus known contaminants use the following commands;
 
 ```sh
-manage_db.rb add crap
-manage_db.rb add sphuman
+manage_db.rb add --predefined crap
+manage_db.rb add --predefined sphuman
 manage_db.rb update crap
 manage_db.rb update sphuman
 ```
@@ -62,6 +62,17 @@ You should now be able to run database searches, specifying this database by usi
 ```sh
 manage_db.rb add --ftp-source 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt' --include-filters '/OS=Homo\ssapiens/' --id-regex 'sp\|.*\|(.*?)\s' --add-decoys --make-blast-index --archive-old sphuman
 ```
+
+## Annotation databases
+
+The manage_db.rb script also deals with annotation databases.  Actually at this stage the only useful annotation database it has support for is the Swissprot Uniprot database which contains detailed information on protein entries.  The following commands download and index this database.
+
+```sh
+manage_db.rb add --predefined swissprot_annotation
+manage_db.rb update swissprot_annotation
+```
+
+Once this step is complete you should be able to use annotation tools such as the uniprot_annotation.rb tool
 
 ## Galaxy integration
 

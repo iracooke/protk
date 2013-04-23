@@ -15,7 +15,7 @@ class OMSSAUtil
     pepxml_doc=parser.parse
     rt_table=MascotUtil.index_mgf_times(mgf_file)
     
-    p "Retention time table #{rt_table}"
+ #   p "Retention time table #{rt_table}"
     
 #    queries=pepxml_doc.find('//x:spectrum_query','x:http://regis-web.systemsbiology.net/pepXML')
     queries=pepxml_doc.find('//spectrum_query')    
