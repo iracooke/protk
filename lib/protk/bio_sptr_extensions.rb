@@ -177,7 +177,26 @@ class Bio::SPTR < Bio::EMBLDB
     return self.safely_get_drentry_for_key("NextBio")
   end
   
-  
+  def uniprot_link
+    return "http://www.uniprot.org/uniprot/#{self.accession}.html"
+  end
+
+  def nextbio_link
+    return "http://www.nextbio.com/b/home/home.nb?id=#{self.nextbio}&type=feature"
+  end
+
+  def intact_link
+    return "http://www.ebi.ac.uk/intact/pages/interactions/interactions.xhtml?query=#{self.intact}*"
+  end
+
+  def pride_link
+    return "http://www.ebi.ac.uk/pride/searchSummary.do?queryTypeSelected=identification%20accession%20number&identificationAccessionNumber=#{self.pride}"
+  end
+
+  def ensembl_link
+    return "http://www.ensembl.org/Homo_sapiens/Transcript/Summary?db=core;t=#{self.ensembl}"
+  end
+
   # Number of transmembrane regions
   #
   def num_transmem
@@ -206,5 +225,25 @@ class Bio::SPTR < Bio::EMBLDB
       p "Warning: Unable to parse feature table for entry #{self.accession}"      
     end
   end
-  
+
+  def ref_dump
+    return self.ref.to_s
+  end
+
+  def seq_dump
+    return self.seq.to_s
+  end
+
+  def tax_dump
+    return self.ox.to_s
+  end
+
+  def species_dump
+    return self.os.to_s
+  end
+
+  def feature_dump
+    return self.ft.to_s
+  end
+
 end

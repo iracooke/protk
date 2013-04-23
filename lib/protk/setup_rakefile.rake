@@ -303,7 +303,7 @@ def platform_cmake_args
 	''
 end
 
-openms_version="1.9.0"
+openms_version="1.10.0"
 openms_packagefile="OpenMS-#{openms_version}.tar.gz"
 openms_url="https://dl.dropbox.com/u/226794/#{openms_packagefile}"
 openms_installed_file="#{env.featurefinderisotopewavelet}"
@@ -321,6 +321,43 @@ file openms_installed_file => [@build_dir,"#{@download_dir}/#{openms_packagefile
 end
 
 task :openms => openms_installed_file
+
+#
+# X!Tandem
+#
+
+def tandem_platform
+	if RbConfig::CONFIG['host_os'] =~ /darwin/ 
+		return 'osx-intel'
+	end
+	'linux'
+end
+
+tandem_version="13-02-01-1"
+tandem_packagefile="tandem-#{tandem_platform}-#{tandem_version}.zip"
+tandem_url="ftp://ftp.thegpm.org/projects/tandem/source/#{tandem_packagefile}"
+tandem_installed_file="#{env.gpmxtandem}"
+
+download_task tandem_url, tandem_packagefile
+
+file tandem_installed_file => [@build_dir,"#{@download_dir}/#{tandem_packagefile}"] do 
+	sh %{cp #{@download_dir}/#{tandem_packagefile} #{@build_dir}}
+    sh %{cd #{@build_dir}; unzip #{tandem_packagefile}}
+    sh %{mkdir -p #{env.tandem_root}}
+    tandem_dirname = "#{tandem_packagefile.chomp('.zip')}"
+
+    if ( tandem_platform=="linux") #Must compile
+    	tandem_src_dir = "#{@build_dir}/#{tandem_dirname}/#{tandem_dirname}/src/"
+    	sh %{cd #{tandem_src_dir}; make}
+    	sh %{cd #{@build_dir}; cp -r ./#{tandem_dirname}/#{tandem_dirname}/bin  #{env.tandem_root}/}
+    else
+    	sh %{cd #{@build_dir}; cp -r ./#{tandem_packagefile.chomp('.zip')}/* #{env.tandem_root}/}
+    	sh %{chmod u+x #{env.gpmtandem}}
+    end
+
+end
+
+task :tandem => tandem_installed_file
 
 #
 # Galaxy Environment

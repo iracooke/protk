@@ -192,6 +192,14 @@ def archive_fasta_file(filename)
   end
 end
 
+def cleanup_file(filename)
+  if  (File.exist? filename  )
+    archive_filename="#{filename}.tmp"
+    p "Cleaning up #{filename}"
+    FileUtils.mv(filename,archive_filename,:force=>true)
+  end
+end
+
 #####################
 # Source Files      #
 #####################
@@ -308,7 +316,9 @@ file raw_db_filename => [source_files,dbspec_file].flatten do
   if ( format == "fasta" && source_filters.length > 0 ) # We can perform concat and filter for fasta only
 
     archive_fasta_file(raw_db_filename) if dbspec[:archive_old]
-  
+
+    cleanup_file(raw_db_filename)
+
     output_fh=File.open(raw_db_filename, "w")
 
     id_regexes=dbspec[:id_regexes]
@@ -360,6 +370,9 @@ file raw_db_filename => [source_files,dbspec_file].flatten do
   else # Other formats just copy a file across ... must be a single source
 
     throw "Only a single source file is permitted for formats other than fasta" unless source_files.length == 1
+
+    cleanup_file(raw_db_filename)
+
     
     sh "cp #{source_files[0]} #{raw_db_filename}" do |ok,res|
       if ! ok 
@@ -379,6 +392,7 @@ file decoy_db_filename => raw_db_filename do
 
   archive_fasta_file(decoy_db_filename) if dbspec[:archive_old]
 
+  cleanup_file(decoy_db_filename)
 
   decoys_filename = "#{dbdir}/decoys_only.fasta"
   decoy_prefix=dbspec[:decoy_prefix]
@@ -450,7 +464,7 @@ if dbspec[:make_blast_index]
   blast_index_files=["#{db_filename}.phr"]
   blast_index_files.each do |indfile|
     file indfile => db_filename do
-      cmd="cd #{dbdir}; #{$genv.makeblastdb} -in #{db_filename} -parse_seqids -dbtype prot"
+      cmd="cd #{dbdir}; #{$genv.makeblastdb} -in #{db_filename} -parse_seqids -dbtype prot -max_file_sz 20000000000"
       p "Creating blast index"
       sh %{ #{cmd} }
     end
@@ -476,18 +490,18 @@ if dbspec[:make_msgf_index]
 end
 
 if format=="dat" && dbspec[:is_annotation_db]
-  dat_index_files=FileList.new(["config.dat","id_AC.index","key_ID.key"].collect {|file| "#{dbdir}/#{file}"}  )
+  dat_index_file= "#{dbdir}/id_AC.index"
+
+  cleanup_file dat_index_file #Regenerate indexes every time
   
-  dat_index_files.each do |indexfile|
-    file indexfile => db_filename do
-      puts "Indexing annotation database"
-      dbclass=Bio::SPTR
-      parser = Bio::FlatFileIndex::Indexer::Parser.new(dbclass, nil, nil)
-      Bio::FlatFileIndex::Indexer::makeindexFlat(dbdir, parser, {}, db_filename)
-    end
+  file dat_index_file => db_filename do
+    puts "Indexing annotation database"
+    dbclass=Bio::SPTR
+    parser = Bio::FlatFileIndex::Indexer::Parser.new(dbclass, nil, nil)
+    Bio::FlatFileIndex::Indexer::makeindexFlat(dbdir, parser, {}, db_filename)
   end
   
-  task dbname => dat_index_files
+  task dbname => dat_index_file
   
 end
 

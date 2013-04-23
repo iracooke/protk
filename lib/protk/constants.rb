@@ -169,6 +169,19 @@ class Constants
     return "#{self.openms_root}/bin/ExecutePipeline"
   end
 
+  def tandem_root
+    path=@env['tandem_root']
+    if ( path =~ /^\//)
+      return path 
+    else
+      return "#{@protk_dir}/#{@env['tandem_root']}"
+    end
+  end
+
+  def gpmtandem
+    return "#{self.tandem_root}/bin/tandem"
+  end
+
   def protein_database_root
     path=@env['protein_database_root']
     if ( path =~ /^\// )

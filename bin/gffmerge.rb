@@ -83,7 +83,14 @@ protxml_doc=protxml_parser.parse
 proteins = protxml_doc.find('.//protxml:protein','protxml:http://regis-web.systemsbiology.net/protXML')
 
 
-db_filename = Pathname.new(tool.sixframe).realpath.to_s
+db_filename = nil
+case
+when Pathname.new(tool.sixframe).exist? # It's an explicitly named db  
+  db_filename = Pathname.new(tool.sixframe).realpath.to_s
+else
+  db_filename=Constants.new.current_database_for_name(tool.sixframe)
+end
+
 db_indexfilename = "#{db_filename}.pin"
 
 if File.exist?(db_indexfilename)
