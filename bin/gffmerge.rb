@@ -109,6 +109,9 @@ protein_count = 0
 total_peptides = 0
 for prot in proteins
   prot_prob = prot['probability']
+  if ( prot_prob.to_f < tool.peptide_probability_threshold )
+    next
+  end
   indis_proteins = prot.find('protxml:indistinguishable_protein','protxml:http://regis-web.systemsbiology.net/protXML')
   prot_names = [prot['protein_name']]
   for protein in indis_proteins
@@ -121,10 +124,10 @@ for prot in proteins
     protein_count += 1
     prot_qualifiers = {"source" => "OBSERVATION", "score" => prot_prob, "ID" => 'pr' + protein_count.to_s}
     begin
-      p "Looking up #{protein_name}"
+      puts "Looking up #{protein_name}"
       orf = orf_lookup.get_by_id protein_name
       if ( orf == nil)
-        p "Failed lookup for #{protein_name}"
+        puts "Failed lookup for #{protein_name}"
         raise KeyError
       end
 
@@ -132,7 +135,7 @@ for prot in proteins
       position = orf.identifiers.description.split('|').collect { |pos| pos.to_i }
 
       if ( position.length != 2 )
-        p "Badly formatted entry #{orf}"
+        puts "Badly formatted entry #{orf}"
         raise EncodingError
       end
       orf_name = orf.entry_id.scan(/lcl\|(.*)/)[0][0]
@@ -151,6 +154,9 @@ for prot in proteins
       prot_seq = orf.aaseq.to_s
       throw "Not amino_acids" if prot_seq != orf.seq.to_s
 
+      if ( strand=='-' )
+        prot_seq.reverse!
+      end
 
       for peptide in peptides
         pprob = peptide['nsp_adjusted_probability'].to_f
@@ -158,6 +164,9 @@ for prot in proteins
           total_peptides += 1
           pep_seq = peptide['peptide_sequence']
 
+          if ( strand=='-')
+            pep_seq.reverse!
+          end
 
           start_indexes = [0]
           prot_seq.scan /#{pep_seq}/  do |match| 
@@ -178,7 +187,7 @@ for prot in proteins
               strand=strand,frame=nil,attributes=pep_attributes)
             fragment_gff_line = Bio::GFF::GFF3::Record.new(seqid = scaffold_name,source="OBSERVATION",
               feature_type="fragment",start_position=pep_genomic_start,end_position=pep_genomic_end,score='',
-              strand=strand,frame=nil,attributes=[["Parent",pep_id],["ID",pep_seq]])
+              strand=strand,frame=nil,attributes=[["Parent",pep_id],["ID",peptide['peptide_sequence']]])
             gff_db.records += [pep_gff_line,fragment_gff_line]
 
           end
