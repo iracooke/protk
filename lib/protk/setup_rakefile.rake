@@ -141,10 +141,11 @@ tpp_url = "https://dl.dropbox.com/u/226794/TPP-4.6.1.tgz"
 tpp_download_file = download_task tpp_url, tpp_packagefile
 
 # Build
-file tpp_installed_file => [:perl_locallib,@build_dir,tpp_download_file] do
+file tpp_installed_file => [@build_dir,tpp_download_file] do
 	sh %{cp #{@download_dir}/#{tpp_packagefile} #{@build_dir}}
-	sh %{eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir});cpanm --local-lib=#{env.protk_dir}/perl5 XML::Parser}
-	sh %{eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir});cpanm --local-lib=#{env.protk_dir}/perl5 CGI --force}
+	use_perl_locallib_cmd="eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})"
+	sh %{#{use_perl_locallib_cmd};cpanm --local-lib=#{env.protk_dir}/perl5 XML::Parser}
+	sh %{#{use_perl_locallib_cmd};cpanm --local-lib=#{env.protk_dir}/perl5 CGI --force}
 
 	sh %{cd #{@build_dir};tar -xvzf TPP-#{tpp_version}.tgz}
 
@@ -172,8 +173,14 @@ file tpp_installed_file => [:perl_locallib,@build_dir,tpp_download_file] do
 			f.write subs_text
 		end
 	end
-	sh %{eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir});cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make; make install}
-
+	build_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make"
+	install_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make install"
+	env.log build_cmd, :info
+	sh %{#{build_cmd}}
+	env.log "Done Building", :info
+	env.log install_cmd, :info
+	sh %{#{install_cmd}}
+	env.log "Done Installing", :info
 end
 
 task :tpp => tpp_installed_file

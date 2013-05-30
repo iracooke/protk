@@ -23,6 +23,7 @@ class MascotUtil
   end
   
   def self.remove_charge_from_title_string(tstring)
+
     if ( tstring=~/(.*)\..*?\..*?\.$/)
       return tstring.chop
     end
@@ -30,6 +31,10 @@ class MascotUtil
     if ( tstring=~/(.*)\..*?\..*?\.\d$/)
       return tstring.chop!.chop
     end
+
+    if ( tstring=~/(.*)\..*?\..*?$/)
+      return tstring
+    end    
     
     throw "Unrecognised title string format #{tstring}"
     

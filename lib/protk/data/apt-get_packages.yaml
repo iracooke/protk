@@ -45,6 +45,10 @@ tpp:
 - libcurl4-openssl-dev
 - libxml2-dev
 - libgd2-xpm-dev
+- perl-ExtUtils-MakeMaker
+- perl-ExtUtils-AutoInstall
+- perl-ExtUtils-CBuilder
+- perl-CPAN
 
 msgfplus:
 - java-1.7.0-openjdk

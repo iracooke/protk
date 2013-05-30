@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.2.0'
+  s.version     = '1.2.1'
   s.date        = '2013-03-05'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "net-ftp-list", [">=3.2.5"]
   s.add_runtime_dependency "spreadsheet", [">=0.7.4"]
   s.add_runtime_dependency "libxml-ruby", [">=2.3.3"]
-
+  s.add_runtime_dependency "mascot-dat", [">=0.3.1"]
 
   s.add_development_dependency 'rspec', '~> 2.5'
 
@@ -41,5 +41,5 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['uniprot_mapper.rb']
   s.executables = s.executables + ['feature_finder.rb','toppas_pipeline.rb']
   s.executables = s.executables + ['gffmerge.rb','sixframe.rb']
-  s.executables = s.executables + ['uniprot_annotation.rb']
+  s.executables = s.executables + ['uniprot_annotation.rb','protxml_to_table.rb']
 end
