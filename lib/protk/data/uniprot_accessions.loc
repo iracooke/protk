@@ -1,0 +1,96 @@
+UniProtKB AC	uniprotkb_ac_	ACC	uniprotkb_ac_
+UniProtKB ID	uniprotkb_id_	ID	uniprotkb_id_
+UniParc	uniparc_	UPARC	uniparc_
+UniRef50	uniref50_	NF50	uniref50_
+UniRef90	uniref90_	NF90	uniref90_
+UniRef100	uniref100_	NF100	uniref100_
+EMBL/GenBank/DDBJ	embl/genbank/ddbj_	EMBL_ID	embl/genbank/ddbj_
+EMBL/GenBank/DDBJ CDS	embl/genbank/ddbj_cds_	EMBL	embl/genbank/ddbj_cds_
+PIR	pir_	PIR	pir_
+UniGene	unigene_	UNIGENE_ID	unigene_
+Entrez Gene (GeneID)	entrez_gene_(geneid)_	P_ENTREZGENEID	entrez_gene_(geneid)_
+GI number*	gi_number*_	P_GI	gi_number*_
+IPI	ipi_	P_IPI	ipi_
+RefSeq Protein	refseq_protein_	P_REFSEQ_AC	refseq_protein_
+RefSeq Nucleotide	refseq_nucleotide_	REFSEQ_NT_ID	refseq_nucleotide_
+PDB	pdb_	PDB_ID	pdb_
+DisProt	disprot_	DISPROT_ID	disprot_
+HSSP	hssp_	HSSP_ID	hssp_
+DIP	dip_	DIP_ID	dip_
+MINT	mint_	MINT_ID	mint_
+Allergome	allergome_	ALLERGOME_ID	allergome_
+MEROPS	merops_	MEROPS_ID	merops_
+PeroxiBase	peroxibase_	PEROXIBASE_ID	peroxibase_
+PptaseDB	pptasedb_	PPTASEDB_ID	pptasedb_
+REBASE	rebase_	REBASE_ID	rebase_
+TCDB	tcdb_	TCDB_ID	tcdb_
+PhosSite	phossite_	PHOSSITE_ID	phossite_
+DMDM	dmdm_	DMDM_ID	dmdm_
+Aarhus/Ghent-2DPAGE	aarhus/ghent-2dpage_	AARHUS_GHENT_2DPAGE_ID	aarhus/ghent-2dpage_
+World-2DPAGE	world-2dpage_	WORLD_2DPAGE_ID	world-2dpage_
+DNASU	dnasu_	DNASU_ID	dnasu_
+Ensembl	ensembl_	ENSEMBL_ID	ensembl_
+Ensembl Protein	ensembl_protein_	ENSEMBL_PRO_ID	ensembl_protein_
+Ensembl Transcript	ensembl_transcript_	ENSEMBL_TRS_ID	ensembl_transcript_
+Ensembl Genomes	ensembl_genomes_	ENSEMBLGENOME_ID	ensembl_genomes_
+Ensembl Genomes Protein	ensembl_genomes_protein_	ENSEMBLGENOME_PRO_ID	ensembl_genomes_protein_
+Ensembl Genomes Transcript	ensembl_genomes_transcript_	ENSEMBLGENOME_TRS_ID	ensembl_genomes_transcript_
+GeneID	geneid_	P_ENTREZGENEID	geneid_
+GenomeReviews	genomereviews_	GENOMEREVIEWS_ID	genomereviews_
+KEGG	kegg_	KEGG_ID	kegg_
+PATRIC	patric_	PATRIC_ID	patric_
+UCSC	ucsc_	UCSC_ID	ucsc_
+VectorBase	vectorbase_	VECTORBASE_ID	vectorbase_
+AGD	agd_	AGD_ID	agd_
+ArachnoServer	arachnoserver_	ARACHNOSERVER_ID	arachnoserver_
+CGD	cgd_	CGD	cgd_
+ConoServer	conoserver_	CONOSERVER_ID	conoserver_
+CYGD	cygd_	CYGD_ID	cygd_
+dictyBase	dictybase_	DICTYBASE_ID	dictybase_
+EchoBASE	echobase_	ECHOBASE_ID	echobase_
+EcoGene	ecogene_	ECOGENE_ID	ecogene_
+euHCVdb	euhcvdb_	EUHCVDB_ID	euhcvdb_
+EuPathDB	eupathdb_	EUPATHDB_ID	eupathdb_
+FlyBase	flybase_	FLYBASE_ID	flybase_
+GeneCards	genecards_	GENECARDS_ID	genecards_
+GeneFarm	genefarm_	GENEFARM_ID	genefarm_
+GenoList	genolist_	GENOLIST_ID	genolist_
+H-InvDB	h-invdb_	H_INVDB_ID	h-invdb_
+HGNC	hgnc_	HGNC_ID	hgnc_
+HPA	hpa_	HPA_ID	hpa_
+LegioList	legiolist_	LEGIOLIST_ID	legiolist_
+Leproma	leproma_	LEPROMA_ID	leproma_
+MaizeGDB	maizegdb_	MAIZEGDB_ID	maizegdb_
+MIM	mim_	MIM_ID	mim_
+MGI	mgi_	MGI_ID	mgi_
+neXtProt	nextprot_	NEXTPROT_ID	nextprot_
+Orphanet	orphanet_	ORPHANET_ID	orphanet_
+PharmGKB	pharmgkb_	PHARMGKB_ID	pharmgkb_
+PomBase	pombase_	POMBASE_ID	pombase_
+PseudoCAP	pseudocap_	PSEUDOCAP_ID	pseudocap_
+RGD	rgd_	RGD_ID	rgd_
+SGD	sgd_	SGD_ID	sgd_
+TAIR	tair_	TAIR_ID	tair_
+TubercuList	tuberculist_	TUBERCULIST_ID	tuberculist_
+WormBase	wormbase_	WORMBASE_ID	wormbase_
+WormBase Transcript	wormbase_transcript_	WORMBASE_TRS_ID	wormbase_transcript_
+WormBase Protein	wormbase_protein_	WORMBASE_PRO_ID	wormbase_protein_
+Xenbase	xenbase_	XENBASE_ID	xenbase_
+ZFIN	zfin_	ZFIN_ID	zfin_
+eggNOG	eggnog_	EGGNOG_ID	eggnog_
+GeneTree	genetree_	GENETREE_ID	genetree_
+HOGENOM	hogenom_	HOGENOM_ID	hogenom_
+HOVERGEN	hovergen_	HOVERGEN_ID	hovergen_
+KO	ko_	KO_ID	ko_
+OMA	oma_	OMA_ID	oma_
+OrthoDB	orthodb_	ORTHODB_ID	orthodb_
+ProtClustDB	protclustdb_	PROTCLUSTDB_ID	protclustdb_
+BioCyc	biocyc_	BIOCYC_ID	biocyc_
+Reactome	reactome_	REACTOME_ID	reactome_
+UniPathWay	unipathway_	UNIPATHWAY_ID	unipathway_
+CleanEx	cleanex_	CLEANEX_ID	cleanex_
+GermOnline	germonline_	GERMONLINE_ID	germonline_
+ChEMBL	chembl_	CHEMBL	chembl_
+DrugBank	drugbank_	DRUGBANK_ID	drugbank_
+GenomeRNAi	genomernai_	GENOMERNAI_ID	genomernai_
+NextBio	nextbio_	NEXTBIO_ID	nextbio_
