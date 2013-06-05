@@ -29,6 +29,7 @@ class Constants
 
   attr :info_level
   attr :protk_dir
+  attr :data_lib_dir
 
   # Provides direct access to constants through methods of the same name
   # This will be used for all constants other than paths
@@ -227,6 +228,7 @@ class Constants
   #
   def initialize 
 
+    @data_lib_dir="#{File.dirname(__FILE__)}/data"
     @protk_dir="#{Dir.home}/.protk"
 
     if ( ENV['PROTK_INSTALL_DIR']!=nil )

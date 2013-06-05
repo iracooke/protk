@@ -43,21 +43,7 @@ tool.option_parser.on('--threshold prob','Peptide Probability Threshold (Default
   tool.options.peptide_probability_threshold=thresh.to_f
 end
 
-# Checking for required options
-begin
-  tool.option_parser.parse!
-  mandatory = [:protxml,:sixframe] 
-  missing = mandatory.select{ |param| tool.send(param).nil? }
-  if not missing.empty?                                            
-    puts "Missing options: #{missing.join(', ')}"                  
-    puts tool.option_parser                                                  
-    exit                                                           
-  end                                                              
-rescue OptionParser::InvalidOption, OptionParser::MissingArgument      
-  puts $!.to_s                                                           
-  puts tool.option_parser                                              
-  exit                                                                   
-end
+exit unless tool.check_options [:protxml,:sixframe]
 
 gff_out_file="merged.gff"
 if ( tool.explicit_output != nil)

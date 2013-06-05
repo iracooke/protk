@@ -49,7 +49,7 @@ class Tool
   # Creates an empty options object to hold commandline options
   # Also creates an option_parser with default options common to all tools
   #
-  def initialize(option_support={:help=>true})
+  def initialize(option_support=[])
     @jobid_prefix = "x"
     @options = OpenStruct.new
     options.library = []
@@ -59,8 +59,8 @@ class Tool
     options.verbose = false
     
     @option_parser=OptionParser.new do |opts|
-      
-      if ( option_support[:prefix_suffix]==true)
+
+      if ( option_support.include? :prefix_suffix)
       
         @options.output_prefix = ""
         opts.on( '-b', '--output-prefix pref', 'A string to prepend to the name of output files' ) do |prefix|
@@ -74,14 +74,14 @@ class Tool
         
       end
       
-      if ( option_support[:explicit_output]==true)
+      if ( option_support.include? :explicit_output )
         @options.explicit_output = nil
         opts.on( '-o', '--output out', 'An explicitly named output file.' ) do |out|
           @options.explicit_output = out
         end
       end
          
-      if ( option_support[:over_write]==true)
+      if ( option_support.include? :over_write)
             
         @options.over_write=false
         opts.on( '-r', '--replace-output', 'Dont skip analyses for which the output file already exists' ) do  
@@ -90,7 +90,7 @@ class Tool
         
       end
 
-      if ( option_support[:background]==true)
+      if ( option_support.include? :background)
 
         @options.background = false
         opts.on( '-z', '--background', 'Run jobs in the background using pbs' ) do  
@@ -99,12 +99,10 @@ class Tool
         
       end
       
-      if ( option_support[:help]==true)
        
-        opts.on( '-h', '--help', 'Display this screen' ) do
-          puts opts
-          exit
-        end
+      opts.on( '-h', '--help', 'Display this screen' ) do
+        puts opts
+        exit
       end
        
     end
@@ -133,7 +131,23 @@ class Tool
    end
 
 
-
+   def check_options(mandatory=[])
+    # Checking for required options
+    begin
+      self.option_parser.parse!
+      missing = mandatory.select{ |param| self.send(param).nil? }
+      if not missing.empty?                                            
+        puts "Missing options: #{missing.join(', ')}"                  
+        puts self.option_parser                                                  
+        return false                                                        
+      end                                                              
+    rescue OptionParser::InvalidOption, OptionParser::MissingArgument      
+      puts $!.to_s                                                           
+      puts tool.option_parser                                              
+      return false                                                         
+    end
+    return true
+   end
 
    # Create a full base path (without extension) representing the input file for this analysis
    # Optionally provide the extension to be removed (if not provided it will be inferred)

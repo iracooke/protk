@@ -16,7 +16,12 @@ for_galaxy = GalaxyUtil.for_galaxy?
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new({:msms_search=>true,:background=>false,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
+search_tool=SearchTool.new([:database,:explicit_output,:over_write,:enzyme,
+  :modifications,:instrument,:mass_tolerance_units,:mass_tolerance,:missed_cleavages,
+  :precursor_search_type,:respect_precursor_charges,:num_peaks_for_multi_isotope_search,:searched_ions
+  ])
+
+
 search_tool.option_parser.banner = "Run an OMSSA msms search on a set of mgf input files.\n\nUsage: omssa_search.rb [options] file1.mgf file2.mgf ..."
 search_tool.options.output_suffix="_omssa"
 
@@ -54,7 +59,13 @@ search_tool.option_parser.on( '--nthreads num', 'Number of search threads to use
   search_tool.options.nthreads=num
 end
 
-search_tool.option_parser.parse!
+exit unless search_tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts search_tool.option_parser 
+    exit
+end
 
 # Environment with global constants
 #

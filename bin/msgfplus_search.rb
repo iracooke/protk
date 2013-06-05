@@ -17,9 +17,24 @@ input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new({:msms_search=>true,:background=>false,:glyco=>false,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
+search_tool=SearchTool.new([:database,:explicit_output,:over_write,:enzyme,
+  :modifications,:instrument,:mass_tolerance_units,:mass_tolerance,:missed_cleavages])
+
 search_tool.option_parser.banner = "Run an MSGFPlus msms search on a set of msms spectrum input files.\n\nUsage: msgfplus_search.rb [options] file1.mzML file2.mzML ..."
 search_tool.options.output_suffix="_msgfplus"
+
+search_tool.options.enzyme=1
+search_tool.options.instrument=0
+
+search_tool.options.no_pepxml=false
+search_tool.option_parser.on(  '--no-pepxml', 'Dont convert results to pepxml. Keep native mzidentml format' ) do
+  search_tool.options.no_pepxml=true
+end
+
+search_tool.options.isotope_error_range="0,1"
+search_tool.option_parser.on(  '--isotope-error-range range', 'Takes into account of the error introduced by chooosing a non-monoisotopic peak for fragmentation.(Default 0,1)' ) do |range|
+  search_tool.options.isotope_error_range=range
+end
 
 search_tool.options.fragment_method=0
 search_tool.option_parser.on(  '--fragment-method method', 'Fragment method 0: As written in the spectrum or CID if no info (Default), 1: CID, 2: ETD, 3: HCD, 4: Merge spectra from the same precursor' ) do |method|
@@ -27,7 +42,7 @@ search_tool.option_parser.on(  '--fragment-method method', 'Fragment method 0: A
 end
 
 search_tool.options.protocol=0
-search_tool.option_parser.on(  '--protocol p', '0: NoProtocol (Default), 1: Phosphorylation' ) do |p|
+search_tool.option_parser.on(  '--protocol p', '0: NoProtocol (Default), 1: Phosphorylation, 2: iTRAQ, 3: iTRAQPhospho' ) do |p|
   search_tool.options.protocol=p
 end
 
@@ -61,12 +76,23 @@ search_tool.option_parser.on(  '--add-features', 'output additional features' ) 
   search_tool.options.add_features=true
 end
 
+search_tool.options.num_threads=nil
+search_tool.option_parser.on('--threads NumThreads','Number of processing threads to use') do |nt|
+  search_tool.options.num_threads=nt
+end
+
 search_tool.options.java_mem="3500M"
 search_tool.option_parser.on('--java-mem mem','Java memory limit when running the search (Default 3.5Gb)') do |mem|
   search_tool.options.java_mem=mem
 end
   
-search_tool.option_parser.parse!
+exit unless search_tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts search_tool.option_parser 
+    exit
+end
 
 # Environment with global constants
 #
@@ -149,17 +175,33 @@ ARGV.each do |filename|
     # Instrument type
     cmd << " -inst #{search_tool.instrument}"
     
-#    cmd << " -m 4"
+    cmd << " -m #{search_tool.fragment_method}"
 
     cmd << " -addFeatures 1"
 
+    cmd << " -protocol #{search_tool.protocol}"
+
+    cmd << " -minLength #{search_tool.min_pep_length}"
+
+    cmd << " -maxLength #{search_tool.max_pep_length}"
+
+    cmd << " -minCharge #{search_tool.min_pep_charge}"
+
+    cmd << " -maxCharge #{search_tool.max_pep_charge}"
+
+    cmd << " -ti #{search_tool.isotope_error_range}"
+
+    cmd << " -n #{search_tool.num_reported_matches}"
+
     # Enzyme
     #
-  #    if ( search_tool.enzyme!="Trypsin")
-  #      cmd << " -e #{search_tool.enzyme}"
-  #    end
+    cmd << " -e #{search_tool.enzyme}"
 
-  mods_file_content = ""
+    # Num Threads
+    #
+    cmd << " -thread #{search_tool.num_threads}" if search_tool.num_threads
+
+    mods_file_content = ""
 
     # Variable Modifications
     #
@@ -188,10 +230,14 @@ ARGV.each do |filename|
     end
     
     # As a final part of the command we convert to pepxml
-    cmd << "; #{genv.idconvert} #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}"
-
-    #Then copy the pepxml to the final output path
-    cmd << "; cp #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
+    if search_tool.no_pepxml
+      cmd << "; #{genv.idconvert} #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
+      #Then copy the pepxml to the final output path
+      cmd << "; cp #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
+    elsif search_tool.explicit_output
+      cmd << "; cp #{mzid_output_path} #{output_path}"
+    end
+      
 
     # Up to here we've formulated the command. The rest is cleanup
     p "Running:#{cmd}"

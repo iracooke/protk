@@ -248,7 +248,7 @@ task :blast => blast_installed_file
 #
 # MSGFPlus
 #
-msgfplus_version="20130227"
+msgfplus_version="20130410"
 msgfplus_packagefile="MSGFPlus.#{msgfplus_version}.zip"
 msgfplus_url="http://proteomics.ucsd.edu/Downloads/MSGFPlus.#{msgfplus_version}.zip"
 msgfplus_installed_file="#{env.msgfplusjar}"
