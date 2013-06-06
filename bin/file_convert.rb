@@ -57,7 +57,7 @@ end
 
 # Setup specific command-line options for this tool. Other options are inherited from Tool
 #
-convert_tool=Tool.new({:explicit_output=>true,:over_write=>true,:maldi=>true})
+convert_tool=Tool.new([:explicit_output,:over_write,:maldi])
 convert_tool.option_parser.banner = "Convert files between different formats.\n\nUsage: file_convert.rb [options] input_file output_file"
 
 # Special case (usually tool specific options use capitals). Use lowercase l here to mimick maldi option in the search_tool class
@@ -80,7 +80,13 @@ end
 
 
 
-convert_tool.option_parser.parse!
+exit unless convert_tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts convert_tool.option_parser 
+    exit
+end
 
 
 

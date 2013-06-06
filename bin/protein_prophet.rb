@@ -26,7 +26,7 @@ end
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new({:glyco=>true,:explicit_output=>true})
+prophet_tool=ProphetTool.new([:glyco,:explicit_output])
 prophet_tool.option_parser.banner = "Run ProteinProphet on a set of pep.xml input files.\n\nUsage: protein_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_protproph"
 
@@ -90,7 +90,13 @@ prophet_tool.option_parser.on( '--minindep mp',"Minimum percentage of independen
   prophet_tool.options.minindep = mp
 end
 
-prophet_tool.option_parser.parse!
+exit unless prophet_tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts prophet_tool.option_parser 
+    exit
+end
 
 
 # Obtain a global environment object

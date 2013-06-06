@@ -15,7 +15,7 @@ require 'libxml'
 
 include LibXML
 
-tool=Tool.new({:explicit_output=>false, :background=>true,:over_write=>false})
+tool=Tool.new([:explicit_output, :background,:over_write])
 tool.option_parser.banner = "Execute a toppas pipeline with a single inputs node\n\nUsage: toppas_pipeline.rb [options] input1 input2 ..."
 
 tool.options.outdir = ""
@@ -28,7 +28,13 @@ tool.option_parser.on( '--toppas-file f',"the toppas file to run" ) do |file|
   tool.options.toppas_file = file
 end
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 # Obtain a global environment object
 genv=Constants.new

@@ -13,7 +13,7 @@ require 'protk/prophet_tool'
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new({:explicit_output=>true})
+prophet_tool=ProphetTool.new([:explicit_output])
 prophet_tool.option_parser.banner = "Run InterProphet on a set of pep.xml input files.\n\nUsage: interprophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_iproph"
 
@@ -48,8 +48,12 @@ prophet_tool.option_parser.on("--minprob mp","Minimum probability cutoff ") do |
   prophet_tool.options.min_prob=mp
 end
 
-prophet_tool.option_parser.parse!
-
+exit unless prophet_tool.check_options
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts prophet_tool.option_parser 
+    exit
+end
 
 # Obtain a global environment object
 genv=Constants.new

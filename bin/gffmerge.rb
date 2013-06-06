@@ -14,7 +14,7 @@ require 'bio'
 
 include LibXML
 
-tool=Tool.new(:explicit_output=>true)
+tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Create a gff containing peptide observations.\n\nUsage: gffmerge.rb "
 
 

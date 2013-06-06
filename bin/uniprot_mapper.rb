@@ -13,7 +13,7 @@ require 'protk/uniprot_mapper'
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-tool=Tool.new({:explicit_output=>true})
+tool=Tool.new([:explicit_output])
 
 tool.options.id_column=1
 tool.option_parser.on(  '--id-column num', 'Specify a column for ids (default is column 1)' ) do |col|
@@ -27,7 +27,13 @@ end
 
 tool.option_parser.banner = "Given a set of IDs convert them to a different type of ID\n\nUsage: uniprot_mapper.rb input_file.txt fromID_type"
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 
 from_file=ARGV.shift

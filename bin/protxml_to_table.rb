@@ -16,10 +16,16 @@ include LibXML
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-tool=Tool.new({:explicit_output=>true})
+tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Convert a protXML file to a tab delimited table.\n\nUsage: protxml_to_table.rb [options] file1.protXML"
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 input_file=ARGV[0]
 

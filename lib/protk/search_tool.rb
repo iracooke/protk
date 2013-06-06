@@ -127,6 +127,20 @@ class SearchTool < Tool
         @options.glyco = true
       end
     end
+
+    if ( option_support.include? :methionine_oxidation)
+      @options.methionine_oxidation = false
+      @option_parser.on( '-m', '--methionineo', 'Expect Oxidised Methionine modifications as variable mod in a search' ) do 
+        @options.methionine_oxidation = true
+      end
+    end
+
+    if ( option_support.include? :carbamidomethyl)
+      @options.carbamidomethyl = false
+      @option_parser.on( '-c', '--carbamidomethyl', 'Expect Carbamidomethyl C modifications as fixed mod in a search' ) do 
+        @options.carbamidomethyl = true
+      end
+    end
     
     if ( option_support.include? :maldi)
       @options.maldi=false

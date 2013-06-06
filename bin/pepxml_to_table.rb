@@ -16,10 +16,16 @@ include LibXML
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-tool=Tool.new({:explicit_output=>true})
+tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Convert a pepXML file to a tab delimited table.\n\nUsage: pepxml_to_table.rb [options] file1.pep.xml"
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 # Obtain a global environment object
 #genv=Constants.new

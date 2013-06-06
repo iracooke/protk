@@ -40,7 +40,13 @@ tool.option_parser.on('--omssa-itol fitol','Add a fragment ion tolerance paramet
   tool.options.omssa_ion_tolerance=fitol
 end
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 pepxml_file=ARGV[0]
 

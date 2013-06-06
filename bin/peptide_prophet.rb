@@ -13,7 +13,7 @@ require 'protk/prophet_tool'
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new({:glyco=>true,:explicit_output=>true,:maldi=>true})
+prophet_tool=ProphetTool.new([:glyco,:explicit_output,:maldi])
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_pproph"
 
@@ -92,7 +92,13 @@ prophet_tool.option_parser.on( '--override-database database', 'Manually specify
   prophet_tool.options.override_database = database
 end
 
-prophet_tool.option_parser.parse!
+exit unless prophet_tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts prophet_tool.option_parser 
+    exit
+end
 
 throw "When --output and -F options are set only one file at a time can be run" if  ( ARGV.length> 1 ) && ( prophet_tool.explicit_output!=nil ) && (prophet_tool.one_ata_time!=nil)
 

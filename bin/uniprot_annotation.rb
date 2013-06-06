@@ -15,7 +15,7 @@ require 'protk/bio_sptr_extensions'
 
 # Setup specific command-line options for this tool. Other options are inherited from Tool
 #
-tool=Tool.new({:explicit_output=>true})
+tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Retrieve information from the Uniprot database given a list of ID's.\n\n\
 Usage: uniprot_annotation.rb [options] input.tsv"
 
@@ -29,7 +29,13 @@ tool.option_parser.on(  '--fields flds', 'A comma separated list of fields to ex
   tool.options.fields=flds
 end
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 # Obtain a global environment object
 genv=Constants.new

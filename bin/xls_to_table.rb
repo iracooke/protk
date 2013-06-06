@@ -14,10 +14,16 @@ require 'spreadsheet'
 
 # Setup command-line options for this tool. 
 #
-tool=Tool.new({:explicit_output=>true})
+tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Convert an xls file to a tab delimited table.\n\nUsage: xls_to_table.rb [options] file1.xls"
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 input_file=ARGV[0]
 

@@ -13,7 +13,7 @@ require 'libxml'
 
 include LibXML
 
-tool=Tool.new({:explicit_output=>true, :background=>true,:over_write=>true,:prefix_suffix=>true})
+tool=Tool.new([:explicit_output, :background,:over_write,:prefix_suffix])
 tool.option_parser.banner = "Find molecular features on a set of input files.\n\nUsage: feature_finder.rb [options] file1.mzML file2.mzML ..."
 
 tool.options.intensity_type = "ref"
@@ -27,7 +27,13 @@ tool.option_parser.on( '--intensity-threshold thresh',"discard features below th
 end
 
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 # Obtain a global environment object
 genv=Constants.new

@@ -20,7 +20,10 @@ genv=Constants.new
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new({:msms_search=>true,:background=>true,:glyco=>true,:database=>true,:explicit_output=>true,:over_write=>true,:msms_search_detailed_options=>true})
+search_tool=SearchTool.new([:background,:glyco,:database,:explicit_output,:over_write,
+:enzyme,:modifications,:mass_tolerance_units,:mass_tolerance,:strict_monoisotopic_mass,
+:missed_cleavages,:carbamidomethyl,:methionine_oxidation
+  ])
 search_tool.jobid_prefix="x"
 search_tool.option_parser.banner = "Run an X!Tandem msms search on a set of mzML input files.\n\nUsage: tandem_search.rb [options] file1.mzML file2.mzML ..."
 search_tool.options.output_suffix="_tandem"
@@ -94,7 +97,13 @@ search_tool.option_parser.on('--cleavage-c-terminal-mod-mass mass') do |mass|
     search_tool.options.cleavage_c_terminal_mod_mass = mass
 end
 
-search_tool.option_parser.parse!
+exit unless search_tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts search_tool.option_parser 
+    exit
+end
 
 
 # Set search engine specific parameters on the SearchTool object

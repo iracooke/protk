@@ -28,10 +28,16 @@ def check_coords(naseq,aaseq,frame,pstart,pend)
 end
 
 
-tool=Tool.new(:explicit_output=>true)
+tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Create a sixframe translation of a genome.\n\nUsage: sixframe.rb [options] genome.fasta"
 
-tool.option_parser.parse!
+exit unless tool.check_options 
+
+if ( ARGV[0].nil? )
+    puts "You must supply an input file"
+    puts tool.option_parser 
+    exit
+end
 
 inname=ARGV.shift
 

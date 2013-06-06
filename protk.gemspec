@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.2.1'
-  s.date        = '2013-03-05'
+  s.version     = '1.2.2'
+  s.date        = '2013-06-06'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
   s.description = "A bunch of tools for proteomics"
@@ -31,7 +31,6 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['libra.rb']
   s.executables = s.executables + ['xpress.rb']
   s.executables = s.executables + ['tandem_search.rb','mascot_search.rb','omssa_search.rb','msgfplus_search.rb']
-  s.executables = s.executables + ['big_search.rb']
   s.executables = s.executables + ['mascot_to_pepxml.rb','file_convert.rb']
   s.executables = s.executables + ['make_decoy.rb']
   s.executables = s.executables + ['correct_omssa_retention_times.rb','repair_run_summary.rb']
