@@ -15,7 +15,7 @@ require 'protk/protein_annotator'
 
 # Setup specific command-line options for this tool. Other options are inherited from Tool
 #
-id_tool=ProphetTool.new([:explicit_output,:over_write])
+id_tool=ProphetTool.new([:explicit_output,:over_write,:prefix_suffix])
 id_tool.option_parser.banner = "Run ID annotation on a prot.xml input file.\n\nUsage: annotate_ids.rb [options] file1.prot.xml"
 id_tool.options.output_prefix="annotated_"
 

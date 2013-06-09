@@ -71,13 +71,15 @@ spectrum_queries.each do |query|
   search_engine=""
   search_score_names=top_search_hit.find("./#{pepxml_ns_prefix}search_score/@name",pepxml_ns).collect {|s| s.to_s}
 
-  if ( search_score_names.length==2 && search_score_names.grep(/^name.*=.*pvalue/))
-    search_engine="omssa" 
-  elsif ( search_score_names.grep(/^name.*=.*ionscore/))
-    search_engine="mascot"
-  elsif ( search_score_names.grep(/^name.*=.*hyperscore/) )
-    search_engine="x!tandem"
-  end
+  search_engine=query.parent.attributes['search_engine']
+
+  # if ( search_score_names.length==2 && search_score_names.grep(/^name.*=.*pvalue/))
+  #   search_engine="omssa" 
+  # elsif ( search_score_names.grep(/^name.*=.*ionscore/))
+  #   search_engine="mascot"
+  # elsif ( search_score_names.grep(/^name.*=.*hyperscore/) )
+  #   search_engine="x!tandem"
+  # end
 
   
   pp_result=top_search_hit.find("./#{pepxml_ns_prefix}analysis_result/#{pepxml_ns_prefix}peptideprophet_result/@probability",pepxml_ns)

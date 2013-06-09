@@ -13,7 +13,7 @@ require 'protk/prophet_tool'
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new([:glyco,:explicit_output,:maldi])
+prophet_tool=ProphetTool.new([:glyco,:explicit_output,:over_write,:maldi,:prefix_suffix])
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_pproph"
 
@@ -256,7 +256,8 @@ else
 
   end
   cmd=generate_command(genv,prophet_tool,inputs,output_file_name,database,engine)
-
+  puts cmd
+  %x['ls']
   run_peptide_prophet(genv,prophet_tool,cmd,output_file_name,engine)
     
 end

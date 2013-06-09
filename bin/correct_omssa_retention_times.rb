@@ -17,7 +17,7 @@ require 'protk/omssa_util'
 #
 genv=Constants.new
 
-tool=Tool.new 
+tool=Tool.new([:over_write])
 tool.option_parser.banner = "Correct retention times on a pepxml file produced by omssa using information from an mgf file.\n\nUsage: correct_omssa_retention_times.rb [options] file1.pep.xml file2.mgf"
 tool.option_parser.parse!
 

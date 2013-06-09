@@ -13,7 +13,7 @@ require 'protk/prophet_tool'
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new([:explicit_output])
+prophet_tool=ProphetTool.new([:explicit_output,:over_write,:prefix_suffix])
 prophet_tool.option_parser.banner = "Run InterProphet on a set of pep.xml input files.\n\nUsage: interprophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_iproph"
 
@@ -67,7 +67,7 @@ end
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   cmd="#{genv.interprophetparser} #{prophet_tool.options.no_nss} #{prophet_tool.options.no_nrs} #{prophet_tool.options.no_nse} #{prophet_tool.options.no_nsi} #{prophet_tool.options.no_nsm}"
-  cmd << " MINPROB=#{min_prob}" if ( prophet_tool.options.min_prob !="" )
+  cmd << " MINPROB=#{prophet_tool.min_prob}" if ( prophet_tool.min_prob !="" )
 
   inputs = ARGV.collect {|file_name| 
     file_name.chomp

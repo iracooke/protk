@@ -173,7 +173,7 @@ file tpp_installed_file => [@build_dir,tpp_download_file] do
 			f.write subs_text
 		end
 	end
-	build_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make"
+	build_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make -s"
 	install_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make install"
 	env.log build_cmd, :info
 	sh %{#{build_cmd}}
