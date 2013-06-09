@@ -14,6 +14,7 @@ require 'libxml'
 
 include LibXML
 
+# Regex for cleaning mgf sed -i.bak 's/\(PEPMASS=[0-9]*.[0-9]*\)[ \t]*[0-9]*/\1/g'
 
 # Read the input file and search for an instance of the charge state cvParam inside a precursor tag. Return true if one is found. False otherwise
 #

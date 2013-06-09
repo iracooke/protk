@@ -231,11 +231,11 @@ ARGV.each do |filename|
     
     # As a final part of the command we convert to pepxml
     if search_tool.no_pepxml
+      cmd << "; cp #{mzid_output_path} #{output_path}"
+    elsif search_tool.explicit_output
       cmd << "; #{genv.idconvert} #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
       #Then copy the pepxml to the final output path
       cmd << "; cp #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
-    elsif search_tool.explicit_output
-      cmd << "; cp #{mzid_output_path} #{output_path}"
     end
       
 
