@@ -313,7 +313,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   var_mods.each do |vm|
 
     mod_type="potential modification mass"
-    mod_type = "potential modification motif" if ( vm=~/[\[\]\(\)\{\}\!]/ )      
+    mod_type = "potential modification motif" if motif?(vm)
     mod_id_label = "custom-variable-mod-#{mod_id.to_s}"
     mod_id=mod_id+1
     mnode=XML::Node.new('note')
@@ -328,7 +328,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   mod_id=1
   fix_mods.each do |fm|
     mod_type="modification mass"
-    mod_type = "modification motif" if ( fm=~/[\[\]\(\)\{\}\!]/ )      
+    mod_type = "modification motif" if motif?(fm)
     mod_id_label = "custom-fixed-mod-#{mod_id.to_s}"
     mod_id=mod_id+1
     mnode=XML::Node.new('note')
@@ -344,6 +344,13 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   std_params
   
 end
+
+def motif?(mod_string)
+  # 124@[ is not a modification motif, it is a residue (N-term) modification,
+  # so when checking if modification is a motif look for paired square brackets.
+  mod_string =~ /[\(\)\{\}\!]/ or mod_string =~ /\[.*\]/
+end
+
 
 def generate_taxonomy_doc(taxo_doc,current_db,search_tool)
 
