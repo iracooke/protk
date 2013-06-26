@@ -316,7 +316,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     mod_type = "potential modification motif" if ( vm=~/[\[\]\(\)\{\}\!]/ )      
     mod_id_label = "custom-variable-mod-#{mod_id.to_s}"
     mod_id=mod_id+1
-    mnode=XML::Node.new('node')
+    mnode=XML::Node.new('note')
     mnode["id"]=mod_id_label
     mnode["type"]="input"
     mnode["label"]="residue, #{mod_type}"
@@ -331,7 +331,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     mod_type = "modification motif" if ( fm=~/[\[\]\(\)\{\}\!]/ )      
     mod_id_label = "custom-fixed-mod-#{mod_id.to_s}"
     mod_id=mod_id+1
-    mnode=XML::Node.new('node')
+    mnode=XML::Node.new('note')
     mnode["id"]=mod_id_label
     mnode["type"]="input"
     mnode["label"]="residue, #{mod_type}"
