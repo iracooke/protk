@@ -149,6 +149,20 @@ def set_option(std_params, tandem_key, value)
   notes[0].content=value
 end
 
+def append_option(std_params, tandem_key, value)
+  notes = std_params.find("/bioml/note[@type=\"input\" and @label=\"#{tandem_key}\"]")
+  if notes.length == 0
+    node = XML::Node.new('note')
+    node["type"] = "input"
+    node["label"] = tandem_key
+    node.content = value
+    std_params.find('/bioml')[0] << node
+  else
+    throw "Exactly one parameter named (#{tandem_key}) is required in parameter file" unless notes.length==1    
+    notes[0].content = "#{notes[0].content},#{value}"
+  end
+end
+
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
   set_option(std_params, "protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
   set_option(std_params, "scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
@@ -314,30 +328,16 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
 
     mod_type="potential modification mass"
     mod_type = "potential modification motif" if motif?(vm)
-    mod_id_label = "custom-variable-mod-#{mod_id.to_s}"
-    mod_id=mod_id+1
-    mnode=XML::Node.new('note')
-    mnode["id"]=mod_id_label
-    mnode["type"]="input"
-    mnode["label"]="residue, #{mod_type}"
-    mnode.content=vm
-    
-    root_bioml_node << mnode
+    label="residue, #{mod_type}"
+    append_option(std_params, label, vm)
   end
   
   mod_id=1
   fix_mods.each do |fm|
     mod_type="modification mass"
     mod_type = "modification motif" if motif?(fm)
-    mod_id_label = "custom-fixed-mod-#{mod_id.to_s}"
-    mod_id=mod_id+1
-    mnode=XML::Node.new('note')
-    mnode["id"]=mod_id_label
-    mnode["type"]="input"
-    mnode["label"]="residue, #{mod_type}"
-    mnode.content=fm
-    
-    root_bioml_node << mnode
+    label="residue, #{mod_type}"
+    append_option(std_params, label, fm)
   end
 
   #p root_bioml_node
