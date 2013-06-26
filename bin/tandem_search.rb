@@ -159,7 +159,24 @@ def append_option(std_params, tandem_key, value)
     std_params.find('/bioml')[0] << node
   else
     throw "Exactly one parameter named (#{tandem_key}) is required in parameter file" unless notes.length==1    
-    notes[0].content = "#{notes[0].content},#{value}"
+    notes[0].content = append_string(notes[0].content, value)
+  end
+end
+
+def collapse_keys(std_params, tandem_key)
+    mods=std_params.find('/bioml/note[@type="input" and @label="#{tandem_key}"]')
+    if not mods
+      first_mod = mods[0]
+      rest_mods = mods[1..-1]
+      rest_mods.each{ |node| first_mod.content = append_string(first_mod.content, node.content); node.remove!}
+    end
+end
+
+def append_string(first, second)
+  if first.empty?
+    second
+  else
+    "#{first},#{second}"
   end
 end
 
@@ -315,7 +332,11 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     mods=std_params.find('/bioml/note[@type="input" and @id="methionine-oxidation-variable"]')
     mods.each{ |node| node.remove!}        
   end  
-  
+
+  # Merge all remaining id based modification into single modification. 
+  collapse_keys(std_params, "residue, potential modification mass")
+  collapse_keys(std_params, "residue, modification mass")
+
   var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }
   var_mods=var_mods.collect {|mod| decode_modification_string(mod) }
   fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }
