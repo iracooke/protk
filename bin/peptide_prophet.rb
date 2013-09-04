@@ -85,7 +85,12 @@ end
 prophet_tool.options.decoy_prefix="decoy"
 prophet_tool.option_parser.on( '--decoy-prefix prefix', 'Prefix for decoy sequences') do |prefix|
   prophet_tool.options.decoy_prefix = prefix
-end  
+end 
+
+prophet_tool.options.no_decoys = false
+prophet_tool.option_parser.on( '--no-decoy', 'Don\'t use decoy sequences to pin down the negative distribution') do 
+  prophet_tool.options.no_decoys = true
+end
 
 prophet_tool.options.override_database=nil
 prophet_tool.option_parser.on( '--override-database database', 'Manually specify database') do |database|
@@ -207,12 +212,14 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
     cmd << " -I2 -T3 -I4 -I5 -I6 -I7 "
   end
 
-  if engine=="omssa" || engine=="phenyx"
-    cmd << " -Op -P -d#{prophet_tool.decoy_prefix} "
-  else
-    cmd << " -d#{prophet_tool.decoy_prefix} "
-  end
-  
+  unless prophet_tool.no_decoys
+
+    if engine=="omssa" || engine=="phenyx"
+      cmd << " -Op -P -d#{prophet_tool.decoy_prefix} "
+    else
+      cmd << " -d#{prophet_tool.decoy_prefix} "
+    end
+  end  
   
   if ( inputs.class==Array)
     cmd << " #{inputs.join(" ")}"  

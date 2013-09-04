@@ -15,7 +15,7 @@ require 'libxml'
 
 include LibXML
 
-tool=Tool.new([:explicit_output, :background,:over_write])
+tool=Tool.new([:background,:over_write])
 tool.option_parser.banner = "Execute a toppas pipeline with a single inputs node\n\nUsage: toppas_pipeline.rb [options] input1 input2 ..."
 
 tool.options.outdir = ""
@@ -26,6 +26,11 @@ end
 tool.options.toppas_file = ""
 tool.option_parser.on( '--toppas-file f',"the toppas file to run" ) do |file|
   tool.options.toppas_file = file
+end
+
+tool.options.threads = "1"
+tool.option_parser.on( '--threads t',"Number of threads to use" ) do |tr|
+  tool.options.threads=tr
 end
 
 exit unless tool.check_options 
@@ -67,13 +72,13 @@ throw "outdir is a required parameter" if tool.outdir==""
 throw "toppas-file is a required parameter" if tool.toppas_file==""
 throw "outdir must exist" unless Dir.exist?(tool.outdir)
 
-trf_path = "#{tool.toppas_file}.trf"
+trf_path = "#{Pathname.new(Tempfile.new(tool.toppas_file).path).basename.to_s}.trf"
 
 generate_trf(ARGV,trf_path)
 
 cmd=""
 cmd<<"export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:#{genv.openms_root}/lib;
-#{genv.executepipeline} -in #{Pathname.new(tool.toppas_file).realpath.to_s} -out_dir #{Pathname.new(tool.outdir).realpath.to_s} -resource_file #{Pathname.new(trf_path).realpath.to_s}"
+#{genv.executepipeline} -in #{Pathname.new(tool.toppas_file).realpath.to_s} -out_dir #{Pathname.new(tool.outdir).realpath.to_s} -resource_file #{Pathname.new(trf_path).realpath.to_s} -threads #{tool.threads}"
 
 run_pipeline(genv,tool,cmd,tool.outdir,tool.jobid_from_filename(tool.toppas_file))
 

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.2.4'
+  s.version     = '1.2.5'
   s.date        = '2013-06-06'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['tandem_search.rb','mascot_search.rb','omssa_search.rb','msgfplus_search.rb']
   s.executables = s.executables + ['mascot_to_pepxml.rb','file_convert.rb']
   s.executables = s.executables + ['make_decoy.rb']
-  s.executables = s.executables + ['correct_omssa_retention_times.rb','repair_run_summary.rb']
+  s.executables = s.executables + ['correct_omssa_retention_times.rb','repair_run_summary.rb','add_retention_times.rb']
   s.executables = s.executables + ['peptide_prophet.rb','interprophet.rb','protein_prophet.rb']
   s.executables = s.executables + ['pepxml_to_table.rb','xls_to_table.rb','annotate_ids.rb']
   s.executables = s.executables + ['unimod_to_loc.rb','generate_omssa_loc.rb']

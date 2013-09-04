@@ -425,8 +425,8 @@ ARGV.each do |filename|
     # Run the search
     #
     job_params= {:jobid => search_tool.jobid_from_filename(filename)}
-    job_params[:queue]="lowmem"
-    job_params[:vmem]="900mb"
+    job_params[:queue]="sixteen"
+    job_params[:vmem]="12gb"
     code = search_tool.run(cmd,genv,job_params,jobscript_path)
     throw "Command failed with exit code #{code}" unless code==0
   else

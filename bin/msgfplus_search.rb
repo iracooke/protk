@@ -17,9 +17,10 @@ input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new([:database,:explicit_output,:over_write,:enzyme,
+search_tool=SearchTool.new([:background,:database,:explicit_output,:over_write,:enzyme,
   :modifications,:instrument,:mass_tolerance_units,:mass_tolerance,:missed_cleavages])
 
+search_tool.jobid_prefix="p"
 search_tool.option_parser.banner = "Run an MSGFPlus msms search on a set of msms spectrum input files.\n\nUsage: msgfplus_search.rb [options] file1.mzML file2.mzML ..."
 search_tool.options.output_suffix="_msgfplus"
 
@@ -135,7 +136,7 @@ ARGV.each do |filename|
   if ( search_tool.explicit_output!=nil)
     output_path=search_tool.explicit_output
   else
-    output_path="#{search_tool.output_base_path(filename.chomp)}.pepXML"
+    output_path="#{search_tool.output_base_path(filename.chomp)}.pep.xml"
   end
 
 
@@ -232,20 +233,28 @@ ARGV.each do |filename|
     # As a final part of the command we convert to pepxml
     if search_tool.no_pepxml
       cmd << "; cp #{mzid_output_path} #{output_path}"
-    elsif search_tool.explicit_output
+    else
+      #if search_tool.explicit_output
       cmd << "; #{genv.idconvert} #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
       #Then copy the pepxml to the final output path
-      cmd << "; cp #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
+      cmd << "; mv #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
     end
       
 
     # Up to here we've formulated the command. The rest is cleanup
     p "Running:#{cmd}"
     
+    # In case the user specified background running we need to create a jobscript path
+    #
+    jobscript_path="#{output_path}.pbs.sh"
+
     # Run the search
     #
     job_params= {:jobid => search_tool.jobid_from_filename(filename) }
-    search_tool.run(cmd,genv,job_params)
+    job_params[:queue]="seventytwo"
+    job_params[:vmem]="70gb"
+    code = search_tool.run(cmd,genv,job_params,jobscript_path)
+    throw "Command failed with exit code #{code}" unless code==0
 
   if for_galaxy 
     input_stager.restore_references(output_path)

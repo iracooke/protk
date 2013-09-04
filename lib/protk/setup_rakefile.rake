@@ -133,10 +133,10 @@ task :perl_locallib => [perl_locallib_installed_file]
 #
 # TPP
 #
-tpp_version="4.6.1"
+tpp_version="4.6.2"
 tpp_packagefile="TPP-#{tpp_version}.tgz"
 tpp_installed_file = "#{env.xinteract}"
-tpp_url = "https://dl.dropbox.com/u/226794/TPP-4.6.1.tgz"
+tpp_url = "https://dl.dropbox.com/u/226794/TPP-4.6.2.tgz"
 
 tpp_download_file = download_task tpp_url, tpp_packagefile
 

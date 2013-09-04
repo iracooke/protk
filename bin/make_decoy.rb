@@ -11,6 +11,8 @@ require 'libxml'
 require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/tool'
+require 'protk/randomize'
+require 'tempfile'
 require 'bio'
 
 include LibXML
@@ -60,8 +62,14 @@ output_file = tool.explicit_output if tool.explicit_output!=nil
 
 genv=Constants.new()
 
-Randomize.make_decoys #{input_file} #{db_length} #{output_file} #{tool.prefix_string}"
-cmd << "cat #{input_file} >> #{output_file}" if ( tool.append ) 
+decoys_tmp_file = Pathname.new(Tempfile.new("random").path).basename.to_s;
+
+Randomize.make_decoys input_file, db_length, decoys_tmp_file, tool.prefix_string
+cmd = "cat #{input_file} #{decoys_tmp_file} >> #{output_file}; rm #{decoys_tmp_file}" if ( tool.append ) 
+
+# Randomize.make_decoys raw_db_filename, db_length, decoys_filename, decoy_prefix
+#   cmd = "cat #{raw_db_filename} #{decoys_filename} >> #{decoy_db_filename}; rm #{decoys_filename}"
+
 p cmd
 # Run the conversion
 #

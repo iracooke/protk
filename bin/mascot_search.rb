@@ -124,7 +124,7 @@ search_tool.option_parser.on('--username un', 'Username.') do |un|
     search_tool.options.username = un
 end
 
-search_tool.options.httpproxy=""
+search_tool.options.httpproxy=nil
 search_tool.option_parser.on( '--proxy url', 'The url to a proxy server' ) do |urll| 
     search_tool.options.httpproxy=urll
 end
@@ -144,6 +144,11 @@ search_tool.option_parser.on( '--export format', 'Save results in a specified fo
     search_tool.options.export_format=format
 end
 
+search_tool.options.timeout=200
+search_tool.option_parser.on( '--timeout seconds', 'Timeout for sending data file to mascot in seconds' ) do |seconds| 
+    search_tool.options.timeout=seconds.to_i
+end
+
 exit unless search_tool.check_options 
 
 if ( ARGV[0].nil? )
@@ -161,8 +166,7 @@ unless ( mascot_cgi =~ /^http[s]?:\/\//)
     mascot_cgi  = "http://#{mascot_cgi}"
 end
 
-RestClient.proxy=search_tool.httpproxy
-
+RestClient.proxy=search_tool.httpproxy if search_tool.httpproxy
 $genv.log("Var mods #{search_tool.var_mods} and fixed #{search_tool.fix_mods}",:info)
 
 cookie=""
@@ -177,7 +181,13 @@ end
 postdict = search_params_dictionary search_tool, ARGV[0]
 $genv.log("Sending #{postdict}",:info)
 
-search_response=RestClient.post "#{mascot_cgi}/nph-mascot.exe?1",  postdict, {:cookies=>cookie}
+#site = RestClient::Resource.new(mascot_cgi, timeout=300)
+#search_response=site['/nph-mascot.exe?1'].post , postdict, {:cookies=>cookie}
+
+search_response=RestClient::Request.execute(:method => :post, :url => "#{mascot_cgi}/nph-mascot.exe?1", :payload => postdict,:headers=>{:cookies=>cookie},:timeout => search_tool.options.timeout, :open_timeout => 10)
+
+
+#search_response=RestClient.post "#{mascot_cgi}/nph-mascot.exe?1", postdict, {:cookies=>cookie}
 
 $genv.log("Mascot search response was #{search_response}",:info)
 

@@ -154,7 +154,7 @@ class SearchTool < Tool
   
   def jobid_from_filename(filename)
     jobid="protk"
-    jobnum_match=filename.match(/(.{1,10})\.d/)
+    jobnum_match=filename.match(/(.{1,10}).*?\./)
     if (jobnum_match!=nil)
       jobid="#{self.jobid_prefix}#{jobnum_match[1]}"
     end

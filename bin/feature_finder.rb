@@ -10,6 +10,7 @@ require 'protk/command_runner'
 require 'protk/tool'
 require 'protk/openms_defaults'
 require 'libxml'
+require 'tempfile'
 
 include LibXML
 
@@ -62,7 +63,9 @@ end
 
 throw "Cannot use explicit output in combination with multiple input files" if ( tool.explicit_output && ARGV.length>1)
 
-ini_file="#{Pathname.new(ARGV[0]).dirname.realpath.to_s}/feature_finder.ini"
+input_basename=Pathname.new(ARGV[0]).basename.to_s
+ini_file_name="#{Pathname.new(Tempfile.new(input_basename).path).basename.to_s}_feature_finder.ini"
+ini_file="#{Pathname.new(ini_file_name).dirname.realpath.to_s}/#{ini_file_name}"
 
 generate_ini(tool,ini_file)
 
@@ -74,6 +77,9 @@ ARGV.each do |filen|
   output_dir=Pathname.new(input_basename).dirname.realpath.to_s
   output_base=Pathname.new(input_basename).basename.to_s
   output_file = "#{output_dir}/#{tool.output_prefix}#{output_base}#{tool.output_suffix}.featureXML"
+  if ( tool.explicit_output )
+    output_file = "#{output_dir}/#{tool.explicit_output}"
+  end
 
   if ( tool.over_write || !Pathname.new(output_file).exist? )
     output_base_filename=Pathname.new(output_file).basename.to_s

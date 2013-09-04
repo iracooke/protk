@@ -54,12 +54,17 @@ class MascotUtil
 
      if ( spec!=nil && rt!=nil)
        # Remove charge from the end of the title
-       spec_id= remove_charge_from_title_string(spec[1])
+       # spec_id= remove_charge_from_title_string(spec[1])
+       spec_id= spec[1]
+
+    #   $stdout.write "#{spec_id} \r"
+
        
        rt_table[spec_id]=rt[1]
      end
-     
+
    end
+#    $stdout.write "\n"
 
    return rt_table
     

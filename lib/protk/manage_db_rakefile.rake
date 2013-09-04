@@ -449,7 +449,8 @@ file db_filename do
 
     # Symlink to the source file
     #
-    File.symlink(source_db_filename,db_filename)
+    source_db_filename_relative = Pathname.new(source_db_filename).basename.to_s
+    File.symlink(source_db_filename_relative,db_filename)
   end
 end
 
