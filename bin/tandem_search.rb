@@ -149,6 +149,37 @@ def set_option(std_params, tandem_key, value)
   notes[0].content=value
 end
 
+def append_option(std_params, tandem_key, value)
+  notes = std_params.find("/bioml/note[@type=\"input\" and @label=\"#{tandem_key}\"]")
+  if notes.length == 0
+    node = XML::Node.new('note')
+    node["type"] = "input"
+    node["label"] = tandem_key
+    node.content = value
+    std_params.find('/bioml')[0] << node
+  else
+    throw "Exactly one parameter named (#{tandem_key}) is required in parameter file" unless notes.length==1    
+    notes[0].content = append_string(notes[0].content, value)
+  end
+end
+
+def collapse_keys(std_params, tandem_key)
+    mods=std_params.find('/bioml/note[@type="input" and @label="#{tandem_key}"]')
+    if not mods
+      first_mod = mods[0]
+      rest_mods = mods[1..-1]
+      rest_mods.each{ |node| first_mod.content = append_string(first_mod.content, node.content); node.remove!}
+    end
+end
+
+def append_string(first, second)
+  if first.empty?
+    second
+  else
+    "#{first},#{second}"
+  end
+end
+
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
   set_option(std_params, "protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
   set_option(std_params, "scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
@@ -301,7 +332,11 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     mods=std_params.find('/bioml/note[@type="input" and @id="methionine-oxidation-variable"]')
     mods.each{ |node| node.remove!}        
   end  
-  
+
+  # Merge all remaining id based modification into single modification. 
+  collapse_keys(std_params, "residue, potential modification mass")
+  collapse_keys(std_params, "residue, modification mass")
+
   var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }
   var_mods=var_mods.collect {|mod| decode_modification_string(mod) }
   fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }
@@ -313,37 +348,30 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   var_mods.each do |vm|
 
     mod_type="potential modification mass"
-    mod_type = "potential modification motif" if ( vm=~/[\[\]\(\)\{\}\!]/ )      
-    mod_id_label = "custom-variable-mod-#{mod_id.to_s}"
-    mod_id=mod_id+1
-    mnode=XML::Node.new('node')
-    mnode["id"]=mod_id_label
-    mnode["type"]="input"
-    mnode["label"]="residue, #{mod_type}"
-    mnode.content=vm
-    
-    root_bioml_node << mnode
+    mod_type = "potential modification motif" if motif?(vm)
+    label="residue, #{mod_type}"
+    append_option(std_params, label, vm)
   end
   
   mod_id=1
   fix_mods.each do |fm|
     mod_type="modification mass"
-    mod_type = "modification motif" if ( fm=~/[\[\]\(\)\{\}\!]/ )      
-    mod_id_label = "custom-fixed-mod-#{mod_id.to_s}"
-    mod_id=mod_id+1
-    mnode=XML::Node.new('node')
-    mnode["id"]=mod_id_label
-    mnode["type"]="input"
-    mnode["label"]="residue, #{mod_type}"
-    mnode.content=fm
-    
-    root_bioml_node << mnode
+    mod_type = "modification motif" if motif?(fm)
+    label="residue, #{mod_type}"
+    append_option(std_params, label, fm)
   end
 
   #p root_bioml_node
   std_params
   
 end
+
+def motif?(mod_string)
+  # 124@[ is not a modification motif, it is a residue (N-term) modification,
+  # so when checking if modification is a motif look for paired square brackets.
+  mod_string =~ /[\(\)\{\}\!]/ or mod_string =~ /\[.*\]/
+end
+
 
 def generate_taxonomy_doc(taxo_doc,current_db,search_tool)
 
