@@ -39,6 +39,6 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['unimod_to_loc.rb','generate_omssa_loc.rb']
   s.executables = s.executables + ['uniprot_mapper.rb']
   s.executables = s.executables + ['feature_finder.rb','toppas_pipeline.rb']
-  s.executables = s.executables + ['gffmerge.rb','sixframe.rb']
+  s.executables = s.executables + ['gffmerge.rb','sixframe.rb','augustus_to_proteindb.rb']
   s.executables = s.executables + ['uniprot_annotation.rb','protxml_to_table.rb']
 end
