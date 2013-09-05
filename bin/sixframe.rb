@@ -41,9 +41,11 @@ end
 
 inname=ARGV.shift
 
-outfile=File.open("#{inname}.translated.fasta",'w')
+outfile=nil
 if ( tool.explicit_output != nil)
   outfile=File.open(tool.explicit_output,'w')
+else
+  outfile=File.open("#{inname}.translated.fasta",'w')
 end
 
 
