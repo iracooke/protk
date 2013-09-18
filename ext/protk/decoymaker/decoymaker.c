@@ -1,6 +1,4 @@
 #include <ruby.h>
-
-
 /*                                                                                                 */
 /* make_random.c - make random protein sequence database using Markov chain with transitional      */
 /* probabilities from amino acid frequencies in a real database in FASTA format                    */
@@ -25,7 +23,8 @@
 #define MAX_SEQUENCE_LENGTH 20000
 #define MAX_LINE_LENGTH 20000 /* large enough to read in long header lines */
 
-static VALUE protk_make_decoys(VALUE self,VALUE input_file_in,VALUE db_length_in,VALUE output_file_in,char *prefix_string_in) {
+
+static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_length_in,VALUE output_file_in,char *prefix_string_in) {
   char *input_file = RSTRING_PTR(input_file_in);
   long sequences_to_generate = NUM2INT(db_length_in);
   char * output_file = RSTRING_PTR(output_file_in);
@@ -148,7 +147,7 @@ static VALUE protk_make_decoys(VALUE self,VALUE input_file_in,VALUE db_length_in
                 measured_aa_freq[a]++;
       }
   }
-	  else {a=floor(20*(float)rand()/RAND_MAX);MP[a][i]++; measured_aa_freq[a]++;} // replace B, X, Z etc. with random amino acid to preserve size distribution
+    else {a=floor(20*(float)rand()/RAND_MAX);MP[a][i]++; measured_aa_freq[a]++;} // replace B, X, Z etc. with random amino acid to preserve size distribution
   }
   MP[20][pl]++;
       measured_aa_freq[20]++; // MP[20][n] is the number of sequences of length n in the database 
@@ -178,12 +177,12 @@ static VALUE protk_make_decoys(VALUE self,VALUE input_file_in,VALUE db_length_in
        x=(double)row_sum[j]*((double)rand()/RAND_MAX);
        partial_sum=MP[0][j]; i=1;
        while (partial_sum<x) {partial_sum+=MP[i][j]; i++;}
-	  if (j>=MAX_SEQUENCE_LENGTH) i=21; /* terminate when sequence has reached MAX_SEQUENCE_LENGTH */
+    if (j>=MAX_SEQUENCE_LENGTH) i=21; /* terminate when sequence has reached MAX_SEQUENCE_LENGTH */
        if (i<21)
        {
          random_sequence[j]=AMINO_ACIDS[i-1];j++;generated_aa_freq[i-1]++;
        }
-	  else /* i==21, i.e. protein sequence terminated */
+    else /* i==21, i.e. protein sequence terminated */
        {
          k=0; generated_aa_freq[20]++; generated_pl_sum+=j;
          for(l=0;l<j;l++) 
@@ -196,7 +195,7 @@ static VALUE protk_make_decoys(VALUE self,VALUE input_file_in,VALUE db_length_in
         }
 
         random_sequence_output[k]='\0';
-	      if (!(k%61)) random_sequence_output[k-1]='\0'; /* remove extra newline for sequence length multiple of 60 */
+        if (!(k%61)) random_sequence_output[k-1]='\0'; /* remove extra newline for sequence length multiple of 60 */
         fprintf(outp,">%srp%li\n%s\n",prefix_string,protein,random_sequence_output);
         break;
       }
@@ -222,14 +221,13 @@ static VALUE protk_make_decoys(VALUE self,VALUE input_file_in,VALUE db_length_in
 
 }
 
-  /* ruby calls this to load the extension */
-void Init_protk(void) {
-  /* assume we haven't yet defined Hola */
-  VALUE klass = rb_define_class("Protk",
-    rb_cObject);
 
-  /* the hola_bonjour function can be called
-   * from ruby as "Hola.bonjour" */
+void Init_decoymaker(void) 
+{
+  VALUE klass = rb_define_class("Decoymaker",rb_cObject);
+
   rb_define_singleton_method(klass,
-    "make_decoys", protk_make_decoys, 4);
+    "make_decoys", decoymaker_make_decoys, 4);
+
+
 }

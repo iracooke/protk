@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.files        = Dir["{lib}/**/*.rb","{lib}/protk/*.rake", "bin/*", "LICENSE", "*.md","{lib}/**/data/*"] + Dir.glob('lib/**/*.rb') + Dir.glob('ext/**/*.{c,h,rb}')
   s.require_path = 'lib'
 
-  s.extensions = ['ext/protk/extconf.rb']
+  s.extensions = ['ext/protk/decoymaker/extconf.rb']
 
   s.add_runtime_dependency "ftools", [">= 0.0.0"]
   s.add_runtime_dependency "open4", [">= 1.3.0"]
@@ -39,6 +39,6 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['unimod_to_loc.rb','generate_omssa_loc.rb']
   s.executables = s.executables + ['uniprot_mapper.rb']
   s.executables = s.executables + ['feature_finder.rb','toppas_pipeline.rb']
-  s.executables = s.executables + ['gffmerge.rb','sixframe.rb','augustus_to_proteindb.rb']
+  s.executables = s.executables + ['gffmerge.rb','sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb']
   s.executables = s.executables + ['uniprot_annotation.rb','protxml_to_table.rb']
 end

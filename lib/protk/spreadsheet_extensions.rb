@@ -1,3 +1,4 @@
+require 'spreadsheet'
 # Add a method to the Spreadsheet::Worksheet class to insert a column
 class Spreadsheet::Worksheet < Object
     def insert_column(col,index)

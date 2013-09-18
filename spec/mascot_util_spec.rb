@@ -13,10 +13,10 @@ describe MascotUtil do
 			@dat = Mascot::DAT.open("#{$this_dir}/data/mascot_results.dat")
 		end
 
-		it "can parse the enzyme field" do
-			require 'debugger';debugger
-			@dat.enzyme.should
-		end
+		# it "can parse the enzyme field" do
+		# 	require 'debugger';debugger
+		# 	@dat.enzyme.should
+		# end
 	end
 end
 

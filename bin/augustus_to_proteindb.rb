@@ -65,6 +65,7 @@ def get_protein_sequence_lines(gene_lines)
   gene_lines.each do |line|  
     capture_protein_start(line)
     if at_protein_end(line)
+      current_protein_lines << line
       proteins << current_protein_lines 
       current_protein_lines=[]
       $capturing_protein=false   
@@ -76,12 +77,15 @@ def get_protein_sequence_lines(gene_lines)
 end
 
 def sequence_fasta_header(transcript_line,scaffold)
-  tmatch=transcript_line.match(/transcript\t(\d+)\t(\d+).*?ID=(.*?);/)
+  tmatch=transcript_line.match(/transcript\t(\d+)\t(\d+).*?([-\+]{1}).*?ID=(.*?);/)
 #  require 'debugger'; debugger
   tstart=tmatch[1]
   tend=tmatch[2]
-  tid=tmatch[3]
-  header=">lcl|#{scaffold}_transcript_#{tid} #{tstart}|#{tend}"
+  tstrand="fwd"
+  tstrand = "rev" if tmatch[3]=="-"
+
+  tid=tmatch[4]
+  header=">lcl|#{scaffold}_#{tstrand}_#{tid} #{tstart}|#{tend}"
   header
 end
 
@@ -107,8 +111,6 @@ def parse_gene(gene_lines)
     ps=protein_sequence(proteins[i])  
     fasta_string << "#{ps}\n"
   end
-
-
 
   gene_lines=[]
   $capturing_gene=false

@@ -5,7 +5,7 @@ require 'spec_helper'
 describe FastaDB do
 
   before :all do
-  	@testdb = FastaDB.create("/tmp/testdb","data/proteindb.fasta",'prot')
+  	@testdb = FastaDB.create("/tmp/testdb","spec/data/proteindb.fasta",'prot')
   	@testdb.should_not==nil
   end
 
