@@ -19,14 +19,18 @@ class PeptideToGeneAlignment
 	end
 
 	def inspect
+		descr = "#{@gene_seq}\n"
+
 		pep_triples=""
 		@pep_seq.each_char { |c| pep_triples<<c;pep_triples<<c;pep_triples<<c }
-		gene_seq_triples=""
-		Bio::Sequence::NA.new(@gene_seq).translate.each_char do |c| 
-			gene_seq_triples<<c;gene_seq_triples<<c;gene_seq_triples<<c 
-		end
+		
+		# gene_seq_triples=""
+		# Bio::Sequence::NA.new(@gene_seq).translate.each_char do |c| 
+		# 	gene_seq_triples<<c;gene_seq_triples<<c;gene_seq_triples<<c 
+		# end
 
-		descr = "#{@gene_seq}\n#{gene_seq_triples}\n"
+		# descr << "#{gene_seq_triples}\n"
+		
 		pepi=0
 		@trace.each_with_index do |move, i|  
 			if move==1
@@ -72,11 +76,15 @@ class PeptideToGeneAlignment
 
 end
 
+# Uses a dynamic programming algorithm (Smith-Waterman like) to align a peptide sequence to a nucleotide.
+# This aligner assumes you are doing protogenomics and just want to assume that
+#    (a) The entire peptide sequence matches (with gaps) to the DNA sequence
+#
 class GappedAligner
 
 	def initialize
-		@big_penalty = -100000
-		@gap_open_penalty = -10
+		@big_penalty = -1000000000
+		@gap_open_penalty = -10000
 		@gap_extend_penalty = -1
 		@end_gap_penalty = 0
 
@@ -137,6 +145,25 @@ class GappedAligner
 		end
 	end
 
+	def save_matrix(dpmatrix,pep_triples,gene_seq,name)
+		matfile=File.open("#{name}.csv", "w+")
+		matfile.write(",,")
+		gene_seq.each_char { |na| matfile.write("#{na},")  }
+		matfile.write("\n")
+		dpmatrix.each_with_index { |row,ri|  
+			if ri>0
+				matfile.write("#{pep_triples[ri-1]},")
+			else
+				matfile.write(",")
+			end
+			row.each { |col|  
+				matfile.write("#{col},")
+			}
+			matfile.write("\n")
+		}
+		matfile.close()
+	end
+
 	def calculate_dp(pep_seq,gene_seq)
 		gene_seq = Bio::Sequence::NA.new(gene_seq)
 		nrow = pep_seq.length*3+1
@@ -159,8 +186,10 @@ class GappedAligner
 		(0..(ncol-1)).each { |j| 
 			dpmatrix[0][j] = @end_gap_penalty*j 
 			dpmoves[0][j] = @nadel_move
+			dpframes[0][j] = j % 3
 		}
 		dpmoves[0][0]=0
+		dpframes[0][0]=0
 
 		(1..(nrow-1)).each do |i|
 			(1..(ncol-1)).each do |j|
@@ -172,6 +201,10 @@ class GappedAligner
 
 				nadel = score_na_deletion(dpmoves[i][j-1]) + dpmatrix[i][j-1]
 
+				# if (translated_na=="R") && (pep_seq=="FR") && (aa == "R")
+					# require 'debugger';debugger					
+				# end
+
 				if match >= nadel
 					dpmatrix[i][j] = match					
 					dpmoves[i][j] = @match_move
@@ -181,11 +214,20 @@ class GappedAligner
 					dpmoves[i][j] = @nadel_move
 					dpframes[i][j] = next_frame(dpframes[i][j-1])
 				end
+
 			end
 		end
 
+		# Find best end-point
+		end_score = dpmatrix[nrow-1].max
+		end_j = dpmatrix[nrow-1].index(end_score)
+
+		save_matrix(dpmatrix,pep_triples,gene_seq,"dpmatrix")
+		save_matrix(dpmoves,pep_triples,gene_seq,"moves")
+		save_matrix(dpframes,pep_triples,gene_seq,"frames")
 #		require 'debugger';debugger
-		traceback(nrow-1,ncol-1,dpmoves)
+
+		traceback(nrow-1,end_j,dpmoves)
 	end
 
 
