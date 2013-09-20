@@ -176,17 +176,28 @@ def peptide_is_in_sixframe(pep_seq,gene_seq)
   return false
 end
 
-def get_peptide_coordinates_blast(prot_seq,pep_seq,protein_info,gene_seq)
+# gene_seq should already have been reverse_complemented if on reverse strand
+def get_peptide_coordinates_by_alignment(prot_seq,pep_seq,protein_info,gene_seq)
   if ( peptide_is_in_sixframe(pep_seq,gene_seq))
     return nil
   else
     puts "Warning. Actually found a gap #{protein_info.fasta_id}"
     require 'debugger';debugger
+    aln=GappedAligner.new().align(pep_seq,gene_seq)
+    throw "More than one intron.#{aln}" unless aln.gaps.length==1
+
+    frags = aln.fragments
+    pep_coords=[frags[0][0],frags[0][1],frags[1][0],frags[1][1]]
+    if ( protein_info.strand == '-' )
+      prot_seq = prot_seq.reverse
+      pep_seq = pep_seq.reverse
+    end
+
     return [0,0,0,0]
   end
 end
 
-def get_peptide_coordinates_sixframe(prot_seq,pep_seq,protein_info,gene_seq)
+def get_peptide_coordinates_sixframe(prot_seq,pep_seq,protein_info)
 
   if ( protein_info.strand == '-' )
     prot_seq = prot_seq.reverse
@@ -211,9 +222,9 @@ end
 # Returns a 4-mer [genomic_start,fragment1_end(or0),frag2_start(or0),genomic_end]
 def get_peptide_coordinates(prot_seq,pep_seq,protein_info,gene_seq)
   if ( protein_info.is_sixframe)
-    return get_peptide_coordinates_sixframe(prot_seq,pep_seq,protein_info,gene_seq)
+    return get_peptide_coordinates_sixframe(prot_seq,pep_seq,protein_info)
   else
-    return get_peptide_coordinates_blast(prot_seq,pep_seq,protein_info,gene_seq)
+    return get_peptide_coordinates_by_alignment(prot_seq,pep_seq,protein_info,gene_seq)
   end
 end
 

@@ -49,25 +49,24 @@ describe GappedAligner do
 	# 	alignment.gaps.should eql []
 	# end
 
-	# it "should deal with frameshifts at the start" do
-	# 	reference="tggtttttgcaggaggtgc"
-	# 	# Translation is GFCRRC in frame 2
-	# 	subject="RC"
-	# 	alignment = @aligner.align(subject,reference)
-	# 	require 'debugger';debugger
+	it "should deal with frameshifts at the start" do
+		reference="tggtttttgcaggaggtgc"
+		# Translation is GFCRRC in frame 2
+		subject="RC"
+		alignment = @aligner.align(subject,reference)
 
-	# 	alignment.class.should eql PeptideToGeneAlignment
-	# 	alignment.trace.should eql [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
-	# 	alignment.gaps.should eql []
-	# end
+		alignment.class.should eql PeptideToGeneAlignment
+		alignment.trace.should eql [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+		alignment.gaps.should eql []
+	end
 
 	it "can align a real case" do
-		reference="catgggtggtatcccaactaagtacactggtgaagtcctcacagtcgatgagaacggaaaggacaaggtcgttccaggtctattcgcctgcggtgaggctgcctgtgtgtccgttcacggtgccaatcgtctcggagctaactctctgctcgatcttatcgtcttcggtcgtgctgtctcccacactattcgtgataacttttcgcctggctacaagcaccccgagatttcggctgatgccggagccgaatctatttctgtcatcgatcagatgcgaaccgccgacggatccaagtccacagctgacattcgtcttgaaatgcagaaggtcatgcagactgatgtctctgtcttccgtactcaagaatcactggatgaaggtgtaaagaagattcaccaggtggaccagagctttgccgatgtcggaactaaagacagaagcatgatctggaactctgatctagttgagaccttggagttgaggaatttgttaacttgcgcgtatgtcatcaacttctcactagtttatgatgatcacagctaatatgttaccagtgttcaaaccgctgaggcagcagctaaccgaaaggaatcgcgtggtgcccacgcacgagaggattatccagaccgtgatgacgagaaatggatgaagcacacactgacgtggcagaagtcgcctcatagcaaggttgacattggttaccgtgccgtcacatctcacactcttgatgaggccgagtgcaaggctgttcctcctttcaagcgtacttattag"
+		reference="gagaccttggagttgaggaatttgttaacttgcgcgtatgtcatcaacttctcactagtttatgatgatcacagctaatatgttaccagtgttcaaaccgctgaggcagcagctaaccgaaaggaatcgcgt"
 		subject = "NLLTCAVQTAEAAANR"		
 		alignment = @aligner.align(subject,reference)
+#		require 'debugger';debugger
 		alignment.class.should eql PeptideToGeneAlignment
-		require 'debugger';debugger
-		alignment.gaps.length.should eql 1
+		alignment.gaps.should eql [[36,90]]
 	end
 
 end

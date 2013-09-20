@@ -44,6 +44,24 @@ class PeptideToGeneAlignment
 		puts descr
 	end
 
+	def fragments
+		frags=[]
+		in_fragment=false
+		@trace.each_with_index do |move,i|
+			if move==0
+				frags << [i,0] unless in_fragment #Start a fragment
+				in_fragment=true	
+			else
+				frags.last[1]=i-1 if in_fragment #End a fragment
+				in_fragment=false
+			end					
+		end
+		if frags.last[1]==0
+			frags.last[1]=@trace.length
+		end
+		frags
+	end
+
 	def gaps
 		gps=[]
 		in_start_end=true
@@ -87,6 +105,7 @@ class GappedAligner
 		@gap_open_penalty = -10000
 		@gap_extend_penalty = -1
 		@end_gap_penalty = 0
+		@match_bonus = 0.4
 
 		@match_move=0
 		@aadel_move=-1
@@ -107,7 +126,7 @@ class GappedAligner
 
 	def score_match(aa,na)
 		if aa==na
-			return 1			
+			return @match_bonus		
 		end
 		return @big_penalty
 	end
