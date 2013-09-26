@@ -116,21 +116,24 @@ class CDSInfo
   attr_accessor :scaffold
   attr_accessor :start
   attr_accessor :end
+  attr_accessor :coding_sequences
   attr_accessor :is_sixframe
 end
 
 def cds_info_from_fasta(fasta_entry)
   info=CDSInfo.new
   info.fasta_id=fasta_entry
-  positions = fasta_entry.identifiers.description.split('|').collect { |pos| pos.to_i }
+  positions = fasta_entry.identifiers.description.split(' ').collect { |coords| coords.split('|').collect {|pos| pos.to_i} }
+  info.coding_sequences=[]
 
-  if ( positions.length != 2 )
-    puts "Badly formatted fasta_entry #{fasta_entry}"
+  if ( positions.length < 1 )
     raise EncodingError
+  elsif ( positions.length > 1)
+    info.coding_sequences = positions[1..-1]
   end
 
-  info.start = positions[0]
-  info.end = positions[1]
+  info.start = positions[0][0]
+  info.end = positions[0][1]
 
   info.scaffold=fasta_entry.entry_id.scan(/(scaffold_?\d+)_/)[0][0]
   info.name = fasta_entry.entry_id.scan(/lcl\|(.*)/)[0][0]
@@ -182,18 +185,105 @@ def get_peptide_coordinates_by_alignment(prot_seq,pep_seq,protein_info,gene_seq)
     return nil
   else
     puts "Warning. Actually found a gap #{protein_info.fasta_id}"
-    require 'debugger';debugger
     aln=GappedAligner.new().align(pep_seq,gene_seq)
-    throw "More than one intron.#{aln}" unless aln.gaps.length==1
-
-    frags = aln.fragments
-    pep_coords=[frags[0][0],frags[0][1],frags[1][0],frags[1][1]]
-    if ( protein_info.strand == '-' )
-      prot_seq = prot_seq.reverse
-      pep_seq = pep_seq.reverse
+    unless aln.gaps.length==1
+      puts "More than one intron.#{aln}" 
+      require 'debugger';debugger
     end
+    pep_coords = []
+    frags = aln.fragments
+    frags.reverse!  if protein_info.strand=='-'
 
-    return [0,0,0,0]
+    frags.each { |frag|  
+      if protein_info.strand=='+'
+        frag_genomic_start = protein_info.start + frag[0]
+        frag_genomic_end = protein_info.start + frag[1]        
+      else
+        frag_genomic_start = protein_info.end - frag[1]
+        frag_genomic_end = protein_info.end - frag[0]        
+      end
+      pep_coords << frag_genomic_start
+      pep_coords << frag_genomic_end
+    }
+
+    return [pep_coords]
+  end
+end
+
+def fragment_coords_from_protein_coords(pepstart,pepend,gene_start,gene_end,coding_sequences)
+  
+  sorted_cds = coding_sequences.sort { |a, b| a[0] <=> b[0] }
+
+  # Assume positive strand
+  pi_start=pepstart*3+gene_start-1
+  pi_end=pepend*3+gene_start-1
+
+  fragments=[]
+  p_i = pi_start #Initially we are looking for the first fragment
+  finding_start=true
+
+  sorted_cds.each_with_index do |cds_coords, i|
+    cds_start=cds_coords[0]
+    cds_end = cds_coords[1]
+    if cds_end < p_i # Exon is before index in sequence and doesn't contain p_i
+      if sorted_cds.length <= i+1
+        require 'debugger';debugger
+      end
+
+      next_coords = sorted_cds[i+1]
+      intron_offset = ((next_coords[0]-cds_end)-1)
+      p_i+=intron_offset
+      pi_end+=intron_offset
+      if !finding_start
+        # This is a middle exon
+        fragments << [cds_start-1,cds_end-1]
+      end
+    else 
+      if finding_start
+        fragments << [p_i,(cds_end-1)]
+        next_coords = sorted_cds[i+1]
+        intron_offset = ((next_coords[0]-cds_end)-1)
+        p_i+=intron_offset
+        pi_end+=intron_offset
+        p_i = pi_end
+        finding_start=false
+      else # A terminal exon
+#        require 'debugger';debugger
+        fragments << [(cds_start-1),(p_i-1)]
+        break;
+      end
+    end
+  end
+  [fragments]
+end
+
+# gene_seq should already have been reverse_complemented if on reverse strand
+def get_peptide_coordinates_from_transcript_info(prot_seq,pep_seq,protein_info,gene_seq)
+  if ( peptide_is_in_sixframe(pep_seq,gene_seq))
+    return nil
+  else
+
+    puts "Found a gap #{protein_info.fasta_id}"
+    if protein_info.strand=='-'
+      pep_index = prot_seq.reverse.index(pep_seq.reverse)
+      if pep_index==nil
+#        require 'debugger';debugger
+        puts "Warning: Unable to find peptide #{pep_seq} in this protein! #{protein_info}"
+        return nil
+      end
+      pep_start_i = prot_seq.reverse.index(pep_seq.reverse)+1
+      # Plus 1 because on reverse stand stop-codon will be at the beginning of the sequence (when read forwards). Need to eliminate it.
+    else
+      pep_start_i = prot_seq.index(pep_seq)
+      if pep_start_i==nil
+#        require 'debugger';debugger
+        puts "Warning: Unable to find peptide #{pep_seq} in this protein! #{protein_info}"
+        return nil
+      end
+    end
+    pep_end_i = pep_start_i+pep_seq.length
+
+    return fragment_coords_from_protein_coords(pep_start_i,pep_end_i,protein_info.start,protein_info.end,protein_info.coding_sequences)
   end
 end
 
@@ -214,7 +304,7 @@ def get_peptide_coordinates_sixframe(prot_seq,pep_seq,protein_info)
   start_indexes.collect do |si| 
     pep_genomic_start = protein_info.start + 3*si
     pep_genomic_end = pep_genomic_start + 3*pep_seq.length - 1
-    [pep_genomic_start,0,0,pep_genomic_end]  
+    [[pep_genomic_start-1,pep_genomic_end-1]]  
   end
 
 end
@@ -224,9 +314,44 @@ def get_peptide_coordinates(prot_seq,pep_seq,protein_info,gene_seq)
   if ( protein_info.is_sixframe)
     return get_peptide_coordinates_sixframe(prot_seq,pep_seq,protein_info)
   else
-    return get_peptide_coordinates_by_alignment(prot_seq,pep_seq,protein_info,gene_seq)
+    return get_peptide_coordinates_from_transcript_info(prot_seq,pep_seq,protein_info,gene_seq)
   end
 end
+
+
+def generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,genomedb)
+  scaff = get_fasta_record(protein_info.scaffold,genomedb)
+  scaffold_seq = Bio::Sequence::NA.new(scaff.seq)
+
+  all_aaseqs=nil
+
+  gff_lines = coords.collect do |frag_start,frag_end|
+    frag_aaseq = scaffold_seq[frag_start..frag_end]
+    all_aaseqs += frag_aaseq unless all_aaseqs == nil
+    all_aaseqs = frag_aaseq if all_aaseqs==nil
+    frag_frame = (frag_aaseq.length % 3)+1
+    frag_seq = nil
+    if ( protein_info.strand=='-')
+      frag_seq = frag_aaseq.reverse_complement.translate(frag_frame)
+    else
+      frag_seq = frag_aaseq.translate(frag_frame)
+    end
+
+    Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
+        feature_type="frag",start_position=frag_start,end_position=frag_end,score='',
+        strand=protein_info.strand,frame=nil,attributes=[["Parent",pep_id],["ID",frag_seq]])
+  end
+
+  check_seq = protein_info.strand=='-' ? all_aaseqs.reverse_complement.translate : all_aaseqs.translate
+  if ( check_seq != peptide_seq)
+    require 'debugger';debugger
+    puts "Fragment seqs not equal to peptide seqs"
+  end
+
+  return gff_lines
+
+end
+
 
 def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_info,prot_id,peptide_prob,genomedb=nil)
 
@@ -242,7 +367,7 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
 
   peptide_coords = get_peptide_coordinates(prot_seq,pep_seq,protein_info,dna_sequence)  
 
-  if ( peptide_coords==nil ) # In 6-frame so no need to write this entry
+  if ( peptide_coords==nil ) # Return value of nil means the entry is a predicted transcript that should already be covered by 6-frame
     return []
   end
 
@@ -251,8 +376,12 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
 
   # Now convert peptide coordinate to genome coordinates
   # And create gff lines for each match
-  peptide_coords.collect do |pep_genomic_start,frag1_end,frag2_start,pep_genomic_end|
-    
+  peptide_coords.collect do |coords|
+
+#    require 'debugger';debugger
+    pep_genomic_start = coords.first[0]
+    pep_genomic_end = coords.last[1]
+
     peptide_count+=1
     pep_id = "#{prot_id}.p#{peptide_count.to_s}"
     pep_attributes = [["ID",pep_id],["Parent",prot_id]]
@@ -261,22 +390,7 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
       feature_type="peptide",start_position=pep_genomic_start,end_position=pep_genomic_end,score=peptide_prob,
       strand=protein_info.strand,frame=nil,attributes=pep_attributes)
 
-    if frag1_end==0
-      fragment_gff_line = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
-        feature_type="frag",start_position=pep_genomic_start,end_position=pep_genomic_end,score='',
-        strand=protein_info.strand,frame=nil,attributes=[["Parent",pep_id],["ID",peptide_seq]])
-      gff_records += [pep_gff_line,fragment_gff_line]
-    else
-      fragment_gff_line1 = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
-        feature_type="frag",start_position=pep_genomic_start,end_position=frag1_end,score='',
-        strand=protein_info.strand,frame=nil,attributes=[["Parent",pep_id],["ID",peptide_seq]])
-
-      fragment_gff_line2 = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
-        feature_type="frag",start_position=frag2_start,end_position=pep_genomic_end,score='',
-        strand=protein_info.strand,frame=nil,attributes=[["Parent",pep_id],["ID",peptide_seq]])
-
-      gff_records += [pep_gff_line,fragment_gff_line1,fragment_gff_line2]
-    end
+    gff_records += [pep_gff_line] + generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,genomedb)
 
   end
   gff_records

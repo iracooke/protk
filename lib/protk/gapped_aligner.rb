@@ -57,7 +57,7 @@ class PeptideToGeneAlignment
 			end					
 		end
 		if frags.last[1]==0
-			frags.last[1]=@trace.length
+			frags.last[1]=@trace.length-1
 		end
 		frags
 	end
@@ -105,7 +105,7 @@ class GappedAligner
 		@gap_open_penalty = -10000
 		@gap_extend_penalty = -1
 		@end_gap_penalty = 0
-		@match_bonus = 0.4
+		@match_bonus = 400
 
 		@match_move=0
 		@aadel_move=-1
@@ -196,6 +196,7 @@ class GappedAligner
 		dpmoves=Matrix.build(nrow,ncol) {|r,c| 0 }.to_a
 		dpmatrix=Matrix.build(nrow,ncol) { |r,c| 0 }.to_a
 		dpframes=Matrix.build(nrow,ncol) { |r,c| 0 }.to_a
+		# before_gap_positions = Matrix.build(nrow,ncol) { |r,c| 0 }.to_a
 
 		# Boundary conditions
 		(0..(nrow-1)).each { |i| 

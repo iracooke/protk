@@ -49,24 +49,35 @@ describe GappedAligner do
 	# 	alignment.gaps.should eql []
 	# end
 
-	it "should deal with frameshifts at the start" do
-		reference="tggtttttgcaggaggtgc"
-		# Translation is GFCRRC in frame 2
-		subject="RC"
-		alignment = @aligner.align(subject,reference)
+# 	it "should deal with frameshifts at the start" do
+# 		reference="tggtttttgcaggaggtgc"
+# 		# Translation is GFCRRC in frame 2
+# 		subject="RC"
+# 		alignment = @aligner.align(subject,reference)
 
-		alignment.class.should eql PeptideToGeneAlignment
-		alignment.trace.should eql [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
-		alignment.gaps.should eql []
-	end
+# 		alignment.class.should eql PeptideToGeneAlignment
+# 		alignment.trace.should eql [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+# 		alignment.gaps.should eql []
+# 	end
 
-	it "can align a real case" do
-		reference="gagaccttggagttgaggaatttgttaacttgcgcgtatgtcatcaacttctcactagtttatgatgatcacagctaatatgttaccagtgttcaaaccgctgaggcagcagctaaccgaaaggaatcgcgt"
-		subject = "NLLTCAVQTAEAAANR"		
-		alignment = @aligner.align(subject,reference)
-#		require 'debugger';debugger
-		alignment.class.should eql PeptideToGeneAlignment
-		alignment.gaps.should eql [[36,90]]
-	end
+# 	it "can align real case 1" do
+# 		reference="gagaccttggagttgaggaatttgttaacttgcgcgtatgtcatcaacttctcactagtttatgatgatcacagctaatatgttaccagtgttcaaaccgctgaggcagcagctaaccgaaaggaatcgcgt"
+# 		subject = "NLLTCAVQTAEAAANR"		
+# 		alignment = @aligner.align(subject,reference)
+# #		require 'debugger';debugger
+# 		alignment.class.should eql PeptideToGeneAlignment
+# 		alignment.gaps.should eql [[36,90]]
+# 	end
+
+# 	it "can align real case 2" do
+# 		reference="caatttgctgctacttcacgaatcatggccgctggagacactggttccggttcctcaagaccaggtggagcagcttctgggtgattacactttcactggtggcacctgtcaacgcattctgacagattggcagtgacgtctggactggccgcg"
+# 		subject = "DTGSGSSRPGGAASGDVWTGR"		
+# 		alignment = @aligner.align(subject,reference)
+# 		require 'debugger';debugger
+# 		alignment.class.should eql PeptideToGeneAlignment
+# 		alignment.gaps.should eql [[36,90]]
+# 	end
+
+	
 
 end

@@ -12,6 +12,11 @@ require 'bio'
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Create a protein database from Augustus gene prediction output that is suitable for later processing by proteogenomics tools.\n\nUsage: augustus_to_proteindb.rb [options] augustus.gff3"
 
+tool.options.add_transcript_info=false
+tool.option_parser.on( '--info', 'Include CDS coordinates' ) do  
+  tool.options.add_transcript_info=true
+end
+
 exit unless tool.check_options 
 
 if ( ARGV[0].nil? )
@@ -21,6 +26,8 @@ if ( ARGV[0].nil? )
 end
 
 inname=ARGV.shift
+
+$add_transcript_info=tool.add_transcript_info
 
 $print_progress=true
 
@@ -41,6 +48,16 @@ def get_transcript_lines(gene_lines)
     end
   end
   transcripts
+end
+
+def get_cds_lines(gene_lines)
+  coding_sequences=[]
+  gene_lines.each do |line|  
+    if line =~ /CDS\t(\d*?)\t/
+      coding_sequences << line
+    end
+  end
+  coding_sequences
 end
 
 $capturing_protein=false
@@ -76,7 +93,19 @@ def get_protein_sequence_lines(gene_lines)
   proteins
 end
 
-def sequence_fasta_header(transcript_line,scaffold)
+def cds_to_header_text(coding_sequence,transcript_id)
+#  require 'debugger';debugger
+  imatch=coding_sequence.match(/CDS\t(\d+)\t(\d+).*?([-\+]{1}.*?Parent=#{transcript_id})$/)
+  if imatch==nil
+    return ""
+  end
+  istart=imatch[1]
+  iend=imatch[2]
+  "#{istart}|#{iend}"
+end
+
+def sequence_fasta_header(transcript_line,coding_sequences,scaffold)
+
   tmatch=transcript_line.match(/transcript\t(\d+)\t(\d+).*?([-\+]{1}).*?ID=(.*?);/)
 #  require 'debugger'; debugger
   tstart=tmatch[1]
@@ -86,6 +115,9 @@ def sequence_fasta_header(transcript_line,scaffold)
 
   tid=tmatch[4]
   header=">lcl|#{scaffold}_#{tstrand}_#{tid} #{tstart}|#{tend}"
+  if $add_transcript_info
+    coding_sequences.each { |coding_sequence| header << " #{cds_to_header_text(coding_sequence,tid)}" }
+  end
   header
 end
 
@@ -102,11 +134,12 @@ def parse_gene(gene_lines)
 
   geneid=gene_lines[0].match(/start gene (.*)/)[1]
   transcripts=get_transcript_lines(gene_lines)
+  coding_sequences=get_cds_lines(gene_lines)
   proteins=get_protein_sequence_lines(gene_lines)
   fasta_string=""
   throw "transcripts/protein mismatch" unless transcripts.length == proteins.length
   transcripts.each_with_index do |ts, i|  
-    fh=sequence_fasta_header(ts,$current_scaffold)
+    fh=sequence_fasta_header(ts,coding_sequences,$current_scaffold)
     fasta_string << "#{fh}\n"
     ps=protein_sequence(proteins[i])  
     fasta_string << "#{ps}\n"
