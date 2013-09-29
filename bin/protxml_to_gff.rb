@@ -236,11 +236,11 @@ def fragment_coords_from_protein_coords(pepstart,pepend,gene_start,gene_end,codi
       pi_end+=intron_offset
       if !finding_start
         # This is a middle exon
-        fragments << [cds_start-1,cds_end-1]
+        fragments << [cds_start,cds_end]
       end
     else 
       if finding_start
-        fragments << [p_i,(cds_end-1)]
+        fragments << [p_i+1,(cds_end)]
         next_coords = sorted_cds[i+1]
         intron_offset = ((next_coords[0]-cds_end)-1)
         p_i+=intron_offset
@@ -249,7 +249,7 @@ def fragment_coords_from_protein_coords(pepstart,pepend,gene_start,gene_end,codi
         finding_start=false
       else # A terminal exon
 #        require 'debugger';debugger
-        fragments << [(cds_start-1),(p_i-1)]
+        fragments << [(cds_start),(p_i)]
         break;
       end
     end
@@ -304,7 +304,7 @@ def get_peptide_coordinates_sixframe(prot_seq,pep_seq,protein_info)
   start_indexes.collect do |si| 
     pep_genomic_start = protein_info.start + 3*si
     pep_genomic_end = pep_genomic_start + 3*pep_seq.length - 1
-    [[pep_genomic_start-1,pep_genomic_end-1]]  
+    [[pep_genomic_start,pep_genomic_end]]  
   end
 
 end
@@ -326,7 +326,7 @@ def generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,gen
   all_aaseqs=nil
 
   gff_lines = coords.collect do |frag_start,frag_end|
-    frag_aaseq = scaffold_seq[frag_start..frag_end]
+    frag_aaseq = scaffold_seq[frag_start-1..frag_end-1]
     all_aaseqs += frag_aaseq unless all_aaseqs == nil
     all_aaseqs = frag_aaseq if all_aaseqs==nil
     frag_frame = (frag_aaseq.length % 3)+1
@@ -338,7 +338,7 @@ def generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,gen
     end
 
     Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
-        feature_type="frag",start_position=frag_start,end_position=frag_end,score='',
+        feature_type="fragment",start_position=frag_start,end_position=frag_end,score='',
         strand=protein_info.strand,frame=nil,attributes=[["Parent",pep_id],["ID",frag_seq]])
   end
 
