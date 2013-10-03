@@ -263,7 +263,7 @@ def get_peptide_coordinates_from_transcript_info(prot_seq,pep_seq,protein_info,g
     return nil
   else
 
-    puts "Found a gap #{protein_info.fasta_id}"
+    # puts "Found a gap #{protein_info.fasta_id}"
     if protein_info.strand=='-'
       pep_index = prot_seq.reverse.index(pep_seq.reverse)
       if pep_index==nil
@@ -319,27 +319,40 @@ def get_peptide_coordinates(prot_seq,pep_seq,protein_info,gene_seq)
 end
 
 
-def generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,genomedb)
+def generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,genomedb,name="fragment")
   scaff = get_fasta_record(protein_info.scaffold,genomedb)
   scaffold_seq = Bio::Sequence::NA.new(scaff.seq)
 
   all_aaseqs=nil
 
+  fragment_sense=0
   gff_lines = coords.collect do |frag_start,frag_end|
     frag_aaseq = scaffold_seq[frag_start-1..frag_end-1]
     all_aaseqs += frag_aaseq unless all_aaseqs == nil
     all_aaseqs = frag_aaseq if all_aaseqs==nil
-    frag_frame = (frag_aaseq.length % 3)+1
-    frag_seq = nil
-    if ( protein_info.strand=='-')
-      frag_seq = frag_aaseq.reverse_complement.translate(frag_frame)
-    else
-      frag_seq = frag_aaseq.translate(frag_frame)
+
+    begin
+      frag_frame = fragment_sense+1
+      frag_seq = nil
+      if ( protein_info.strand=='-')
+        frag_seq = frag_aaseq.reverse_complement.translate(frag_frame)
+      else
+        frag_seq = frag_aaseq.translate(frag_frame)
+      end
+    rescue
+      if frag_aaseq.length > 1
+        puts "Unable to translate #{frag_aaseq}"
+#        require 'debugger'        
+      end
+      frag_seq="*"
     end
 
     Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
-        feature_type="fragment",start_position=frag_start,end_position=frag_end,score='',
-        strand=protein_info.strand,frame=nil,attributes=[["Parent",pep_id],["ID",frag_seq]])
+        feature_type=name,start_position=frag_start,end_position=frag_end,score='',
+        strand=protein_info.strand,frame=fragment_sense,attributes=[["Parent",pep_id],["ID",frag_seq]])
+
+    fragment_sense=(fragment_sense+frag_aaseq.length) % 3
+
   end
 
   check_seq = protein_info.strand=='-' ? all_aaseqs.reverse_complement.translate : all_aaseqs.translate
@@ -352,6 +365,49 @@ def generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,gen
 
 end
 
+def get_start_codon_coords_for_peptide(peptide_genomic_start,peptide_genomic_end,peptide_seq,protein_seq,strand)
+  pi=protein_seq.index(peptide_seq)
+  if ( protein_seq[pi]=='M' )
+
+    start_codon_coord = (strand=='+') ? peptide_genomic_start : peptide_genomic_end-1
+    # require 'debugger';debugger
+    return [start_codon_coord,start_codon_coord+2]
+  else
+    return nil
+  end
+end
+
+def get_cterm_coords_for_peptide(peptide_genomic_start,peptide_genomic_end,peptide_seq,protein_seq,strand)
+
+  if ( (peptide_seq[-1]!='K' && peptide_seq[-1]!='R' ) )
+
+    codon_coord = (strand=='+') ? peptide_genomic_end-3 : peptide_genomic_start+1
+    # require 'debugger';debugger
+    return [codon_coord,codon_coord+2]
+  else
+    return nil
+  end
+end
+
+
+def get_signal_peptide_for_peptide(peptide_seq,protein_seq)
+  pi=protein_seq.index(peptide_seq)
+  if ( pi>0 && (protein_seq[pi-1]!='K' && protein_seq[pi-1]!='R' && protein_seq[pi]!='M') )
+    reverse_leader_seq=protein_seq[0..pi].reverse
+    mi=reverse_leader_seq.index('M')
+
+    if ( mi==nil )
+      puts "No methionine found ahead of peptide sequence. Unable to determine signal peptide sequence"
+      return nil
+    end
+
+    mi=pi-mi
+
+    return protein_seq[mi..(pi-1)]
+  else
+    return nil
+  end
+end
 
 def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_info,prot_id,peptide_prob,genomedb=nil)
 
@@ -390,7 +446,39 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
       feature_type="peptide",start_position=pep_genomic_start,end_position=pep_genomic_end,score=peptide_prob,
       strand=protein_info.strand,frame=nil,attributes=pep_attributes)
 
+    # For standard peptides
     gff_records += [pep_gff_line] + generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,genomedb)
+
+    # For peptides with only 1 tryptic terminus
+    start_codon_coords=get_start_codon_coords_for_peptide(pep_genomic_start,pep_genomic_end,peptide_seq,protein_seq,protein_info.strand)
+    if start_codon_coords
+      start_codon_gff = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
+        feature_type="start_codon",start_position=start_codon_coords[0],end_position=start_codon_coords[1],score='',
+        strand=protein_info.strand,frame=nil,attributes=pep_attributes)
+      gff_records+=[start_codon_gff]
+    end
+
+    cterm_coords = get_cterm_coords_for_peptide(pep_genomic_start,pep_genomic_end,peptide_seq,protein_seq,protein_info.strand)
+    if ( cterm_coords )
+      cterm_gff = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
+        feature_type="cterm",start_position=cterm_coords[0],end_position=cterm_coords[1],score='',
+        strand=protein_info.strand,frame=nil,attributes=pep_attributes)
+      gff_records+=[start_codon_gff]
+    end
+
+    signal_peptide = get_signal_peptide_for_peptide(peptide_seq,protein_seq)
+    if signal_peptide
+      # require 'debugger';debugger
+
+      signal_peptide_coords=get_peptide_coordinates(prot_seq,signal_peptide,protein_info,dna_sequence)
+      if signal_peptide_coords
+        signal_peptide_coords.each do |spcoords|  
+          signal_peptide_gff = generate_fragment_gffs_for_coords(spcoords,protein_info,pep_id,signal_peptide,genomedb,"signalpeptide")
+          gff_records += signal_peptide_gff
+        end
+      end
+    end
+
 
   end
   gff_records
