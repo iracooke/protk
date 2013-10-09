@@ -16,7 +16,7 @@ require 'bio'
 include LibXML
 
 tool=Tool.new([:explicit_output])
-tool.option_parser.banner = "Create a gff containing peptide observations.\n\nUsage: protxml_to_gff.rb "
+tool.option_parser.banner = "Create a gff containing peptide Observations.\n\nUsage: protxml_to_gff.rb "
 
 
 tool.options.protxml=nil
@@ -150,9 +150,9 @@ def cds_info_from_fasta(fasta_entry)
 end
 
 def generate_protein_gff(protein_name,entry_info,prot_prob,prot_id)
-  prot_qualifiers = {"source" => "OBSERVATION", "score" => prot_prob, "ID" => prot_id}
+  prot_qualifiers = {"source" => "MSMS", "score" => prot_prob, "ID" => prot_id}
   prot_attributes = [["ID",prot_id],["Name",entry_info.name]]
-  prot_gff_line = Bio::GFF::GFF3::Record.new(seqid = entry_info.scaffold,source="OBSERVATION",feature_type="protein",
+  prot_gff_line = Bio::GFF::GFF3::Record.new(seqid = entry_info.scaffold,source="MSMS",feature_type="protein",
     start_position=entry_info.start+1,end_position=entry_info.end,score=prot_prob,strand=entry_info.strand,frame=nil,attributes=prot_attributes)
   prot_gff_line
 end
@@ -323,39 +323,53 @@ def generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,gen
   scaff = get_fasta_record(protein_info.scaffold,genomedb)
   scaffold_seq = Bio::Sequence::NA.new(scaff.seq)
 
-  all_aaseqs=nil
-
-  fragment_sense=0
-  gff_lines = coords.collect do |frag_start,frag_end|
-    frag_aaseq = scaffold_seq[frag_start-1..frag_end-1]
-    all_aaseqs += frag_aaseq unless all_aaseqs == nil
-    all_aaseqs = frag_aaseq if all_aaseqs==nil
+  fragment_phase = 0
+  ordered_coords= protein_info.strand=='+' ? coords : coords.reverse
+  if name=="CDS"
+    frag_id="#{pep_id}.fg"    
+  else
+    frag_id="#{pep_id}.sp"    
+  end
+  gff_lines = ordered_coords.collect do |frag_start,frag_end|
+    frag_naseq = scaffold_seq[frag_start-1..frag_end-1]
 
     begin
-      frag_frame = fragment_sense+1
+      frag_frame = fragment_phase+1
       frag_seq = nil
       if ( protein_info.strand=='-')
-        frag_seq = frag_aaseq.reverse_complement.translate(frag_frame)
+        frag_seq = frag_naseq.reverse_complement.translate(frag_frame)
       else
-        frag_seq = frag_aaseq.translate(frag_frame)
+        frag_seq = frag_naseq.translate(frag_frame)
       end
     rescue
-      if frag_aaseq.length > 1
-        puts "Unable to translate #{frag_aaseq}"
+      if frag_naseq.length > 1
+        puts "Unable to translate #{frag_naseq}"
 #        require 'debugger'        
       end
       frag_seq="*"
     end
 
-    Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
+    fragment_record=Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="MSMS",
         feature_type=name,start_position=frag_start,end_position=frag_end,score='',
-        strand=protein_info.strand,frame=fragment_sense,attributes=[["Parent",pep_id],["ID",frag_seq]])
+        strand=protein_info.strand,frame=fragment_phase,attributes=[["Parent",pep_id],["ID",frag_id],["Name",frag_seq]])
 
-    fragment_sense=(fragment_sense+frag_aaseq.length) % 3
 
+    remainder=(frag_naseq.length-fragment_phase) % 3
+    fragment_phase=(3-remainder) % 3
+
+    fragment_record
   end
 
-  check_seq = protein_info.strand=='-' ? all_aaseqs.reverse_complement.translate : all_aaseqs.translate
+
+  concat_seq=nil
+
+  coords.each do |frag_start,frag_end|
+    frag_naseq = scaffold_seq[frag_start-1..frag_end-1]
+    concat_seq += frag_naseq unless concat_seq == nil
+    concat_seq = frag_naseq if concat_seq==nil
+  end
+
+  check_seq = protein_info.strand=='-' ? concat_seq.reverse_complement.translate : concat_seq.translate
   if ( check_seq != peptide_seq)
     require 'debugger';debugger
     puts "Fragment seqs not equal to peptide seqs"
@@ -432,7 +446,7 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
 
   # Now convert peptide coordinate to genome coordinates
   # And create gff lines for each match
-  peptide_coords.collect do |coords|
+  peptide_coords.each do |coords|
 
 #    require 'debugger';debugger
     pep_genomic_start = coords.first[0]
@@ -440,29 +454,30 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
 
     peptide_count+=1
     pep_id = "#{prot_id}.p#{peptide_count.to_s}"
-    pep_attributes = [["ID",pep_id],["Parent",prot_id]]
+    pep_attributes = [["ID",pep_id],["Parent",prot_id],["Name",pep_seq]]
 
-    pep_gff_line = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
+    pep_gff_line = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="MSMS",
       feature_type="peptide",start_position=pep_genomic_start,end_position=pep_genomic_end,score=peptide_prob,
       strand=protein_info.strand,frame=nil,attributes=pep_attributes)
 
     # For standard peptides
-    gff_records += [pep_gff_line] + generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,genomedb)
-
+    frag_gffs = generate_fragment_gffs_for_coords(coords,protein_info,pep_id,peptide_seq,genomedb,"CDS")
+    gff_records += [pep_gff_line] + frag_gffs
+    # require 'debugger';debugger
     # For peptides with only 1 tryptic terminus
     start_codon_coords=get_start_codon_coords_for_peptide(pep_genomic_start,pep_genomic_end,peptide_seq,protein_seq,protein_info.strand)
     if start_codon_coords
-      start_codon_gff = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
+      start_codon_gff = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="MSMS",
         feature_type="start_codon",start_position=start_codon_coords[0],end_position=start_codon_coords[1],score='',
-        strand=protein_info.strand,frame=nil,attributes=pep_attributes)
+        strand=protein_info.strand,frame=nil,attributes=["Parent",pep_id])
       gff_records+=[start_codon_gff]
     end
 
     cterm_coords = get_cterm_coords_for_peptide(pep_genomic_start,pep_genomic_end,peptide_seq,protein_seq,protein_info.strand)
     if ( cterm_coords )
-      cterm_gff = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="OBSERVATION",
+      cterm_gff = Bio::GFF::GFF3::Record.new(seqid = protein_info.scaffold,source="MSMS",
         feature_type="cterm",start_position=cterm_coords[0],end_position=cterm_coords[1],score='',
-        strand=protein_info.strand,frame=nil,attributes=pep_attributes)
+        strand=protein_info.strand,frame=nil,attributes=["Parent",pep_id])
       gff_records+=[start_codon_gff]
     end
 
@@ -481,8 +496,9 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
 
 
   end
-  gff_records
+  puts gff_records
 
+  gff_records
 end
 
 proteins = parse_proteins(tool.protxml)
