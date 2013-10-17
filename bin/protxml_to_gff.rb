@@ -118,6 +118,7 @@ class CDSInfo
   attr_accessor :end
   attr_accessor :coding_sequences
   attr_accessor :is_sixframe
+  attr_accessor :gene_id
 end
 
 def cds_info_from_fasta(fasta_entry)
@@ -125,7 +126,7 @@ def cds_info_from_fasta(fasta_entry)
   info.fasta_id=fasta_entry
   positions = fasta_entry.identifiers.description.split(' ').collect { |coords| coords.split('|').collect {|pos| pos.to_i} }
   info.coding_sequences=[]
-
+  info.gene_id
   if ( positions.length < 1 )
     raise EncodingError
   elsif ( positions.length > 1)
@@ -144,16 +145,32 @@ def cds_info_from_fasta(fasta_entry)
     info.is_sixframe = true
   else
     info.strand = (info.name =~ /rev/) ? '-' : '+'
+    info.gene_id=info.name.scan(/_\w{3}_(.*)\.t/)[0][0]
     info.is_sixframe = false
   end
   info
 end
 
+
+
+def is_new_genome_location(candidate_entry,existing_entries)
+  # puts existing_entries
+  # require 'debugger';debugger
+
+  genes=existing_entries.collect { |e|  e.gene_id  }.compact
+
+  if genes.include?(candidate_entry.gene_id)
+    return false
+  end
+  return true
+end
+
+
 def generate_protein_gff(protein_name,entry_info,prot_prob,prot_id)
   prot_qualifiers = {"source" => "MSMS", "score" => prot_prob, "ID" => prot_id}
   prot_attributes = [["ID",prot_id],["Name",entry_info.name]]
   prot_gff_line = Bio::GFF::GFF3::Record.new(seqid = entry_info.scaffold,source="MSMS",feature_type="protein",
-    start_position=entry_info.start+1,end_position=entry_info.end,score=prot_prob,strand=entry_info.strand,frame=nil,attributes=prot_attributes)
+    start_position=entry_info.start,end_position=entry_info.end,score=prot_prob,strand=entry_info.strand,frame=nil,attributes=prot_attributes)
   prot_gff_line
 end
 
@@ -531,34 +548,42 @@ for prot in proteins
   prot_names=protein_names(prot)
 
   peptides=peptide_nodes(prot)
-
+  entries_covered=[]
   for protein_name in prot_names
     protein_count += 1
     prot_id = "pr#{protein_count.to_s}"
     begin
 
       protein_fasta_entry = get_fasta_record(protein_name,fastadb)
+      protein_info = cds_info_from_fasta(protein_fasta_entry) 
 
-      protein_info = cds_info_from_fasta(protein_fasta_entry)
+      if is_new_genome_location(protein_info,entries_covered)
 
-      protein_gff = generate_protein_gff(protein_name,protein_info,prot_prob,protein_count)
+        protein_gff = generate_protein_gff(protein_name,protein_info,prot_prob,protein_count)
 
-      gff_db.records += ["##gff-version 3\n","##sequence-region #{protein_info.scaffold} 1 160\n",protein_gff]
+        gff_db.records += ["##gff-version 3\n","##sequence-region #{protein_info.scaffold} 1 160\n",protein_gff]
 
-      prot_seq = protein_fasta_entry.aaseq.to_s
-      throw "Not amino_acids" if prot_seq != protein_fasta_entry.seq.to_s
+        prot_seq = protein_fasta_entry.aaseq.to_s
+        throw "Not amino_acids" if prot_seq != protein_fasta_entry.seq.to_s
 
-      peptide_count=1
-      for peptide in peptides
-        pprob = peptide['nsp_adjusted_probability'].to_f
-        if ( pprob >= tool.peptide_probability_threshold )
-          total_peptides += 1
-          pep_seq = peptide['peptide_sequence']
+        peptide_count=1
+        for peptide in peptides
+          pprob = peptide['nsp_adjusted_probability'].to_f
+          if ( pprob >= tool.peptide_probability_threshold )
+            total_peptides += 1
+            pep_seq = peptide['peptide_sequence']
 
-          gff_db.records += generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,peptide_count,genomedb)
-          peptide_count+=1
+            gff_db.records += generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,peptide_count,genomedb)
+            peptide_count+=1
+          end
         end
+      else
+        puts "Skipping redundant entry #{protein_name}"
+        protein_count-=1 # To counter +1 prior to begin rescue end block
       end
+
+      entries_covered<<protein_info
+
 #      puts protein_gff
 #      puts gff_db.records
     rescue KeyError,EncodingError
