@@ -382,6 +382,13 @@ end
 def get_start_codon_coords_for_peptide(peptide_genomic_start,peptide_genomic_end,peptide_seq,protein_seq,strand)
   pi=protein_seq.index(peptide_seq)
   if ( protein_seq[pi]=='M' )
+    is_tryptic=false
+    if ( pi>0 && (protein_seq[pi-1]!='K' && protein_seq[pi-1]!='R') )
+      is_tryptic=true
+    elsif (pi==0)
+      is_tryptic=true
+    end
+    return nil unless is_tryptic
 
     start_codon_coord = (strand=='+') ? peptide_genomic_start : peptide_genomic_end-1
     # require 'debugger';debugger
@@ -423,7 +430,7 @@ def get_signal_peptide_for_peptide(peptide_seq,protein_seq)
   end
 end
 
-def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_info,prot_id,peptide_prob,genomedb=nil)
+def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_info,prot_id,peptide_prob,peptide_count,genomedb=nil)
 
   dna_sequence=nil
   if !protein_info.is_sixframe
@@ -442,7 +449,6 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
   end
 
   gff_records=[]
-  peptide_count=0
 
   # Now convert peptide coordinate to genome coordinates
   # And create gff lines for each match
@@ -452,7 +458,6 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
     pep_genomic_start = coords.first[0]
     pep_genomic_end = coords.last[1]
 
-    peptide_count+=1
     pep_id = "#{prot_id}.p#{peptide_count.to_s}"
     pep_attributes = [["ID",pep_id],["Parent",prot_id],["Name",pep_seq]]
 
@@ -543,14 +548,15 @@ for prot in proteins
       prot_seq = protein_fasta_entry.aaseq.to_s
       throw "Not amino_acids" if prot_seq != protein_fasta_entry.seq.to_s
 
+      peptide_count=1
       for peptide in peptides
         pprob = peptide['nsp_adjusted_probability'].to_f
         if ( pprob >= tool.peptide_probability_threshold )
           total_peptides += 1
           pep_seq = peptide['peptide_sequence']
 
-          gff_db.records += generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,genomedb)
-
+          gff_db.records += generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,peptide_count,genomedb)
+          peptide_count+=1
         end
       end
 #      puts protein_gff

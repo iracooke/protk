@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "spreadsheet", [">=0.7.4"]
   s.add_runtime_dependency "libxml-ruby", [">=2.3.3"]
   s.add_runtime_dependency "mascot-dat", [">=0.3.1"]
+  s.add_runtime_dependency "bio-blastxmlparser", [">=1.1.1"]
 
   s.add_development_dependency 'rspec', '~> 2.5'
 
@@ -41,4 +42,6 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['feature_finder.rb','toppas_pipeline.rb']
   s.executables = s.executables + ['gffmerge.rb','sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb']
   s.executables = s.executables + ['uniprot_annotation.rb','protxml_to_table.rb']
+  s.executables = s.executables + ['blastxml_to_table.rb']
+  
 end
