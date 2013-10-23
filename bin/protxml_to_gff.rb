@@ -119,6 +119,15 @@ class CDSInfo
   attr_accessor :coding_sequences
   attr_accessor :is_sixframe
   attr_accessor :gene_id
+
+  def overlap(candidate_entry)
+    return false if candidate_entry.scaffold!=self.scaffold
+    return false if strand!=self.strand
+    return false if candidate_entry.start >= self.end
+    return false if self.start <= candidate_entry.end 
+    return true
+  end
+
 end
 
 def cds_info_from_fasta(fasta_entry)
@@ -152,16 +161,21 @@ def cds_info_from_fasta(fasta_entry)
 end
 
 
-
 def is_new_genome_location(candidate_entry,existing_entries)
   # puts existing_entries
   # require 'debugger';debugger
 
-  genes=existing_entries.collect { |e|  e.gene_id  }.compact
+  # genes=existing_entries.collect { |e|  e.gene_id  }.compact
 
-  if genes.include?(candidate_entry.gene_id)
-    return false
+  # if genes.include?(candidate_entry.gene_id)
+  #   return false
+  # end
+
+  existing_entries.each do |existing|  
+    return false if existing.gene_id==candidate_entry.gene_id
+    return false if existing.overlap(candidate_entry)
   end
+
   return true
 end
 

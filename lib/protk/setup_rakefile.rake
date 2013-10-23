@@ -380,6 +380,29 @@ end
 
 task :galaxyenv => protk_galaxy_envfile
 
+
+#
+# NCBI GI and Taxonomy Databases
+#
+
+# gi_taxid_package_file="gi_taxid_prot.zip"
+# gi_taxid_url="ftp://ftp.ncbi.nih.gov/pub/taxonomy/#{gi_taxid_package_file}"
+# gi_taxid_installed_file=
+
+# file "gi_taxid_prot.zip" do
+#         %x[wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/gi_taxid_prot.zip]
+#         %x[unzip gi_taxid_prot.zip]
+# end
+
+# file "taxdmp.zip" do
+#         %x[wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip]
+#         %x[unzip taxdmp.zip]
+# end
+
+
+# multitask :downloads => FileList["nr","env_nr","gi_taxid_prot.zip","taxdmp.zip"]
+
+
 task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz,:openms,:galaxyenv]
 
 # Special task when installing via toolshed

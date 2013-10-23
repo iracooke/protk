@@ -56,15 +56,15 @@ end
 blast = Bio::BlastXMLParser::XmlSplitterIterator.new(input_file).to_enum
 
 blast.each do |query|  
-#	query.hits.each do |hit|
-	hit=query.hits.first
-	if hit
+	query.hits.each do |hit|
+#	hit=query.hits.first
+#	if hit
 		hit_seq=fetch_hit_seq(hit)
 		hit.hsps.each do |hsp|
 			out_file.write generate_line(hsp,hit,query,hit_seq)
 		end
-	end
 #	end
+	end
 end
 
 #require 'debugger';debugger

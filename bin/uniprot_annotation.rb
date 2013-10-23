@@ -24,6 +24,11 @@ tool.option_parser.on(  '--id-column num', 'Specify a column for ids (default is
   tool.options.id_column=col.to_i
 end
 
+tool.options.flatfiledb="swissprot"
+tool.option_parser.on(  '--flatfiledb dbname', 'Specify path to a Uniprot flatfile' ) do |dbname|
+  tool.options.flatfiledb=dbname
+end
+
 tool.options.fields=nil
 tool.option_parser.on(  '--fields flds', 'A comma separated list of fields to extract' ) do |flds|
   tool.options.fields=flds
@@ -42,7 +47,7 @@ genv=Constants.new
 
 input_file=ARGV[0]
 
-swissprotdb=SwissprotDatabase.new(genv)
+swissprotdb=SwissprotDatabase.new(genv,tool.flatfiledb)
 
 output_file=nil
 
