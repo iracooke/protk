@@ -236,10 +236,13 @@ class Constants
       @protk_dir=ENV['PROTK_INSTALL_DIR']
     end
 
-
+    # Protk Defaults
+    #
     default_config_yml = YAML.load_file "#{File.dirname(__FILE__)}/data/default_config.yml"
     throw "Unable to read the config file at #{File.dirname(__FILE__)}/data/default_config.yml" unless default_config_yml!=nil
 
+    # User-defined defaults override protk defaults
+    #
     user_config_yml = nil
     user_config_yml = YAML.load_file "#{@protk_dir}/config.yml" if File.exist? "#{@protk_dir}/config.yml"
     if ( user_config_yml !=nil )
@@ -248,11 +251,22 @@ class Constants
       @env=default_config_yml
     end
 
-    protk_roots = ["tpp","omssa","blast","pwiz","msgfplus","openms"]
+    # Application installation directories. From environment variables
+    #
+    protk_roots = [["tpp","xinteract"],["omssa","omssacl"],["blast","blastdbcmd"],["pwiz","msconvert"],["msgfplus",""],["openms","ExecutePipeline"]]
 
-    protk_roots.each do |r|  
+    protk_roots.each do |r,binaryname|  
       env_value = ENV["PROTK_#{r.upcase}_ROOT"]
       if ( env_value!=nil)
+        # "FROMPATH" means detect the root value
+        if env_value=="FROMPATH"
+          bin_path=Pathname.new(%x[which #{binaryname}].chomp)
+          if bin_path.exist?
+            env_value=bin_path.realpath.dirname.to_s
+          else
+            env_value=""
+          end
+        end
         p "Using #{r} root #{env_value}"
         @env["#{r}_root"]=env_value
       end
