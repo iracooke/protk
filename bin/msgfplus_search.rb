@@ -18,7 +18,7 @@ input_stager = nil
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
 search_tool=SearchTool.new([:background,:database,:explicit_output,:over_write,:enzyme,
-  :modifications,:instrument,:mass_tolerance_units,:mass_tolerance,:missed_cleavages])
+  :modifications,:instrument,:mass_tolerance_units,:mass_tolerance,:cleavage_semi])
 
 search_tool.jobid_prefix="p"
 search_tool.option_parser.banner = "Run an MSGFPlus msms search on a set of msms spectrum input files.\n\nUsage: msgfplus_search.rb [options] file1.mzML file2.mzML ..."
@@ -164,10 +164,10 @@ ARGV.each do |filename|
     # The basic command
     #
     cmd= "#{make_msgfdb_cmd} java -Xmx#{search_tool.java_mem} -jar #{msgf_bin} -d #{current_db} -s #{input_path} -o #{mzid_output_path} "
-    #Missed cleavages
+
+    #Semi tryptic peptides
     #
-    throw "Maximum value for missed cleavages is 2" if ( search_tool.missed_cleavages.to_i > 2)
-    cmd << " -ntt #{search_tool.missed_cleavages}"
+    cmd << " -ntt 1" if ( search_tool.cleavage_semi )
 
     # Precursor tolerance
     #

@@ -22,7 +22,7 @@ genv=Constants.new
 #
 search_tool=SearchTool.new([:background,:glyco,:database,:explicit_output,:over_write,
 :enzyme,:modifications,:mass_tolerance_units,:mass_tolerance,:strict_monoisotopic_mass,
-:missed_cleavages,:carbamidomethyl,:methionine_oxidation
+:missed_cleavages,:cleavage_semi,:carbamidomethyl,:methionine_oxidation
   ])
 search_tool.jobid_prefix="x"
 search_tool.option_parser.banner = "Run an X!Tandem msms search on a set of mzML input files.\n\nUsage: tandem_search.rb [options] file1.mzML file2.mzML ..."

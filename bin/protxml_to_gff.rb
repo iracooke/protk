@@ -29,6 +29,16 @@ tool.option_parser.on( '-d filename','--database filename', 'Database used for m
   tool.options.database=file
 end
 
+tool.options.protein_find=nil
+tool.option_parser.on( '-f term','--find term', 'Restrict output to proteins whose name matches the specified string' ) do |term| 
+  tool.options.protein_find=term
+end
+
+tool.options.nterm_minlen=7
+tool.option_parser.on( '-n len','--nterm-min-len len', 'Only include inferred N-terminal sequences if longer than len' ) do |len| 
+  tool.options.nterm_minlen=len
+end
+
 tool.options.genome=nil
 tool.option_parser.on( '-g filename','--genome filename', 'Nucleotide sequences for scaffolds (Fasta Format)' ) do |file| 
   tool.options.genome=file
@@ -210,40 +220,10 @@ def peptide_is_in_sixframe(pep_seq,gene_seq)
   return false
 end
 
-# gene_seq should already have been reverse_complemented if on reverse strand
-def get_peptide_coordinates_by_alignment(prot_seq,pep_seq,protein_info,gene_seq)
-  if ( peptide_is_in_sixframe(pep_seq,gene_seq))
-    return nil
-  else
-    puts "Warning. Actually found a gap #{protein_info.fasta_id}"
-    aln=GappedAligner.new().align(pep_seq,gene_seq)
-    unless aln.gaps.length==1
-      puts "More than one intron.#{aln}" 
-      require 'debugger';debugger
-    end
-    pep_coords = []
-    frags = aln.fragments
-    frags.reverse!  if protein_info.strand=='-'
-
-    frags.each { |frag|  
-      if protein_info.strand=='+'
-        frag_genomic_start = protein_info.start + frag[0]
-        frag_genomic_end = protein_info.start + frag[1]        
-      else
-        frag_genomic_start = protein_info.end - frag[1]
-        frag_genomic_end = protein_info.end - frag[0]        
-      end
-      pep_coords << frag_genomic_start
-      pep_coords << frag_genomic_end
-    }
-
-    return [pep_coords]
-  end
-end
-
 def fragment_coords_from_protein_coords(pepstart,pepend,gene_start,gene_end,coding_sequences)
   
   sorted_cds = coding_sequences.sort { |a, b| a[0] <=> b[0] }
+
 
   # Assume positive strand
   pi_start=pepstart*3+gene_start-1
@@ -271,6 +251,13 @@ def fragment_coords_from_protein_coords(pepstart,pepend,gene_start,gene_end,codi
       end
     else 
       if finding_start
+
+        if ( pi_end <= cds_end) #Whole peptide contained in a single exon
+          fragments << [p_i+1,pi_end]
+          break;
+        end
+
+
         fragments << [p_i+1,(cds_end)]
         next_coords = sorted_cds[i+1]
         intron_offset = ((next_coords[0]-cds_end)-1)
@@ -290,9 +277,10 @@ end
 
 # gene_seq should already have been reverse_complemented if on reverse strand
 def get_peptide_coordinates_from_transcript_info(prot_seq,pep_seq,protein_info,gene_seq)
-  if ( peptide_is_in_sixframe(pep_seq,gene_seq))
-    return nil
-  else
+  # if ( peptide_is_in_sixframe(pep_seq,gene_seq))
+    # Peptide is in 6-frame but on a predicted transcript
+    # return nil
+  # else
 
     # puts "Found a gap #{protein_info.fasta_id}"
     if protein_info.strand=='-'
@@ -315,7 +303,7 @@ def get_peptide_coordinates_from_transcript_info(prot_seq,pep_seq,protein_info,g
     pep_end_i = pep_start_i+pep_seq.length
 
     return fragment_coords_from_protein_coords(pep_start_i,pep_end_i,protein_info.start,protein_info.end,protein_info.coding_sequences)
-  end
+  # end
 end
 
 def get_peptide_coordinates_sixframe(prot_seq,pep_seq,protein_info)
@@ -442,20 +430,28 @@ def get_cterm_coords_for_peptide(peptide_genomic_start,peptide_genomic_end,pepti
 end
 
 
-def get_signal_peptide_for_peptide(peptide_seq,protein_seq)
+def get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
   pi=protein_seq.index(peptide_seq)
   if ( pi>0 && (protein_seq[pi-1]!='K' && protein_seq[pi-1]!='R' && protein_seq[pi]!='M') )
     reverse_leader_seq=protein_seq[0..pi].reverse
     mi=reverse_leader_seq.index('M')
 
     if ( mi==nil )
-      puts "No methionine found ahead of peptide sequence. Unable to determine signal peptide sequence"
+      puts "No methionine found ahead of peptide sequence. Unable to determine n-term sequence"
       return nil
     end
 
     mi=pi-mi
 
-    return protein_seq[mi..(pi-1)]
+    ntermseq=protein_seq[mi..(pi-1)]
+
+    if ( ntermseq.length < tool.options.nterm_minlen )
+      return nil
+    end
+
+#    $STDOUT.write protein_seq[mi..(pi+peptide_seq.length-1)]
+
+    return ntermseq
   else
     return nil
   end
@@ -517,7 +513,7 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
       gff_records+=[start_codon_gff]
     end
 
-    signal_peptide = get_signal_peptide_for_peptide(peptide_seq,protein_seq)
+    signal_peptide = get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
     if signal_peptide
       # require 'debugger';debugger
 
@@ -561,6 +557,12 @@ for prot in proteins
   # Gets identifiers of all proteins (includeing indistinguishable ones)
   prot_names=protein_names(prot)
 
+
+  if tool.protein_find!=nil
+    prot_names=prot_names.keep_if { |pname| pname.include? tool.protein_find }  
+  end
+
+
   peptides=peptide_nodes(prot)
   entries_covered=[]
   for protein_name in prot_names
@@ -568,10 +570,12 @@ for prot in proteins
     prot_id = "pr#{protein_count.to_s}"
     begin
 
+
+
       protein_fasta_entry = get_fasta_record(protein_name,fastadb)
       protein_info = cds_info_from_fasta(protein_fasta_entry) 
 
-      if is_new_genome_location(protein_info,entries_covered)
+      if is_new_genome_location(protein_info,entries_covered) 
 
         protein_gff = generate_protein_gff(protein_name,protein_info,prot_prob,protein_count)
 
@@ -582,13 +586,17 @@ for prot in proteins
 
         peptide_count=1
         for peptide in peptides
+
           pprob = peptide['nsp_adjusted_probability'].to_f
+          # puts peptide
+          # puts pprob
           if ( pprob >= tool.peptide_probability_threshold )
             total_peptides += 1
             pep_seq = peptide['peptide_sequence']
 
             gff_db.records += generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,peptide_count,genomedb)
             peptide_count+=1
+            puts gff_db.records.last
           end
         end
       else

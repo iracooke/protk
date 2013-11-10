@@ -100,6 +100,13 @@ class SearchTool < Tool
       end
     end
 
+    if ( option_support.include? :cleavage_semi )
+      @options.cleavage_semi=true
+      @option_parser.on( '--no-cleavage-semi', 'Dont allow up to 1 non tryptic terminus on peptides' ) do  
+        @options.cleavage_semi=false
+      end
+    end
+
     if ( option_support.include? :respect_precursor_charges )
       @options.respect_precursor_charges=false
       @option_parser.on( '-q', '--respect-charges','Dont respect charges in the input file. Instead impute them by trying various options') do 
