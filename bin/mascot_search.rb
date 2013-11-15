@@ -22,7 +22,7 @@ def login(mascot_cgi,username,password)
     authdict[:savecookie]="1"
 
     p "Logging in to #{mascot_cgi}/login.pl"
-    p authdict
+
     response = RestClient.post "#{mascot_cgi}/login.pl", authdict
 
     cookie = response.cookies
@@ -39,6 +39,8 @@ def download_datfile(mascot_cgi,results_date,results_file,explicit_output,openur
     else
         output_path="#{results_file}"
     end
+
+    puts "Writing output to #{output_path}"
 
     require 'open-uri'
     open("#{output_path}", 'wb') do |file|
@@ -144,6 +146,12 @@ search_tool.option_parser.on( '--export format', 'Save results in a specified fo
     search_tool.options.export_format=format
 end
 
+search_tool.options.download_only=nil
+search_tool.option_parser.on( '--download-only path', 'Specify a path to an existing results file for download eg(20131113/F227185.dat)' ) do |path| 
+    search_tool.options.download_only=path
+end
+
+
 search_tool.options.timeout=200
 search_tool.option_parser.on( '--timeout seconds', 'Timeout for sending data file to mascot in seconds' ) do |seconds| 
     search_tool.options.timeout=seconds.to_i
@@ -151,8 +159,9 @@ end
 
 exit unless search_tool.check_options 
 
-if ( ARGV[0].nil? )
+if ( ARGV[0].nil? && search_tool.download_only.nil?)
     puts "You must supply an input file"
+    puts search_tool.download_only
     puts search_tool.option_parser 
     exit
 end
@@ -167,7 +176,6 @@ unless ( mascot_cgi =~ /^http[s]?:\/\//)
 end
 
 RestClient.proxy=search_tool.httpproxy if search_tool.httpproxy
-$genv.log("Var mods #{search_tool.var_mods} and fixed #{search_tool.fix_mods}",:info)
 
 cookie=""
 openurlcookie=""
@@ -178,36 +186,47 @@ if ( search_tool.use_security)
     openurlcookie = "MASCOT_SESSION=#{cookie['MASCOT_SESSION']}; MASCOT_USERID=#{cookie['MASCOT_USERID']}; MASCOT_USERNAME=#{cookie['MASCOT_USERNAME']}"
 end
 
-postdict = search_params_dictionary search_tool, ARGV[0]
-$genv.log("Sending #{postdict}",:info)
-
-#site = RestClient::Resource.new(mascot_cgi, timeout=300)
-#search_response=site['/nph-mascot.exe?1'].post , postdict, {:cookies=>cookie}
-
-search_response=RestClient::Request.execute(:method => :post, :url => "#{mascot_cgi}/nph-mascot.exe?1", :payload => postdict,:headers=>{:cookies=>cookie},:timeout => search_tool.options.timeout, :open_timeout => 10)
-
-
-#search_response=RestClient.post "#{mascot_cgi}/nph-mascot.exe?1", postdict, {:cookies=>cookie}
-
-$genv.log("Mascot search response was #{search_response}",:info)
-
-# Look for an error if there is one
-error_result= /Sorry, your search could not be performed(.*)/.match(search_response)
-if ( error_result != nil )
-    puts error_result[0]
-    $genv.log("Mascot search failed with response #{search_response}",:warn)
-    throw "Mascot search failed with response #{search_response}"
-elsif (search_tool.export_format=="mascotdat")
-    # Search for the location of the mascot data file in the response
-    results=/master_results_?2?\.pl\?file=\.*\/data\/(.*)\/(.+\.dat)/.match(search_response)
-    results_date=results[1]
-    results_file=results[2]
-
+if ( !search_tool.download_only.nil?)
+    parts=search_tool.download_only.split("/")
+    throw "Must provide a path of the format date/filename" unless parts.length==2
+    results_date=parts[0]
+    results_file=parts[1]
     download_datfile mascot_cgi, results_date, results_file,search_tool.explicit_output,openurlcookie
 else
-    results=/master_results_?2?\.pl\?file=(\.*\/data\/.*\/.+\.dat)/.match(search_response)
-    results_file = results[1]
-    export_results mascot_cgi,cookie,results_file,search_tool.export_format, openurlcookie
-#    export_results mascot_cgi,cookie,results_file,search_tool.export_format
+    #$genv.log("Var mods #{search_tool.var_mods} and fixed #{search_tool.fix_mods}",:info)
+
+    postdict = search_params_dictionary search_tool, ARGV[0]
+    $genv.log("Sending #{postdict}",:info)
+
+    #site = RestClient::Resource.new(mascot_cgi, timeout=300)
+    #search_response=site['/nph-mascot.exe?1'].post , postdict, {:cookies=>cookie}
+
+    search_response=RestClient::Request.execute(:method => :post, :url => "#{mascot_cgi}/nph-mascot.exe?1", :payload => postdict,:headers=>{:cookies=>cookie},:timeout => search_tool.options.timeout, :open_timeout => 10)
+
+
+    #search_response=RestClient.post "#{mascot_cgi}/nph-mascot.exe?1", postdict, {:cookies=>cookie}
+
+    $genv.log("Mascot search response was #{search_response}",:info)
+
+    # Look for an error if there is one
+    error_result= /Sorry, your search could not be performed(.*)/.match(search_response)
+    if ( error_result != nil )
+        puts error_result[0]
+        $genv.log("Mascot search failed with response #{search_response}",:warn)
+        throw "Mascot search failed with response #{search_response}"
+    elsif (search_tool.export_format=="mascotdat")
+        # Search for the location of the mascot data file in the response
+        results=/master_results_?2?\.pl\?file=\.*\/data\/(.*)\/(.+\.dat)/.match(search_response)
+        results_date=results[1]
+        results_file=results[2]
+
+        download_datfile mascot_cgi, results_date, results_file,search_tool.explicit_output,openurlcookie
+    else
+        results=/master_results_?2?\.pl\?file=(\.*\/data\/.*\/.+\.dat)/.match(search_response)
+        results_file = results[1]
+        export_results mascot_cgi,cookie,results_file,search_tool.export_format, openurlcookie
+    #    export_results mascot_cgi,cookie,results_file,search_tool.export_format
+    end
 end
+
 
