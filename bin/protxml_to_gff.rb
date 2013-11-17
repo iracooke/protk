@@ -445,13 +445,15 @@ def get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
 
     ntermseq=protein_seq[mi..(pi-1)]
 
-    if ( ntermseq.length < tool.options.nterm_minlen )
-      return nil
-    end
+    # if ( ntermseq.length < minlen )
+    #   return nil
+    # end
 
 #    $STDOUT.write protein_seq[mi..(pi+peptide_seq.length-1)]
+#    require 'debugger';debugger
+    full_seq_with_annotations = "#{ntermseq}(cleaved)#{protein_seq[(pi..(pi+peptide_seq.length-1))]}"
 
-    return ntermseq
+    return full_seq_with_annotations
   else
     return nil
   end
@@ -515,12 +517,22 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
 
     signal_peptide = get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
     if signal_peptide
-      # require 'debugger';debugger
+      $stdout.write "N-term: #{signal_peptide}\n"
+      raw_signal_peptide=signal_peptide.sub(/\(cleaved\)/,"")
+      # Get raw signal_peptide sequence
 
-      signal_peptide_coords=get_peptide_coordinates(prot_seq,signal_peptide,protein_info,dna_sequence)
+      signal_peptide_coords=get_peptide_coordinates(prot_seq,raw_signal_peptide,protein_info,dna_sequence)
       if signal_peptide_coords
         signal_peptide_coords.each do |spcoords|  
-          signal_peptide_gff = generate_fragment_gffs_for_coords(spcoords,protein_info,pep_id,signal_peptide,genomedb,"signalpeptide")
+          signal_peptide_gff = generate_fragment_gffs_for_coords(spcoords,protein_info,pep_id,raw_signal_peptide,genomedb,"signalpeptide")
+          # signal_peptide_gff[0].attributes=signal_peptide_gff[0].attributes.collect {|name,value| [name,value.sub(raw_signal_peptide,signal_peptide)] }
+
+          # unless signal_peptide_gff[0].attributes[2][1]=~/cleaved/
+          #  require 'debugger';debugger            
+          # end
+
+
+          # Replace raw sequence with annotated sequence in gff entry
           gff_records += signal_peptide_gff
         end
       end
@@ -528,7 +540,7 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
 
 
   end
-  puts gff_records
+#  puts gff_records
 
   gff_records
 end
@@ -596,7 +608,7 @@ for prot in proteins
 
             gff_db.records += generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,peptide_count,genomedb)
             peptide_count+=1
-            puts gff_db.records.last
+#            puts gff_db.records.last
           end
         end
       else
