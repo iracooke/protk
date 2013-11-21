@@ -54,6 +54,11 @@ tool.option_parser.on('--threshold prob','Peptide Probability Threshold (Default
   tool.options.peptide_probability_threshold=thresh.to_f
 end
 
+tool.options.protein_probability_threshold=0.99
+tool.option_parser.on('--prot-threshold prob','Protein Probability Threshold (Default 0.99)') do |thresh|
+  tool.options.protein_probability_threshold=thresh.to_f
+end
+
 exit unless tool.check_options [:protxml,:database]
 
 gff_out_file="peptides.gff"
@@ -433,6 +438,8 @@ end
 def get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
   pi=protein_seq.index(peptide_seq)
   if ( pi>0 && (protein_seq[pi-1]!='K' && protein_seq[pi-1]!='R' && protein_seq[pi]!='M') )
+    # Since trypsin sometimes cleaves before P (ie breaking the rule) 
+    # we don't check for it and assume those cases are real tryptic termini
     reverse_leader_seq=protein_seq[0..pi].reverse
     mi=reverse_leader_seq.index('M')
 
@@ -517,7 +524,7 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
 
     signal_peptide = get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
     if signal_peptide
-      $stdout.write "N-term: #{signal_peptide}\n"
+      $stdout.write "Nterm\t#{signal_peptide}\t#{protein_info.name}\t#{prot_seq}\n"
       raw_signal_peptide=signal_peptide.sub(/\(cleaved\)/,"")
       # Get raw signal_peptide sequence
 
@@ -562,7 +569,7 @@ total_peptides = 0
 
 for prot in proteins
   prot_prob = prot['probability']
-  if ( prot_prob.to_f < tool.peptide_probability_threshold )
+  if ( prot_prob.to_f < tool.protein_probability_threshold )
     next
   end
 
