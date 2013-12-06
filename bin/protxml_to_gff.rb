@@ -49,6 +49,16 @@ tool.option_parser.on('--skip-index','Don\'t index database (Index should alread
   tool.options.skip_fasta_indexing=true
 end
 
+tool.options.stack_charge_states=false
+tool.option_parser.on('--stack-charge-states','Different peptide charge states get separate gff entries') do 
+  tool.options.stack_charge_states=true
+end
+
+tool.options.collapse_redundant_proteins=false
+tool.option_parser.on('--collapse-redundant-proteins','Proteins that cover genomic regions already covered will be skipped') do 
+  tool.options.collapse_redundant_proteins=true
+end
+
 tool.options.peptide_probability_threshold=0.95
 tool.option_parser.on('--threshold prob','Peptide Probability Threshold (Default 0.95)') do |thresh|
   tool.options.peptide_probability_threshold=thresh.to_f
@@ -109,7 +119,7 @@ def protein_names(protein_node)
 end
 
 def peptide_nodes(protein_node)
-  protein_node.find('protxml:peptide','protxml:http://regis-web.systemsbiology.net/protXML')
+  return protein_node.find('protxml:peptide','protxml:http://regis-web.systemsbiology.net/protXML')
 end
 
 
@@ -466,13 +476,7 @@ def get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
   end
 end
 
-def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_info,prot_id,peptide_prob,peptide_count,genomedb=nil)
-
-  dna_sequence=nil
-  if !protein_info.is_sixframe
-    throw "A genome is required if predicted transcripts are to be mapped" unless genomedb!=nil
-    dna_sequence = get_dna_sequence(protein_info,genomedb)
-  end
+def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_info,prot_id,peptide_prob,peptide_count,dna_sequence,genomedb=nil)
 
   prot_seq = protein_seq
   pep_seq = peptide_seq
@@ -522,34 +526,37 @@ def generate_gff_for_peptide_mapped_to_protein(protein_seq,peptide_seq,protein_i
       gff_records+=[start_codon_gff]
     end
 
-    signal_peptide = get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
-    if signal_peptide
-      $stdout.write "Nterm\t#{signal_peptide}\t#{protein_info.name}\t#{prot_seq}\n"
-      raw_signal_peptide=signal_peptide.sub(/\(cleaved\)/,"")
-      # Get raw signal_peptide sequence
-
-      signal_peptide_coords=get_peptide_coordinates(prot_seq,raw_signal_peptide,protein_info,dna_sequence)
-      if signal_peptide_coords
-        signal_peptide_coords.each do |spcoords|  
-          signal_peptide_gff = generate_fragment_gffs_for_coords(spcoords,protein_info,pep_id,raw_signal_peptide,genomedb,"signalpeptide")
-          # signal_peptide_gff[0].attributes=signal_peptide_gff[0].attributes.collect {|name,value| [name,value.sub(raw_signal_peptide,signal_peptide)] }
-
-          # unless signal_peptide_gff[0].attributes[2][1]=~/cleaved/
-          #  require 'debugger';debugger            
-          # end
-
-
-          # Replace raw sequence with annotated sequence in gff entry
-          gff_records += signal_peptide_gff
-        end
-      end
-    end
-
-
   end
 #  puts gff_records
 
   gff_records
+end
+
+def add_putative_nterm_to_gff(gff_records,peptide_seq,protein_seq,protein_info,prot_id,peptide_count,dna_sequence,genomedb)
+  pep_id = "#{prot_id}.p#{peptide_count.to_s}"
+  signal_peptide = get_nterm_peptide_for_peptide(peptide_seq,protein_seq)
+  if signal_peptide
+    $stdout.write "Nterm\t#{signal_peptide}\t#{protein_info.name}\t#{protein_seq}\n"
+    raw_signal_peptide=signal_peptide.sub(/\(cleaved\)/,"")
+    # Get raw signal_peptide sequence
+
+    signal_peptide_coords=get_peptide_coordinates(protein_seq,raw_signal_peptide,protein_info,dna_sequence)
+    if signal_peptide_coords
+     signal_peptide_coords.each do |spcoords|  
+      signal_peptide_gff = generate_fragment_gffs_for_coords(spcoords,protein_info,pep_id,raw_signal_peptide,genomedb,"signalpeptide")
+          gff_records += signal_peptide_gff
+      end
+    end
+  end
+end
+
+def peptide_gff_is_duplicate(peptide_gff,peptides_covered_genome)
+  nameindex = peptide_gff.attributes.index {|obj| obj[0]=="Name" }
+  pep_seq = peptide_gff.attributes[nameindex][1]
+  existing = peptides_covered_genome[pep_seq]
+  return true if existing==peptide_gff.start
+
+  return false
 end
 
 proteins = parse_proteins(tool.protxml)
@@ -566,6 +573,8 @@ skipped = 0
 peptide_count = 0
 protein_count = 0
 total_peptides = 0
+
+peptides_covered_genome={}
 
 for prot in proteins
   prot_prob = prot['probability']
@@ -589,12 +598,10 @@ for prot in proteins
     prot_id = "pr#{protein_count.to_s}"
     begin
 
-
-
       protein_fasta_entry = get_fasta_record(protein_name,fastadb)
       protein_info = cds_info_from_fasta(protein_fasta_entry) 
 
-      if is_new_genome_location(protein_info,entries_covered) 
+      unless (tool.collapse_redundant_proteins && !is_new_genome_location(protein_info,entries_covered) )
 
         protein_gff = generate_protein_gff(protein_name,protein_info,prot_prob,protein_count)
 
@@ -603,18 +610,40 @@ for prot in proteins
         prot_seq = protein_fasta_entry.aaseq.to_s
         throw "Not amino_acids" if prot_seq != protein_fasta_entry.seq.to_s
 
+        peptides_covered_protein=[]
         peptide_count=1
         for peptide in peptides
 
           pprob = peptide['nsp_adjusted_probability'].to_f
           # puts peptide
           # puts pprob
-          if ( pprob >= tool.peptide_probability_threshold )
-            total_peptides += 1
-            pep_seq = peptide['peptide_sequence']
+          pep_seq = peptide['peptide_sequence']
 
-            gff_db.records += generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,peptide_count,genomedb)
-            peptide_count+=1
+          if ( pprob >= tool.peptide_probability_threshold && (!peptides_covered_protein.include?(pep_seq) || tool.stack_charge_states))
+
+            dna_sequence=nil
+            if !protein_info.is_sixframe
+              throw "A genome is required if predicted transcripts are to be mapped" unless genomedb!=nil
+              dna_sequence = get_dna_sequence(protein_info,genomedb)
+            end
+
+
+            peptide_gff = generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,peptide_count,dna_sequence,genomedb)
+
+            unless (peptide_gff.length==0 || peptide_gff_is_duplicate(peptide_gff[0],peptides_covered_genome))
+
+              add_putative_nterm_to_gff(peptide_gff,pep_seq,prot_seq,protein_info,prot_id,peptide_count,dna_sequence,genomedb)
+
+              gff_db.records += peptide_gff
+
+              peptides_covered_protein << pep_seq unless tool.stack_charge_states
+              peptides_covered_genome[pep_seq] = peptide_gff[0].start 
+
+              total_peptides += 1
+              peptide_count+=1
+            else
+              puts "Duplicate peptide #{peptide_gff[0]}"
+            end
 #            puts gff_db.records.last
           end
         end
