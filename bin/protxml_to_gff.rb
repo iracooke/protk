@@ -424,7 +424,7 @@ def get_start_codon_coords_for_peptide(peptide_genomic_start,peptide_genomic_end
     end
     return nil unless is_tryptic
 
-    start_codon_coord = (strand=='+') ? peptide_genomic_start : peptide_genomic_end-1
+    start_codon_coord = (strand=='+') ? peptide_genomic_start : peptide_genomic_end-2
     # require 'debugger';debugger
     return [start_codon_coord,start_codon_coord+2]
   else
