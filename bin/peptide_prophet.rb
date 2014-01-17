@@ -92,6 +92,11 @@ prophet_tool.option_parser.on( '--no-decoy', 'Don\'t use decoy sequences to pin 
   prophet_tool.options.no_decoys = true
 end
 
+prophet_tool.options.experiment_label=nil
+prophet_tool.option_parser.on('--experiment-label label','used to commonly label all spectra belonging to one experiment (required by iProphet)') do |label|
+  prophet_tool.options.experiment_label = label
+end  
+
 prophet_tool.options.override_database=nil
 prophet_tool.option_parser.on( '--override-database database', 'Manually specify database') do |database|
   prophet_tool.options.override_database = database
@@ -210,6 +215,10 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
   
   if prophet_tool.maldi
     cmd << " -I2 -T3 -I4 -I5 -I6 -I7 "
+  end
+
+  if prophet_tool.experiment_label!=nil
+    cmd << " -E#{prophet_tool.experiment_label} "
   end
 
   unless prophet_tool.no_decoys
