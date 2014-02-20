@@ -235,6 +235,8 @@ ARGV.each do |filename|
       cmd << "; cp #{mzid_output_path} #{output_path}"
     else
       #if search_tool.explicit_output
+      cmd << ";ruby -pi.bak -e \"gsub('post=\\\"?','post=\\\"X')\" #{mzid_output_path}"
+      cmd << ";ruby -pi.bak -e \"gsub('pre=\\\"?','pre=\\\"X')\" #{mzid_output_path}"
       cmd << "; #{genv.idconvert} #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
       #Then copy the pepxml to the final output path
       cmd << "; mv #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"

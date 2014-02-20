@@ -19,6 +19,11 @@ include LibXML
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Convert a protXML file to a tab delimited table.\n\nUsage: protxml_to_table.rb [options] file1.protXML"
 
+tool.options.groups=false
+tool.option_parser.on("--groups","Print output by groups rather than for each protein") do 
+	tool.options.groups=true
+end
+
 # tool.options.proteinid_regex=".*?\|.*?\|(.*)"
 # tool.option_parser.on( '--regex rexpr', 'Regex' ) do |regex| 
 #   tool.options.proteinid_regex=regex
@@ -58,14 +63,18 @@ column_headers=[
 	"num_peptides","confidence"
 ]
 
-output_fh.write "#{column_headers.join("\t")}\n"
+groups_column_headers=["group_number","group_probability","members"]
 
+output_fh.write "#{column_headers.join("\t")}\n" unless tool.groups
+output_fh.write "#{groups_column_headers.join("\t")}\n" if tool.groups
 
 protein_groups=protxml_doc.find("//#{protxml_ns_prefix}protein_group", protxml_ns)
 
 protein_groups.each do |protein_group| 
 
 	proteins=protein_group.find("./#{protxml_ns_prefix}protein", protxml_ns)
+
+	group_members=[]
 
 	proteins.each do |protein| 
 
@@ -77,6 +86,8 @@ protein_groups.each do |protein_group|
 		if protein.attributes['protein_name'] =~ /.*?\|.*?\|(.*)/
 			protein_id=protein.attributes['protein_name'].match(/.*?\|.*?\|(.*)/)[1]
 		end
+
+		group_members<<protein.attributes['protein_name']
 
 		column_values=[]
 
@@ -91,9 +102,21 @@ protein_groups.each do |protein_group|
 		column_values << protein.attributes['unique_stripped_peptides']
 		column_values << protein.attributes['total_number_peptides']
 		column_values << protein.attributes['confidence']
-		output_fh.write(column_values.join("\t"))
-		output_fh.write("\n")
 
+		unless tool.groups			
+			output_fh.write(column_values.join("\t"))
+			output_fh.write("\n")
+		end
 	end
+
+	group_column_values=[protein_group.attributes['group_number']]
+	group_column_values<<protein_group.attributes['probability']
+	group_column_values<<group_members.join(" ")
+
+	if tool.groups
+		output_fh.write(group_column_values.join("\t"))
+		output_fh.write("\n")
+	end
+
 end
 
