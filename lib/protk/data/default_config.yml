@@ -12,11 +12,4 @@ uniprot_sprot_annotation_database: swissprot_annotation
 uniprot_trembl_annotation_database: trembl_annotation
 galaxy_root: galaxy
 default_mascot_server: www.matrixscience.com
-tpp_root: tools/tpp
-omssa_root: tools/omssa
-openms_root: tools/openms
-msgfplus_root: tools/msgfplus
-blast_root: tools/blast
-pwiz_root: tools/pwiz
-tandem_root: tools/tandem
 log_file: Logs/protk.log

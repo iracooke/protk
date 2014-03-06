@@ -8,43 +8,38 @@ Protk is a wrapper for various proteomics tools. It aims to present a consistent
 
 ***
 
+## Table of Contents
+
+* [Protk](#what-is-it?)
+    * [Installation](#installation)
+    * [Configuration](#configuration)
 
 
-## Basic Installation
+
+## Installation
  
-Protk depends on ruby 1.9.  The recommended way to install ruby and manage ruby gems is with rvm. Install rvm using this command.
-    
-```sh
-curl -L https://get.rvm.io | bash -s stable
+The easiest intallation method is to use rubygems.  You might need to install the libxml2 package on your system first (eg libxml-dev on Ubuntu)
+
+``` shell
+    gem install protk
 ```
 
-Next install ruby and protk's dependencies
+## Configuration
 
-On OSX
+By default protk will install tools and databases into `.protk` in your home directory.  If this is not desirable you can change the protk root default by setting the environment variable `PROTK_INSTALL_DIR`. You can also avoid using a `.protk` directory altogether (see below)
 
-```sh
-rvm install 1.9.3 --with-gcc=clang
-rvm use 1.9.3
-gem install protk
-protk_setup.rb package_manager
-protk_setup.rb system_packages
-protk_setup.rb all
-```
-On Linux
+Protk includes a setup tool to install various third party proteomics tools such as the TPP, OMSSA, MS-GF+, Proteowizard.  If this tool is used it installs everything under `.protk/tools`.  To perform such an installation use;
 
-```sh    
-rvm install 1.9.3
-rvm use 1.9.3
-gem install protk
-sudo ~/.rvm/bin/rvm 1.9.3 do protk_setup.rb system_packages
-protk_setup all
+```shell
+    protk_setup.rb tpp omssa blast msgfplus pwiz
 ```
 
-Instead off using protk_setup.rb all it might be preferable to only install some of the protk tool dependencies.  'all' is just an alias for the following full target list, any of which can be omitted with the consequence that tools depending on that component will not be available.  
+Alternatively, these tools may already be present on your system, or you may prefer to install them yourself.  In that case simply ensure that all executables are included in your `$PATH`. Those executables will be used as a fallback if nothing is available under the `.protk` installation directory.
 
-```sh
-protk_setup.rb tpp omssa blast msgfplus pwiz openms galaxyenv
-```
+
+Instead off using protk_setup.rb all it might be preferable to only install some of the protk tool dependencies.  'all' is just an alias for the following full target list, any of which can be omitted with the consequence that tools depending on that component will not be available.
+
+
 
 ## Sequence databases
 
