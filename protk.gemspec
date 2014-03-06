@@ -46,3 +46,4 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['blastxml_to_table.rb']
   
 end
+
