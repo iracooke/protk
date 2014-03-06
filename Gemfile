@@ -3,6 +3,8 @@ gem "rspec" , "~> 2.8.0"
 gem "rake"     , "~> 0.9.2.2"
 gem 'open4', '~> 1.3'
 gem 'bio' , '~> 1.4'
+gem 'ftools', '~> 0.0'
+gem 'mascot-dat', '~>0.3.1'
 
 # s.add_runtime_dependency 'ftools', '~> 0.0', '>= 0.0.0'
 #   s.add_runtime_dependency 'open4', '~> 1.3', '>= 1.3.0'
