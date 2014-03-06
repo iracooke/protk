@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+
+gemspec
 gem "rspec" , "~> 2.8.0"
 gem "rake"     , "~> 0.9.2.2"
 gem 'open4', '~> 1.3'
