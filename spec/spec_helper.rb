@@ -8,6 +8,10 @@ def swissprot_installed
 	Pathname.new("#{$protk_env.protein_database_root}/#{$protk_env.uniprot_sprot_annotation_database}").exist?
 end
 
+def blast_installed
+	$protk_env.makeblastdb!=nil
+end
+
 RSpec.configure do |c|
-	c.filter_run_excluding :broken => true unless swissprot_installed
+	c.filter_run_excluding :broken => true unless (swissprot_installed && blast_installed)
 end

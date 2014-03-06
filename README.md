@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/iracooke/protk.png?branch=master)](https://travis-ci.org/iracooke/protk)
+
 # protk ( Proteomics toolkit )
 
 
@@ -5,15 +8,6 @@
 ## What is it?
 
 Protk is a wrapper for various proteomics tools. It aims to present a consistent interface to a wide variety of tools and provides support for managing protein databases. 
-
-***
-
-## Table of Contents
-
-* [Protk](#what-is-it?)
-    * [Installation](#installation)
-    * [Configuration](#configuration)
-
 
 
 ## Installation

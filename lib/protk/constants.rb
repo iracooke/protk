@@ -206,7 +206,7 @@ class Constants
   end
 
   def makeblastdb
-    return "#{self.blast_root}/bin/makeblastdb"
+    return "makeblastdb"
   end
 
   def searchblastdb
