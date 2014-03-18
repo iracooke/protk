@@ -91,6 +91,12 @@ search_tool.option_parser.on('--cleavage-c-terminal-mod-mass mass') do |mass|
     search_tool.options.cleavage_c_terminal_mod_mass = mass
 end
 
+# if contrast angle is set we need to insert two parameters into the XML file ("use contrast angle" and "contrast angle")
+search_tool.options.contrast_angle=nil
+search_tool.option_parser.on('--contrast_angle angle') do |angle|
+    search_tool.options.contrast_angle = angle
+end
+
 search_tool.options.threads=1
 search_tool.option_parser.on('--threads threads') do |threads|
     search_tool.options.threads = threads
@@ -251,12 +257,19 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   cleavage_c_terminal_mod_mass[0].content=search_tool.cleavage_c_terminal_mod_mass
 
   threads=std_params.find('/bioml/note[@type="input" and @label="spectrum, threads"]')
-  throw "Exactly one spectrum, threads note is required in the parameter file. Got #{cleavage_c_terminal_mod_mass.length}" unless threads.length==1
+  throw "Exactly one spectrum, threads note is required in the parameter file. Got #{threads.length}" unless threads.length==1
   threads[0].content = search_tool.threads
 
+  # if contrast angle is set we need to insert two parameters into the XML file ("use contrast angle" and "contrast angle")
+  if search_tool.contrast_angle
+    use_contrast_angle=std_params.find('/bioml/note[@type="input" and @label="spectrum, use contrast angle"]')
+    throw "Exactly one spectrum, use contrast angle note is required in the parameter file. Got #{use_contrast_angle.length}" unless use_contrast_angle.length==1
+    use_contrast_angle[0].content = "yes"
 
-
-
+    contrast_angle=std_params.find('/bioml/note[@type="input" and @label="spectrum, contrast angle"]')
+    throw "Exactly one spectrum, contrast angle note is required in the parameter file. Got #{contrast_angle.length}" unless contrast_angle.length==1
+    contrast_angle[0].content = search_tool.contrast_angle
+  end
 
 
 

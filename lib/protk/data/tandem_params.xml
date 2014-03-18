@@ -58,7 +58,10 @@
 
 	<note type="input" label="output, spectra">no</note>
 
+    <!-- TODO check defaults -->
 	<note type="input" label="spectrum, threads">1</note>
+	<note type="input" label="spectrum, use contrast angle">no</note>
+	<note type="input" label="spectrum, contrast angle"></note>
 
 	<!-- Controlled by thresholds_type parameter. -->
 	<note type="input" label="spectrum, dynamic range">10000.0</note>
