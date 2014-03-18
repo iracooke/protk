@@ -63,6 +63,7 @@
 	<note type="input" label="spectrum, use contrast angle">no</note>
 	<note type="input" label="spectrum, contrast angle"></note>
 	<note type="input" label="spectrum, total peaks"></note>
+	<note type="input" label="spectrum, use neutral loss window">no</note>
 
 	<!-- Controlled by thresholds_type parameter. -->
 	<note type="input" label="spectrum, dynamic range">10000.0</note>

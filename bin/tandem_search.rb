@@ -102,6 +102,13 @@ search_tool.option_parser.on('--total_peaks peaks') do |peaks|
     search_tool.options.total_peaks = peaks
 end
 
+# TODO: check default
+search_tool.options.use_neutral_loss_window=false
+search_tool.option_parser.on('--use_neutral_loss_window') do
+    search_tool.options.use_neutral_loss_window = true
+end
+
+
 search_tool.options.threads=1
 search_tool.option_parser.on('--threads threads') do |threads|
     search_tool.options.threads = threads
@@ -192,6 +199,7 @@ end
 
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
   set_option(std_params, "protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
+  set_option(std_params, "spectrum, use neutral loss window", search_tool.use_neutral_loss_window ? "yes" : "no")
   set_option(std_params, "scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
 
   # Set the input and output paths 
