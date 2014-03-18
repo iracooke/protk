@@ -104,7 +104,7 @@ end
 
 # TODO: check default
 search_tool.options.use_neutral_loss_window=false
-search_tool.option_parser.on('--use_neutral_loss_window') do
+search_tool.option_parser.on('--use-neutral-loss-window') do
     search_tool.options.use_neutral_loss_window = true
 end
 
