@@ -227,9 +227,11 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
 
   pmass_err_units=std_params.find('/bioml/note[@type="input" and @label="spectrum, parent monoisotopic mass error units"]')
   throw "Exactly one spectrum, parent monoisotopic mass error units note is required in the parameter file. Got #{pmass_err_units.length}" unless pmass_err_units.length==1
-  
-  
   pmass_err_units[0].content=search_tool.precursor_tolu
+
+
+
+
 
   if search_tool.strict_monoisotopic_mass
     isotopic_error=std_params.find('/bioml/note[@type="input" and @label="spectrum, parent monoisotopic mass isotope error"]')
