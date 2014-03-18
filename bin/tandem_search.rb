@@ -29,9 +29,11 @@ search_tool.option_parser.banner = "Run an X!Tandem msms search on a set of mzML
 search_tool.options.output_suffix="_tandem"
 
 tandem_defaults=XTandemDefaults.new.path
+search_tool.options.tandem_params_defauls=true
 search_tool.options.tandem_params=tandem_defaults
 search_tool.option_parser.on( '-T', '--tandem-params tandem', 'XTandem parameters to use' ) do |parms| 
   search_tool.options.tandem_params = parms
+  search_tool.options.tandem_params_defauls = false
 end
 
 search_tool.options.no_pepxml=false
@@ -198,10 +200,8 @@ def append_string(first, second)
 end
 
 def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
-  set_option(std_params, "protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
-  set_option(std_params, "spectrum, use neutral loss window", search_tool.use_neutral_loss_window ? "yes" : "no")
-  set_option(std_params, "scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
 
+  ########### path setting begin #############
   # Set the input and output paths 
   #
   input_notes=std_params.find('/bioml/note[@type="input" and @label="spectrum, path"]')
@@ -211,7 +211,7 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   output_notes=std_params.find('/bioml/note[@type="input" and @label="output, path"]')
   throw "Exactly one output, path note is required in the parameter file" unless output_notes.length==1
   output_notes[0].content=output_path
-  
+
   # Set the path to the scoring algorithm default params. We use one from ISB
   #
   scoring_notes=std_params.find('/bioml/note[@type="input" and @label="list path, default parameters"]')
@@ -227,6 +227,12 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   taxo_notes=std_params.find('/bioml/note[@type="input" and @label="list path, taxonomy information"]')
   throw "Exactly one list path, taxonomy information note is required in the parameter file" unless taxo_notes.length==1
   taxo_notes[0].content=taxo_path
+
+  ######### path setting end ############
+
+  set_option(std_params, "protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
+  set_option(std_params, "spectrum, use neutral loss window", search_tool.use_neutral_loss_window ? "yes" : "no")
+  set_option(std_params, "scoring, maximum missed cleavage sites", search_tool.missed_cleavages)
 
   fragment_tol = search_tool.fragment_tol
   
