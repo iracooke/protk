@@ -6,12 +6,16 @@ require 'fileutils'
 
 class GalaxyUtil
 
-  def self.for_galaxy?
-    for_galaxy = ARGV[0] == "--galaxy"
-    ARGV.shift if for_galaxy
-    return for_galaxy
+  def self.for_galaxy?    
+    fg = ARGV[0]=="--galaxy"
+    ARGV.shift if fg
+    fg
   end
 
+  def self.stage_pepxml(input_pepxml_path)
+    stager = GalaxyStager.new(input_pepxml_path, :extension => ".pep.xml")
+    stager.staged_path
+  end
 
   def self.stage_protxml(input_protxml_path)
     # This method takes in the path to a protxml created in Galaxy,
@@ -42,5 +46,8 @@ class GalaxyUtil
 
     protxml_path
   end
+
+
+
 
 end

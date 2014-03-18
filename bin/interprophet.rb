@@ -10,6 +10,9 @@
 require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/prophet_tool'
+require 'protk/galaxy_util'
+
+for_galaxy = GalaxyUtil.for_galaxy?
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
@@ -66,12 +69,16 @@ end
 
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
-  cmd="#{genv.interprophetparser} #{prophet_tool.options.no_nss} #{prophet_tool.options.no_nrs} #{prophet_tool.options.no_nse} #{prophet_tool.options.no_nsi} #{prophet_tool.options.no_nsm}"
+  cmd="InterProphetParser #{prophet_tool.options.no_nss} #{prophet_tool.options.no_nrs} #{prophet_tool.options.no_nse} #{prophet_tool.options.no_nsi} #{prophet_tool.options.no_nsm}"
   cmd << " MINPROB=#{prophet_tool.min_prob}" if ( prophet_tool.min_prob !="" )
 
   inputs = ARGV.collect {|file_name| 
     file_name.chomp
   }
+
+  if for_galaxy
+    inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
+  end
 
   cmd << " #{inputs.join(" ")} #{output_file}"
 

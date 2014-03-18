@@ -1,2 +1,5 @@
 *.gem
 *.csv
+Gemfile.lock
+todo.txt
+.bundle/

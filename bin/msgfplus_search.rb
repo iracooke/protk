@@ -104,6 +104,8 @@ genv=Constants.new
 #
 msgf_bin="#{genv.msgfplusjar}"
 
+throw "Could not find MSGFPlus.jar" if (msgf_bin==nil) || (msgf_bin.length==0)
+
 make_msgfdb_cmd=""
 
 case 
@@ -238,7 +240,7 @@ ARGV.each do |filename|
       #if search_tool.explicit_output
       cmd << ";ruby -pi.bak -e \"gsub('post=\\\"?','post=\\\"X')\" #{mzid_output_path}"
       cmd << ";ruby -pi.bak -e \"gsub('pre=\\\"?','pre=\\\"X')\" #{mzid_output_path}"
-      cmd << "; #{genv.idconvert} #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
+      cmd << ";idconvert #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
       #Then copy the pepxml to the final output path
       cmd << "; mv #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
     end

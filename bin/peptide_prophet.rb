@@ -10,6 +10,10 @@
 require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/prophet_tool'
+require 'protk/galaxy_util'
+
+for_galaxy = GalaxyUtil.for_galaxy?
+input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
@@ -116,11 +120,16 @@ throw "When --output and -F options are set only one file at a time can be run" 
 genv=Constants.new
 
 
+inputs=ARGV.collect { |file_name| file_name.chomp}
+if for_galaxy
+  inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
+end
+
 # Interrogate all the input files to obtain the database and search engine from them
 #
 genv.log("Determining search engine and database used to create input files ...",:info)
 file_info={}
-ARGV.each {|file_name| 
+inputs.each {|file_name| 
   name=file_name.chomp
   
   engine=prophet_tool.extract_engine(name)
@@ -159,7 +168,10 @@ end
 
 def generate_command(genv,prophet_tool,inputs,output,database,engine)
   
-  cmd="#{genv.xinteract} -N#{output}  -l7 -eT -D'#{database}' "
+  cmd="xinteract -N#{output}  -l7 -eT -D'#{database}' "
+
+  # Do not produce png plots
+  cmd << " -Ot "
 
   if prophet_tool.glyco 
     cmd << " -Og "

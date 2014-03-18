@@ -61,7 +61,7 @@ ARGV.each do |file_name|
   else  #Mascot2XML doesn't support explicitly named output files so we move the file to an appropriate output filename after finishing
     new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}_mascot2xml"
     cmd="cp #{name} #{new_basename}.dat"
-    cmd << "; #{genv.mascot2xml} #{new_basename}.dat -D#{current_db} -E#{tool.enzyme}"
+    cmd << "; Mascot2XML #{new_basename}.dat -D#{current_db} -E#{tool.enzyme}"
     cmd << " -shortid" if tool.shortid
     cmd << "; mv #{new_basename}.pep.xml #{tool.explicit_output}; rm #{new_basename}.dat"
     repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"     

@@ -15,15 +15,6 @@ require 'protk/galaxy_util'
 
 for_galaxy = GalaxyUtil.for_galaxy?
 
-if for_galaxy
-  # Stage files for galaxy
-  original_input_file = ARGV[0]
-  original_input_path = Pathname.new("#{original_input_file}")
-  input_stager = GalaxyStager.new("#{original_input_file}", :extension => '.pep.xml')
-  ARGV.push("-o")
-  ARGV.push("protein_prophet_results.prot.xml")  
-end
-
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
 prophet_tool=ProphetTool.new([:glyco,:explicit_output,:over_write,:prefix_suffix])
@@ -112,11 +103,16 @@ p output_file
 
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
-  cmd="#{genv.proteinprophet} "
+  cmd="ProteinProphet NOPLOT "
 
   inputs = ARGV.collect {|file_name| 
     file_name.chomp
   }
+
+  if for_galaxy
+    inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
+  end
+
 
   cmd << " #{inputs.join(" ")} #{output_file}"
 
@@ -135,11 +131,11 @@ else
   genv.log("Protein Prophet output file #{output_file} already exists. Run with -r option to replace",:warn)   
 end
 
-if for_galaxy
+# if for_galaxy
   # Restore references to peptide prophet xml so downstream tools like 
   # libra can find it.
-  input_stager.restore_references("protein_prophet_results.prot.xml")
-end
+  # input_stager.restore_references("protein_prophet_results.prot.xml")
+# end
 
 
 

@@ -31,6 +31,16 @@ end
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Create a sixframe translation of a genome.\n\nUsage: sixframe.rb [options] genome.fasta"
 
+tool.options.print_coords=false
+tool.option_parser.on( '--coords', 'Write genomic coordinates in the fasta header' ) do 
+  tool.options.print_coords=true
+end
+
+tool.options.keep_header=true
+tool.option_parser.on( '--strip-header', 'Dont write sequence definition' ) do 
+  tool.options.keep_header=false
+end
+
 exit unless tool.check_options 
 
 if ( ARGV[0].nil? )
@@ -86,12 +96,20 @@ file.each do |entry|
         ncbi_scaffold_id = entry.entry_id.gsub('|','_').gsub(' ','_')
         ncbi_accession = "lcl|#{ncbi_scaffold_id}_frame_#{frame}_orf_#{oi}"
 
-#        check_coords(entry.naseq,orf,frame,position_start,position_end)
+        defline=">#{ncbi_accession}"
+
+        if tool.print_coords
+          defline << " #{position_start}|#{position_end}"
+        end
+
+        if tool.keep_header
+          defline << " #{entry.definition}"
+        end
 
         # Output in fasta format
         # start and end positions are always relative to the forward strand
 
-        outfile.write(">#{ncbi_accession} #{position_start}|#{position_end}\n#{orf}\n")
+        outfile.write("#{defline}\n#{orf}\n")
 
       end
       position += orf.length*3+3

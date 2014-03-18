@@ -35,7 +35,9 @@ class Constants
   # This will be used for all constants other than paths
   #
   def method_missing(method)
-    @env[method.to_s]
+    from_env = @env[method.to_s]
+    throw "#{method} is undefined" unless from_env!=nil
+    from_env
   end
 
   # Some constants are paths. They need to be translated into real paths before being returned
@@ -46,141 +48,33 @@ class Constants
   end
   
   def tpp_root
-    path=@env['tpp_root']
-    if ( path =~ /^\// )
-      return path
-    else
-      return "#{@protk_dir}/#{@env['tpp_root']}"
-    end
+      "#{@protk_dir}/tools/tpp"
   end
 
-  def xinteract
-    return "#{self.tpp_root}/bin/xinteract"
-  end
-
-  def xtandem    
-    return "#{self.tpp_root}/bin/tandem"
-  end
-
-  def tandem2xml
-    return "#{self.tpp_root}/bin/Tandem2XML"
-  end
-  
-  def interprophetparser
-    return "#{self.tpp_root}/bin/InterProphetParser"
-  end
-
-  def proteinprophet
-    return "#{self.tpp_root}/bin/ProteinProphet"
-  end
-
-  def asapratiopeptideparser
-    return "#{self.tpp_root}/bin/ASAPRatioPeptideParser"
-  end
-
-  def asapratioproteinparser
-    return "#{self.tpp_root}/bin/ASAPRatioProteinRatioParser"
-  end
-
-  def asaprationpvalueparser
-    return "#{self.tpp_root}/bin/ASAPRatioPvalueParser"
-  end
-
-  def librapeptideparser
-    return "#{self.tpp_root}/bin/LibraPeptideParser"
-  end
-
-  def libraproteinratioparser
-    return "#{self.tpp_root}/bin/LibraProteinRatioParser"
-  end
-
-  def xpresspeptideparser
-    return "#{self.tpp_root}/bin/XPressPeptideParser"
-  end
-
-  def xpressproteinratioparser
-    return "#{self.tpp_root}/bin/XPressProteinRatioParser"
-  end
-
-  def mascot2xml
-    return "#{self.tpp_root}/bin/Mascot2XML"
-  end
   
   def omssa_root
-    path=@env['omssa_root']
-    if ( path =~ /^\// )
-      return path
-    else
-      return "#{@protk_dir}/#{@env['omssa_root']}"
-    end
-  end
-
-  def omssacl
-    return "#{self.omssa_root}/omssacl"
-  end
-
-  def omssa2pepxml
-    return "#{self.omssa_root}/omssa2pepXML"
+      "#{@protk_dir}/tools/omssa"
   end
   
   def msgfplus_root
-    path=@env['msgfplus_root']
-    if ( path =~ /^\// )
-      return path
-    else
-      return "#{@protk_dir}/#{@env['msgfplus_root']}"
-    end
+    "#{@protk_dir}/tools/msgfplus"
   end
 
   def msgfplusjar
-    return %x[which MSGFPlus.jar]
+    msgfplus_path=%x[which MSGFPlus.jar]
+    msgfplus_path.chomp
   end
 
   def pwiz_root
-    path=@env['pwiz_root']
-    if ( path =~ /^\// )
-      return path
-    else
-      return "#{@protk_dir}/#{@env['pwiz_root']}"
-    end    
-  end
-
-  def idconvert
-    return "#{self.pwiz_root}/idconvert"
-  end
-
-  def msconvert
-    return "#{self.pwiz_root}/msconvert"
+      return "#{@protk_dir}/tools/pwiz"
   end
 
   def openms_root
-    path=@env['openms_root']
-    if ( path =~ /^\//)
-      return path 
-    else
-      return "#{@protk_dir}/#{@env['openms_root']}"
-    end
-  end
-
-  def featurefinderisotopewavelet
-    return "#{self.openms_root}/bin/FeatureFinderIsotopeWavelet"
-  end
-
-  def executepipeline
-    return "#{self.openms_root}/bin/ExecutePipeline"
+      "#{@protk_dir}/tools/openms"
   end
 
   def tandem_root
-    path=@env['tandem_root']
-    if ( path =~ /^\//)
-      return path 
-    else
-      return "#{@protk_dir}/#{@env['tandem_root']}"
-    end
-  end
-
-  def gpmtandem
-    return "#{self.tandem_root}/bin/tandem"
+      "#{@protk_dir}/tools/tandem"
   end
 
   def protein_database_root
@@ -197,20 +91,7 @@ class Constants
   end
   
   def blast_root
-    path=@env['blast_root']
-    if ( path =~ /^\// )
-      return path
-    else
-      return "#{@protk_dir}/#{@env['blast_root']}"   
-    end 
-  end
-
-  def makeblastdb
-    return "makeblastdb"
-  end
-
-  def searchblastdb
-    return "#{self.blast_root}/bin/blastdbcmd"
+      "#{@protk_dir}/tools/blast"   
   end
   
   def log_file
@@ -251,7 +132,7 @@ class Constants
       @env=default_config_yml
     end
 
-    protk_tool_dirs=["tpp","omssa","openms","msgfplus","blast","pwiz","tandem"]
+    protk_tool_dirs=["tpp/bin","omssa","openms/bin","msgfplus","blast/bin","pwiz","tandem/bin"]
 
     # Construct the PATH variable by prepending our preferred paths
     #

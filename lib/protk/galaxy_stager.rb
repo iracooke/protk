@@ -15,8 +15,8 @@ class GalaxyStager
     @staged_path = "#{@staged_base}#{@extension}"
     if options[:force_copy]
       FileUtils.copy(@original_path, @staged_path)
-    else
-      File.symlink(@original_path, @staged_path)
+    else      
+      File.symlink(@original_path, @staged_path) unless File.symlink?@staged_path
     end
   end
 

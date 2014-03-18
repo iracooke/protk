@@ -133,10 +133,10 @@ task :perl_locallib => [perl_locallib_installed_file]
 #
 # TPP
 #
-tpp_version="4.6.2"
+tpp_version="4.6.3"
 tpp_packagefile="TPP-#{tpp_version}.tgz"
-tpp_installed_file = "#{env.xinteract}"
-tpp_url = "https://dl.dropbox.com/u/226794/TPP-4.6.2.tgz"
+tpp_installed_file = "#{env.tpp_root}/bin/xinteract"
+tpp_url = "https://dl.dropbox.com/u/226794/TPP-4.6.3.tgz"
 
 tpp_download_file = download_task tpp_url, tpp_packagefile
 
@@ -198,7 +198,7 @@ def omssa_platform
 end
 
 omssa_packagefile="omssa-#{omssa_platform}.tar.gz"
-omssa_installed_file = "#{env.omssacl}"
+omssa_installed_file = "#{env.omssa_root}/omssacl"
 omssa_url = "ftp://ftp.ncbi.nih.gov/pub/lewisg/omssa/CURRENT/omssa-#{omssa_platform}.tar.gz"
 
 download_task omssa_url, omssa_packagefile
@@ -229,7 +229,7 @@ end
 blast_version="2.2.27+"
 blast_packagefile="ncbi-blast-#{blast_version}-#{blast_platform}.tar.gz"
 blast_url="ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/#{blast_version.chomp('+')}/#{blast_packagefile}"
-blast_installed_file="#{env.makeblastdb}"
+blast_installed_file="#{env.blast_root}/bin/makeblastdb"
 
 download_task blast_url, blast_packagefile
 
@@ -248,10 +248,10 @@ task :blast => blast_installed_file
 #
 # MSGFPlus
 #
-msgfplus_version="20130410"
+msgfplus_version="20140210"
 msgfplus_packagefile="MSGFPlus.#{msgfplus_version}.zip"
-msgfplus_url="http://proteomics.ucsd.edu/Downloads/MSGFPlus.#{msgfplus_version}.zip"
-msgfplus_installed_file="#{env.msgfplusjar}"
+msgfplus_url="http://proteomics.ucsd.edu/Software/MSGFPlus/MSGFPlus.#{msgfplus_version}.zip"
+msgfplus_installed_file="#{env.msgfplus_root}/MSGFPlus.jar"
 
 download_task msgfplus_url, msgfplus_packagefile
 
@@ -285,7 +285,7 @@ pwiz_version="3_0_4388"
 pwiz_folder_name="pwiz-bin-#{pwiz_platform}-release-#{pwiz_version}"
 pwiz_packagefile="#{pwiz_folder_name}.tar.bz2"
 pwiz_url="https://dl.dropbox.com/u/226794/#{pwiz_packagefile}"
-pwiz_installed_file="#{env.idconvert}"
+pwiz_installed_file="#{env.pwiz_root}/idconvert"
 
 download_task pwiz_url, pwiz_packagefile
 
@@ -313,7 +313,7 @@ end
 openms_version="1.10.0"
 openms_packagefile="OpenMS-#{openms_version}.tar.gz"
 openms_url="https://dl.dropbox.com/u/226794/#{openms_packagefile}"
-openms_installed_file="#{env.featurefinderisotopewavelet}"
+openms_installed_file="#{env.openms_root}/bin/FileConverter"
 
 download_task openms_url, openms_packagefile
 
@@ -340,10 +340,10 @@ def tandem_platform
 	'linux'
 end
 
-tandem_version="13-02-01-1"
+tandem_version="13-09-01-1"
 tandem_packagefile="tandem-#{tandem_platform}-#{tandem_version}.zip"
-tandem_url="ftp://ftp.thegpm.org/projects/tandem/source/#{tandem_packagefile}"
-tandem_installed_file="#{env.gpmxtandem}"
+tandem_url="https://dl.dropboxusercontent.com/u/226794/galaxy/#{tandem_packagefile}"
+tandem_installed_file="#{env.tandem_root}/bin/tandem.exe"
 
 download_task tandem_url, tandem_packagefile
 
