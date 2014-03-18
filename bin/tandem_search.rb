@@ -229,9 +229,21 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   throw "Exactly one spectrum, parent monoisotopic mass error units note is required in the parameter file. Got #{pmass_err_units.length}" unless pmass_err_units.length==1
   pmass_err_units[0].content=search_tool.precursor_tolu
 
+  n_terminal_mod_mass=std_params.find('/bioml/note[@type="input" and @label="protein, N-terminal residue modification mass"]')
+  throw "Exactly one protein, N-terminal residue modification mass note is required in the parameter file. Got #{n_terminal_mod_mass.length}" unless n_terminal_mod_mass.length==1
+  n_terminal_mod_mass[0].content=search_tool.n_terminal_mod_mass
 
+  c_terminal_mod_mass=std_params.find('/bioml/note[@type="input" and @label="protein, C-terminal residue modification mass"]')
+  throw "Exactly one protein, C-terminal residue modification mass note is required in the parameter file. Got #{c_terminal_mod_mass.length}" unless c_terminal_mod_mass.length==1
+  c_terminal_mod_mass[0].content=search_tool.c_terminal_mod_mass
 
+  cleavage_n_terminal_mod_mass=std_params.find('/bioml/note[@type="input" and @label="protein, cleavage N-terminal mass change"]')
+  throw "Exactly one protein, cleavage N-terminal mass change note is required in the parameter file. Got #{cleavage_n_terminal_mod_mass.length}" unless cleavage_n_terminal_mod_mass.length==1
+  cleavage_n_terminal_mod_mass[0].content=search_tool.cleavage_n_terminal_mod_mass
 
+  cleavage_c_terminal_mod_mass=std_params.find('/bioml/note[@type="input" and @label="protein, cleavage C-terminal mass change"]')
+  throw "Exactly one protein, cleavage C-terminal mass change note is required in the parameter file. Got #{cleavage_c_terminal_mod_mass.length}" unless cleavage_c_terminal_mod_mass.length==1
+  cleavage_c_terminal_mod_mass[0].content=search_tool.cleavage_c_terminal_mod_mass
 
   if search_tool.strict_monoisotopic_mass
     isotopic_error=std_params.find('/bioml/note[@type="input" and @label="spectrum, parent monoisotopic mass isotope error"]')
