@@ -230,6 +230,12 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
 
   ######### path setting end ############
 
+  # threads should be set independent of the used config file
+  threads=std_params.find('/bioml/note[@type="input" and @label="spectrum, threads"]')
+  throw "Exactly one spectrum, threads note is required in the parameter file. Got #{threads.length}" unless threads.length==1
+  threads[0].content = search_tool.threads
+
+
   if search_tool.tandem_params_defauls
 
     set_option(std_params, "protein, cleavage semi", search_tool.cleavage_semi ? "yes" : "no")
@@ -276,10 +282,6 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     cleavage_c_terminal_mod_mass=std_params.find('/bioml/note[@type="input" and @label="protein, cleavage C-terminal mass change"]')
     throw "Exactly one protein, cleavage C-terminal mass change note is required in the parameter file. Got #{cleavage_c_terminal_mod_mass.length}" unless cleavage_c_terminal_mod_mass.length==1
     cleavage_c_terminal_mod_mass[0].content=search_tool.cleavage_c_terminal_mod_mass
-
-    threads=std_params.find('/bioml/note[@type="input" and @label="spectrum, threads"]')
-    throw "Exactly one spectrum, threads note is required in the parameter file. Got #{threads.length}" unless threads.length==1
-    threads[0].content = search_tool.threads
 
     # if contrast angle is set we need to insert two parameters into the XML file ("use contrast angle" and "contrast angle")
     if search_tool.contrast_angle
