@@ -98,7 +98,7 @@ search_tool.option_parser.on('--contrast_angle angle') do |angle|
 end
 
 search_tool.options.total_peaks=nil
-search_tool.option_parser.on('--total_peaks peaks') do |peaks|
+search_tool.option_parser.on('--total-peaks peaks') do |peaks|
     search_tool.options.total_peaks = peaks
 end
 
