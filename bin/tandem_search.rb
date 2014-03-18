@@ -93,7 +93,7 @@ end
 
 # if contrast angle is set we need to insert two parameters into the XML file ("use contrast angle" and "contrast angle")
 search_tool.options.contrast_angle=nil
-search_tool.option_parser.on('--contrast_angle angle') do |angle|
+search_tool.option_parser.on('--contrast-angle angle') do |angle|
     search_tool.options.contrast_angle = angle
 end
 
