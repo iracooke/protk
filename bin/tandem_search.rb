@@ -71,12 +71,6 @@ search_tool.option_parser.on( '--algorithm algorithm', "Scoring algorithm (kscor
   search_tool.options.algorithm = algorithm
 end
 
-search_tool.options.cleavage_semi = true
-search_tool.option_parser.on( '--no-cleavage-semi' ) do
-  search_tool.options.cleavage_semi = false
-end
-
-
 search_tool.options.n_terminal_mod_mass=nil
 search_tool.option_parser.on('--n-terminal-mod-mass mass') do |mass|
     search_tool.options.n_terminal_mod_mass = mass
@@ -419,7 +413,7 @@ ARGV.each do |filename|
     mod_taxo_doc.save(taxo_path)
 
     # Modify the default XML document to contain search specific details and save it so it can be used in the search
-    #    
+    #
     mod_params=generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_db,search_tool,genv)
     params_path="#{search_tool.input_base_path(filename.chomp)}.tandem.params"
     mod_params.save(params_path)
