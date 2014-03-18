@@ -91,6 +91,11 @@ search_tool.option_parser.on('--cleavage-c-terminal-mod-mass mass') do |mass|
     search_tool.options.cleavage_c_terminal_mod_mass = mass
 end
 
+search_tool.options.threads=1
+search_tool.option_parser.on('--threads threads') do |threads|
+    search_tool.options.threads = threads
+end
+
 exit unless search_tool.check_options 
 
 if ( ARGV[0].nil? )
@@ -244,6 +249,16 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
   cleavage_c_terminal_mod_mass=std_params.find('/bioml/note[@type="input" and @label="protein, cleavage C-terminal mass change"]')
   throw "Exactly one protein, cleavage C-terminal mass change note is required in the parameter file. Got #{cleavage_c_terminal_mod_mass.length}" unless cleavage_c_terminal_mod_mass.length==1
   cleavage_c_terminal_mod_mass[0].content=search_tool.cleavage_c_terminal_mod_mass
+
+  threads=std_params.find('/bioml/note[@type="input" and @label="spectrum, threads"]')
+  throw "Exactly one spectrum, threads note is required in the parameter file. Got #{cleavage_c_terminal_mod_mass.length}" unless threads.length==1
+  threads[0].content = search_tool.threads
+
+
+
+
+
+
 
   if search_tool.strict_monoisotopic_mass
     isotopic_error=std_params.find('/bioml/note[@type="input" and @label="spectrum, parent monoisotopic mass isotope error"]')
