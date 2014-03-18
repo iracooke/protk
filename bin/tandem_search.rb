@@ -97,6 +97,11 @@ search_tool.option_parser.on('--contrast_angle angle') do |angle|
     search_tool.options.contrast_angle = angle
 end
 
+search_tool.options.total_peaks=nil
+search_tool.option_parser.on('--total_peaks peaks') do |peaks|
+    search_tool.options.total_peaks = peaks
+end
+
 search_tool.options.threads=1
 search_tool.option_parser.on('--threads threads') do |threads|
     search_tool.options.threads = threads
@@ -271,6 +276,9 @@ def generate_parameter_doc(std_params,output_path,input_path,taxo_path,current_d
     contrast_angle[0].content = search_tool.contrast_angle
   end
 
+  total_peaks=std_params.find('/bioml/note[@type="input" and @label="spectrum, total peaks"]')
+  throw "Exactly one spectrum, total peaks note is required in the parameter file. Got #{total_peaks.length}" unless total_peaks.length==1
+  total_peaks[0].content = search_tool.total_peaks
 
 
   if search_tool.strict_monoisotopic_mass

@@ -62,6 +62,7 @@
 	<note type="input" label="spectrum, threads">1</note>
 	<note type="input" label="spectrum, use contrast angle">no</note>
 	<note type="input" label="spectrum, contrast angle"></note>
+	<note type="input" label="spectrum, total peaks"></note>
 
 	<!-- Controlled by thresholds_type parameter. -->
 	<note type="input" label="spectrum, dynamic range">10000.0</note>
@@ -71,7 +72,6 @@
 	<note type="input" label="spectrum, minimum peaks">10</note>
 	<note type="input" label="scoring, minimum ion count">1</note>
 	<note type="input" label="output, maximum valid expectation value">0.1</note>
-
 
 
 </bioml>
