@@ -32,9 +32,12 @@
 	<note id="glyco-variable" type="input" label="residue, potential modification motif">0.998@N!{P}[ST]</note>
 	<note> You can specify a variable modification when present in a motif. For instance, 0.998@N!{P}[ST] is a deamidation modification on N only if it is present in an N[any but P][S or T] motif (N-glycosite). </note>
 	
+	<note type="input" label="protein, cleavage C-terminal mass change"></note>
+	<note type="input" label="protein, cleavage N-terminal mass change"></note>
 	<note type="input" label="protein, N-terminal residue modification mass"></note>
- 	<note type="input" label="protein, C-terminal residue modification mass"></note>
+	<note type="input" label="protein, C-terminal residue modification mass"></note>
 	<note> These are *static* modifications on the PROTEINS' N or C-termini. </note>
+
 
 	<note> SEMI-TRYPTICS AND MISSED CLEAVAGES. In the example below, semitryptic peptides are allowed, and up to 2 missed cleavages are allowed. </note>
 	<note type="input" label="protein, cleavage semi">yes</note>
@@ -53,9 +56,14 @@
 	<note type="input" label="refine, point mutations">no</note>
 	<note type="input" label="refine, use potential modifications for full refinement">no</note>
 
-
-
 	<note type="input" label="output, spectra">no</note>
+
+    <!-- TODO check defaults -->
+	<note type="input" label="spectrum, threads">1</note>
+	<note type="input" label="spectrum, use contrast angle">no</note>
+	<note type="input" label="spectrum, contrast angle"></note>
+	<note type="input" label="spectrum, total peaks"></note>
+	<note type="input" label="spectrum, use neutral loss window">no</note>
 
 	<!-- Controlled by thresholds_type parameter. -->
 	<note type="input" label="spectrum, dynamic range">10000.0</note>
