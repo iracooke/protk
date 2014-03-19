@@ -10,8 +10,8 @@ class FastaDB
   def initialize(blast_database_file_path)
     env = Constants.new
     @database = blast_database_file_path
-    @makedbcmd = env.makeblastdb
-    @searchdbcmd = env.searchblastdb
+    @makedbcmd = "makeblastdb"
+    @searchdbcmd = "blastdbcmd"
   end
 
   def self.create(blast_database_file_path,input_fasta_filepath,type='nucl')

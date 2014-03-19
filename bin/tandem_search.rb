@@ -108,9 +108,7 @@ end
 
 # Set search engine specific parameters on the SearchTool object
 #
-tandem_bin="#{genv.xtandem}"
-
-throw "Could not find X!Tandem executable" unless FileTest.exists?(tandem_bin)
+tandem_bin="tandem"
 
 tandem_params=search_tool.tandem_params
 
@@ -432,7 +430,7 @@ ARGV.each do |filename|
     #
     unless search_tool.no_pepxml
       repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"
-      cmd << "; #{genv.tandem2xml} #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}"
+      cmd << "; Tandem2XML #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}"
       if search_tool.tandem_output 
         cmd << "; cp #{output_path} #{search_tool.tandem_output}"
       else

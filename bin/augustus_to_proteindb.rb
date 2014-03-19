@@ -104,6 +104,12 @@ def cds_to_header_text(coding_sequence,transcript_id)
   "#{istart}|#{iend}"
 end
 
+# Scaffold identifiers cant contain pipes
+#
+def sanitize_scaffold_idstring(raw_scaffold_string)
+  raw_scaffold_string.split("|")[0]
+end
+
 def sequence_fasta_header(transcript_line,coding_sequences,scaffold)
 
   tmatch=transcript_line.match(/transcript\t(\d+)\t(\d+).*?([-\+]{1}).*?ID=(.*?);/)
@@ -114,7 +120,7 @@ def sequence_fasta_header(transcript_line,coding_sequences,scaffold)
   tstrand = "rev" if tmatch[3]=="-"
 
   tid=tmatch[4]
-  header=">lcl|#{scaffold}_#{tstrand}_#{tid} #{tstart}|#{tend}"
+  header=">lcl|#{sanitize_scaffold_idstring(scaffold)}_#{tstrand}_#{tid} #{tstart}|#{tend}"
   if $add_transcript_info
     coding_sequences.each { |coding_sequence| header << " #{cds_to_header_text(coding_sequence,tid)}" }
   end
