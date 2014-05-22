@@ -43,6 +43,11 @@ search_tool.option_parser.on(  '--fragment-method method', 'Fragment method 0: A
   search_tool.options.fragment_method=method
 end
 
+search_tool.options.decoy_search=false
+search_tool.option_parser.on(  '--decoy-search', 'Build and search a decoy database on the fly. Input db should not contain decoys if this option is used' ) do 
+  search_tool.options.decoy_search=true
+end
+
 search_tool.options.protocol=0
 search_tool.option_parser.on(  '--protocol p', '0: NoProtocol (Default), 1: Phosphorylation, 2: iTRAQ, 3: iTRAQPhospho' ) do |p|
   search_tool.options.protocol=p
@@ -104,7 +109,11 @@ genv=Constants.new
 #
 msgf_bin="#{genv.msgfplusjar}"
 
-throw "Could not find MSGFPlus.jar" if (msgf_bin==nil) || (msgf_bin.length==0)
+# We need to cope with the fact that MSGFPlus.jar might not be executable so fall back to the protk predefined path
+
+msgf_bin = "#{genv.msgfplus_root}/MSGFPlus.jar " if !msgf_bin
+
+throw "Could not find MSGFPlus.jar" if !msgf_bin || (msgf_bin.length==0) || !File.exist?(msgf_bin)
 
 make_msgfdb_cmd=""
 
@@ -120,7 +129,8 @@ when Pathname.new(search_tool.database).exist? # It's an explicitly named db
 
   if(not FileTest.exists?("#{current_db}.canno"))
     dbdir = Pathname.new(current_db).dirname.realpath.to_s
-    make_msgfdb_cmd << "cd #{dbdir}; java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{current_db} -tda 0; "
+    tdavalue=search_tool.decoy_search ? 1 : 0;
+    make_msgfdb_cmd << "cd #{dbdir}; java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{current_db} -tda #{tdavalue}; "
   end
 else
   current_db=search_tool.current_database :fasta
@@ -171,6 +181,11 @@ ARGV.each do |filename|
     #Semi tryptic peptides
     #
     cmd << " -ntt 1" if ( search_tool.cleavage_semi )
+
+    #Decoy searches
+    #
+    tdavalue=search_tool.decoy_search ? 1 : 0;
+    cmd << " -tda #{tdavalue}"
 
     # Precursor tolerance
     #

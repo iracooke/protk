@@ -143,9 +143,10 @@ tpp_download_file = download_task tpp_url, tpp_packagefile
 # Build
 file tpp_installed_file => [@build_dir,tpp_download_file] do
 	sh %{cp #{@download_dir}/#{tpp_packagefile} #{@build_dir}}
+#	use_perl_locallib_cmd="echo hi"
 	use_perl_locallib_cmd="eval $(perl -I#{perl_dir}/lib/perl5 -Mlocal::lib=#{perl_dir})"
-	sh %{#{use_perl_locallib_cmd};cpanm --local-lib=#{env.protk_dir}/perl5 XML::Parser}
-	sh %{#{use_perl_locallib_cmd};cpanm --local-lib=#{env.protk_dir}/perl5 CGI --force}
+#	sh %{#{use_perl_locallib_cmd};cpanm --local-lib=#{env.protk_dir}/perl5 XML::Parser}
+#	sh %{#{use_perl_locallib_cmd};cpanm --local-lib=#{env.protk_dir}/perl5 CGI --force}
 
 	sh %{cd #{@build_dir};tar -xvzf TPP-#{tpp_version}.tgz}
 
@@ -173,6 +174,8 @@ file tpp_installed_file => [@build_dir,tpp_download_file] do
 			f.write subs_text
 		end
 	end
+	sh %{cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src;echo '' > ../perl/tpp_models.pl;echo '' > ../perl/exporTPP.pl;echo '' > ../CGI/show_nspbin.pl;echo '' > ../CGI/tpp_gui/tpp_gui.pl}
+
 	build_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make -s"
 	install_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make install"
 	env.log build_cmd, :info
@@ -402,8 +405,9 @@ task :galaxyenv => protk_galaxy_envfile
 
 # multitask :downloads => FileList["nr","env_nr","gi_taxid_prot.zip","taxdmp.zip"]
 
+task :base => [:perl_locallib]
 
-task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz,:openms,:galaxyenv]
+task :all => [:tpp,:omssa,:blast,:msgfplus,:pwiz,:openms]
 
 # Special task when installing via toolshed
 #
