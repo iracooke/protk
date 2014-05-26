@@ -13,7 +13,7 @@ describe "The xtandem_search command" do
 
 		output_file.should_not exist?
 
-		%x[tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
+		puts %x[tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
 		
 		output_file.should be_a_non_empty_file
 	end

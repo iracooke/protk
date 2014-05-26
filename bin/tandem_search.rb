@@ -30,7 +30,7 @@ search_tool.options.output_suffix="_tandem"
 
 tandem_defaults=XTandemDefaults.new
 search_tool.options.tandem_params=tandem_defaults.path
-search_tool.option_parser.on( '-T', '--tandem-params tandem', 'XTandem parameters to use' ) do |parms| 
+search_tool.option_parser.on( '-T', '--tandem-params tandem', 'Path to file containing default parameters' ) do |parms| 
   search_tool.options.tandem_params = parms
 end
 
@@ -60,12 +60,6 @@ search_tool.option_parser.on( '--algorithm algorithm', "Scoring algorithm (kscor
   search_tool.options.algorithm = algorithm
 end
 
-search_tool.options.cleavage_semi = true
-search_tool.option_parser.on( '--no-cleavage-semi' ) do
-  search_tool.options.cleavage_semi = false
-end
-
-
 search_tool.options.n_terminal_mod_mass=nil
 search_tool.option_parser.on('--n-terminal-mod-mass mass') do |mass|
     search_tool.options.n_terminal_mod_mass = mass
@@ -84,6 +78,29 @@ end
 search_tool.options.cleavage_c_terminal_mod_mass=nil
 search_tool.option_parser.on('--cleavage-c-terminal-mod-mass mass') do |mass|
     search_tool.options.cleavage_c_terminal_mod_mass = mass
+end
+
+# if contrast angle is set we need to insert two parameters into the XML file ("use contrast angle" and "contrast angle")
+search_tool.options.contrast_angle=nil
+search_tool.option_parser.on('--contrast-angle angle') do |angle|
+    search_tool.options.contrast_angle = angle
+end
+
+search_tool.options.total_peaks=nil
+search_tool.option_parser.on('--total-peaks peaks') do |peaks|
+    search_tool.options.total_peaks = peaks
+end
+
+# TODO: check default
+search_tool.options.use_neutral_loss_window=false
+search_tool.option_parser.on('--use-neutral-loss-window') do
+    search_tool.options.use_neutral_loss_window = true
+end
+
+
+search_tool.options.threads=1
+search_tool.option_parser.on('--threads threads') do |threads|
+    search_tool.options.threads = threads
 end
 
 exit unless search_tool.check_options 
