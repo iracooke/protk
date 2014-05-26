@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<bioml label="x! taxon-to-file matching list">
-	
-	<taxon label="/users/icooke/sources/protk/spec/data/testdb.fasta">
-		<file format="peptide" URL="/Users/icooke/Sources/protk/spec/data/testdb.fasta"/>
-	</taxon>
-	
-</bioml>

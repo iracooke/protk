@@ -9,7 +9,6 @@
 require 'protk/constants'
 require 'protk/tool'
 require 'protk/fastadb'
-require 'protk/gapped_aligner'
 require 'libxml'
 require 'bio'
 
