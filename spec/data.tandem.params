@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bioml>
+	
+	<note> TAXONOMY FILE. This is a file containing references to the sequence databases. Point it to your own taxonomy.xml if needed.</note>
+	<note type="input" label="list path, taxonomy information">/Users/icooke/Sources/protk/spec/data.taxonomy.xml</note>
+
+	<note> PROTEIN SEQUENCE DATABASE. This refers to identifiers in the taxonomy.xml, not the .fasta files themselves! Make sure the database you want is present as an entry in the taxonomy.xml referenced above. This is REQUIRED. </note>
+	<note type="input" label="protein, taxon">/users/icooke/sources/protk/spec/data/testdb.fasta</note>
+
+	<note> FILE LOCATIONS. Replace them with your input (.mzXML) file and output file -- these are REQUIRED. Optionally a log file and a sequence output file of all protein sequences identified in the first-pass can be specified. Use of FULL path (not relative) paths is recommended. </note>
+	<note type="input" label="spectrum, path">/Users/icooke/Sources/protk/spec/data/tiny.mzML</note>
+	<note type="input" label="output, path">/Users/icooke/Sources/protk/spec/data/tiny_tandem.tandem</note>
+ 
+	<note> DEFAULT PARAMETERS. The value of "isb_default_input_kscore.xml" is recommended. Change to "isb_default_input_native.xml" for native X!Tandem scoring.</note> 
+	<note type="input" label="list path, default parameters">/Users/icooke/Sources/protk/lib/protk/data/isb_default_input_native.xml</note>
+
+	<note> FRAGMENT MASS TOLERANCES </note>
+ 	<note type="input" label="spectrum, fragment monoisotopic mass error">0.65</note>
+
+	<note> PRECURSOR MASS TOLERANCES. In the example below, a -2.0 Da to 4.0 Da (monoisotopic mass) window is searched for peptide candidates. Since this is monoisotopic mass, so for non-accurate-mass instruments, for which the precursor is often taken nearer to the isotopically averaged mass, an asymmetric tolerance (-2.0 Da to 4.0 Da) is preferable. This somewhat imitates a (-3.0 Da to 3.0 Da) window for averaged mass (but not exactly)</note>
+ 	<note type="input" label="spectrum, parent monoisotopic mass error minus">100.0</note>
+ 	<note type="input" label="spectrum, parent monoisotopic mass error plus">100.0</note>
+	<note type="input" label="spectrum, parent monoisotopic mass error units">ppm</note>
+	<note>The value for this parameter may be 'Daltons' or 'ppm': all other values are ignored</note>
+	<note type="input" label="spectrum, parent monoisotopic mass isotope error">yes</note>
+	<note>This allows peptide candidates in windows around -1 Da and -2 Da from the acquired mass to be considered. Only applicable when the minus/plus window above is set to less than 0.5 Da. Good for accurate-mass instruments for which the reported precursor mass is not corrected to the monoisotopic mass. </note>
+
+
+	<note> MODIFICATIONS. In the example below, there is a static (carbamidomethyl) modification on C, and variable modifications on M (oxidation). Multiple modifications can be separated by commas, as in "80.0@S,80.0@T". Peptide terminal modifications can be specified with the symbol '[' for N-terminus and ']' for C-terminus, such as 42.0@[ .  </note>	
+	
+	
+	
+	<note> You can specify a variable modification when present in a motif. For instance, 0.998@N!{P}[ST] is a deamidation modification on N only if it is present in an N[any but P][S or T] motif (N-glycosite). </note>
+	
+	<note type="input" label="protein, N-terminal residue modification mass"/>
+ 	<note type="input" label="protein, C-terminal residue modification mass"/>
+	<note> These are *static* modifications on the PROTEINS' N or C-termini. </note>
+
+	<note> SEMI-TRYPTICS AND MISSED CLEAVAGES. In the example below, semitryptic peptides are allowed, and up to 2 missed cleavages are allowed. </note>
+	<note type="input" label="protein, cleavage semi">yes</note>
+	<note type="input" label="scoring, maximum missed cleavage sites">2</note>
+
+	<note> REFINEMENT. Do not use unless you know what you are doing. Set "refine" to "yes" and specify what you want to search in the refinement. For non-confusing results, repeat the same modifications you set above for the first-pass here.</note>
+	<note type="input" label="refine">no</note>
+	<note type="input" label="refine, maximum valid expectation value">0.1</note>
+	<note type="input" label="refine, modification mass">57.012@C</note>
+	<note type="input" label="refine, potential modification mass">15.994915@M</note>
+	<note type="input" label="refine, potential modification motif"/>
+ 	<note type="input" label="refine, cleavage semi">yes</note>
+	<note type="input" label="refine, unanticipated cleavage">no</note>
+	<note type="input" label="refine, potential N-terminus modifications"/>
+	<note type="input" label="refine, potential C-terminus modifications"/>
+	<note type="input" label="refine, point mutations">no</note>
+	<note type="input" label="refine, use potential modifications for full refinement">no</note>
+
+
+
+	<note type="input" label="output, spectra">no</note>
+
+	<!-- Controlled by thresholds_type parameter. -->
+	<note type="input" label="spectrum, dynamic range">10000.0</note>
+	<note type="input" label="spectrum, use noise suppression">no</note>
+	<note type="input" label="spectrum, minimum parent m+h">600</note>
+	<note type="input" label="spectrum, minimum fragment mz">125</note>
+	<note type="input" label="spectrum, minimum peaks">10</note>
+	<note type="input" label="scoring, minimum ion count">1</note>
+	<note type="input" label="output, maximum valid expectation value">0.1</note>
+
+
+</bioml>

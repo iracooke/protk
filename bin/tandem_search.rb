@@ -34,20 +34,9 @@ search_tool.option_parser.on( '-T', '--tandem-params tandem', 'XTandem parameter
   search_tool.options.tandem_params = parms
 end
 
-search_tool.options.no_pepxml=false
-search_tool.option_parser.on( '-P', '--no-pepxml', 'Dont convert to pepXML after running the search') do
-  search_tool.options.no_pepxml=true
-end
-
 search_tool.options.keep_params_files=false
 search_tool.option_parser.on( '-K', '--keep-params-files', 'Keep X!Tandem parameter files' ) do 
   search_tool.options.keep_params_files = true
-end
-
-# In case want pepXML, but still want tandem output also.
-search_tool.options.tandem_output=nil
-search_tool.option_parser.on( '--tandem-output tandem_output', 'Keep X! Tandem Output') do |tandem_output|
-  search_tool.options.tandem_output=tandem_output
 end
 
 search_tool.options.thresholds_type = 'isb_kscore'
@@ -66,7 +55,7 @@ search_tool.option_parser.on( '--thresholds-type thresholds_type', 'Threshold Ty
   search_tool.options.thresholds_type = thresholds_type
 end
 
-search_tool.options.algorithm = "kscore"
+search_tool.options.algorithm = "native"
 search_tool.option_parser.on( '--algorithm algorithm', "Scoring algorithm (kscore or native)" ) do |algorithm|
   search_tool.options.algorithm = algorithm
 end
@@ -117,27 +106,29 @@ tandem_bin=%x[which tandem].chomp
 ARGV.each do |filename|
 
   input_path=Pathname.new(filename.chomp).realpath.to_s
-  output_path="#{search_tool.output_base_path(filename.chomp)}.tandem"
+  output_path="#{search_tool.output_base_path(input_path)}.tandem"
 
-  if ( search_tool.explicit_output==nil )
-    pepxml_path="#{output_path.match(/(.*)\.tandem$/)[1]}.pep.xml"
+  if ( search_tool.explicit_output )
+    final_output_path=search_tool.explicit_output
   else
-    pepxml_path=search_tool.explicit_output
+    final_output_path=output_path
   end
   
-  output_exists=false
-  if ( !search_tool.no_pepxml && Pathname.new(pepxml_path).exist?)
-    output_exists=true
-  end
-  
-  if ( search_tool.no_pepxml && Pathname.new(output_path).exist? )
-    output_exists=true
-  end
 
-  taxo_path="#{search_tool.input_base_path(filename.chomp)}.taxonomy.xml"
-  params_path="#{search_tool.input_base_path(filename.chomp)}.tandem.params"
+  output_exists=Pathname.new(final_output_path).exist?
+
+  puts final_output_path
+  if Pathname.new(final_output_path).absolute?
+    output_base_path=Pathname.new(final_output_path).dirname.to_s
+  else
+    output_base_path="#{Dir.pwd}/#{Pathname.new(final_output_path).dirname.to_s}"
+  end
+  puts output_base_path
+
+  taxo_path="#{final_output_path}.taxonomy.xml"
+  params_path="#{final_output_path}.params"
   
-  tandem_defaults.generate_params(params_path,taxo_path,input_path,output_path,search_tool,genv)
+  tandem_defaults.generate_params(params_path,taxo_path,input_path,final_output_path,search_tool,genv)
 
   # Only proceed if the output file is not present or we have opted to over-write it
   #
@@ -146,18 +137,6 @@ ARGV.each do |filename|
     # The basic command
     #
     cmd= "#{tandem_bin} #{params_path}"
-
-    # pepXML conversion and repair
-    #
-    unless search_tool.no_pepxml
-      repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"
-      cmd << "; Tandem2XML #{output_path} #{pepxml_path}; #{repair_script} #{pepxml_path}"
-      if search_tool.tandem_output 
-        cmd << "; cp #{output_path} #{search_tool.tandem_output}"
-      else
-        cmd << "; rm #{output_path}"
-      end
-    end
 
     # Add a cleanup command unless the user wants to keep params files
     #

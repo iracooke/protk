@@ -13,3 +13,4 @@ uniprot_trembl_annotation_database: trembl_annotation
 galaxy_root: galaxy
 default_mascot_server: www.matrixscience.com
 log_file: Logs/protk.log
+

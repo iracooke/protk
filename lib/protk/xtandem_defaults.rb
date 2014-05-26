@@ -28,7 +28,7 @@ class XTandemDefaults
 	def set_option(std_params, tandem_key, value)
   		notes = std_params.find("/bioml/note[@type=\"input\" and @label=\"#{tandem_key}\"]")
   		throw "Exactly one parameter named (#{tandem_key}) is required in parameter file" unless notes.length==1
-  		notes[0].content=value
+  		notes[0].content=value.to_s
 	end
 
 	def append_option(std_params, tandem_key, value)
