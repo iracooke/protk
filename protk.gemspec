@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['libra.rb']
   s.executables = s.executables + ['xpress.rb']
   s.executables = s.executables + ['tandem_search.rb','mascot_search.rb','omssa_search.rb','msgfplus_search.rb']
-  s.executables = s.executables + ['mascot_to_pepxml.rb','file_convert.rb']
+  s.executables = s.executables + ['mascot_to_pepxml.rb','tandem_to_pepxml.rb','file_convert.rb']
   s.executables = s.executables + ['make_decoy.rb']
   s.executables = s.executables + ['correct_omssa_retention_times.rb','repair_run_summary.rb','add_retention_times.rb']
   s.executables = s.executables + ['peptide_prophet.rb','interprophet.rb','protein_prophet.rb']
