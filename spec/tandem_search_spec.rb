@@ -59,7 +59,7 @@ describe "The xtandem_search command", :broken => false do
 	end
 
 
-	it "should output spectra when requested" do
+	it "should output spectra when requested" , :dependencies_not_installed => tandem_not_installed do
 
 		%x[tandem_search.rb -d #{@db_file} #{@tiny_input} -o #{@output_file} --output-spectra]
 		expect(@output_file).to contain_text("type=\"tandem mass spectrum\"")
