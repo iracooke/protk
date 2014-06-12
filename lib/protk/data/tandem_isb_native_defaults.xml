@@ -1,45 +1,47 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="tandem-input-style.xsl"?>
 <bioml>
 
 <note>spectrum parameters</note>
-	<note type="input" label="spectrum, parent monoisotopic mass error minus">2.0</note>
-	<note type="input" label="spectrum, parent monoisotopic mass error plus">4.0</note>
-	        <note>PRECURSOR MASS TOLERANCE. This is monoisotopic mass, so for non-accurate-mass instruments, for which the precursor is often taken nearer to the isotopically averaged mass, an asymmetric tolerance (-2.0 Da to 4.0 Da) is preferable. This somewhat imitates a (-3.0 Da to 3.0 Da) window for averaged mass (but not exactly).</note>
 	<note type="input" label="spectrum, parent monoisotopic mass isotope error">no</note>
-	<note type="input" label="spectrum, fragment monoisotopic mass error units">Daltons</note>
-		<note>The value for this parameter may be 'Daltons' or 'ppm': all other values are ignored</note>
 	<note type="input" label="spectrum, parent monoisotopic mass error units">Daltons</note>
 		<note>The value for this parameter may be 'Daltons' or 'ppm': all other values are ignored</note>
+
 	<note type="input" label="spectrum, fragment monoisotopic mass error">0.4</note>
-	        <note>This parameter has no effect in k-score scoring.</note>
+	<note type="input" label="spectrum, fragment monoisotopic mass error units">Daltons</note>
+	<note>The value for this parameter may be 'Daltons' or 'ppm': all other values are ignored</note>
 	<note type="input" label="spectrum, fragment mass type">monoisotopic</note>
 		<note>values are monoisotopic|average </note>
 
 <note>spectrum conditioning parameters</note>
-        <note type="input" label="spectrum, use conditioning">no</note>
-		<note>For k-score scoring, it is recommended spectrum conditioning be turned OFF for best performance. All of the spectrum filtering and preprocessing options below in this section will be inactive.</note>
-	<note type="input" label="spectrum, dynamic range">10000.0</note>
-	<note type="input" label="spectrum, total peaks">400</note> 
+        <note type="input" label="spectrum, use conditioning">yes</note>
+		<note>For native scoring, conditioning should be turned on.</note>
+	<note type="input" label="spectrum, dynamic range">100.0</note>
+		<note>The peaks read in are normalized so that the most intense peak is set to the dynamic range value. All peaks with values of less that 1, using this normalization, are not used. This normalization has the overall effect of setting a threshold value for peak intensities.</note>
+	<note type="input" label="spectrum, total peaks">50</note> 
+		<note>If this value is 0, it is ignored. If it is greater than zero (lets say 50), then the number of peaks in the spectrum with be limited to the 50 most intense peaks in the spectrum. X! tandem does not do any peak finding: it only limits the peaks used by this parameter, and the dynamic range parameter.</note>
 	<note type="input" label="spectrum, maximum parent charge">5</note>
-	<note type="input" label="spectrum, use noise suppression">yes</note>
+	<note type="input" label="spectrum, use noise suppression">no</note>
 	<note type="input" label="spectrum, minimum parent m+h">600.0</note>
-	<note type="input" label="spectrum, minimum fragment mz">125.0</note>
-	<note type="input" label="spectrum, minimum peaks">10</note> 
+        <note type="input" label="spectrum, maximum parent m+h">4000.0</note>
+	<note type="input" label="spectrum, minimum fragment mz">50.0</note>
+	<note type="input" label="spectrum, minimum peaks">6</note> 
 	<note type="input" label="spectrum, threads">1</note>
 	<note type="input" label="spectrum, sequence batch size">1000</note>
 	
 <note>residue modification parameters</note>
-	<note type="input" label="residue, modification mass"></note>
-		<note>STATIC MODIFICATION. The format of this parameter is m@X, where m is the modfication mass in Daltons and X is the appropriate residue to modify. Lists of modifications are separated by commas. For example, to modify M and C with the addition of 16.0 Daltons, the parameter line would be +16.0@M,+16.0@C. Positive and negative values are allowed.</note>
+	<note type="input" label="residue, modification mass"></note>	
+	        <note>STATIC MODIFICATION. The format of this parameter is m@X, where m is the modfication mass in Daltons and X is the appropriate residue to modify. Lists of modifications are separated by commas. For example, to modify M and C with the addition of 16.0 Daltons, the parameter line would be +16.0@M,+16.0@C. Positive and negative values are allowed.</note>
 	<note type="input" label="residue, potential modification mass"></note>
-		<note>VARIABLE MODIFICATION. The format of this parameter is the same as the format for residue, modification mass (see above).</note>
+	        <note>VARIABLE MODIFICATION. The format of this parameter is the same as the format for residue, modification mass (see above).</note>
 	<note type="input" label="residue, potential modification motif"></note>
-		<note>VARIABLE MODIFICATION IN A MOTIF. The format of this parameter is similar to residue, modification mass, with the addition of a modified PROSITE notation sequence motif specification. For example, a value of 80@[ST!]PX[KR] indicates a modification of either S or T when followed by P, and residue and the a K or an R. A value of 204@N!{P}[ST]{P} indicates a modification of N by 204, if it is NOT followed by a P, then either an S or a T, NOT followed by a P. Positive and negative values are allowed. </note>
+	        <note>VARIABLE MODIFICATION IN A MOTIF. The format of this parameter is similar to residue, modification mass, with the addition of a modified PROSITE notation sequence motif specification. For example, a value of 80@[ST!]PX[KR] indicates a modification of either S or T when followed by P, and residue and the a K or an R. A value of 204@N!{P}[ST]{P} indicates a modification of N by 204, if it is NOT followed by a P, then either an S or a T, NOT followed by a P. Positive and negative values are allowed. </note>
 
 <note>protein parameters</note>
-	<note type="input" label="protein, taxon">no default</note>
-		<note>SEQUENCE DATABASE TO SEARCH. This refers to identifiers in taxonomy.xml.</note>
-	<note type="input" label="protein, cleavage site">[RK]|{P}</note>
-		<note>ENZYME SPECIFICITY. This setting corresponds to the enzyme trypsin. The first characters in brackets represent residues N-terminal to the bond - the '|' pipe - and the second set of characters represent residues C-terminal to the bond. The characters must be in square brackets (denoting that only these residues are allowed for a cleavage) or french brackets (denoting that these residues cannot be in that position). Use UPPERCASE characters. To denote cleavage at any residue, use [X]|[X] and reset the scoring, maximum missed cleavage site parameter (see below) to something like 50. </note>
+	<note type="input" label="protein, taxon">no default</note>		
+	        <note>SEQUENCE DATABASE TO SEARCH. This refers to identifiers in taxonomy.xml.</note>
+	<note type="input" label="protein, cleavage site">[RK]|{P}</note>	
+	        <note>ENZYME SPECIFICITY. This setting corresponds to the enzyme trypsin. The first characters in brackets represent residues N-terminal to the bond - the '|' pipe - and the second set of characters represent residues C-terminal to the bond. The characters must be in square brackets (denoting that only these residues are allowed for a cleavage) or french brackets (denoting that these residues cannot be in that position). Use UPPERCASE characters. To denote cleavage at any residue, use [X]|[X] and reset the scoring, maximum missed cleavage site parameter (see below) to something like 50. </note>
 	<note type="input" label="protein, modified residue mass file"></note>
 	<note type="input" label="protein, N-terminal residue modification mass"></note>
 	<note type="input" label="protein, C-terminal residue modification mass"></note>
@@ -63,9 +65,7 @@
 	<note type="input" label="refine, potential modification motif"></note>
 
 <note>scoring parameters</note>
-
-        <note type="input" label="scoring, algorithm">k-score</note>
- 	<note type="input" label="scoring, minimum ion count">1</note>
+	<note type="input" label="scoring, minimum ion count">4</note>
 	<note type="input" label="scoring, maximum missed cleavage sites">2</note>
 	<note type="input" label="scoring, x ions">no</note>
 	<note type="input" label="scoring, y ions">yes</note>
