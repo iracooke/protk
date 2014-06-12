@@ -68,6 +68,6 @@ ARGV.each do |file_name|
     cmd << "; #{repair_script} #{tool.explicit_output}"
   end
     
-  code = tool.run(cmd,genv,nil,nil)
+  code = tool.run(cmd,genv)
   throw "Command #{cmd} failed with exit code #{code}" unless code==0
 end

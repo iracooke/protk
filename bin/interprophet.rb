@@ -86,9 +86,7 @@ if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   # Run the analysis
   #
-  jobscript_path="#{output_file}.pbs.sh"
-  job_params={:jobid=>"iprophet", :vmem=>"900mb", :queue => "lowmem"}
-  code = prophet_tool.run(cmd,genv,job_params,jobscript_path)
+  code = prophet_tool.run(cmd,genv)
   throw "Command failed with exit code #{code}" unless code==0
     
 else

@@ -254,10 +254,7 @@ ARGV.each do |filename|
     
     # Run the search
     #
-    job_params= {:jobid => search_tool.jobid_from_filename(filename) }
-    job_params[:queue]="lowmem"
-    job_params[:vmem]="900mb"    
-    search_tool.run(cmd,genv,job_params)
+    search_tool.run(cmd,genv)
 
 
   else

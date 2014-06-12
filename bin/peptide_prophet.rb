@@ -255,9 +255,7 @@ def run_peptide_prophet(genv,prophet_tool,cmd,output_path,engine)
   if ( !prophet_tool.over_write && Pathname.new(output_path).exist? )
     genv.log("Skipping analysis on existing file #{output_path}",:warn)   
   else
-    jobscript_path="#{output_path}.pbs.sh"
-    job_params={:jobid=>engine, :vmem=>"900mb", :queue => "lowmem"}
-    code=prophet_tool.run(cmd,genv,job_params,jobscript_path)
+    code=prophet_tool.run(cmd,genv)
     throw "Command failed with exit code #{code}" unless code==0
   end
 end

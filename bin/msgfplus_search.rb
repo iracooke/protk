@@ -18,7 +18,7 @@ input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new([:background,:database,:explicit_output,:over_write,:enzyme,
+search_tool=SearchTool.new([:database,:explicit_output,:over_write,:enzyme,
   :modifications,:instrument,:mass_tolerance_units,:mass_tolerance,:cleavage_semi])
 
 search_tool.jobid_prefix="p"
@@ -266,14 +266,7 @@ ARGV.each do |filename|
     
     # In case the user specified background running we need to create a jobscript path
     #
-    jobscript_path="#{output_path}.pbs.sh"
-
-    # Run the search
-    #
-    job_params= {:jobid => search_tool.jobid_from_filename(filename) }
-    job_params[:queue]="seventytwo"
-    job_params[:vmem]="70gb"
-    code = search_tool.run(cmd,genv,job_params,jobscript_path)
+    code = search_tool.run(cmd,genv)
     throw "Command failed with exit code #{code}" unless code==0
 
   if for_galaxy 

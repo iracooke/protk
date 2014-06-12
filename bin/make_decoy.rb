@@ -99,9 +99,6 @@ cmd = "cat #{input_file} #{decoys_tmp_file} >> #{output_file}; rm #{decoys_tmp_f
 p cmd
 # Run the conversion
 #
-job_params= {:jobid => tool.jobid_from_filename(input_file) }
-job_params[:queue]="lowmem"
-job_params[:vmem]="900mb"    
-tool.run(cmd,genv,job_params)
+tool.run(cmd,genv)
 
 

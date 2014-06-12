@@ -122,10 +122,7 @@ if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   # Run the analysis
   #
-  jobscript_path="#{output_file}.pbs.sh"
-  job_params={:jobid=>"protproph", :vmem=>"900mb", :queue => "lowmem"}
-  genv.log("Running #{cmd}",:info)
-  code = prophet_tool.run(cmd,genv,job_params,jobscript_path)
+  code = prophet_tool.run(cmd,genv)
   throw "Command failed with exit code #{code}" unless code==0
 else
   genv.log("Protein Prophet output file #{output_file} already exists. Run with -r option to replace",:warn)   
