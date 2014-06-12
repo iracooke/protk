@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# This file is part of MSLIMS
+# This file is part of Protk
 # Created by Ira Cooke 12/4/2010
 #
 # Reads a unimod xml file (eg from a Mascot installation) and produces a loc file with names of allowable chemical modifications

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# This file is part of MSLIMS
+# This file is part of Protk
 # Created by Ira Cooke 12/4/2010
 #
 # Generates files required by the omssa galaxy wrapper

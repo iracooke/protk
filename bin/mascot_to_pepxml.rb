@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# This file is part of MSLIMS
+# This file is part of Protk
 # Created by Ira Cooke 12/4/2010
 #
 # Convert mascot dat files to pepxml. A wrapper for Mascot2XML
