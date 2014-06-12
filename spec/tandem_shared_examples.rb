@@ -74,3 +74,20 @@ RSpec.shared_examples "an xtandem option" do |commandlineval,generatedval,extern
     end
 
 end
+
+
+RSpec.shared_examples "a residue modification option" do |commandlineval,generatedval|
+
+	before(:each) do
+    	@tandem_key=subject[0]
+    	@flag=subject[1]
+	end
+
+    it "is parsed from argv" do
+    	ARGV+=[@flag,commandlineval.to_s]
+    	pdoc=params_doc_by_parsing_argv
+    	expect(pdoc).to have_tandem_param(@tandem_key)
+		expect(value_for_tandem_param(pdoc,@tandem_key)).to eq(generatedval.to_s)
+    end
+
+end

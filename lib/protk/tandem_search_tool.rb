@@ -1,5 +1,18 @@
 require 'protk/search_tool'
 
+class String
+  def xtandem_modification_motif?
+		# 124@[ is not a modification motif, it is a residue (N-term) modification,
+		# so when checking if modification is a motif look for paired square brackets.
+		ismotif=false
+		case self
+		when /[\(\)\{\}\!]/,/\[.*\]/
+			ismotif=true
+		end
+		ismotif
+  end
+end
+
 class TandemSearchTool < SearchTool
 	attr :defaults_path
 	attr :taxonomy_path
@@ -9,7 +22,7 @@ class TandemSearchTool < SearchTool
 
 	def initialize
 
-		super([:glyco,
+		super([
 			:database,
 			:explicit_output,
 			:over_write,
@@ -20,8 +33,8 @@ class TandemSearchTool < SearchTool
 			:multi_isotope_search,
 			:missed_cleavages,
 			:cleavage_semi,
-			:carbamidomethyl,
-			:methionine_oxidation
+			:methionine_oxidation,
+			:glyco
   			])
 
 		@xtandem_keys_with_single_multiplicity = {
@@ -31,7 +44,8 @@ class TandemSearchTool < SearchTool
 			:precursor_tolu => "spectrum, parent monoisotopic mass error units",
 			:multi_isotope_search => "spectrum, parent monoisotopic mass isotope error",
 			:fragment_tolu => "spectrum, fragment monoisotopic mass error units",
-			:output_spectra => "output, spectra"
+			:output_spectra => "output, spectra",
+			:threads => "spectrum, threads"
 		}
 
 		@xtandem_keys_for_precursor_tol = {
@@ -45,22 +59,9 @@ class TandemSearchTool < SearchTool
 		@option_parser.banner = "Run an X!Tandem msms search on a set of mzML input files.\n\nUsage: tandem_search.rb [options] file1.mzML file2.mzML ..."
 		@options.output_suffix="_tandem"
 
-
-		@options.tandem_params="isb_native"
-		@option_parser.on( '-T', '--tandem-params tandem', 'Either the full path to an xml file containing a complete set of default parameters, or one of the following (isb_native,isb_kscore,gpm). Default is isb_native' ) do |parms| 
-  			@options.tandem_params = parms
-		end
-
-		@options.keep_params_files=false
-		@option_parser.on( '-K', '--keep-params-files', 'Keep X!Tandem parameter files' ) do 
-  			@options.keep_params_files = true
-		end
-
-		@options.threads=1
-		@option_parser.on('--threads threads') do |threads|
-  			  @options.threads = threads
-		end
-
+		add_value_option(:tandem_params,"isb_native",['-T', '--tandem-params tandem', 'Either the full path to an xml file containing a complete set of default parameters, or one of the following (isb_native,isb_kscore,gpm). Default is isb_native'])
+		add_boolean_option(:keep_params_files,false,['-K', '--keep-params-files', 'Keep X!Tandem parameter files'])
+		add_value_option(:threads,1,['--threads threads','Number of threads. Set to the number of processors on your computer for best performance'])
 		add_boolean_option(:output_spectra,false,['--output-spectra', 'Include spectra in the output file'])
 
 	end
@@ -96,31 +97,6 @@ class TandemSearchTool < SearchTool
     	notes[0].content = append_string(notes[0].content, value)
   		end
 	end
-
-	def collapse_keys(std_params, tandem_key)
-	    mods=std_params.find('/bioml/note[@type="input" and @label="#{tandem_key}"]')
-    	if not mods
-      		first_mod = mods[0]
-      		rest_mods = mods[1..-1]
-      		rest_mods.each{ |node| first_mod.content = append_string(first_mod.content, node.content); node.remove!}
-    	end
-	end
-
-	def append_string(first, second)
-  		if first.empty?
-    		second
-  		else
-    		"#{first},#{second}"
-  		end
-	end
-
-
-    def motif?(mod_string)
-		# 124@[ is not a modification motif, it is a residue (N-term) modification,
-		# so when checking if modification is a motif look for paired square brackets.
-		mod_string =~ /[\(\)\{\}\!]/ or mod_string =~ /\[.*\]/
-	end
-
 
 	def tandem_keys_in_params_file(default_params_path)
 		params_parser=XML::Parser.file(default_params_path)
@@ -204,53 +180,39 @@ class TandemSearchTool < SearchTool
 			end
 		end
 
-		# Fixed and Variable Modifications
+		# Per residue Fixed and Variable Modifications
 		#
-		unless self.carbamidomethyl 
-			mods=std_params.find('/bioml/note[@type="input" and @id="carbamidomethyl-fixed"]')
-			mods.each{ |node| node.remove!}
-		end
-	
-		unless self.glyco
-			mods=std_params.find('/bioml/note[@type="input" and @id="glyco-variable"]')
-			mods.each{ |node| node.remove!}  	
-		end
-	
-		unless self.methionine_oxidation
-			mods=std_params.find('/bioml/note[@type="input" and @id="methionine-oxidation-variable"]')
-			mods.each{ |node| node.remove!} 	     
-		end  
-
-		# Merge all remaining id based modification into single modification. 
-		# 
-		collapse_keys(std_params, "residue, potential modification mass")
-		collapse_keys(std_params, "residue, modification mass")
+		# These can be added using a variety of methods in xtandem
+		#
+		# residue, potential modification mass
+		# residue, modification mass
+		# residue, potential modification motif
+		#
+		# We support these primarily via the var_mods and fix_mods commandline params
+		# Modification masses and/or motifs can be entered via these arguments
+		#
 
 		var_mods = self.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }
 		var_mods=var_mods.collect {|mod| decode_modification_string(mod) }
+
+		# var_mods allows motif's as well as standard mods. These should be in a separate array
+		var_motifs = [].replace(var_mods)
+		var_mods.delete_if {|mod| mod.xtandem_modification_motif? }
+		var_motifs.keep_if {|mod| mod.xtandem_modification_motif? }
+
 		fix_mods = self.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }
 		fix_mods=fix_mods.collect {|mod| decode_modification_string(mod)}
-	
-		root_bioml_node=std_params.find('/bioml')[0]
-	
-		mod_id=1
-		var_mods.each do |vm|
 
-			mod_type="potential modification mass"
-			mod_type = "potential modification motif" if motif?(vm)
-			label="residue, #{mod_type}"
-			append_option(std_params, label, vm)
-		end
-	
-		mod_id=1
-		fix_mods.each do |fm|
-			mod_type="modification mass"
-			mod_type = "modification motif" if motif?(fm)
-			label="residue, #{mod_type}"
-			append_option(std_params, label, fm)
-		end
+		# We also support the --glyco and --methionineo shortcuts.
+		# Add these here. No check is made for duplication
+		#
+		var_motifs << "0.998@N!{P}[ST]" if self.glyco
+		var_mods << "15.994915@M" if self.methionine_oxidation
 
-		#p root_bioml_node
+		append_option(std_params,"residue, modification mass",fix_mods.join(",")) unless fix_mods.length==0
+		append_option(std_params,"residue, potential modification mass",var_mods.join(",")) unless var_mods.length==0
+		append_option(std_params,"residue, potential modification motif",var_motifs.join(",")) unless var_motifs.length==0
+
 		std_params
   
 	end

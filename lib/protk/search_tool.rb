@@ -43,15 +43,8 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :modifications )
-      @options.var_mods = ""
-      @option_parser.on('--var-mods vm', 'Variable modifications' ) do |vm|
-        @options.var_mods = vm
-      end
-
-      @options.fix_mods = ""
-      @option_parser.on('--fix-mods fm', 'Fixed modifications' ) do |fm|
-        @options.fix_mods = fm
-      end
+      add_value_option(:var_mods,"",['--var-mods vm','Variable modifications. These should be provided in a comma separated list'])
+      add_value_option(:fix_mods,"",['--fix-mods fm','Fixed modifications. These should be provided in a comma separated list'])
     end
 
     if ( option_support.include? :instrument )
@@ -123,17 +116,15 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :glyco)
-      @options.glyco = false
-      @option_parser.on( '-g', '--glyco', 'Expect N-Glycosylation modifications as variable mod in a search or as a parameter when building statistical models' ) do 
-        @options.glyco = true
-      end
+      add_boolean_option(:glyco,false,['-g','--glyco', 'Expect N-Glycosylation modifications as variable mod in a search or as a parameter when building statistical models'])
     end
 
     if ( option_support.include? :methionine_oxidation)
-      @options.methionine_oxidation = false
-      @option_parser.on( '-m', '--methionineo', 'Expect Oxidised Methionine modifications as variable mod in a search' ) do 
-        @options.methionine_oxidation = true
-      end
+      add_boolean_option(:methionine_oxidation,false,['-m', '--methionineo', 'Expect Oxidised Methionine modifications as variable mod in a search'])
+      # @options.methionine_oxidation = false
+      # @option_parser.on( '-m', '--methionineo', 'Expect Oxidised Methionine modifications as variable mod in a search' ) do 
+      #   @options.methionine_oxidation = true
+      # end
     end
 
     if ( option_support.include? :carbamidomethyl)

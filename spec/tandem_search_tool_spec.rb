@@ -115,7 +115,7 @@ describe TandemSearchTool do
 	end
 
 
-	describe "options" do
+	describe "standard xtandem options" do
 		include_context :tmpdir
 
 		describe ["spectrum, fragment monoisotopic mass error","-f"] do
@@ -146,12 +146,44 @@ describe TandemSearchTool do
 			it_behaves_like "an xtandem option", "yes","yes","no"
 		end
 
+		describe ["spectrum, threads", "--threads"] do
+			it_behaves_like "an xtandem option", "2","2","4"
+		end
+
 		describe ["spectrum, parent monoisotopic mass error minus","-p"] do
 			it_behaves_like "an xtandem option", 5, 2.5, "250"
 		end
 
 		describe ["spectrum, parent monoisotopic mass error plus","-p"] do
 			it_behaves_like "an xtandem option", 5, 2.5, "250"
+		end
+
+	end
+
+
+	describe "residue modification options" do
+
+		describe ["residue, modification mass","--fix-mods"] do
+			it_behaves_like "a residue modification option", "57.021464@C , 	65.2@Q","57.021464@C,65.2@Q"
+			it_behaves_like "a residue modification option", "57.021464__at__C ","57.021464@C"
+		end
+
+		describe ["residue, potential modification mass","--var-mods"] do
+			it_behaves_like "a residue modification option", "15.994915@M , 	65.2@Q, 0.998@N!{P}[ST]","15.994915@M,65.2@Q"
+			it_behaves_like "a residue modification option", "15.994915__at__M ","15.994915@M"
+		end
+
+		describe ["residue, potential modification motif","--var-mods"] do
+			it_behaves_like "a residue modification option", "15.994915@M , 	65.2@Q, 0.998@N!{P}[ST]","0.998@N!{P}[ST]"
+			it_behaves_like "a residue modification option", "0.998__at__N!__oc__P__cc____ob__ST__cb__ ","0.998@N!{P}[ST]"
+		end
+
+		describe ["residue, potential modification motif","--glyco"] do
+			it_behaves_like "a residue modification option", "","0.998@N!{P}[ST]"
+		end
+
+		describe ["residue, potential modification mass","-m"] do
+			it_behaves_like "a residue modification option", "","15.994915@M"
 		end
 
 	end

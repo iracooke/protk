@@ -39,7 +39,7 @@ describe "The xtandem_search command", :broken => false do
 		%x[tandem_search.rb -d #{@db_file} #{@tiny_input} -o #{@output_file}]
 		
 		expect(@output_file).to exist?
-		# expect(@output_file).not_to contain_text("default from tandem_search.rb")
+		expect(@output_file).not_to contain_text("default from tandem_search.rb")
 	end
 
 
@@ -55,16 +55,14 @@ describe "The xtandem_search command", :broken => false do
 		%x[export PATH=#{@mocks_path}:$PATH; tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
 		
 		expect(output_file).to exist?
-		# expect(output_file).not_to contain_text("default from tandem_search.rb")		
+		expect(output_file).not_to contain_text("default from tandem_search.rb")		
 	end
 
 
 	it "should output spectra when requested" do
 
-		# puts %x[tandem_search.rb -d #{@db_file} #{@tiny_input} -o #{@output_file} --output-spectra]
-		# puts %x[cat #{@output_file}]
-
-		# expect(@output_file).to contain_text("spectrum, fragment monoisotopic mass error\">#{fme}")
+		%x[tandem_search.rb -d #{@db_file} #{@tiny_input} -o #{@output_file} --output-spectra]
+		expect(@output_file).to contain_text("type=\"tandem mass spectrum\"")
 	
 	end
 
