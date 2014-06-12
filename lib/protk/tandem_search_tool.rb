@@ -30,6 +30,7 @@ class TandemSearchTool < SearchTool
 			:cleavage_semi => "protein, cleavage semi",
 			:precursor_tolu => "spectrum, parent monoisotopic mass error units",
 			:multi_isotope_search => "spectrum, parent monoisotopic mass isotope error",
+			:fragment_tolu => "spectrum, fragment monoisotopic mass error units",
 			:output_spectra => "output, spectra"
 		}
 
@@ -44,8 +45,9 @@ class TandemSearchTool < SearchTool
 		@option_parser.banner = "Run an X!Tandem msms search on a set of mzML input files.\n\nUsage: tandem_search.rb [options] file1.mzML file2.mzML ..."
 		@options.output_suffix="_tandem"
 
+
 		@options.tandem_params="isb_native"
-		@option_parser.on( '-T', '--tandem-params tandem', 'Either the full path to an xml file containing a complete set of default parameters, or one of the following (isb_native,gpm_default). Default is isb_native' ) do |parms| 
+		@option_parser.on( '-T', '--tandem-params tandem', 'Either the full path to an xml file containing a complete set of default parameters, or one of the following (isb_native,isb_kscore,gpm). Default is isb_native' ) do |parms| 
   			@options.tandem_params = parms
 		end
 
@@ -53,44 +55,6 @@ class TandemSearchTool < SearchTool
 		@option_parser.on( '-K', '--keep-params-files', 'Keep X!Tandem parameter files' ) do 
   			@options.keep_params_files = true
 		end
-
-		@options.n_terminal_mod_mass=nil
-		@option_parser.on('--n-terminal-mod-mass mass') do |mass|
-  			  @options.n_terminal_mod_mass = mass
-		end
-
-		@options.c_terminal_mod_mass=nil
-		@option_parser.on('--c-terminal-mod-mass mass') do |mass|
-  			  @options.c_terminal_mod_mass = mass
-		end
-
-		@options.cleavage_n_terminal_mod_mass=nil
-		@option_parser.on('--cleavage-n-terminal-mod-mass mass') do |mass|
-  			  @options.cleavage_n_terminal_mod_mass = mass
-		end
-
-		@options.cleavage_c_terminal_mod_mass=nil
-		@option_parser.on('--cleavage-c-terminal-mod-mass mass') do |mass|
-  			  @options.cleavage_c_terminal_mod_mass = mass
-		end
-
-		# if contrast angle is set we need to insert two parameters into the XML file ("use contrast angle" and "contrast angle")
-		@options.contrast_angle=nil
-		@option_parser.on('--contrast-angle angle') do |angle|
-  			  @options.contrast_angle = angle
-		end
-
-		@options.total_peaks=nil
-		@option_parser.on('--total-peaks peaks') do |peaks|
-  			  @options.total_peaks = peaks
-		end
-
-		# TODO: check default
-		@options.use_neutral_loss_window=false
-		@option_parser.on('--use-neutral-loss-window') do
-  			  @options.use_neutral_loss_window = true
-		end
-
 
 		@options.threads=1
 		@option_parser.on('--threads threads') do |threads|
@@ -238,76 +202,6 @@ class TandemSearchTool < SearchTool
 					append_option(std_params,xtandem_key,(self.precursor_tol.to_f*0.5).to_s)
 				end
 			end
-		end
-		
-		# append_option(std_params,"output, spectra",self.output_spectra ? "yes" : "no")
-
-
-		thresholds_type = self.thresholds_type
-
-		if thresholds_type != "system_default"
-			maximum_valid_expectation_value = "0.1"
-
-			if thresholds_type == "scaffold"
-			maximum_valid_expectation_value = "1000"
-			end 
-
-			minimum_ion_count = "4"
-			case thresholds_type 
-			when "isb_kscore", "isb_native"
-				minimum_ion_count = "1"
-			when "scaffold"
-				minimum_ion_count = "0"
-			end
-
-			minimum_peaks = "15"
-			case thresholds_type
-			when "isb_native"
-				minimum_peaks = "6"
-			when "isb_kscore"
-				minimum_peaks = "10"
-			when "scaffold"
-				minimum_peaks = "0"
-			end
-
-			minimum_fragement_mz = "150"
-			case thresholds_type
-			when "isb_native"
-				minimum_fragement_mz = "50"
-			when "isb_kscore"
-				minimum_fragement_mz = "125"
-			when "scaffold"
-				minimum_fragement_mz = "0"
-			end
-
-		    minimum_parent_mh = "500" # tandem and isb_native defaults
-    		case thresholds_type
-    		when "isb_kscore"
-    			minimum_parent_mh = "600"
-    		when "scaffold"
-    			minimum_parent_mh = "0"
-    		end
-    
-		    use_noise_suppression = "yes"
-    		if thresholds_type == "isb_kscore" or thresholds_type == "scaffold"
-    			use_noise_suppression = "no"
-		    end
-    
-		    dynamic_range = "100.0"
-    		case thresholds_type
-    		when "isb_kscore"
-    			dynamic_range = "10000.0"
-    		when "scaffold"
-    			dynamic_range = "1000.0"
-    		end
-
-		    set_option(std_params, "spectrum, dynamic range", dynamic_range)
-    		set_option(std_params, "spectrum, use noise suppression", use_noise_suppression)
-    		set_option(std_params, "spectrum, minimum parent m+h", minimum_parent_mh)
-		    set_option(std_params, "spectrum, minimum fragment mz", minimum_fragement_mz)
-    		set_option(std_params, "spectrum, minimum peaks", minimum_peaks)
-    		set_option(std_params, "scoring, minimum ion count", minimum_ion_count)
-    		set_option(std_params, "output, maximum valid expectation value", maximum_valid_expectation_value)
 		end
 
 		# Fixed and Variable Modifications

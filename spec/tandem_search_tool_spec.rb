@@ -130,6 +130,10 @@ describe TandemSearchTool do
 			it_behaves_like "an xtandem option", "ppm", "ppm", "Da"
 		end
 
+		describe ["spectrum, fragment monoisotopic mass error units","--fragment-ion-tol-units"] do
+			it_behaves_like "an xtandem option", "ppm", "ppm", "Da"
+		end
+
 		describe ["spectrum, parent monoisotopic mass isotope error","--multi-isotope-search"] do
 			it_behaves_like "an xtandem option", "yes","yes","no"
 		end
