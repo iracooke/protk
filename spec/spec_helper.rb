@@ -19,13 +19,7 @@ end
 
 RSpec.configure do |c|
 	c.filter_run_excluding :broken => true unless (swissprot_installed && blast_installed)
-end
-
-
-RSpec::Matchers.define :be_a_non_empty_file do
- 	match do |filename|
-   		File.exist?(filename)
-  	end
+  c.filter_run_excluding :dependencies_not_installed => true  
 end
 
 RSpec::Matchers.define :exist? do
@@ -34,15 +28,32 @@ RSpec::Matchers.define :exist? do
   	end
 end
 
-RSpec.shared_context :tmp_dir_with_files do |input_files|
+RSpec::Matchers.define :contain_text  do |match_text|
+  match do |filename|
+    File.read(filename).include?(match_text)
+  end
+end
+
+
+RSpec.shared_context :tiny_inputs_and_outputs do 
+
   before(:each) do
-  	@tmp_dir=Dir.mktmpdir
-  	input_files.each do |file| 
-  		file_path=Pathname.new("#{$this_dir}/data/#{file}").realpath.to_s
-  		throw "test file #{file} does not exist" unless File.exist? file_path
-  		File.symlink(file_path,"#{@tmp_dir}/#{file}")
-  	end
+    @tmp_dir=Dir.mktmpdir
+
+    ["tiny.mzML","testdb.fasta"].each do |file| 
+      file_path=Pathname.new("#{$this_dir}/data/#{file}").realpath.to_s
+      throw "test file #{file} does not exist" unless File.exist? file_path
+      File.symlink(file_path,"#{@tmp_dir}/#{file}")
+    end
+
+    @tiny_input="#{@tmp_dir}/tiny.mzML"
+    @db_file = "#{@tmp_dir}/testdb.fasta"
+    @output_file="#{@tmp_dir}/tiny_tandem.tandem"
+
+  end
+
+  after(:each) do
+    FileUtils.remove_entry @tmp_dir
   end
 
 end
-

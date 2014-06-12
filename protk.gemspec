@@ -25,7 +25,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'mascot-dat', "~>0.3.1", ">=0.3.1"
   s.add_runtime_dependency 'bio-blastxmlparser',"~>1.1.1", ">=1.1.1"
 
-  s.add_development_dependency 'rspec', '~> 2.8'
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'rspec-mocks', '~> 3.0'
 
   s.homepage    = 'http://rubygems.org/gems/protk'
   s.executables = ['protk_setup.rb','manage_db.rb']

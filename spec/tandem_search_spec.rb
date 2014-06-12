@@ -1,36 +1,73 @@
 require 'spec_helper'
 
-describe "The xtandem_search command" do
+RSpec.shared_context :tiny_inputs_and_outputs do 
 
-	include_context :tmp_dir_with_files, ["tiny.mzML","testdb.fasta"]
+  before(:each) do
+    @tmp_dir=Dir.mktmpdir
 
-	it "should run a search using absolute pathnames" do
+    ["tiny.mzML","testdb.fasta"].each do |file| 
+      file_path=Pathname.new("#{$this_dir}/data/#{file}").realpath.to_s
+      throw "test file #{file} does not exist" unless File.exist? file_path
+      File.symlink(file_path,"#{@tmp_dir}/#{file}")
+    end
 
-		input_file="#{@tmp_dir}/tiny.mzML"
-		db_file = "#{@tmp_dir}/testdb.fasta"
+    @tiny_input="#{@tmp_dir}/tiny.mzML"
+    @db_file = "#{@tmp_dir}/testdb.fasta"
+    @output_file="#{@tmp_dir}/tiny_tandem.tandem"
 
-		output_file="#{@tmp_dir}/tiny_tandem.tandem"
+  end
 
-		output_file.should_not exist?
+end
 
-		puts %x[tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
+def tandem_not_installed
+	installed=(%x[which tandem].length>0)
+	installed=(%x[which tandem.exe].length>0) unless installed
+	!installed
+end
+
+describe "The xtandem_search command", :broken => false do
+
+	include_context :tiny_inputs_and_outputs
+
+	it "should print help text if no arguments are given" do
+		output=%x[tandem_search.rb]
+		expect(output).to match("Usage: tandem_search.rb")
+	end
+
+	it "should run a search using absolute pathnames", :dependencies_not_installed => tandem_not_installed do
+
+		%x[tandem_search.rb -d #{@db_file} #{@tiny_input} -o #{@output_file}]
 		
-		output_file.should be_a_non_empty_file
+		expect(@output_file).to exist?
+		# expect(@output_file).not_to contain_text("default from tandem_search.rb")
 	end
 
 
-	it "should run a search using relative pathnames" do
+	it "should run a search using relative pathnames", :dependencies_not_installed => tandem_not_installed do
+
 		Dir.chdir(@tmp_dir)
-		# Get test input file/s
 		input_file="tiny.mzML"
 		db_file = "testdb.fasta"
 
 		output_file="tiny_tandem.tandem"
-		output_file.should_not exist?
+		expect(output_file).not_to exist?
 
-		%x[tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
+		%x[export PATH=#{@mocks_path}:$PATH; tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
 		
-		output_file.should be_a_non_empty_file
+		expect(output_file).to exist?
+		# expect(output_file).not_to contain_text("default from tandem_search.rb")		
 	end
 
+
+	it "should output spectra when requested" do
+
+		# puts %x[tandem_search.rb -d #{@db_file} #{@tiny_input} -o #{@output_file} --output-spectra]
+		# puts %x[cat #{@output_file}]
+
+		# expect(@output_file).to contain_text("spectrum, fragment monoisotopic mass error\">#{fme}")
+	
+	end
+
+
 end
+

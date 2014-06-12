@@ -8,7 +8,7 @@ describe GalaxyStager do
   let(:tempdir) { Dir.mktmpdir }
 
   before do
-  	Dir.stub(:pwd) { tempdir }
+    allow(Dir).to receive(:pwd).and_return( tempdir )
   end
 
   after do
@@ -16,15 +16,15 @@ describe GalaxyStager do
   end
 
   it "staged file should use original basename if none specified" do
-  	File.basename(GalaxyStager.new(file).staged_path).should eq(input_name)
+  	expect(File.basename(GalaxyStager.new(file).staged_path)).to eq(input_name)
   end
 
   it "should allow specifing name of staged file" do
-	File.basename(GalaxyStager.new(file, :name =>'test.pep.xml').staged_path).should eq('test.pep.xml')  	
+	   expect(File.basename(GalaxyStager.new(file, :name =>'test.pep.xml').staged_path)).to eq('test.pep.xml')  	
   end
 
   it "should allow specifing new extension for staged file" do 
-	File.basename(GalaxyStager.new(file, :extension =>'.pep.xml').staged_path).should eq("#{input_name}.pep.xml")
+	   expect(File.basename(GalaxyStager.new(file, :extension =>'.pep.xml').staged_path)).to eq("#{input_name}.pep.xml")
   end
 
 end

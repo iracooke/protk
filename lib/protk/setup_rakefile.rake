@@ -357,9 +357,9 @@ file tandem_installed_file => [@build_dir,"#{@download_dir}/#{tandem_packagefile
     tandem_dirname = "#{tandem_packagefile.chomp('.zip')}"
 
     if ( tandem_platform=="linux") #Must compile
-    	tandem_src_dir = "#{@build_dir}/#{tandem_dirname}/#{tandem_dirname}/src/"
+    	tandem_src_dir = "#{@build_dir}/#{tandem_dirname}/src/"
     	sh %{cd #{tandem_src_dir}; make}
-    	sh %{cd #{@build_dir}; cp -r ./#{tandem_dirname}/#{tandem_dirname}/bin  #{env.tandem_root}/}
+    	sh %{cd #{@build_dir}; cp -r ./#{tandem_dirname}/bin  #{env.tandem_root}/}
     else
     	sh %{cd #{@build_dir}; cp -r ./#{tandem_packagefile.chomp('.zip')}/* #{env.tandem_root}/}
     	sh %{chmod u+x #{env.gpmtandem}}

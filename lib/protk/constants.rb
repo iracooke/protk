@@ -154,7 +154,7 @@ class Constants
 
     ENV['PATH']=protk_paths.join(":")
 
-    
+    # puts "Path #{ENV['PATH']}"
     throw "No data found in config file" unless @env!=nil
     @info_level=default_config_yml['message_level']
     

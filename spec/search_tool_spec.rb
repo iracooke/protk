@@ -5,22 +5,22 @@ describe SearchTool do
 
   it "should yield itself when intialised in a block" do
     st=SearchTool.new do |st|
-      st.class.should==SearchTool
+      expect(st.class).to eq(SearchTool)
     end    
   end 
   
   it "should permit additional options to be defined" do
     
     st=SearchTool.new({:database=>true})
-    st.option_parser.class.should==OptionParser
-    st.database.class.should==String
+    expect(st.option_parser.class).to eq(OptionParser)
+    expect(st.database.class).to eq(String)
 
     st.options.test=false
     st.option_parser.on( '-t', '--test', 'a test option' ) do 
       st.options.test = true
     end
     
-    st.options.test.class.should==FalseClass
+    expect(st.options.test.class).to eq(FalseClass)
     
   end
   
@@ -28,7 +28,7 @@ describe SearchTool do
     
     st=SearchTool.new({:database=>true})
     
-    st.database.class.should==String
+    expect(st.database.class).to eq(String)
     
   end
     

@@ -8,7 +8,7 @@ describe CommandRunner do
     genv=Constants.new
     
     cr=CommandRunner.new(genv)
-    cr.run_local("ls").should==0
+    expect(cr.run_local("ls")).to eq(0)
 
   end
   

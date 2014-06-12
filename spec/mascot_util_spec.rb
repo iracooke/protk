@@ -5,7 +5,7 @@ require 'spec_helper'
 
 describe MascotUtil do
 	it "should successfully read the basename of its original input file" do
-		MascotUtil.input_basename("#{$this_dir}/data/mascot_results.dat").should=="dataset_600"
+		expect(MascotUtil.input_basename("#{$this_dir}/data/mascot_results.dat")).to eq("dataset_600")
 	end
 
 	describe "Exported PepXML" do

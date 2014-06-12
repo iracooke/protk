@@ -13,6 +13,15 @@ require 'optparse'
 require 'pathname'
 require 'protk/tool'
 
+class FastaDatabase
+  attr :name
+  attr :path
+  def initialize(name,path)
+    @name=name
+    @path=path
+  end
+end
+
 class SearchTool < Tool
 
   # Initializes commandline options common to all search tools.
@@ -30,10 +39,7 @@ class SearchTool < Tool
     end
     
     if ( option_support.include? :enzyme )
-       @options.enzyme = "Trypsin"
-       @option_parser.on('--enzyme enz', 'Enzyme') do |enz|
-         @options.enzyme=enz
-       end
+      add_value_option(:enzyme,"Trypsin",['--enzyme enz', 'Enzyme'])
     end
 
     if ( option_support.include? :modifications )
@@ -56,27 +62,21 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :mass_tolerance_units )
+
       @options.fragment_tolu="Da"
       @option_parser.on('--fragment-ion-tol-units tolu', 'Fragment ion mass tolerance units (Da or mmu). Default=Da' ) do |tolu|
         @options.fragment_tolu = tolu
       end
-        
-      @options.precursor_tolu="ppm"
-      @option_parser.on('--precursor-ion-tol-units tolu', 'Precursor ion mass tolerance units (ppm or Da). Default=ppm' ) do |tolu|
-        @options.precursor_tolu = tolu
-      end
+      
+      add_value_option(:precursor_tolu,"ppm",['--precursor-ion-tol-units tolu', 'Precursor ion mass tolerance units (ppm or Da). Default=ppm'])
+
     end
 
     if ( option_support.include? :mass_tolerance )
-      @options.fragment_tol=0.65
-      @option_parser.on( '-f', '--fragment-ion-tol tol', 'Fragment ion mass tolerance (unit dependent). Default=0.65' ) do |tol|
-        @options.fragment_tol = tol
-      end
-      
-      @options.precursor_tol=200
-      @option_parser.on( '-p', '--precursor-ion-tol tol', 'Precursor ion mass tolerance in (ppm if precursor search type is monoisotopic or Da if it is average). Default=200' ) do |tol|
-        @options.precursor_tol = tol.to_f
-      end
+
+      add_value_option(:fragment_tol,0.65,['-f', '--fragment-ion-tol tol', 'Fragment ion mass tolerance (unit dependent). Default=0.65'])
+      add_value_option(:precursor_tol,200,['-p','--precursor-ion-tol tol', 'Precursor ion mass tolerance in (ppm if precursor search type is monoisotopic or Da if it is average). Default=200'])
+
     end
     
     if ( option_support.include? :precursor_search_type )
@@ -94,17 +94,11 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :missed_cleavages )
-      @options.missed_cleavages=2
-      @option_parser.on( '-v', '--num-missed-cleavages num', 'Number of missed cleavages allowed' ) do |num| 
-        @options.missed_cleavages = num
-      end
+      add_value_option(:missed_cleavages,2,['-v', '--num-missed-cleavages num', 'Number of missed cleavages allowed'])
     end
 
     if ( option_support.include? :cleavage_semi )
-      @options.cleavage_semi=true
-      @option_parser.on( '--no-cleavage-semi', 'Dont allow up to 1 non tryptic terminus on peptides' ) do  
-        @options.cleavage_semi=false
-      end
+      add_boolean_option(:cleavage_semi,false,['--cleavage-semi', 'Search for peptides with up to 1 non-enzymatic cleavage site'])
     end
 
     if ( option_support.include? :respect_precursor_charges )
@@ -119,6 +113,10 @@ class SearchTool < Tool
         @option_parser.on('--searched-ions si', 'Ion series to search (default=b,y)' ) do |si|
           @options.searched_ions = si
         end
+    end
+
+    if ( option_support.include? :multi_isotope_search )
+      add_boolean_option(:multi_isotope_search,false,["--multi-isotope-search","Expand parent mass window to include windows around neighbouring isotopic peaks"])
     end
 
     if ( option_support.include? :num_peaks_for_multi_isotope_search )
@@ -155,6 +153,9 @@ class SearchTool < Tool
         @options.maldi=true
       end
     end
+
+    @option_parser.summary_width=40
+
       
   end
   
@@ -171,8 +172,38 @@ class SearchTool < Tool
   # Based on the database setting and global database path, find the most current version of the required database
   # This function returns the name of the database with an extension appropriate to the database type
   #
+  # TODO: Deprecate this
   def current_database(db_type,db=@options.database)
     return Constants.new.current_database_for_name(db)
   end
-    
+
+  # Full path to a fasta database for this search
+  # If specified db was a real file it returns the path to that file
+  # If a named db it returns the full path to the database for the named db
+  #
+  # def database_path
+  #   case
+  #     when Pathname.new(@options.database).exist? # It's an explicitly named db  
+  #       db_path=Pathname.new(@options.database).realpath.to_s
+  #     else
+  #       db_path=Constants.new.current_database_for_name @options.database
+  #   end
+  #   db_path
+  # end
+
+  def database_info
+    case
+      when Pathname.new(@options.database).exist? # It's an explicitly named db  
+        db_path=Pathname.new(@options.database).realpath.to_s
+        db_name=Pathname.new(@options.database).basename.to_s
+      else
+        db_path=Constants.new.current_database_for_name @options.database
+        db_path=@options.database
+    end
+    FastaDatabase.new(db_name,db_path)
+  end
+
 end
+
+
+

@@ -18,7 +18,9 @@ class Tool
   
   # The option parser used to parse command-line options. 
   #
-  attr :option_parser, false
+  attr :option_parser
+
+  attr :options_defined_by_user
 
   # Prefix for background jobs
   # x = X!Tandem, o=OMSSA, p="Phenyx", m="Mascot"
@@ -32,6 +34,14 @@ class Tool
     @jobid_prefix=p
   end
 
+  def supported_options
+    os_hash=@options.to_h
+    # Remove entries entirely related to internal use
+    internal_keys=[:library, :inplace, :encoding, :transfer_type, :verbose]
+    os_hash.delete_if { |key,val| internal_keys.include? key }
+    os_hash
+  end
+
   # Provides direct access to options through methods of the same name
   #
   def method_missing(meth, *args, &block)
@@ -43,9 +53,23 @@ class Tool
   end
   
   
+  def add_value_option(symbol,default_value,opts)
+    @options[symbol]=default_value
+    @option_parser.on(*opts) do |val|
+      @options[symbol]=val
+      @options_defined_by_user[symbol]=opts
+    end
+  end
   
-  
-  
+  def add_boolean_option(symbol,default_value,opts)
+    @options[symbol]=default_value
+    @option_parser.on(*opts) do 
+      @options[symbol]=!default_value
+      @options_defined_by_user[symbol]=opts
+    end
+  end
+
+
   # Creates an empty options object to hold commandline options
   # Also creates an option_parser with default options common to all tools
   #
@@ -58,6 +82,8 @@ class Tool
     options.transfer_type = :auto
     options.verbose = false
     
+    @options_defined_by_user={}
+
     @option_parser=OptionParser.new do |opts|
 
       if ( option_support.include? :prefix_suffix)
@@ -89,15 +115,6 @@ class Tool
         end
         
       end
-
-      if ( option_support.include? :background)
-
-        @options.background = false
-        opts.on( '-z', '--background', 'Run jobs in the background using pbs' ) do  
-          @options.background = true
-        end
-        
-      end
       
        
       opts.on( '-h', '--help', 'Display this screen' ) do
@@ -106,7 +123,7 @@ class Tool
       end
        
     end
-    
+
   end
   
 
@@ -167,30 +184,10 @@ class Tool
    
    # Run the search tool using the given command string and global environment
    #
-   def run(cmd,genv,job_params=nil,jobscript_path=nil,autodelete=true)
-     if ( @options.background )
-       throw "Error: Background option was selected but this host does not support background jobs" unless genv.has_pbs
-       # Send this job off to be run in a batch queuer
-       
-       cmd_runner=CommandRunner.new(genv)
-       
- 
-       
-       cmd_runner.run_batch(cmd,job_params,jobscript_path,autodelete)
-       
-     else 
-       cmd_runner=CommandRunner.new(genv)
-       cmd_runner.run_local(cmd)
-     end
+   def run(cmd,genv,autodelete=true)
+    cmd_runner=CommandRunner.new(genv)
+    cmd_runner.run_local(cmd)
    end
    
-   def jobid_from_filename(filename)
-      jobid="protk"
-      jobnum_match=filename.match(/(.{1,10})\.d/)
-      if (jobnum_match!=nil)
-        jobid="#{self.jobid_prefix}#{jobnum_match[1]}"
-      end
-      return jobid
-    end
   
 end
