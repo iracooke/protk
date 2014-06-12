@@ -142,6 +142,10 @@ describe TandemSearchTool do
 			it_behaves_like "an xtandem option", "yes","yes","no"
 		end
 
+		describe ["protein, quick acetyl","--acetyl-nterm"] do
+			it_behaves_like "an xtandem option", "yes","yes","no"
+		end
+
 		describe ["output, spectra", "--output-spectra"] do
 			it_behaves_like "an xtandem option", "yes","yes","no"
 		end

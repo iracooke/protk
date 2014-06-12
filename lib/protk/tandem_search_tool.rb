@@ -34,7 +34,8 @@ class TandemSearchTool < SearchTool
 			:missed_cleavages,
 			:cleavage_semi,
 			:methionine_oxidation,
-			:glyco
+			:glyco,
+			:acetyl_nterm
   			])
 
 		@xtandem_keys_with_single_multiplicity = {
@@ -44,6 +45,7 @@ class TandemSearchTool < SearchTool
 			:precursor_tolu => "spectrum, parent monoisotopic mass error units",
 			:multi_isotope_search => "spectrum, parent monoisotopic mass isotope error",
 			:fragment_tolu => "spectrum, fragment monoisotopic mass error units",
+			:acetyl_nterm => "protein, quick acetyl",
 			:output_spectra => "output, spectra",
 			:threads => "spectrum, threads"
 		}

@@ -119,6 +119,10 @@ class SearchTool < Tool
       add_boolean_option(:glyco,false,['-g','--glyco', 'Expect N-Glycosylation modifications as variable mod in a search or as a parameter when building statistical models'])
     end
 
+    if ( option_support.include? :acetyl_nterm)
+      add_boolean_option(:acetyl_nterm,false,['-y','--acetyl-nterm', 'Expect N-terminal acetylation as a variable mod in a search or as a parameter when building statistical models'])
+    end
+
     if ( option_support.include? :methionine_oxidation)
       add_boolean_option(:methionine_oxidation,false,['-m', '--methionineo', 'Expect Oxidised Methionine modifications as variable mod in a search'])
       # @options.methionine_oxidation = false
