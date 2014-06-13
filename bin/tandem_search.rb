@@ -35,6 +35,8 @@ tandem_bin=%x[which tandem.exe].chomp unless tandem_bin && tandem_bin.length>0
 #
 ARGV.each do |filename|
 
+  throw "Input file #{filename} does not exist" unless File.exist?(filename)
+
   input_path=Pathname.new(filename.chomp).realpath.to_s
   output_path="#{search_tool.output_base_path(input_path)}.tandem"
 

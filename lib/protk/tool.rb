@@ -181,7 +181,6 @@ class Tool
    end
    
    
-   
    # Run the search tool using the given command string and global environment
    #
    def run(cmd,genv,autodelete=true)

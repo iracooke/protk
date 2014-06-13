@@ -30,9 +30,12 @@ end
 binpath=%x[which Tandem2XML]
 binpath.chomp!
 
-ARGV.each do |file_name| 
 
-  input_path=Pathname.new(file_name.chomp).realpath.to_s
+ARGV.each do |filename| 
+
+  throw "Input file #{filename} does not exist" unless File.exist?(filename)
+
+  input_path=Pathname.new(filename.chomp).realpath.to_s
   output_path="#{input_path}.pep.xml"
 
   if ( tool.explicit_output )
@@ -41,7 +44,8 @@ ARGV.each do |file_name|
     final_output_path=output_path
   end
 
-  cmd = "#{binpath} #{input_path} #{output_path}"
+  throw "Unable to find Tandem2XML" unless binpath=~/Tandem2XML/
+  cmd = "#{binpath} #{input_path} #{final_output_path}"
     
   code = tool.run(cmd,genv)
   throw "Command #{cmd} failed with exit code #{code}" unless code==0
