@@ -78,66 +78,66 @@ Many protk tools have equivalent galaxy wrappers available on the [galaxy toolsh
 
 1. Ensure you have a working install of galaxy. 
 
-[Full instructions](https://wiki.galaxyproject.org/Admin/GetGalaxy) are available on the official Galaxy project wiki page.  We assume you have galaxy installed in a directory called galaxy-dist.
+	[Full instructions](https://wiki.galaxyproject.org/Admin/GetGalaxy) are available on the official Galaxy project wiki page.  We assume you have galaxy installed in a directory called galaxy-dist.
 
 2. Install rvm if you haven't allready.  See [here](https://rvm.io/) for more information.
 
-```bash
-	curl -sSL https://get.rvm.io | bash -s stable
-```
+	```bash
+		curl -sSL https://get.rvm.io | bash -s stable
+	```
 
 3. Install a compatible version of ruby using rvm. Ruby 2.0 or higher is required
 
-```bash
-	rvm install 2.1
-```
+	```bash
+		rvm install 2.1
+	```
 
 4.  Install protk in an isolated gemset using rvm.
 
-This sets up an isolated environment where only a specific version of protk is available.  We name the environment according to the protk version (1.2.6 in this example).
+	This sets up an isolated environment where only a specific version of protk is available.  We name the environment according to the protk version (1.2.6 in this example).
 
-```bash
-	rvm 2.1
-	rvm gemset create protk1.2.6
-	rvm use 2.1@protk1.2.6
-	gem install protk -v 1.2.6
-```
+	```bash
+		rvm 2.1
+		rvm gemset create protk1.2.6
+		rvm use 2.1@protk1.2.6
+		gem install protk -v 1.2.6
+	```
 
 5. Configure Galaxy's tool dependency directory.
 
-Create a directory for galaxy tool dependencies. This must be outside the galaxy-dist directory. I usually create a directory called tool_dependencies alongside galaxy-dist.
-Open the file `universe_wsgi.ini` in the galaxy-dist directory and set the configuration option `tool_dependency_dir` to point to the directory you just created, eg;
+	Create a directory for galaxy tool dependencies. This must be outside the galaxy-dist directory. I usually create a directory called tool_dependencies alongside galaxy-dist.
+	Open the file `universe_wsgi.ini` in the galaxy-dist directory and set the configuration option `tool_dependency_dir` to point to the directory you just created, eg;
 
-```
-	tool_dependency_dir = ../tool_dependencies
-```
+	```
+		tool_dependency_dir = ../tool_dependencies
+	```
 
 6.  Create a tool dependency that sets up protk in the environment created by rvm
 
-In this example we create the environment for protk `1.2.6` as this was the version installed in step 4 above.
+	In this example we create the environment for protk `1.2.6` as this was the version installed in step 4 above.
 
-```bash
-	cd <tool_dependency_dir>
-	mkdir protk
-	cd protk
-	mkdir 1.2.6
-	ln -s 1.2.6 default
-	echo `rvm env --path 2.1@protk1.2.6` > 1.2.6/env.sh
-```
+	```bash
+		cd <tool_dependency_dir>
+		mkdir protk
+		cd protk
+		mkdir 1.2.6
+		ln -s 1.2.6 default
+		echo `rvm env --path 2.1@protk1.2.6` > 1.2.6/env.sh
+	```
 
 7. Keep things up to date
 
-When new versions of galaxy tools are released they may change the version of protk that is required.  Check the release notes on the tool to see what is needed.  For example, if upgrading to version 1.2.7 you would do the following;
+	When new versions of galaxy tools are released they may change the version of protk that is required.  Check the release notes on the tool to see what is needed.  For example, if upgrading to version 1.2.7 you would do the following;
 
-```bash
-	rvm 2.1
-	rvm gemset create protk1.2.7
-	rvm use 2.1@protk1.2.7
-	gem install protk -v 1.2.7
-	cd <tool_dependency_dir>/protk/
-	mkdir 1.2.7
-	echo `rvm env --path 2.1@protk1.2.7` > 1.2.7/env.sh
-	ln -s 1.2.7 default
-```
+	```bash
+		rvm 2.1
+		rvm gemset create protk1.2.7
+		rvm use 2.1@protk1.2.7
+		gem install protk -v 1.2.7
+		cd <tool_dependency_dir>/protk/
+		mkdir 1.2.7
+		echo `rvm env --path 2.1@protk1.2.7` > 1.2.7/env.sh
+		ln -s 1.2.7 default
+	```
 
 
