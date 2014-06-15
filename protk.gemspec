@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'rest-client','~> 1.6.7', '>= 1.6.7'
   s.add_runtime_dependency 'net-ftp-list',"~>3.2.5" ,">=3.2.5"
-  s.add_runtime_dependency 'spreadsheet',"~>0.7.4", ">=0.7.4"
   s.add_runtime_dependency 'libxml-ruby',"~>2.7", ">=2.7.0"
 
   s.add_development_dependency 'rspec', '~> 3.0'
@@ -29,16 +28,18 @@ Gem::Specification.new do |s|
 
   s.executables = ['protk_setup.rb','manage_db.rb']
   s.executables = s.executables + ['tandem_search.rb','mascot_search.rb','omssa_search.rb','msgfplus_search.rb']
-  s.executables = s.executables + ['mascot_to_pepxml.rb','tandem_to_pepxml.rb','file_convert.rb']
+  s.executables = s.executables + ['mascot_to_pepxml.rb','tandem_to_pepxml.rb']
+  #,'file_convert.rb']
   s.executables = s.executables + ['make_decoy.rb']
   s.executables = s.executables + ['correct_omssa_retention_times.rb','repair_run_summary.rb','add_retention_times.rb']
   s.executables = s.executables + ['peptide_prophet.rb','interprophet.rb','protein_prophet.rb']
-  s.executables = s.executables + ['pepxml_to_table.rb','xls_to_table.rb','annotate_ids.rb']
+  s.executables = s.executables + ['pepxml_to_table.rb']
+  #,'xls_to_table.rb','annotate_ids.rb']
   s.executables = s.executables + ['unimod_to_loc.rb','generate_omssa_loc.rb']
   s.executables = s.executables + ['uniprot_mapper.rb']
   s.executables = s.executables + ['feature_finder.rb','toppas_pipeline.rb']
   s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb']
-  s.executables = s.executables + ['uniprot_annotation.rb','protxml_to_table.rb']
-  
+  s.executables = s.executables + ['protxml_to_table.rb']
+  # 'uniprot_annotation.rb',
 end
 
