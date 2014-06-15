@@ -148,7 +148,7 @@ class Tool
    end
 
 
-   def check_options(mandatory=[])
+   def check_options(require_input_file=false,mandatory=[])
     # Checking for required options
     begin
       self.option_parser.parse!
@@ -160,9 +160,16 @@ class Tool
       end                                                              
     rescue OptionParser::InvalidOption, OptionParser::MissingArgument      
       puts $!.to_s                                                           
-      puts tool.option_parser                                              
+      puts self.option_parser                                              
       return false                                                         
     end
+
+    if ( require_input_file && ARGV[0].nil? )
+      puts "You must supply an input file"
+      puts self.option_parser 
+      return false
+    end
+
     return true
    end
 

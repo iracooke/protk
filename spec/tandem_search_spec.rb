@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'commandline_shared_examples.rb'
+
 
 RSpec.shared_context :tiny_inputs_and_outputs do 
 
@@ -29,9 +31,8 @@ describe "The xtandem_search command", :broken => false do
 
 	include_context :tiny_inputs_and_outputs
 
-	it "should print help text if no arguments are given" do
-		output=%x[tandem_search.rb]
-		expect(output).to match("Usage: tandem_search.rb")
+	describe ["tandem_search.rb"] do
+		it_behaves_like "a protk tool"
 	end
 
 	it "should run a search using absolute pathnames", :dependencies_not_installed => tandem_not_installed do

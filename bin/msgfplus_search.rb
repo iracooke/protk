@@ -18,8 +18,16 @@ input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new([:database,:explicit_output,:over_write,:enzyme,
-  :modifications,:instrument,:mass_tolerance_units,:mass_tolerance,:cleavage_semi])
+search_tool=SearchTool.new([
+  :database,
+  :explicit_output,
+  :over_write,
+  :enzyme,
+  :modifications,
+  :instrument,
+  :mass_tolerance_units,
+  :mass_tolerance,
+  :cleavage_semi])
 
 search_tool.jobid_prefix="p"
 search_tool.option_parser.banner = "Run an MSGFPlus msms search on a set of msms spectrum input files.\n\nUsage: msgfplus_search.rb [options] file1.mzML file2.mzML ..."

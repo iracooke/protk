@@ -68,7 +68,7 @@ tool.option_parser.on('--prot-threshold prob','Protein Probability Threshold (De
   tool.options.protein_probability_threshold=thresh.to_f
 end
 
-exit unless tool.check_options [:protxml,:database]
+exit unless tool.check_options(false,[:protxml,:database])
 
 gff_out_file="peptides.gff"
 if ( tool.explicit_output != nil)

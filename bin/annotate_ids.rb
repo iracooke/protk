@@ -3,7 +3,9 @@
 # This file is part of Protk
 # Created by Ira Cooke 21/7/2011
 #
-# Takes an input file with a list of identified proteins and creates a table with swissprot/uniprot database details in various columns for each protein in the input file.
+# Takes an input file with a list of identified proteins and 
+# creates a table with swissprot/uniprot database details in 
+# various columns for each protein in the input file.
 #
 #
 require 'protk/constants'
@@ -11,21 +13,21 @@ require 'protk/command_runner'
 require 'protk/prophet_tool'
 require 'protk/protein_annotator'
 
-
-
 # Setup specific command-line options for this tool. Other options are inherited from Tool
 #
 id_tool=ProphetTool.new([:explicit_output,:over_write,:prefix_suffix])
 id_tool.option_parser.banner = "Run ID annotation on a prot.xml input file.\n\nUsage: annotate_ids.rb [options] file1.prot.xml"
 id_tool.options.output_prefix="annotated_"
 
+id_tool.add_value_option(:input_format,nil,['-I', '--input-format format', 'Format of input file'])
 
-id_tool.options.input_format=nil
-id_tool.option_parser.on( '-I', '--input-format format', 'Format of input file' ) do |format| 
-  id_tool.options.input_format = format
-end
 
-exit unless id_tool.check_options
+# id_tool.options.input_format=nil
+# id_tool.option_parser.on( '-I', '--input-format format', 'Format of input file' ) do |format| 
+#   id_tool.options.input_format = format
+# end
+
+exit unless id_tool.check_options(true)
 
 # Obtain a global environment object
 genv=Constants.new

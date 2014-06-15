@@ -136,7 +136,8 @@ Many protk tools have equivalent galaxy wrappers available on the [galaxy toolsh
 		gem install protk -v 1.2.7
 		cd <tool_dependency_dir>/protk/
 		mkdir 1.2.7
-		echo `rvm env --path 2.1@protk1.2.7` > 1.2.7/env.sh
+		rvmenv=`rvm env --path 2.1@protk1.2.7`
+		echo ". $rvmenv" > 1.2.7/env.sh
 		ln -s 1.2.7 default
 	```
 

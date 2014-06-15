@@ -18,13 +18,7 @@ include LibXML
 genv=Constants.new
 search_tool=TandemSearchTool.new()
 
-exit unless search_tool.check_options 
-
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts search_tool.option_parser 
-    exit
-end
+exit unless search_tool.check_options(true)
 
 # Our environment should be setup so that tandem or tandem.exe is on the path
 #
