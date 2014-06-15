@@ -84,51 +84,28 @@ class Tool
     
     @options_defined_by_user={}
 
-    @option_parser=OptionParser.new do |opts|
+    @option_parser=OptionParser.new do |opts|      
 
-      if ( option_support.include? :prefix_suffix)
-      
-        @options.output_prefix = ""
-        opts.on( '-b', '--output-prefix pref', 'A string to prepend to the name of output files' ) do |prefix|
-          @options.output_prefix = prefix
-        end
-
-        @options.output_suffix = ""
-        opts.on( '-e', '--output-suffix suff', 'A string to append to the name of output files' ) do |suffix|
-          @options.output_suffix = suffix
-        end
-        
-      end
-      
-      if ( option_support.include? :explicit_output )
-        @options.explicit_output = nil
-        opts.on( '-o', '--output out', 'An explicitly named output file.' ) do |out|
-          @options.explicit_output = out
-        end
-      end
-         
-      if ( option_support.include? :over_write)
-            
-        @options.over_write=false
-        opts.on( '-r', '--replace-output', 'Dont skip analyses for which the output file already exists' ) do  
-          @options.over_write = true
-        end
-        
-      end
-      
-       
       opts.on( '-h', '--help', 'Display this screen' ) do
         puts opts
         exit
       end
-       
+    end
+
+    if ( option_support.include? :prefix_suffix)
+      add_value_option(:output_prefix,"",['-b','--output-prefix pref', 'A string to prepend to the name of output files'])
+      add_value_option(:output_suffix,"",['-e', '--output-suffix suff', 'A string to append to the name of output files'])       
+    end
+
+    if ( option_support.include? :over_write)
+      add_boolean_option(:over_write,false,['-r', '--replace-output', 'Dont skip analyses for which the output file already exists'])        
+    end
+
+    if ( option_support.include? :explicit_output )
+      add_value_option(:explicit_output,nil,['-o', '--output out', 'An explicitly named output file.'])
     end
 
   end
-  
-
-
-
 
    # Create and return a full base path (without extension) representing the output file for this analysis
    # Optionally provide the extension to be removed (if not provided it will be inferred)

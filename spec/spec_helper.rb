@@ -35,20 +35,17 @@ RSpec::Matchers.define :contain_text  do |match_text|
 end
 
 
-RSpec.shared_context :tiny_inputs_and_outputs do 
+RSpec.shared_context :tmp_dir_with_fixtures do |filenames|
 
   before(:each) do
+
     @tmp_dir=Dir.mktmpdir
 
-    ["tiny.mzML","testdb.fasta"].each do |file| 
+    filenames.each do |file| 
       file_path=Pathname.new("#{$this_dir}/data/#{file}").realpath.to_s
       throw "test file #{file} does not exist" unless File.exist? file_path
       File.symlink(file_path,"#{@tmp_dir}/#{file}")
     end
-
-    @tiny_input="#{@tmp_dir}/tiny.mzML"
-    @db_file = "#{@tmp_dir}/testdb.fasta"
-    @output_file="#{@tmp_dir}/tiny_tandem.tandem"
 
   end
 

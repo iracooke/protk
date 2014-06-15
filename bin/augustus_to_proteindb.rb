@@ -10,20 +10,16 @@ require 'protk/tool'
 require 'bio'
 
 tool=Tool.new([:explicit_output])
-tool.option_parser.banner = "Create a protein database from Augustus gene prediction output that is suitable for later processing by proteogenomics tools.\n\nUsage: augustus_to_proteindb.rb [options] augustus.gff3"
+tool.option_parser.banner = "Create a protein database from Augustus gene prediction \
+output that is suitable for later processing by proteogenomics tools.\
+\n\nUsage: augustus_to_proteindb.rb [options] augustus.gff3"
 
-tool.options.add_transcript_info=false
-tool.option_parser.on( '--info', 'Include CDS coordinates' ) do  
-  tool.options.add_transcript_info=true
-end
+tool.add_value_option(:explicit_output,nil,['-o', '--output out', 'An explicitly named output file. \
+  The default is to write to standard output'])
+tool.add_boolean_option(:add_transcript_info,false,['--info','Include CDS Coordinates'])
 
-exit unless tool.check_options 
 
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts tool.option_parser 
-    exit
-end
+exit unless tool.check_options(true)
 
 inname=ARGV.shift
 

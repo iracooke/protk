@@ -17,14 +17,14 @@ include LibXML
 #
 genv=Constants.new
 
-tool=Tool.new([:over_write])
+tool=Tool.new([:over_write,:explicit_output])
 tool.option_parser.banner = "Look up retention times in a raw file and \
 add them to a pepxml file.\n\nUsage: add_retention_times.rb [options] file1.pep.xml file2.mgf"
 
 exit unless tool.check_options 
 
 if ( ARGV[0].nil? || ARGV[1].nil? )
-    puts "You must supply an input file"
+    puts "You must supply an input pepxml file and an input mgf file"
     puts tool.option_parser 
     exit
 end
@@ -50,8 +50,6 @@ if not pepxml_doc.root.namespaces.default
   pepxml_ns_prefix=""
   pepxml_ns=nil
 end
-
-
 
 queries=pepxml_doc.find("//#{pepxml_ns_prefix}spectrum_query", pepxml_ns)
 
@@ -86,4 +84,10 @@ queries.each do |query|
 	end
 end
 
-pepxml_doc.save(pepxml_file)
+if tool.explicit_output.nil? 
+	pepxml_doc.save(pepxml_file)	
+else
+	pepxml_doc.save(tool.explicit_output)
+end
+
+
