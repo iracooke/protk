@@ -21,7 +21,7 @@ def login(mascot_cgi,username,password)
     authdict[:action]="login"
     authdict[:savecookie]="1"
 
-    p "Logging in to #{mascot_cgi}/login.pl"
+    $genv.log("Logging in to #{mascot_cgi}/login.pl",:info)
 
     response = RestClient.post "#{mascot_cgi}/login.pl", authdict
 
@@ -40,7 +40,7 @@ def download_datfile(mascot_cgi,results_date,results_file,explicit_output,openur
         output_path="#{results_file}"
     end
 
-    puts "Writing output to #{output_path}"
+    $genv.log("Writing output to #{output_path}",:info)
 
     require 'open-uri'
     open("#{output_path}", 'wb') do |file|
@@ -157,7 +157,7 @@ search_tool.option_parser.on( '--timeout seconds', 'Timeout for sending data fil
     search_tool.options.timeout=seconds.to_i
 end
 
-exit unless search_tool.check_options 
+exit unless search_tool.check_options
 
 if ( ARGV[0].nil? && search_tool.download_only.nil?)
     puts "You must supply an input file"

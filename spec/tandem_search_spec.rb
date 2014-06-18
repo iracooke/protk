@@ -40,7 +40,7 @@ describe "The xtandem_search command", :broken => false do
 		output_file="tiny_tandem.tandem"
 		expect(output_file).not_to exist?
 
-		%x[export PATH=#{@mocks_path}:$PATH; tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
+		%x[tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
 		
 		expect(output_file).to exist?
 		expect(output_file).not_to contain_text("default from tandem_search.rb")		

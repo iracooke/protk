@@ -76,6 +76,16 @@ class Constants
       "#{@protk_dir}/tools/tandem"
   end
 
+  def makeblastdb
+    makeblastdbpath=%x[which makeblastdb]
+    makeblastdbpath.chomp
+  end
+
+  def mascot2xml
+    path=%x[which Mascot2XML]
+    path.chomp
+  end
+
   def protein_database_root
     path=@env['protein_database_root']
     if ( path =~ /^\// )

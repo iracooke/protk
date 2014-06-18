@@ -24,7 +24,9 @@
 #define MAX_LINE_LENGTH 20000 /* large enough to read in long header lines */
 
 
-static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_length_in,VALUE output_file_in,char *prefix_string_in) {
+static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
+  VALUE db_length_in,VALUE output_file_in,char *prefix_string_in) {
+  
   char *input_file = RSTRING_PTR(input_file_in);
   long sequences_to_generate = NUM2INT(db_length_in);
   char * output_file = RSTRING_PTR(output_file_in);
@@ -50,10 +52,26 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
   /* scanning sequence database */
   
   strcpy(infile,input_file);
-  if ((inp = fopen(infile, "r"))==NULL) {printf("error opening sequence database %s\n",infile);return -1;}
-  printf("scanning sequence database \n%s\n",infile);fflush(stdout);
+
+  if ((inp = fopen(infile, "r"))==NULL) {
+    printf("error opening sequence database %s\n",infile);return -1;
+  }
+
+  printf("scanning sequence database \n%s\n",infile);
+  fflush(stdout);
+
   i=0;n=0;k=0;
-  while (fgets(line, MAX_LINE_LENGTH, inp) != NULL) {i++; if(line[0]=='>') {if (!(n%1000)) printf(".");fflush(stdout); n++;} }
+
+  while (fgets(line, MAX_LINE_LENGTH, inp) != NULL) {
+    i++; 
+    if(line[0]=='>') {
+      if (!(n%1000)) {
+        printf(".");
+        fflush(stdout); 
+        n++;
+      }
+    } 
+  }
   
   n_sequences=n;
 
@@ -65,11 +83,17 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
   index=(char**)malloc(sizeof(char*)*n_sequences);
   index[0]=sequence; /* set first index pointer to beginning of first database sequence */
   
-  if ((inp = fopen(infile, "r"))==NULL) {printf("error opening sequence database %s\n",infile);return -1;}
+  if ((inp = fopen(infile, "r"))==NULL) {
+    printf("error opening sequence database %s\n",infile);
+    return -1;
+  }
 
-  printf("done\nreading sequence database \n%s\n",infile);fflush(stdout);    
+  printf("done\nreading sequence database \n%s\n",infile);
+  fflush(stdout);    
+  
   n=-1;
   strcpy(temp_sequence,"\0");
+  
   while (fgets(line, MAX_LINE_LENGTH, inp) != NULL)
   { 
     if (strcmp(line,"\n")==0) {
@@ -98,18 +122,21 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
   }
 
   strcpy(index[n],temp_sequence);
+
   fclose(inp);
 
   n_sequences=n+1;
 
   printf("done [read %li sequences (%li amino acids)]\n",n_sequences,(int)(index[n_sequences-1]-index[0])/sizeof(char)+strlen(temp_sequence));fflush(stdout);
+
   measured_pl_sum=(int)(index[n_sequences-1]-index[0])/sizeof(char)+strlen(temp_sequence);
 
 
 
   /* generating Markov probabilities */
 
-  printf("generating Markov probability matrix...");fflush(stdout);
+  printf("generating Markov probability matrix...");
+  fflush(stdout);
 
   srand(time(0)); /* replace with constant to re-generate identical random databases */
 
@@ -124,7 +151,11 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
 
   for(protein=0;protein<n_sequences;protein++)
   {
-    if (!(protein%1000)) {printf(".");fflush(stdout);}
+    if (!(protein%1000)) {
+      printf(".");
+      fflush(stdout);
+    }
+
     if (protein<(n_sequences-1)) 
     {
      strncpy(one_sequence,index[protein],(index[protein+1]-index[protein])/sizeof(char));
@@ -142,35 +173,56 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
       {
         printf("Unknown amino acid %c",one_sequence[i]);                
       } else {
-                a=20-strlen(strchr(AMINO_ACIDS,one_sequence[i])); // current amino acid
-                MP[a][i]++;
-                measured_aa_freq[a]++;
+        a=20-strlen(strchr(AMINO_ACIDS,one_sequence[i])); // current amino acid
+        MP[a][i]++;
+        measured_aa_freq[a]++;
       }
   }
-    else {a=floor(20*(float)rand()/RAND_MAX);MP[a][i]++; measured_aa_freq[a]++;} // replace B, X, Z etc. with random amino acid to preserve size distribution
+    else {
+    a=floor(20*(float)rand()/RAND_MAX);
+    MP[a][i]++; 
+    measured_aa_freq[a]++;
+    } // replace B, X, Z etc. with random amino acid to preserve size distribution
   }
   MP[20][pl]++;
       measured_aa_freq[20]++; // MP[20][n] is the number of sequences of length n in the database 
     }
-    printf("done\n"); fflush(stdout);
+
+    printf("done\n"); 
+    fflush(stdout);
 
   
 
-  for(i=0;i<MAX_SEQUENCE_LENGTH;i++) row_sum[i]=0;
-    for(i=0;i<MAX_SEQUENCE_LENGTH;i++) for(j=0;j<=20;j++) row_sum[i]+=MP[j][i];
+  for(i=0;i<MAX_SEQUENCE_LENGTH;i++){
+     row_sum[i]=0;
+  }
+  
+  for(i=0;i<MAX_SEQUENCE_LENGTH;i++){ 
+    for(j=0;j<=20;j++){ 
+      row_sum[i]+=MP[j][i];
+    }
+  }
 
 
   /* generate random protein sequences through Markov chain */
 
-      strcpy(outfile,output_file);
-    if ((outp = fopen(outfile, "w"))==NULL) {printf("error opening output file %s\n",outfile); return -1;}
+  strcpy(outfile,output_file);
+
+    if ((outp = fopen(outfile, "w"))==NULL) {
+      printf("error opening output file %s\n",outfile); 
+      return -1;
+    }
+
     printf("generating %li random protein sequences",sequences_to_generate);fflush(stdout);
 
     strcpy(prefix_string,RSTRING_PTR(prefix_string_in));
 
     for(protein=0;protein<sequences_to_generate;protein++)
     {
-      if (!(protein%1000)) {printf(".");fflush(stdout);}
+      if (!(protein%1000)) {
+        printf(".");fflush(stdout);
+      }
+      
       i=0; j=0;
       while (1)
       {

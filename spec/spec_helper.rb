@@ -65,6 +65,45 @@ RSpec::Matchers.define :have_fasta_entries_matching  do |expected_num_entries,pa
 end
 
 
+RSpec::Matchers.define :have_pepxml_hits_matching  do |expected_num_entries,pattern|
+  match do |filename|
+    filename.chomp!
+    pepxml_parser=XML::Parser.file(filename)
+    pepxml_ns_prefix="xmlns:"
+    pepxml_ns="xmlns:http://regis-web.systemsbiology.net/pepXML"
+    pepxml_doc=pepxml_parser.parse
+    hits=pepxml_doc.find("//#{pepxml_ns_prefix}search_hit", pepxml_ns)
+
+    @n_entries=0
+    hits.each do |hit_node|  
+      if hit_node.to_s =~/#{pattern}/
+        @n_entries+=1
+      end
+    end
+    @n_entries==expected_num_entries
+  end
+
+  failure_message do
+    "\nexpected #{expected_num_entries} but found #{@n_entries} hits matching #{pattern}\n"
+  end
+
+end
+
+RSpec::Matchers.define :be_pepxml  do
+  match do |filename|
+    filename.chomp!
+    File.read(filename).include?('http://regis-web.systemsbiology.net/pepXML')
+  end
+end
+
+RSpec::Matchers.define :be_mzidentml  do
+  match do |filename|
+    filename.chomp!
+    File.read(filename).include?('http://psidev.info/psi/pi/mzIdentML')
+  end
+end
+
+
 RSpec.shared_context :tmp_dir_with_fixtures do |filenames|
 
   before(:each) do

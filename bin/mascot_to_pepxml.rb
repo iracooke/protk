@@ -27,13 +27,7 @@ end
 
 tool.option_parser.parse!
 
-exit unless tool.check_options 
-
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts tool.option_parser 
-    exit
-end
+exit unless tool.check_options(true,[:database])
 
 current_db=""
 
