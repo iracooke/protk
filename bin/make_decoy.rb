@@ -22,34 +22,13 @@ include LibXML
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Create a decoy database from real protein sequences.\n\nUsage: make_decoy.rb [options] realdb.fasta"
 
-tool.options.db_length=0
-tool.option_parser.on('-L len','--db-length len','Number of sequences to generate') do |len|
-  tool.options.db_length=len.to_i
-end
-
-tool.options.prefix_string="decoy_"
-tool.option_parser.on('-P str','--prefix-string str','String to prepend to sequence ids') do |str|
-  tool.options.prefix_string=str
-end
-
-tool.options.reverse_only=false
-tool.option_parser.on('--reverse-only','Just reverse sequences. Dont try to randomize') do 
-  tool.options.reverse_only=true
-end
-
-tool.options.id_regex=".*?\\|(.*?)[ \\|]"
-tool.option_parser.on('--id-regex regex','Regex for finding IDs. If reverse-only is used then this will be used to find ids and prepend with the decoy string. Default .*?\\|(.*?)[ \\|]') do regex
-  tool.options.id_regex=regex
-end
-
-tool.options.append=false
-tool.option_parser.on('-A','--append','Append input sequences to the generated database') do 
-  tool.options.append=true
-end
-
+tool.add_value_option(:db_length,0,['-L len','--db-length len','Number of sequences to generate'])
+tool.add_value_option(:prefix_string,"decoy_",['-P str','--prefix-string str','String to prepend to sequence ids'])
+tool.add_boolean_option(:reverse_only,false,['--reverse-only','Just reverse sequences. Dont try to randomize. Ignores -L'])
+tool.add_value_option(:id_regex,".*?\\|(.*?)[ \\|]",['--id-regex regex','Regex for finding IDs. If reverse-only is used then this will be used to find ids and prepend with the decoy string. Default .*?\\|(.*?)[ \\|]'])
+tool.add_boolean_option(:append,false,['-A','--append','Append input sequences to the generated database'])
 
 exit unless tool.check_options(true,[:explicit_output])
-
 
 input_file=ARGV[0]
 
@@ -71,7 +50,8 @@ if (tool.reverse_only)
 	Bio::FastaFormat.open(input_file).each do |seq| 
 		id=nil
 		begin
-			id=seq.definition.scan(/#{id_regex}/)[0][0]
+			# require 'debugger';debugger
+			id=seq.definition.chomp.scan(/#{tool.id_regex}/)[0][0]
 			revdef=seq.definition.sub(id,"#{tool.prefix_string}#{id}")
 			decoys_out.write ">#{revdef}\n#{seq.aaseq}\n"
 		rescue
@@ -85,16 +65,11 @@ end
 
 if ( tool.append )
 	cmd ="awk 'FNR==1{print \"\"}1' #{input_file} #{decoys_tmp_file} > #{output_file};"
-	# cmd = "paste -d=\\\\n -s #{input_file} #{decoys_tmp_file} > #{output_file};"
 	cmd << "rm #{decoys_tmp_file}"
-
-
-
-	# cmd = "cat #{input_file} > #{output_file};cat #{decoys_tmp_file} >> #{output_file}; rm #{decoys_tmp_file}" 
 else
 	cmd = "mv #{decoys_tmp_file} #{output_file}"
 end
-puts cmd
+
 tool.run(cmd,genv)
 
 
