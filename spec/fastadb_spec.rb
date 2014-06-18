@@ -1,20 +1,30 @@
 require "protk/fastadb"
+require "protk/constants"
 
 require 'spec_helper'
 
-describe FastaDB, :broken=>true do
+def blast_not_installed
+  env=Constants.new
+  env.makeblastdb.length==0
+end
 
-  before :all do
-  	@testdb = FastaDB.create("/tmp/testdb","spec/data/proteindb.fasta",'prot')
-  	@testdb.should_not==nil
+describe FastaDB , :dependencies_not_installed => blast_not_installed do 
+
+  include_context :tmp_dir_with_fixtures, ["proteindb.fasta"]
+
+  before :each do
+  	@testdb = FastaDB.create("#{@tmp_dir}/testdb","#{@tmp_dir}/proteindb.fasta",'prot')
+  	expect(@testdb).to be_instance_of(FastaDB)
   end
+
+
 
   it "should correctly access a key by name" do
     query_id = "tr|O70238|O70238_MOUSE"
     item = @testdb.get_by_id(query_id)
-    item.should be_instance_of(Bio::FastaFormat)
-    item.entry_id.should eq query_id
-    item.length.should eq 227
+    expect(item).to be_instance_of(Bio::FastaFormat)
+    expect(item.entry_id).to eq(query_id)
+    expect(item.length).to eq(227)
   end
 
 end

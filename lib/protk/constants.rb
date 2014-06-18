@@ -81,6 +81,11 @@ class Constants
     makeblastdbpath.chomp
   end
 
+  def blastdbcmd
+    path=%x[which blastdbcmd]
+    path.chomp
+  end
+
   def mascot2xml
     path=%x[which Mascot2XML]
     path.chomp

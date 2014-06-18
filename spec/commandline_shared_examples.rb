@@ -1,5 +1,3 @@
-
-
 RSpec.shared_examples "a protk tool" do 
 
 	before(:each) do
