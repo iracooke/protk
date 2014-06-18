@@ -32,11 +32,11 @@ describe "The make_decoy tool" do
 			expect(@output_file).to have_fasta_entries_matching(@num_entries_in_test,"^testprefix_")
 		end
 
-		# it "-A option appends entries" do
-		# 	puts %x[make_decoy.rb #{@input_file} -o #{@output_file} -P "testprefix_" -A]
-		# 	expect(@output_file).to have_fasta_entries(@num_entries_in_test*2)
-		# 	expect(@output_file).to have_fasta_entries_matching(@num_entries_in_test,"^testprefix_")
-		# end
+		it "-A option appends entries" do
+			puts %x[make_decoy.rb #{@input_file} -o #{@output_file} -P "testprefix_" -A]
+			expect(@output_file).to have_fasta_entries(@num_entries_in_test*2)
+			expect(@output_file).to have_fasta_entries_matching(@num_entries_in_test,"^testprefix_")
+		end
 
 	end
 end

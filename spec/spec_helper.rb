@@ -37,23 +37,31 @@ end
 RSpec::Matchers.define :have_fasta_entries  do |expected_num_entries|
   match do |filename|
     filename.chomp!
-    n_entries=0
-    Bio::FastaFormat.open(filename).each { |e| n_entries+=1 }
-    n_entries==expected_num_entries
+    @n_entries=0
+    Bio::FastaFormat.open(filename).each { |e| @n_entries+=1 }
+    @n_entries==expected_num_entries
+  end
+  failure_message do
+    "\nexpected #{expected_num_entries} but found #{@n_entries} fasta entries\n"
   end
 end
 
 RSpec::Matchers.define :have_fasta_entries_matching  do |expected_num_entries,pattern|
   match do |filename|
     filename.chomp!
-    n_entries=0
+    @n_entries=0
     Bio::FastaFormat.open(filename).each do |e| 
       if e.entry_id=~/#{pattern}/
-        n_entries+=1
+        @n_entries+=1
       end
     end
-    n_entries==expected_num_entries
+    @n_entries==expected_num_entries
   end
+
+  failure_message do
+    "\nexpected #{expected_num_entries} but found #{@n_entries} fasta entries\n"
+  end
+
 end
 
 

@@ -84,11 +84,17 @@ else
 end
 
 if ( tool.append )
-	cmd = "cat #{input_file} #{decoys_tmp_file} >> #{output_file}; rm #{decoys_tmp_file}" 
+	cmd ="awk 'FNR==1{print \"\"}1' #{input_file} #{decoys_tmp_file} > #{output_file};"
+	# cmd = "paste -d=\\\\n -s #{input_file} #{decoys_tmp_file} > #{output_file};"
+	cmd << "rm #{decoys_tmp_file}"
+
+
+
+	# cmd = "cat #{input_file} > #{output_file};cat #{decoys_tmp_file} >> #{output_file}; rm #{decoys_tmp_file}" 
 else
 	cmd = "mv #{decoys_tmp_file} #{output_file}"
 end
-
+puts cmd
 tool.run(cmd,genv)
 
 
