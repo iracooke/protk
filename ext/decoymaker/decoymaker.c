@@ -17,6 +17,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
 
 #define AMINO_ACIDS "ARNDCEQGHILKMFPSTWYV"
 #define NOT_AMINO_ACIDS "BJOUXZ*"
@@ -30,10 +31,10 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
   char * output_file = RSTRING_PTR(output_file_in);
 
   char line[MAX_LINE_LENGTH];      
-  char settings_line[60][70];
+  // char settings_line[60][70];
   char infile[255], outfile[255]; /* for reading input and writing output */
   char prefix_string[255];
-  char *p,**index;
+  char **index;
   char *sequence; 
   char one_sequence[MAX_SEQUENCE_LENGTH],random_sequence[(int)(MAX_SEQUENCE_LENGTH*1.5)],random_sequence_output[(int)(MAX_SEQUENCE_LENGTH*1.5)];
   char *temp_sequence;
@@ -42,9 +43,9 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
 
   long i, j, k, l, n, n_sequences, protein;
   long MP[21][MAX_SEQUENCE_LENGTH];
-  long measured_aa_freq[21], generated_aa_freq[21], measured_pl_sum=0, generated_pl_sum=0;
+  long measured_aa_freq[21], generated_aa_freq[21], generated_pl_sum=0;
   long row_sum[MAX_SEQUENCE_LENGTH],partial_sum;
-  long one_index,pl;
+  long pl;
   double x;
 
   /* scanning sequence database */
@@ -103,7 +104,6 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
   n_sequences=n+1;
 
   // printf("done [read %li sequences (%li amino acids)]\n",n_sequences,(int)(index[n_sequences-1]-index[0])/sizeof(char)+strlen(temp_sequence));fflush(stdout);
-  measured_pl_sum=(int)(index[n_sequences-1]-index[0])/sizeof(char)+strlen(temp_sequence);
 
 
 
@@ -132,7 +132,7 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
    }
    else strcpy(one_sequence,index[protein]);
    pl=strlen(one_sequence);
-   n=1;one_index=0;
+   n=1;
 
    for(i=0;i<pl;i++)
    {
@@ -170,7 +170,7 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
 
     for(protein=0;protein<sequences_to_generate;protein++)
     {
-      if (!(protein%1000)) {printf(".");fflush(stdout);}
+      // if (!(protein%1000)) {printf(".");fflush(stdout);}
       i=0; j=0;
       while (1)
       {
@@ -216,7 +216,6 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
     // printf("<f(aa) in %s> <f(aa) in %s>\n",infile,outfile);
   // for(i=0;i<=20;i++) printf("%f %f\n",(float)measured_aa_freq[i]/k,(float)generated_aa_freq[i]/l);
 
-  // printf("<average sequence length in %s> = %f\n<average sequence length in %s> = %f\n",infile,measured_pl_sum/(float)n_sequences,outfile,generated_pl_sum/(float)sequences_to_generate);
 
   return 0;
 
