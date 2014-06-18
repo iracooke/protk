@@ -206,8 +206,8 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
 
 
   /* freeing some memory... */
-
-  free(index);  
+  /* This free is dodgy. For now just suffer huge leak. */
+  // free(index);  
   
   // printf("done (wrote %li random protein sequences to %s)\n",sequences_to_generate,outfile);
 
