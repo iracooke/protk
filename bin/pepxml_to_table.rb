@@ -37,8 +37,8 @@ output_file="#{input_file}.txt"
 output_file = tool.explicit_output if tool.explicit_output!=nil
 
 output_fh=File.new("#{output_file}",'w')
-
-output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\tpeptideprophet_prob\tinterprophet_prob\n"
+# output_fh=$stdout
+output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\traw_score\tpeptideprophet_prob\tinterprophet_prob\n"
 
 XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
 
@@ -68,18 +68,24 @@ spectrum_queries.each do |query|
   start_scan=query.attributes['start_scan']
   end_scan=query.attributes['end_scan']
 
-  search_engine=""
-  search_score_names=top_search_hit.find("./#{pepxml_ns_prefix}search_score/@name",pepxml_ns).collect {|s| s.to_s}
+  run_summary_node=query.parent
+  # puts run_summary_node
+  search_summary_node=run_summary_node.find("./#{pepxml_ns_prefix}search_summary",pepxml_ns)[0]
+   # puts search_summary_node.attributes.each { |e| puts e }
+  search_engine=search_summary_node.attributes['search_engine']
 
-  search_engine=query.parent.attributes['search_engine']
+  # search_engine=""
 
-  # if ( search_score_names.length==2 && search_score_names.grep(/^name.*=.*pvalue/))
-  #   search_engine="omssa" 
-  # elsif ( search_score_names.grep(/^name.*=.*ionscore/))
-  #   search_engine="mascot"
-  # elsif ( search_score_names.grep(/^name.*=.*hyperscore/) )
-  #   search_engine="x!tandem"
-  # end
+
+  raw_score=""
+  case search_engine
+  when /[Tt]andem/
+    search_score_nodes=top_search_hit.find("./#{pepxml_ns_prefix}search_score[@name=\"expect\"]",[pepxml_ns])
+    raw_score=search_score_nodes[0].attributes['value']
+  when /MS\-GF/
+    search_score_nodes=top_search_hit.find("./#{pepxml_ns_prefix}search_score[@name=\"EValue\"]",[pepxml_ns])
+    raw_score=search_score_nodes[0].attributes['value']    
+  end
 
   
   pp_result=top_search_hit.find("./#{pepxml_ns_prefix}analysis_result/#{pepxml_ns_prefix}peptideprophet_result/@probability",pepxml_ns)
@@ -90,7 +96,7 @@ spectrum_queries.each do |query|
   peptide_prophet_prob=pp_result[0].value if ( pp_result.length>0 )
   interprophet_prob=ip_result[0].value if ( ip_result.length>0)
   
-  output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t#{peptide_prophet_prob}\t#{interprophet_prob}\n"
+  output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t#{raw_score}\t#{peptide_prophet_prob}\t#{interprophet_prob}\n"
 
 end
 

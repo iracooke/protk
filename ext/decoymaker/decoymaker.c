@@ -51,7 +51,7 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
   
   strcpy(infile,input_file);
   if ((inp = fopen(infile, "r"))==NULL) {printf("error opening sequence database %s\n",infile);return -1;}
-  printf("scanning sequence database %s",infile);fflush(stdout);
+  printf("scanning sequence database \n%s\n",infile);fflush(stdout);
   i=0;n=0;k=0;
   while (fgets(line, MAX_LINE_LENGTH, inp) != NULL) {i++; if(line[0]=='>') {if (!(n%1000)) printf(".");fflush(stdout); n++;} }
   
@@ -67,7 +67,7 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
   
   if ((inp = fopen(infile, "r"))==NULL) {printf("error opening sequence database %s\n",infile);return -1;}
 
-  printf("done\nreading sequence database %s",infile);fflush(stdout);    
+  printf("done\nreading sequence database \n%s\n",infile);fflush(stdout);    
   n=-1;
   strcpy(temp_sequence,"\0");
   while (fgets(line, MAX_LINE_LENGTH, inp) != NULL)
@@ -213,9 +213,10 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,VALUE db_leng
 
   k=0;l=0;
   for(i=0;i<=20;i++) {k+=measured_aa_freq[i];l+=generated_aa_freq[i];}
-    printf("<f(aa) in %s> <f(aa) in %s>\n",infile,outfile);
-  for(i=0;i<=20;i++) printf("%f %f\n",(float)measured_aa_freq[i]/k,(float)generated_aa_freq[i]/l);
-    printf("<average sequence length in %s> = %f\n<average sequence length in %s> = %f\n",infile,measured_pl_sum/(float)n_sequences,outfile,generated_pl_sum/(float)sequences_to_generate);
+    // printf("<f(aa) in %s> <f(aa) in %s>\n",infile,outfile);
+  // for(i=0;i<=20;i++) printf("%f %f\n",(float)measured_aa_freq[i]/k,(float)generated_aa_freq[i]/l);
+
+  printf("<average sequence length in %s> = %f\n<average sequence length in %s> = %f\n",infile,measured_pl_sum/(float)n_sequences,outfile,generated_pl_sum/(float)sequences_to_generate);
 
   return 0;
 

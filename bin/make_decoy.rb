@@ -48,13 +48,7 @@ tool.option_parser.on('-A','--append','Append input sequences to the generated d
 end
 
 
-exit unless tool.check_options 
-
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts tool.option_parser 
-    exit
-end
+exit unless tool.check_options(true,[:explicit_output])
 
 
 input_file=ARGV[0]
@@ -63,10 +57,8 @@ input_file=ARGV[0]
 db_length=tool.db_length
 if ( db_length==0) #If no db length was specified use the number of entries in the input file
   db_length=Bio::FastaFormat.open(input_file).count
-  p "Found #{db_length} entries in input file"
+  puts "Found #{db_length} entries in input file"
 end
-
-output_file="decoy_#{input_file}"
 
 output_file = tool.explicit_output if tool.explicit_output!=nil
 
@@ -91,14 +83,12 @@ else
 	Randomize.make_decoys input_file, db_length, decoys_tmp_file, tool.prefix_string
 end
 
-cmd = "cat #{input_file} #{decoys_tmp_file} >> #{output_file}; rm #{decoys_tmp_file}" if ( tool.append ) 
+if ( tool.append )
+	cmd = "cat #{input_file} #{decoys_tmp_file} >> #{output_file}; rm #{decoys_tmp_file}" 
+else
+	cmd = "mv #{decoys_tmp_file} #{output_file}"
+end
 
-# Randomize.make_decoys raw_db_filename, db_length, decoys_filename, decoy_prefix
-#   cmd = "cat #{raw_db_filename} #{decoys_filename} >> #{decoy_db_filename}; rm #{decoys_filename}"
-
-p cmd
-# Run the conversion
-#
 tool.run(cmd,genv)
 
 

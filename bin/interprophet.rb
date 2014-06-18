@@ -21,10 +21,12 @@ prophet_tool.option_parser.banner = "Run InterProphet on a set of pep.xml input 
 prophet_tool.options.output_suffix="_iproph"
 
 
-prophet_tool.options.no_nss=""
-prophet_tool.option_parser.on( '--no-nss', 'Don\'t use NSS (Number of Sibling Searches) in Model' ) do 
-  prophet_tool.options.no_nss="NONSS"
-end
+prophet_tool.add_value_option(:no_nss,"",['--no-nss', 'Don\'t use NSS (Number of Sibling Searches) in Model'])
+prophet_tool.add_value_option(:no_nrs,"",['--no-nrs', 'Don\'t use NRS (Number of Replicate Spectra) in Model'])
+# prophet_tool.options.no_nss=""
+# prophet_tool.option_parser.on( '--no-nss', 'Don\'t use NSS (Number of Sibling Searches) in Model' ) do 
+#   prophet_tool.options.no_nss="NONSS"
+# end
 
 prophet_tool.options.no_nrs=""
 prophet_tool.option_parser.on('--no-nrs', 'Don\'t use NRS (Number of Replicate Spectra) in Model' ) do
@@ -51,12 +53,8 @@ prophet_tool.option_parser.on("--minprob mp","Minimum probability cutoff ") do |
   prophet_tool.options.min_prob=mp
 end
 
-exit unless prophet_tool.check_options
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts prophet_tool.option_parser 
-    exit
-end
+exit unless prophet_tool.check_options(true)
+
 
 # Obtain a global environment object
 genv=Constants.new

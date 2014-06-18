@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.files        = Dir["{lib}/**/*.rb","{lib}/protk/*.rake", "bin/*", "LICENSE", "*.md","{lib}/**/data/*"] + Dir.glob('lib/**/*.rb') + Dir.glob('ext/**/*.{c,h,rb}')
   s.require_path = 'lib'
 
-  s.extensions = ['ext/protk/decoymaker/extconf.rb']
+  s.extensions = ['ext/decoymaker/extconf.rb']
 
   s.add_runtime_dependency 'open4', '~> 1.3' , '>= 1.3.0'
   s.add_runtime_dependency 'bio', '~> 1.4', '>= 1.4.3'
@@ -23,23 +23,20 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-mocks', '~> 3.0'
+  s.add_development_dependency 'rake-compiler', '~> 0'
 
   s.homepage    = 'http://rubygems.org/gems/protk'
 
   s.executables = ['protk_setup.rb','manage_db.rb']
   s.executables = s.executables + ['tandem_search.rb','mascot_search.rb','omssa_search.rb','msgfplus_search.rb']
   s.executables = s.executables + ['mascot_to_pepxml.rb','tandem_to_pepxml.rb']
-  #,'file_convert.rb']
   s.executables = s.executables + ['make_decoy.rb']
-  s.executables = s.executables + ['correct_omssa_retention_times.rb','repair_run_summary.rb','add_retention_times.rb']
+  s.executables = s.executables + ['repair_run_summary.rb','add_retention_times.rb']
   s.executables = s.executables + ['peptide_prophet.rb','interprophet.rb','protein_prophet.rb']
   s.executables = s.executables + ['pepxml_to_table.rb']
-  #,'xls_to_table.rb','annotate_ids.rb']
-  s.executables = s.executables + ['unimod_to_loc.rb','generate_omssa_loc.rb']
+  s.executables = s.executables + ['unimod_to_loc.rb']
   s.executables = s.executables + ['uniprot_mapper.rb']
-  s.executables = s.executables + ['feature_finder.rb','toppas_pipeline.rb']
   s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb']
   s.executables = s.executables + ['protxml_to_table.rb']
-  # 'uniprot_annotation.rb',
 end
 
