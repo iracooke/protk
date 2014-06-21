@@ -25,14 +25,17 @@ exit unless search_tool.check_options(true)
 tandem_bin=%x[which tandem].chomp
 tandem_bin=%x[which tandem.exe].chomp unless tandem_bin && tandem_bin.length>0
 
+@output_suffix="_tandem"
+
 # Run the search engine on each input file
 #
 ARGV.each do |filename|
 
   throw "Input file #{filename} does not exist" unless File.exist?(filename)
 
-  input_path=Pathname.new(filename.chomp).realpath.to_s
-  output_path="#{search_tool.output_base_path(input_path)}.tandem"
+  input_path=Pathname.new(filename.chomp).expand_path.to_s
+  output_path=Tool.default_output_path(input_path,".tandem",search_tool.output_prefix,@output_suffix)
+
 
   if ( search_tool.explicit_output )
     final_output_path=search_tool.explicit_output

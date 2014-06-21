@@ -15,11 +15,10 @@ describe "The peptide_prophet command", :broken => false do
 		@db_file="#{@tmp_dir}/AASequences.fasta"
 		@extra_args="-d #{@db_file}"
 		@output_file="#{@tmp_dir}/out.pep.xml"
-		@default_output_file="#{@tmp_dir}/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem.pproph.pep.xml"
 	end
 
 
-	describe ["peptide_prophet.rb",".pep.xml","","_pproph"] do
+	describe ["peptide_prophet.rb",".pep.xml","_pproph"] do
 		it_behaves_like "a protk tool"
 		it_behaves_like "a protk tool with default file output"
 	end

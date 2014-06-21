@@ -24,8 +24,14 @@ end
 
 RSpec::Matchers.define :exist? do
  	match do |filename|
-   		File.exist?(filename)
-  	end
+   	File.exist?(filename)
+  end
+
+  failure_message do |filename|
+    listing=%x[ls #{Pathname.new(filename).dirname.to_s}]
+    "\nDid you mean one of these files #{listing}"
+  end
+
 end
 
 RSpec::Matchers.define :contain_text  do |match_text|

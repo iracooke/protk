@@ -127,7 +127,7 @@ make_msgfdb_cmd=""
 
 case 
 when Pathname.new(search_tool.database).exist? # It's an explicitly named db
-  current_db=Pathname.new(search_tool.database).realpath.to_s
+  current_db=Pathname.new(search_tool.database).expand_path.to_s
 
   # Must have fasta extension
   if ( Pathname.new(current_db).extname.to_s.downcase != ".fasta" )
