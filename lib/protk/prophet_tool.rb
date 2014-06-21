@@ -17,7 +17,7 @@ class ProphetTool < SearchTool
 
 
   # Initializes the commandline options
-  def initialize(option_support=[:prefix_suffix,:over_write])
+  def initialize(option_support=[:prefix,:over_write])
     
     super(option_support)
 

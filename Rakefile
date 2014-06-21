@@ -1,8 +1,15 @@
+
+
 require 'rspec/core/rake_task'
 require "rake/extensiontask"
 
 
-RSpec::Core::RakeTask.new('spec')
+# We can do rake EXAMPLE="peptide_prophet" to run tasks matching peptide_prophet
+#
+RSpec::Core::RakeTask.new(:spec) do |task|
+	example=ENV['EXAMPLE']
+	task.rspec_opts="-e #{example}" if example
+end
 
 task :spec => :compile
 task :compile => :clean

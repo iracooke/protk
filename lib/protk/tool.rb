@@ -92,9 +92,9 @@ class Tool
       end
     end
 
-    if ( option_support.include? :prefix_suffix)
+    if ( option_support.include? :prefix)
       add_value_option(:output_prefix,"",['-b','--output-prefix pref', 'A string to prepend to the name of output files'])
-      add_value_option(:output_suffix,"",['-e', '--output-suffix suff', 'A string to append to the name of output files'])       
+      # add_value_option(:output_suffix,"",['-e', '--output-suffix suff', 'A string to append to the name of output files'])       
     end
 
     if ( option_support.include? :over_write)
@@ -124,6 +124,26 @@ class Tool
      "#{dir}/#{@options.output_prefix}#{base_name}#{@options.output_suffix}"
    end
 
+   def self.extension_from_filename(filename)
+    ext=""
+    case filename.chomp
+    when /\.pep\.xml/
+      ext=".pep.xml"
+    when /\.prot\.xml/
+      ext=".prot.xml"
+    else
+      ext=Pathname.new(filename.chomp).extname
+    end
+    ext
+   end
+
+  def self.default_output_path(input_path,newext,prefix,suffix)
+    dir=Pathname.new(input_path).dirname.realpath.to_s
+    basename=Pathname.new(input_path).basename.to_s
+    oldext=Tool.extension_from_filename(input_path)
+    basename=basename.gsub(/#{oldext}$/,"")
+    "#{dir}/#{prefix}#{basename}#{suffix}#{newext}"
+   end
 
    def check_options(require_input_file=false,mandatory=[])
     # Checking for required options

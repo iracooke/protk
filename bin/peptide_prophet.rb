@@ -17,102 +17,28 @@ input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new([:glyco,:explicit_output,:over_write,:maldi,:prefix_suffix])
+prophet_tool=ProphetTool.new([:glyco,:explicit_output,:over_write,:maldi,:prefix,:database])
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
-prophet_tool.options.output_suffix="_pproph"
+@output_suffix="_pproph"
+prophet_tool.options.database=nil
 
-prophet_tool.options.useicat = false
-prophet_tool.option_parser.on( '--useicat',"Use icat information" ) do 
-  prophet_tool.options.useicat = true
-end
+prophet_tool.add_boolean_option(:useicat,false,['--useicat',"Use icat information"])
+prophet_tool.add_boolean_option(:phospho,false,['--phospho',"Use phospho information"])
+prophet_tool.add_boolean_option(:usepi,false,['--usepi',"Use pI information"])
+prophet_tool.add_boolean_option(:usert,false,['--usert',"Use hydrophobicity / RT information"])
+prophet_tool.add_boolean_option(:accurate_mass,false,['--accurate-mass',"Use accurate mass binning"])
+prophet_tool.add_boolean_option(:no_ntt,false,['--no-ntt',"Don't use NTT model"])
+prophet_tool.add_boolean_option(:no_nmc,false,['--no-nmc',"Don't use NMC model"])
+prophet_tool.add_boolean_option(:usegamma,false,['--usegamma',"Use Gamma distribution to model the negatives"])
+prophet_tool.add_boolean_option(:use_only_expect,false,['--use-only-expect',"Only use Expect Score as the discriminant"])
+prophet_tool.add_boolean_option(:force_fit,false,['--force-fit',"Force fitting of mixture model and bypass checks"])
+prophet_tool.add_boolean_option(:allow_alt_instruments,false,['--allow-alt-instruments',"Warning instead of exit with error if instrument types between runs is different"])
+prophet_tool.add_boolean_option(:one_ata_time,false,['-F', '--one-ata-time', 'Create a separate pproph output file for each analysis'])
+prophet_tool.add_value_option(:decoy_prefix,"decoy",['--decoy-prefix prefix', 'Prefix for decoy sequences'])
+prophet_tool.add_boolean_option(:no_decoys,false,['--no-decoy', 'Don\'t use decoy sequences to pin down the negative distribution'])
+prophet_tool.add_value_option(:experiment_label,nil,['--experiment-label label','used to commonly label all spectra belonging to one experiment (required by iProphet)'])
 
-prophet_tool.options.nouseicat = false
-prophet_tool.option_parser.on( '--no-useicat',"Do not use icat information" ) do 
-  prophet_tool.options.nouseicat = true
-end
-
-prophet_tool.options.phospho = false
-prophet_tool.option_parser.on( '--phospho',"Use phospho information" ) do 
-  prophet_tool.options.phospho = true
-end
-
-prophet_tool.options.usepi = false
-prophet_tool.option_parser.on( '--usepi',"Use pI information" ) do 
-  prophet_tool.options.usepi = true
-end
-
-prophet_tool.options.usert = false
-prophet_tool.option_parser.on( '--usert',"Use hydrophobicity / RT information" ) do 
-  prophet_tool.options.usert = true
-end
-
-prophet_tool.options.accurate_mass = false
-prophet_tool.option_parser.on( '--accurate-mass',"Use accurate mass binning" ) do 
-  prophet_tool.options.accurate_mass = true
-end
-
-prophet_tool.options.no_ntt = false
-prophet_tool.option_parser.on( '--no-ntt',"Don't use NTT model" ) do 
-  prophet_tool.options.no_ntt = true
-end
-
-prophet_tool.options.no_nmc = false
-prophet_tool.option_parser.on( '--no-nmc',"Don't use NMC model" ) do 
-  prophet_tool.options.no_nmc = true
-end
-
-prophet_tool.options.usegamma = false
-prophet_tool.option_parser.on( '--usegamma',"Use Gamma distribution to model the negatives" ) do 
-  prophet_tool.options.usegamma = true
-end
-
-prophet_tool.options.use_only_expect = false
-prophet_tool.option_parser.on( '--use-only-expect',"Only use Expect Score as the discriminant" ) do 
-  prophet_tool.options.use_only_expect = true
-end
-
-prophet_tool.options.force_fit = false
-prophet_tool.option_parser.on( '--force-fit',"Force fitting of mixture model and bypass checks" ) do 
-  prophet_tool.options.force_fit = true
-end
-
-prophet_tool.options.allow_alt_instruments=false
-prophet_tool.option_parser.on( '--allow-alt-instruments',"Warning instead of exit with error if instrument types between runs is different" ) do 
-  prophet_tool.options.allow_alt_instruments = true
-end
-
-prophet_tool.options.one_ata_time = false
-prophet_tool.option_parser.on( '-F', '--one-ata-time', 'Create a separate pproph output file for each analysis' ) do 
-  prophet_tool.options.one_ata_time = true
-end
-
-prophet_tool.options.decoy_prefix="decoy"
-prophet_tool.option_parser.on( '--decoy-prefix prefix', 'Prefix for decoy sequences') do |prefix|
-  prophet_tool.options.decoy_prefix = prefix
-end 
-
-prophet_tool.options.no_decoys = false
-prophet_tool.option_parser.on( '--no-decoy', 'Don\'t use decoy sequences to pin down the negative distribution') do 
-  prophet_tool.options.no_decoys = true
-end
-
-prophet_tool.options.experiment_label=nil
-prophet_tool.option_parser.on('--experiment-label label','used to commonly label all spectra belonging to one experiment (required by iProphet)') do |label|
-  prophet_tool.options.experiment_label = label
-end  
-
-prophet_tool.options.override_database=nil
-prophet_tool.option_parser.on( '--override-database database', 'Manually specify database') do |database|
-  prophet_tool.options.override_database = database
-end
-
-exit unless prophet_tool.check_options 
-
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts prophet_tool.option_parser 
-    exit
-end
+exit unless prophet_tool.check_options(true)
 
 throw "When --output and -F options are set only one file at a time can be run" if  ( ARGV.length> 1 ) && ( prophet_tool.explicit_output!=nil ) && (prophet_tool.one_ata_time!=nil)
 
@@ -133,10 +59,11 @@ inputs.each {|file_name|
   name=file_name.chomp
   
   engine=prophet_tool.extract_engine(name)
-  if prophet_tool.override_database
-    db_path = prophet_tool.override_database
+  if prophet_tool.database
+    db_path = prophet_tool.database_info.path
   else
     db_path=prophet_tool.extract_db(name)
+    throw "Unable to find database #{db_path} used for searching. Specify database path using -d option" unless File.exist?(db_path)
   end
   
   
@@ -219,9 +146,7 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
   
   if prophet_tool.useicat
     cmd << " -Oi "
-  end
-  
-  if prophet_tool.nouseicat
+  else
     cmd << " -Of"
   end
   
@@ -263,27 +188,23 @@ end
 
 cmd=""
 if ( prophet_tool.one_ata_time )
-  inputs.each { |input|
-    
-    output_file_name="#{prophet_tool.output_prefix}#{input}_#{engine}_interact#{prophet_tool.output_suffix}.pep.xml"
+  
+  inputs.each do |input|
+    output_file_name=Tool.default_output_path(input,".pep.xml",prophet_tool.output_prefix,@output_suffix)
     
     cmd=generate_command(genv,prophet_tool,input,output_file_name,database,engine)
-
-    run_peptide_prophet(genv,prophet_tool,cmd,output_file_base_name,engine)
-    
-        
-  }
-else  
-  if (prophet_tool.explicit_output==nil)
-    output_file_name="#{prophet_tool.output_prefix}#{engine}_interact#{prophet_tool.output_suffix}.pep.xml"
-  else
-
-    output_file_name=prophet_tool.explicit_output
-
+    run_peptide_prophet(genv,prophet_tool,cmd,output_file_base_name,engine)        
   end
+
+else  
+
+  if (prophet_tool.explicit_output==nil)
+    output_file_name=Tool.default_output_path(inputs[0],".pep.xml",prophet_tool.output_prefix,@output_suffix)    
+  else
+    output_file_name=prophet_tool.explicit_output
+  end
+
   cmd=generate_command(genv,prophet_tool,inputs,output_file_name,database,engine)
-  puts cmd
-  %x['ls']
   run_peptide_prophet(genv,prophet_tool,cmd,output_file_name,engine)
     
 end

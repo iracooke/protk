@@ -16,7 +16,7 @@ for_galaxy = GalaxyUtil.for_galaxy?
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new([:explicit_output,:over_write,:prefix_suffix])
+prophet_tool=ProphetTool.new([:explicit_output,:over_write,:prefix])
 prophet_tool.option_parser.banner = "Run InterProphet on a set of pep.xml input files.\n\nUsage: interprophet.rb [options] file1.pep.xml file2.pep.xml ..."
 prophet_tool.options.output_suffix="_iproph"
 
