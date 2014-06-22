@@ -29,7 +29,7 @@ RSpec::Matchers.define :exist? do
 
   failure_message do |filename|
     listing=%x[ls #{Pathname.new(filename).dirname.to_s}]
-    "\nDid you mean one of these files #{listing}"
+    "\nDid you mean one of these files:\n#{listing}\n"
   end
 
 end
@@ -95,10 +95,15 @@ RSpec::Matchers.define :have_pepxml_hits_matching  do |expected_num_entries,patt
 
 end
 
+
 RSpec::Matchers.define :be_pepxml  do
   match do |filename|
     filename.chomp!
     File.read(filename).include?('http://regis-web.systemsbiology.net/pepXML')
+  end
+
+  failure_message do |filename|
+    "\nExpected pepXML but got #{File.read(filename)}\n"
   end
 end
 

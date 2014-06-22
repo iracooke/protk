@@ -27,7 +27,8 @@ search_tool=SearchTool.new([
   :instrument,
   :mass_tolerance_units,
   :mass_tolerance,
-  :cleavage_semi])
+  :cleavage_semi,
+  :threads])
 
 search_tool.jobid_prefix="p"
 search_tool.option_parser.banner = "Run an MSGFPlus msms search on a set of msms spectrum input files.\n\nUsage: msgfplus_search.rb [options] file1.mzML file2.mzML ..."
@@ -36,78 +37,20 @@ search_tool.options.output_suffix="_msgfplus"
 search_tool.options.enzyme=1
 search_tool.options.instrument=0
 
-search_tool.options.no_pepxml=false
-search_tool.option_parser.on(  '--no-pepxml', 'Dont convert results to pepxml. Keep native mzidentml format' ) do
-  search_tool.options.no_pepxml=true
-end
-
-search_tool.options.isotope_error_range="0,1"
-search_tool.option_parser.on(  '--isotope-error-range range', 'Takes into account of the error introduced by chooosing a non-monoisotopic peak for fragmentation.(Default 0,1)' ) do |range|
-  search_tool.options.isotope_error_range=range
-end
-
-search_tool.options.fragment_method=0
-search_tool.option_parser.on(  '--fragment-method method', 'Fragment method 0: As written in the spectrum or CID if no info (Default), 1: CID, 2: ETD, 3: HCD, 4: Merge spectra from the same precursor' ) do |method|
-  search_tool.options.fragment_method=method
-end
-
-search_tool.options.decoy_search=false
-search_tool.option_parser.on(  '--decoy-search', 'Build and search a decoy database on the fly. Input db should not contain decoys if this option is used' ) do 
-  search_tool.options.decoy_search=true
-end
-
-search_tool.options.protocol=0
-search_tool.option_parser.on(  '--protocol p', '0: NoProtocol (Default), 1: Phosphorylation, 2: iTRAQ, 3: iTRAQPhospho' ) do |p|
-  search_tool.options.protocol=p
-end
-
-search_tool.options.min_pep_length=6
-search_tool.option_parser.on(  '--min-pep-length p', 'Minimum peptide length to consider, Default: 6' ) do |p|
-  search_tool.options.min_pep_length=p
-end
-
-search_tool.options.max_pep_length=40
-search_tool.option_parser.on(  '--max-pep-length p', 'Maximum peptide length to consider, Default: 40' ) do |p|
-  search_tool.options.max_pep_length=p
-end
-
-search_tool.options.min_pep_charge=2
-search_tool.option_parser.on(  '--min-pep-charge c', 'Minimum precursor charge to consider if charges are not specified in the spectrum file, Default: 2' ) do |c|
-  search_tool.options.min_pep_charge=c
-end
-
-search_tool.options.max_pep_charge=3
-search_tool.option_parser.on(  '--max-pep-charge c', 'Maximum precursor charge to consider if charges are not specified in the spectrum file, Default: 3' ) do |c|
-  search_tool.options.max_pep_charge=c
-end
-
-search_tool.options.num_reported_matches=1
-search_tool.option_parser.on(  '--num-reported-matches n', 'Number of matches per spectrum to be reported, Default: 1' ) do |n|
-  search_tool.options.num_reported_matches=n
-end
-
-search_tool.options.add_features=false
-search_tool.option_parser.on(  '--add-features', 'output additional features' ) do 
-  search_tool.options.add_features=true
-end
-
-search_tool.options.num_threads=nil
-search_tool.option_parser.on('--threads NumThreads','Number of processing threads to use') do |nt|
-  search_tool.options.num_threads=nt
-end
-
-search_tool.options.java_mem="3500M"
-search_tool.option_parser.on('--java-mem mem','Java memory limit when running the search (Default 3.5Gb)') do |mem|
-  search_tool.options.java_mem=mem
-end
+search_tool.add_boolean_option(:pepxml,false,['--pepxml', 'Convert results to pepxml.'])
+search_tool.add_value_option(:isotope_error_range,"0,1",['--isotope-error-range range', 'Takes into account of the error introduced by chooosing a non-monoisotopic peak for fragmentation.(Default 0,1)'])
+search_tool.add_value_option(:fragment_method,0,['--fragment-method method', 'Fragment method 0: As written in the spectrum or CID if no info (Default), 1: CID, 2: ETD, 3: HCD, 4: Merge spectra from the same precursor'])
+search_tool.add_boolean_option(:decoy_search,false,['--decoy-search', 'Build and search a decoy database on the fly. Input db should not contain decoys if this option is used'])
+search_tool.add_value_option(:protocol,0,['--protocol p', '0: NoProtocol (Default), 1: Phosphorylation, 2: iTRAQ, 3: iTRAQPhospho'])
+search_tool.add_value_option(:min_pep_length,6,['--min-pep-length p', 'Minimum peptide length to consider, Default: 6'])
+search_tool.add_value_option(:max_pep_length,40,['--max-pep-length p', 'Maximum peptide length to consider, Default: 40'])
+search_tool.add_value_option(:min_pep_charge,2,['--min-pep-charge c', 'Minimum precursor charge to consider if charges are not specified in the spectrum file, Default: 2'])
+search_tool.add_value_option(:max_pep_charge,3,['--max-pep-charge c', 'Maximum precursor charge to consider if charges are not specified in the spectrum file, Default: 3'])
+search_tool.add_value_option(:num_reported_matches,1,['--num-reported-matches n', 'Number of matches per spectrum to be reported, Default: 1'])
+search_tool.add_boolean_option(:add_features,false,['--add-features', 'output additional features'])
+search_tool.add_value_option(:java_mem,"3500M",['--java-mem mem','Java memory limit when running the search (Default 3.5Gb)'])
   
-exit unless search_tool.check_options 
-
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts search_tool.option_parser 
-    exit
-end
+exit unless search_tool.check_options(true)
 
 # Environment with global constants
 #
@@ -124,6 +67,9 @@ msgf_bin = "#{genv.msgfplus_root}/MSGFPlus.jar " if !msgf_bin
 throw "Could not find MSGFPlus.jar" if !msgf_bin || (msgf_bin.length==0) || !File.exist?(msgf_bin)
 
 make_msgfdb_cmd=""
+
+@output_suffix="_msgfplus"
+@output_extension= search_tool.pepxml ? ".pep.xml" : ".mzid"
 
 case 
 when Pathname.new(search_tool.database).exist? # It's an explicitly named db
@@ -157,7 +103,7 @@ ARGV.each do |filename|
   if ( search_tool.explicit_output!=nil)
     output_path=search_tool.explicit_output
   else
-    output_path="#{search_tool.output_base_path(filename.chomp)}.pep.xml"
+    output_path=Tool.default_output_path(filename,@output_extension,search_tool.output_prefix,@output_suffix)
   end
 
 
@@ -226,7 +172,7 @@ ARGV.each do |filename|
 
     # Num Threads
     #
-    cmd << " -thread #{search_tool.num_threads}" if search_tool.num_threads
+    cmd << " -thread #{search_tool.threads}" if search_tool.threads > 0
 
     mods_file_content = ""
 
@@ -257,15 +203,15 @@ ARGV.each do |filename|
     end
     
     # As a final part of the command we convert to pepxml
-    if search_tool.no_pepxml
-      cmd << "; cp #{mzid_output_path} #{output_path}"
-    else
+    if search_tool.pepxml
       #if search_tool.explicit_output
       cmd << ";ruby -pi.bak -e \"gsub('post=\\\"?','post=\\\"X')\" #{mzid_output_path}"
       cmd << ";ruby -pi.bak -e \"gsub('pre=\\\"?','pre=\\\"X')\" #{mzid_output_path}"
       cmd << ";idconvert #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
       #Then copy the pepxml to the final output path
       cmd << "; mv #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
+    else
+      cmd << "; cp #{mzid_output_path} #{output_path}"
     end
       
 

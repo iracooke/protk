@@ -94,7 +94,6 @@ class Tool
 
     if ( option_support.include? :prefix)
       add_value_option(:output_prefix,"",['-b','--output-prefix pref', 'A string to prepend to the name of output files'])
-      # add_value_option(:output_suffix,"",['-e', '--output-suffix suff', 'A string to append to the name of output files'])       
     end
 
     if ( option_support.include? :over_write)
@@ -105,24 +104,12 @@ class Tool
       add_value_option(:explicit_output,nil,['-o', '--output out', 'An explicitly named output file.'])
     end
 
+    if ( option_support.include? :threads )
+      add_value_option(:threads,1,['-n','--threads num','Number of processing threads to use. Set to 0 to autodetect an appropriate value'])
+    end
+
   end
 
-   # Create and return a full base path (without extension) representing the output file for this analysis
-   # Optionally provide the extension to be removed (if not provided it will be inferred)
-   #
-   def output_base_path(output_file,ext=nil)
-
-     output_path=Pathname.new(output_file)
-     throw "Error: Output directory #{output_path.dirname} does not exist" unless output_path.dirname.exist?
-     dir=output_path.dirname.realpath.to_s
-     basename=output_path.basename.to_s
-     if ( ext==nil)
-       ext=output_path.extname    
-     end
-     base_name=basename.gsub(/#{ext}$/,"")
-
-     "#{dir}/#{@options.output_prefix}#{base_name}#{@options.output_suffix}"
-   end
 
    def self.extension_from_filename(filename)
     ext=""
@@ -173,6 +160,7 @@ class Tool
    # Create a full base path (without extension) representing the input file for this analysis
    # Optionally provide the extension to be removed (if not provided it will be inferred)
    #
+   # TODO Deprecate this
    def input_base_path(input_file,ext=nil)
      input_path=Pathname.new(input_file)
      throw "Error: Input directory #{input_path.dirname} does not exist" unless input_path.dirname.exist?

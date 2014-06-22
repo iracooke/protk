@@ -4,3 +4,4 @@ Gemfile.lock
 todo.txt
 *.bundle
 tmp/
+spec/data/AASequences.fasta.*

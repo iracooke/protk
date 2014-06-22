@@ -35,7 +35,8 @@ class TandemSearchTool < SearchTool
 			:cleavage_semi,
 			:methionine_oxidation,
 			:glyco,
-			:acetyl_nterm
+			:acetyl_nterm,
+			:threads
   			])
 
 		@xtandem_keys_with_single_multiplicity = {
@@ -63,7 +64,6 @@ class TandemSearchTool < SearchTool
 
 		add_value_option(:tandem_params,"isb_native",['-T', '--tandem-params tandem', 'Either the full path to an xml file containing a complete set of default parameters, or one of the following (isb_native,isb_kscore,gpm). Default is isb_native'])
 		add_boolean_option(:keep_params_files,false,['-K', '--keep-params-files', 'Keep X!Tandem parameter files'])
-		add_value_option(:threads,1,['--threads threads','Number of threads. Set to the number of processors on your computer for best performance'])
 		add_boolean_option(:output_spectra,false,['--output-spectra', 'Include spectra in the output file'])
 
 	end

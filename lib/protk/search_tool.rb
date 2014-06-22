@@ -30,12 +30,8 @@ class SearchTool < Tool
   def initialize(option_support=[])
     super(option_support)
 
-    if (option_support.include? :database)          
-      @options.database = "sphuman"
-      @option_parser.on( '-d', '--database dbname', 'Specify the database to use for this search. Default=sphuman' ) do |dbname|
-        options.database = dbname
-      end
-
+    if (option_support.include? :database)
+      add_value_option(:database,"sphuman",['-d', '--database dbname', 'Specify the database to use for this search. Can be a named protk database or the path to a fasta file'])        
     end
     
     if ( option_support.include? :enzyme )
@@ -48,38 +44,25 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :instrument )
-      @options.instrument = "ESI-QUAD-TOF"
-      @option_parser.on('--instrument instrument', 'Instrument') do |instrument|
-       @options.instrument=instrument
-     end
+      add_value_option(:instrument,"ESI-QUAD-TOF",['--instrument instrument', 'Instrument'])
     end
 
     if ( option_support.include? :mass_tolerance_units )
-
       add_value_option(:fragment_tolu,"Da",['--fragment-ion-tol-units tolu', 'Fragment ion mass tolerance units (Da or mmu). Default=Da'])      
       add_value_option(:precursor_tolu,"ppm",['--precursor-ion-tol-units tolu', 'Precursor ion mass tolerance units (ppm or Da). Default=ppm'])
-
     end
 
     if ( option_support.include? :mass_tolerance )
-
       add_value_option(:fragment_tol,0.65,['-f', '--fragment-ion-tol tol', 'Fragment ion mass tolerance (unit dependent). Default=0.65'])
       add_value_option(:precursor_tol,200,['-p','--precursor-ion-tol tol', 'Precursor ion mass tolerance. Default=200'])
-
     end
     
     if ( option_support.include? :precursor_search_type )
-      @options.precursor_search_type="monoisotopic"
-      @option_parser.on( '-a', '--search-type type', 'Use monoisotopic or average precursor masses. (monoisotopic or average)' ) do |type| 
-        @options.precursor_search_type = type
-      end
+      add_value_option(:precursor_search_type,"monoisotopic",['-a', '--search-type type', 'Use monoisotopic or average precursor masses. (monoisotopic or average)'])
     end
 
     if ( option_support.include? :strict_monoisotopic_mass )
-      @options.strict_monoisotopic_mass=false
-      @option_parser.on( '-s', '--strict-monoisotopic-mass', 'Dont allow for misassignment of monoisotopic mass to another isotopic peak') do
-        @options.strict_monoisotopic_mass=true
-      end
+      add_boolean_option(:strict_monoisotopic_mass,false,['-s', '--strict-monoisotopic-mass', 'Dont allow for misassignment of monoisotopic mass to another isotopic peak'])
     end
 
     if ( option_support.include? :missed_cleavages )
@@ -91,17 +74,11 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :respect_precursor_charges )
-      @options.respect_precursor_charges=false
-      @option_parser.on( '-q', '--respect-charges','Dont respect charges in the input file. Instead impute them by trying various options') do 
-        @options.respect_precursor_charges=true
-      end
+      add_boolean_option(:respect_precursor_charges,false,['-q', '--respect-charges','Dont respect charges in the input file. Instead impute them by trying various options'])
     end
 
     if ( option_support.include? :searched_ions )
-        @options.searched_ions = ""
-        @option_parser.on('--searched-ions si', 'Ion series to search (default=b,y)' ) do |si|
-          @options.searched_ions = si
-        end
+      add_value_option(:searched_ions,"",['--searched-ions si', 'Ion series to search (default=b,y)'])
     end
 
     if ( option_support.include? :multi_isotope_search )
@@ -109,10 +86,7 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :num_peaks_for_multi_isotope_search )
-        @options.num_peaks_for_multi_isotope_search="0"
-        @option_parser.on("--num-peaks-for-multi-isotope-search np","Number of peaks to include in multi-isotope search") do |np|
-          @options.num_peaks_for_multi_isotope_search=np
-        end
+      add_value_option(:num_peaks_for_multi_isotope_search,0,["--num-peaks-for-multi-isotope-search np","Number of peaks to include in multi-isotope search"])
     end
 
     if ( option_support.include? :glyco)
@@ -125,41 +99,21 @@ class SearchTool < Tool
 
     if ( option_support.include? :methionine_oxidation)
       add_boolean_option(:methionine_oxidation,false,['-m', '--methionineo', 'Expect Oxidised Methionine modifications as variable mod in a search'])
-      # @options.methionine_oxidation = false
-      # @option_parser.on( '-m', '--methionineo', 'Expect Oxidised Methionine modifications as variable mod in a search' ) do 
-      #   @options.methionine_oxidation = true
-      # end
     end
 
     if ( option_support.include? :carbamidomethyl)
-      @options.carbamidomethyl = false
-      @option_parser.on( '-c', '--carbamidomethyl', 'Expect Carbamidomethyl C modifications as fixed mod in a search' ) do 
-        @options.carbamidomethyl = true
-      end
+      add_boolean_option(:carbamidomethyl,false,['-c', '--carbamidomethyl', 'Expect Carbamidomethyl C modifications as fixed mod in a search'])
     end
     
     if ( option_support.include? :maldi)
-      @options.maldi=false
-      @option_parser.on( '-l', '--maldi', 'Run a search on MALDI data') do
-        @options.maldi=true
-      end
+      add_boolean_option(:maldi,false,['-l', '--maldi', 'Run a search on MALDI data'])
     end
 
     @option_parser.summary_width=40
 
       
   end
-  
-  
-  def jobid_from_filename(filename)
-    jobid="protk"
-    jobnum_match=filename.match(/(.{1,10}).*?\./)
-    if (jobnum_match!=nil)
-      jobid="#{self.jobid_prefix}#{jobnum_match[1]}"
-    end
-    return jobid
-  end
-    
+      
   # Based on the database setting and global database path, find the most current version of the required database
   # This function returns the name of the database with an extension appropriate to the database type
   #
@@ -185,7 +139,7 @@ class SearchTool < Tool
   def database_info
     case
       when Pathname.new(@options.database).exist? # It's an explicitly named db  
-        db_path=Pathname.new(@options.database).realpath.to_s
+        db_path=Pathname.new(@options.database).expand_path.to_s
         db_name=Pathname.new(@options.database).basename.to_s
       else
         db_path=Constants.new.current_database_for_name @options.database
