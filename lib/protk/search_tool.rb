@@ -122,7 +122,7 @@ class SearchTool < Tool
         db_name=Pathname.new(@options.database).basename.to_s
       else
         db_path=Constants.new.current_database_for_name @options.database
-        db_path=@options.database
+        db_name=@options.database
     end
     FastaDatabase.new(db_name,db_path)
   end

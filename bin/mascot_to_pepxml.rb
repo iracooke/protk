@@ -20,16 +20,12 @@ tool.option_parser.banner = "Convert mascot dat files to pep.xml files.\n\nUsage
 
 tool.options.enzyme="trypsin"
 
-tool.options.shortid=false
-tool.option_parser.on( '--shortid', 'Use short protein id as per Mascot result (default uses full protein ids in fasta file)' ) do  
-    tool.options.shortid=true
-end
-
-tool.option_parser.parse!
+tool.add_boolean_option(:shortid,false,['--shortid', 'Use short protein id as per Mascot result (default uses full protein ids in fasta file)' ])
 
 exit unless tool.check_options(true,[:database])
 
 database_path=tool.database_info.path
+
 
 
 ARGV.each do |file_name| 

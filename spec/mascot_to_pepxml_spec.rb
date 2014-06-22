@@ -6,14 +6,20 @@ def sphuman_not_installed
 	$?.exitstatus>0
 end
 
+def mascot2xml_not_installed
+	installed=(%x[which Mascot2XML].length>0)
+	!installed
+end
+
 describe "The mascot_to_pepxml tool" do
 
 	describe ["mascot_to_pepxml.rb"] do
 		it_behaves_like "a protk tool"
 	end
 
-
-	describe "Running with sample data",:broken => true, :dependencies_not_installed => sphuman_not_installed do
+	# This is currently broken because the TPP Mascot2XML itself seems broken
+	#
+	describe "Running with sample data",:broken => true, :dependencies_not_installed => sphuman_not_installed && mascot2xml_not_installed do
 
 		include_context :tmp_dir_with_fixtures, ["tinymgfresults.mascotdat"]
 

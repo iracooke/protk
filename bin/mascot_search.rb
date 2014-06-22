@@ -58,6 +58,29 @@ def search_params_dictionary(search_tool,input_file)
     var_mods=""  if var_mods=="None"
     fix_mods="" if fix_mods=="None"
 
+    shorthand_varmods=[]
+    shorthand_fixmods=[]
+
+    shorthand_varmods << ['Oxidation (M)'] if search_tool.methionine_oxidation
+    shorthand_varmods << ['Acetyl (Protein N-term)'] if search_tool.acetyl_nterm
+    shorthand_varmods << ['Deamidated (NQ)'] if search_tool.glyco
+
+    shorthand_fixmods << ['Carbamidomethyl (C)'] if search_tool.carbamidomethyl
+
+    if var_mods.length>0
+        var_mods=[var_mods,"#{shorthand_varmods.join(",")}"].join(",") 
+    else
+        var_mods=shorthand_varmods.join(",")
+    end
+
+
+    if fix_mods.length>0
+        fix_mods=[fix_mods,"#{shorthand_fixmods.join(",")}"].join(",")
+    else
+        fix_mods=shorthand_fixmods.join(",")
+    end
+
+
     postdict={}
     postdict[:SEARCH]="MIS" 
     postdict[:CHARGE]=search_tool.allowed_charges
@@ -90,72 +113,34 @@ $genv=Constants.new
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
-search_tool=SearchTool.new([:explicit_output,:over_write,:database,:enzyme,
-    :modifications,:instrument,:mass_tolerance,
-    :mass_tolerance_units,:precursor_search_type,:missed_cleavages])
-
-search_tool.jobid_prefix="o"
+search_tool=SearchTool.new([
+    :explicit_output,
+    :over_write,
+    :database,
+    :enzyme,
+    :modifications,
+    :methionine_oxidation,
+    :carbamidomethyl,
+    :glyco,
+    :acetyl_nterm,
+    :instrument,
+    :mass_tolerance,
+    :mass_tolerance_units,
+    :precursor_search_type,
+    :missed_cleavages])
 
 search_tool.option_parser.banner = "Run a Mascot msms search on a set of mgf input files.\n\nUsage: mascot_search.rb [options] msmsfile.mgf"
 search_tool.options.output_suffix="_mascot"
 
-search_tool.options.mascot_server="#{$genv.default_mascot_server}/mascot/cgi"
-
-search_tool.options.allowed_charges="1+,2+,3+"
-search_tool.option_parser.on(  '--allowed-charges ac', 'Allowed precursor ion charges. Default=1+,2+,3+' ) do |ac|
- search_tool.options.allowed_charges = ac
-end     
-
-search_tool.options.email=""
-search_tool.option_parser.on('--email em', 'User email.') do |em|
-    search_tool.options.email = em
-end
-
-search_tool.options.username=""
-search_tool.option_parser.on('--username un', 'Username.') do |un|
-    search_tool.options.username = un
-end
-
-search_tool.options.mascot_server="www.matrixscience.com"
-search_tool.option_parser.on( '-S', '--server url', 'The url to the cgi directory of the mascot server' ) do |url| 
-    search_tool.options.mascot_server=url
-end
-
-search_tool.options.mascot_server=""
-search_tool.option_parser.on('--username un', 'Username.') do |un|
-    search_tool.options.username = un
-end
-
-search_tool.options.httpproxy=nil
-search_tool.option_parser.on( '--proxy url', 'The url to a proxy server' ) do |urll| 
-    search_tool.options.httpproxy=urll
-end
-
-search_tool.options.mascot_password=""
-search_tool.option_parser.on( '--password psswd', 'Password to use when Mascot security is enabled' ) do |psswd| 
-    search_tool.options.mascot_password=psswd
-end
-
-search_tool.options.use_security=FALSE
-search_tool.option_parser.on( '--use-security', 'When Mascot security is enabled this is required' ) do  
-    search_tool.options.use_security=TRUE
-end
-
-search_tool.options.export_format="mascotdat"
-search_tool.option_parser.on( '--export format', 'Save results in a specified format. Only mascotdat is currently supported' ) do |format| 
-    search_tool.options.export_format=format
-end
-
-search_tool.options.download_only=nil
-search_tool.option_parser.on( '--download-only path', 'Specify a path to an existing results file for download eg(20131113/F227185.dat)' ) do |path| 
-    search_tool.options.download_only=path
-end
-
-
-search_tool.options.timeout=200
-search_tool.option_parser.on( '--timeout seconds', 'Timeout for sending data file to mascot in seconds' ) do |seconds| 
-    search_tool.options.timeout=seconds.to_i
-end
+search_tool.add_value_option(:mascot_server,"#{$genv.default_mascot_server}/mascot/cgi",['-S', '--server url', 'The url to the cgi directory of the mascot server'])
+search_tool.add_value_option(:allowed_charges,"1+,2+,3+",['--allowed-charges ac', 'Allowed precursor ion charges.'])
+search_tool.add_value_option(:email,"",['--email em', 'User email.'])
+search_tool.add_value_option(:username,"",['--username un', 'Username.'])
+search_tool.add_value_option(:httpproxy,nil,['--proxy url', 'The url to a proxy server'])
+search_tool.add_value_option(:mascot_password,"",['--password psswd', 'Password to use when Mascot security is enabled'])
+search_tool.add_boolean_option(:use_security,false,['--use-security', 'When Mascot security is enabled this is required'])
+search_tool.add_value_option(:download_only,nil,['--download-only path', 'Specify a relative path to an existing results file on the server for download eg(20131113/F227185.dat)'])
+search_tool.add_value_option(:timeout,200,['--timeout seconds', 'Timeout for sending data file to mascot in seconds'])
 
 exit unless search_tool.check_options
 
@@ -214,19 +199,20 @@ else
         puts error_result[0]
         $genv.log("Mascot search failed with response #{search_response}",:warn)
         throw "Mascot search failed with response #{search_response}"
-    elsif (search_tool.export_format=="mascotdat")
+    else (search_tool.export_format=="mascotdat")
         # Search for the location of the mascot data file in the response
         results=/master_results_?2?\.pl\?file=\.*\/data\/(.*)\/(.+\.dat)/.match(search_response)
         results_date=results[1]
         results_file=results[2]
 
         download_datfile mascot_cgi, results_date, results_file,search_tool.explicit_output,openurlcookie
-    else
-        results=/master_results_?2?\.pl\?file=(\.*\/data\/.*\/.+\.dat)/.match(search_response)
-        results_file = results[1]
-        export_results mascot_cgi,cookie,results_file,search_tool.export_format, openurlcookie
-    #    export_results mascot_cgi,cookie,results_file,search_tool.export_format
     end
+    # else
+    #     results=/master_results_?2?\.pl\?file=(\.*\/data\/.*\/.+\.dat)/.match(search_response)
+    #     results_file = results[1]
+    #     export_results mascot_cgi,cookie,results_file,search_tool.export_format, openurlcookie
+    # #    export_results mascot_cgi,cookie,results_file,search_tool.export_format
+    # end
 end
 
 
