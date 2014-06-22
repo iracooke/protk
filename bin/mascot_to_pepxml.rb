@@ -29,15 +29,7 @@ tool.option_parser.parse!
 
 exit unless tool.check_options(true,[:database])
 
-current_db=""
-
-case 
-when Pathname.new(tool.database).exist? # It's an explicitly named db
-  current_db=Pathname.new(tool.database).realpath.to_s
-else
-  current_db=tool.current_database :fasta
-end
-
+database_path=tool.database_info.path
 
 
 ARGV.each do |file_name| 
@@ -48,14 +40,14 @@ ARGV.each do |file_name|
   if ( tool.explicit_output==nil )
     new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}_mascot2xml"      
     cmd="cp #{name} #{new_basename}.dat"
-    cmd << "; #{genv.mascot2xml} #{new_basename}.dat -D#{current_db} -E#{tool.enzyme}"
+    cmd << "; #{genv.mascot2xml} #{new_basename}.dat -D#{database_path} -E#{tool.enzyme}"
     
     cmd << " -shortid" if tool.shortid
 
   else  #Mascot2XML doesn't support explicitly named output files so we move the file to an appropriate output filename after finishing
     new_basename="#{this_dir}/#{MascotUtil.input_basename(name)}_mascot2xml"
     cmd="cp #{name} #{new_basename}.dat"
-    cmd << "; Mascot2XML #{new_basename}.dat -D#{current_db} -E#{tool.enzyme}"
+    cmd << "; Mascot2XML #{new_basename}.dat -D#{database_path} -E#{tool.enzyme}"
     cmd << " -shortid" if tool.shortid
     cmd << "; mv #{new_basename}.pep.xml #{tool.explicit_output}; rm #{new_basename}.dat"
     repair_script="#{File.dirname(__FILE__)}/repair_run_summary.rb"     

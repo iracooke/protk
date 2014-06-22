@@ -17,9 +17,11 @@ describe "The omssa_search command", :broken => false do
 		@extra_args="-d #{@db_file} --max-hit-expect 1000"    	
 	end
 
-
-	describe ["omssa_search.rb",".pep.xml","_omssa"] do
+	describe ["omssa_search.rb"] do
 		it_behaves_like "a protk tool"
+	end
+
+	describe ["omssa_search.rb",".pep.xml","_omssa"], :dependencies_not_installed => omssa_not_installed do
 		it_behaves_like "a protk tool with default file output"		
 	end
 

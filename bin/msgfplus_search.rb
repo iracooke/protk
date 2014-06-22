@@ -25,8 +25,6 @@ search_tool=SearchTool.new([
   :enzyme,
   :modifications,
   :instrument,
-  :mass_tolerance_units,
-  :mass_tolerance,
   :cleavage_semi,
   :threads])
 
@@ -36,6 +34,10 @@ search_tool.options.output_suffix="_msgfplus"
 
 search_tool.options.enzyme=1
 search_tool.options.instrument=0
+
+# MS-GF+ doesnt support fragment tol so add this manually rather than via the SearchTool defaults
+search_tool.add_value_option(:precursor_tol,"20",['-p','--precursor-ion-tol tol', 'Precursor ion mass tolerance.'])
+search_tool.add_value_option(:precursor_tolu,"ppm",['--precursor-ion-tol-units tolu', 'Precursor ion mass tolerance units (ppm or Da). Default=ppm'])
 
 search_tool.add_boolean_option(:pepxml,false,['--pepxml', 'Convert results to pepxml.'])
 search_tool.add_value_option(:isotope_error_range,"0,1",['--isotope-error-range range', 'Takes into account of the error introduced by chooosing a non-monoisotopic peak for fragmentation.(Default 0,1)'])
@@ -71,27 +73,23 @@ make_msgfdb_cmd=""
 @output_suffix="_msgfplus"
 @output_extension= search_tool.pepxml ? ".pep.xml" : ".mzid"
 
-case 
-when Pathname.new(search_tool.database).exist? # It's an explicitly named db
-  current_db=Pathname.new(search_tool.database).expand_path.to_s
+db_info=search_tool.database_info
 
-  # Must have fasta extension
-  if ( Pathname.new(current_db).extname.to_s.downcase != ".fasta" )
-    make_msgfdb_cmd << "ln -s #{current_db} #{current_db}.fasta;"
-    current_db="#{current_db}.fasta"
-  end
+database_path=db_info.path
 
-  if(not FileTest.exists?("#{current_db}.canno"))
-    dbdir = Pathname.new(current_db).dirname.realpath.to_s
-    tdavalue=search_tool.decoy_search ? 1 : 0;
-    make_msgfdb_cmd << "cd #{dbdir}; java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{current_db} -tda #{tdavalue}; "
-  end
-else
-  current_db=search_tool.current_database :fasta
+# Database must have fasta extension
+if Pathname.new(database_path).extname.to_s.downcase != ".fasta"
+  make_msgfdb_cmd << "ln -s #{database_path} #{database_path}.fasta;"
+  database_path="#{database_path}.fasta"
+  db_info.path=database_path
 end
 
-fragment_tol = search_tool.fragment_tol
-precursor_tol = search_tool.precursor_tol
+# Database must be indexed
+unless FileTest.exists?("#{database_path}.canno")
+  dbdir = Pathname.new(database_path).dirname.realpath.to_s
+  tdavalue=search_tool.decoy_search ? 1 : 0;
+  make_msgfdb_cmd << "cd #{dbdir}; java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{database_path} -tda #{tdavalue}; "
+end
 
 
 throw "When --output is set only one file at a time can be run" if  ( ARGV.length> 1 ) && ( search_tool.explicit_output!=nil ) 
@@ -107,13 +105,8 @@ ARGV.each do |filename|
   end
 
 
-  # (*.mzML, *.mzXML, *.mgf, *.ms2, *.pkl or *_dta.txt)
-  # Get the input file extension
-  ext = Pathname.new(filename).extname
-  input_path="#{search_tool.input_base_path(filename.chomp)}#{ext}"
-
-  mzid_output_path="#{search_tool.input_base_path(filename.chomp)}.mzid"
-
+  input_path=filename.chomp
+  mzid_output_path="#{output_path}.mzid"
 
   if for_galaxy
     original_input_file = input_path
@@ -130,7 +123,7 @@ ARGV.each do |filename|
   
     # The basic command
     #
-    cmd= "#{make_msgfdb_cmd} java -Xmx#{search_tool.java_mem} -jar #{msgf_bin} -d #{current_db} -s #{input_path} -o #{mzid_output_path} "
+    cmd= "#{make_msgfdb_cmd} java -Xmx#{search_tool.java_mem} -jar #{msgf_bin} -d #{database_path} -s #{input_path} -o #{mzid_output_path} "
 
     #Semi tryptic peptides
     #
@@ -195,7 +188,7 @@ ARGV.each do |filename|
     end
 
     if ( mods_file_content != "")
-      mods_path="#{search_tool.input_base_path(filename.chomp)}.msgfplus_mods.txt"
+      mods_path="#{output_path}.msgfplus_mods.txt"
       mods_file=File.open(mods_path,'w+')
       mods_file.write "NumMods=2\n#{mods_file_content}"
       mods_file.close
@@ -211,7 +204,7 @@ ARGV.each do |filename|
       #Then copy the pepxml to the final output path
       cmd << "; mv #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
     else
-      cmd << "; cp #{mzid_output_path} #{output_path}"
+      cmd << "; mv #{mzid_output_path} #{output_path}"
     end
       
 

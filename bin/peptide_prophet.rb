@@ -84,10 +84,10 @@ inputs=file_info.collect do |info|
   end
   throw "All files to be analyzed must have been searched with the same database and search engine" unless (info[1][:engine]==engine) && (info[1][:database])
 
-  retname=  "#{prophet_tool.input_base_path(info[0],".pep.xml")}.pep.xml"
-  if ( info[0]=~/\.dat$/)
-    retname=info[0]
-  end
+  retname=  info[0]
+  # if ( info[0]=~/\.dat$/)
+  #   retname=info[0]
+  # end
       
   retname
 

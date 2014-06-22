@@ -17,9 +17,11 @@ describe "The peptide_prophet command", :broken => false do
 		@output_file="#{@tmp_dir}/out.pep.xml"
 	end
 
-
-	describe ["peptide_prophet.rb",".pep.xml","_pproph"] do
+	describe ["peptide_prophet.rb"] do
 		it_behaves_like "a protk tool"
+	end
+
+	describe ["peptide_prophet.rb",".pep.xml","_pproph"], :dependencies_not_installed => tpp_not_installed do
 		it_behaves_like "a protk tool with default file output"
 	end
 

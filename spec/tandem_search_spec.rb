@@ -18,8 +18,11 @@ describe "The xtandem_search command", :broken => false do
 		@extra_args="-d #{@db_file}"
 	end
 
-	describe ["tandem_search.rb",".tandem","_tandem"] do
+	describe ["tandem_search.rb"] do
 		it_behaves_like "a protk tool"
+	end
+
+	describe ["tandem_search.rb",".tandem","_tandem"], :dependencies_not_installed => tandem_not_installed do
 		it_behaves_like "a protk tool with default file output"
 	end
 

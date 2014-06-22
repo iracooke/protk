@@ -114,27 +114,6 @@ class SearchTool < Tool
       
   end
       
-  # Based on the database setting and global database path, find the most current version of the required database
-  # This function returns the name of the database with an extension appropriate to the database type
-  #
-  # TODO: Deprecate this
-  def current_database(db_type,db=@options.database)
-    return Constants.new.current_database_for_name(db)
-  end
-
-  # Full path to a fasta database for this search
-  # If specified db was a real file it returns the path to that file
-  # If a named db it returns the full path to the database for the named db
-  #
-  # def database_path
-  #   case
-  #     when Pathname.new(@options.database).exist? # It's an explicitly named db  
-  #       db_path=Pathname.new(@options.database).realpath.to_s
-  #     else
-  #       db_path=Constants.new.current_database_for_name @options.database
-  #   end
-  #   db_path
-  # end
 
   def database_info
     case

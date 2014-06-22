@@ -155,23 +155,7 @@ class Tool
     end
 
     return true
-   end
-
-   # Create a full base path (without extension) representing the input file for this analysis
-   # Optionally provide the extension to be removed (if not provided it will be inferred)
-   #
-   # TODO Deprecate this
-   def input_base_path(input_file,ext=nil)
-     input_path=Pathname.new(input_file)
-     throw "Error: Input directory #{input_path.dirname} does not exist" unless input_path.dirname.exist?
-     dir=input_path.dirname.realpath.to_s
-     if ( ext==nil)
-       ext=input_path.extname    
-     end
-     base_name=input_path.basename.to_s.gsub(/#{ext}$/,"")
-     "#{dir}/#{base_name}"
-   end
-   
+   end   
    
    # Run the search tool using the given command string and global environment
    #
