@@ -7,7 +7,7 @@ describe "The make_decoy tool" do
 		it_behaves_like "a protk tool"
 	end
 
-	describe "Running with sample data" do
+	describe "Running with sample data", :broken=>true do
 
 		include_context :tmp_dir_with_fixtures, ["testdb.fasta"]
 
