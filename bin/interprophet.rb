@@ -16,42 +16,21 @@ for_galaxy = GalaxyUtil.for_galaxy?
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new([:explicit_output,:over_write,:prefix])
+prophet_tool=ProphetTool.new([
+  :explicit_output,
+  :over_write,
+  :prefix])
+
 prophet_tool.option_parser.banner = "Run InterProphet on a set of pep.xml input files.\n\nUsage: interprophet.rb [options] file1.pep.xml file2.pep.xml ..."
-prophet_tool.options.output_suffix="_iproph"
+@output_suffix="_iproph"
 
 
-prophet_tool.add_value_option(:no_nss,"",['--no-nss', 'Don\'t use NSS (Number of Sibling Searches) in Model'])
-prophet_tool.add_value_option(:no_nrs,"",['--no-nrs', 'Don\'t use NRS (Number of Replicate Spectra) in Model'])
-# prophet_tool.options.no_nss=""
-# prophet_tool.option_parser.on( '--no-nss', 'Don\'t use NSS (Number of Sibling Searches) in Model' ) do 
-#   prophet_tool.options.no_nss="NONSS"
-# end
-
-prophet_tool.options.no_nrs=""
-prophet_tool.option_parser.on('--no-nrs', 'Don\'t use NRS (Number of Replicate Spectra) in Model' ) do
-  prophet_tool.options.no_nrs="NONRS"
-end
-
-prophet_tool.options.no_nse=""
-prophet_tool.option_parser.on('--no-nse', 'Don\'t use NSE (Number of Sibling Experiments) in Model' ) do
-  prophet_tool.options.no_nse="NONSE"
-end
-
-prophet_tool.options.no_nsi=""
-prophet_tool.option_parser.on("--no-nsi",'Don\'t use NSE (Number of Sibling Ions) in Model' ) do
-  prophet_tool.options.no_nsi="NONSI"
-end
-
-prophet_tool.options.no_nsm=""
-prophet_tool.option_parser.on("--no-nsm",'Don\'t use NSE (Number of Sibling Modifications) in Model' ) do
-  prophet_tool.options.no_nsm="NONSM"
-end
-
-prophet_tool.options.min_prob=""
-prophet_tool.option_parser.on("--minprob mp","Minimum probability cutoff ") do |mp|
-  prophet_tool.options.min_prob=mp
-end
+prophet_tool.add_boolean_option(:no_nss,false,['--no-nss', 'Don\'t use NSS (Number of Sibling Searches) in Model'])
+prophet_tool.add_boolean_option(:no_nrs,false,['--no-nrs', 'Don\'t use NRS (Number of Replicate Spectra) in Model'])
+prophet_tool.add_boolean_option(:no_nse,false,['--no-nse', 'Don\'t use NSE (Number of Sibling Experiments) in Model'])
+prophet_tool.add_boolean_option(:no_nsi,false,["--no-nsi",'Don\'t use NSE (Number of Sibling Ions) in Model'])
+prophet_tool.add_boolean_option(:no_nsm,false,["--no-nsm",'Don\'t use NSE (Number of Sibling Modifications) in Model'])
+prophet_tool.add_value_option(:min_prob,"",["--minprob mp","Minimum probability cutoff "])
 
 exit unless prophet_tool.check_options(true)
 
@@ -59,20 +38,27 @@ exit unless prophet_tool.check_options(true)
 # Obtain a global environment object
 genv=Constants.new
 
+inputs = ARGV.collect {|file_name| 
+  file_name.chomp
+}
+
 if ( prophet_tool.explicit_output != nil )
-    output_file=prophet_tool.explicit_output
+  output_file=prophet_tool.explicit_output
 else
-  output_file="#{prophet_tool.output_prefix}interact#{prophet_tool.output_suffix}.pep.xml"
+  output_file=Tool.default_output_path(inputs[0],".pep.xml",prophet_tool.output_prefix,@output_suffix)
 end
 
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
-  cmd="InterProphetParser #{prophet_tool.options.no_nss} #{prophet_tool.options.no_nrs} #{prophet_tool.options.no_nse} #{prophet_tool.options.no_nsi} #{prophet_tool.options.no_nsm}"
-  cmd << " MINPROB=#{prophet_tool.min_prob}" if ( prophet_tool.min_prob !="" )
+  cmd="InterProphetParser "
 
-  inputs = ARGV.collect {|file_name| 
-    file_name.chomp
-  }
+  cmd<<"NONSS " if prophet_tool.options.no_nss
+  cmd<<"NONRS " if prophet_tool.options.no_nrs
+  cmd<<"NONSE " if prophet_tool.options.no_nse
+  cmd<<"NONSI " if prophet_tool.options.no_nsi
+  cmd<<"NONSM " if prophet_tool.options.no_nsm
+
+  cmd << " MINPROB=#{prophet_tool.min_prob}" if ( prophet_tool.min_prob !="" )
 
   if for_galaxy
     inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }

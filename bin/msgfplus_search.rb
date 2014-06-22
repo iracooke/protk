@@ -24,6 +24,10 @@ search_tool=SearchTool.new([
   :over_write,
   :enzyme,
   :modifications,
+  :methionine_oxidation,
+  :carbamidomethyl,
+  :glyco,
+  :acetyl_nterm,
   :instrument,
   :cleavage_semi,
   :threads])
@@ -173,6 +177,9 @@ ARGV.each do |filename|
     #
     if ( search_tool.var_mods !="" && !search_tool.var_mods =~/None/) # Checking for none is to cope with galaxy input
       var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join("\n")
+      var_mods << "O1,M,opt,any,Oxidation\n" if search_tool.methionine_oxidation
+      var_mods << "C2H2O,*,opt,Prot-N-term,Acetyl\n" if search_tool.acetyl_nterm
+      var_mods << "H-1N-1O1,N,opt,any,Deamidated\n" if search_tool.glyco      
       if ( var_mods !="" )
         mods_file_content << "#{var_mods}\n"
       end
@@ -182,6 +189,7 @@ ARGV.each do |filename|
   #
     if ( search_tool.fix_mods !="" && !search_tool.fix_mods=~/None/)
       fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join("\n")
+      fix_mods << "C2H3N1O1,C,opt,any,Carbamidomethyl\n" if search_tool.carbamidomethyl
       if ( fix_mods !="")
         mods_file_content << "#{fix_mods}"    
       end

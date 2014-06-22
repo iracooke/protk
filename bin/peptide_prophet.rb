@@ -17,7 +17,13 @@ input_stager = nil
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-prophet_tool=ProphetTool.new([:glyco,:explicit_output,:over_write,:maldi,:prefix,:database])
+prophet_tool=ProphetTool.new([
+  :glyco,
+  :explicit_output,
+  :over_write,
+  :maldi,
+  :prefix,
+  :database])
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 @output_suffix="_pproph"
 prophet_tool.options.database=nil
@@ -193,7 +199,7 @@ if ( prophet_tool.one_ata_time )
     output_file_name=Tool.default_output_path(input,".pep.xml",prophet_tool.output_prefix,@output_suffix)
     
     cmd=generate_command(genv,prophet_tool,input,output_file_name,database,engine)
-    run_peptide_prophet(genv,prophet_tool,cmd,output_file_base_name,engine)        
+    run_peptide_prophet(genv,prophet_tool,cmd,output_file_name,engine)        
   end
 
 else  

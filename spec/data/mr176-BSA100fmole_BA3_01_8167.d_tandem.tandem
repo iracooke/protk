@@ -1,0 +1,1145 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="tandem-style.xsl"?>
+<bioml xmlns:GAML="http://www.bioml.com/gaml/" label="models from '/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d.mgf'">
+<group id="1" mh="1443.700944" z="2" rt="" expect="5.9e-02" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." type="model" sumI="3.89" maxI="899" fI="8.99" act="0" >
+<protein expect="-1.2" id="1.1" uid="14" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." sumI="4.77" >
+<note label="description">tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="328">
+	
+<domain id="1.1.1" start="257" end="269" expect="5.9e-02" mh="1379.728" delta="63.973" hyperscore="24.9" nextscore="22.2" y_score="13.5" y_ions="6" b_score="0.0" b_ions="0" pre="FQHR" post="DVCL" seq="NVPVLVQNNQVSS" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="2" mh="1249.669838" z="3" rt="" expect="1.9e+00" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="3.67" maxI="388" fI="3.88" act="0" >
+<protein expect="0.0" id="2.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="2.1.1" start="87" end="96" expect="1.9e+00" mh="1210.479" delta="39.191" hyperscore="21.6" nextscore="20.0" y_score="8.8" y_ions="4" b_score="9.8" b_ions="5" pre="NHAQ" post="SKKD" seq="EQSSEENFCR" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="3" mh="1399.715504" z="2" rt="" expect="9.9e-02" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" type="model" sumI="3.56" maxI="786" fI="7.86" act="0" >
+<protein expect="-1.0" id="3.1" uid="16" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" sumI="4.91" >
+<note label="description">tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="368">
+	
+<domain id="3.1.1" start="208" end="219" expect="9.9e-02" mh="1381.663" delta="18.052" hyperscore="23.9" nextscore="19.3" y_score="7.6" y_ions="5" b_score="9.6" b_ions="4" pre="VFSR" post="KRYL" seq="SQVFQLESTFDV" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="4" mh="1452.636818" z="3" rt="" expect="2.2e+00" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="3.39" maxI="389" fI="3.89" act="0" >
+<protein expect="0.0" id="4.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="4.1.1" start="589" end="600" expect="2.2e+00" mh="1413.614" delta="39.022" hyperscore="20.2" nextscore="19.4" y_score="10.9" y_ions="4" b_score="9.6" b_ions="3" pre="NNFK" post="FNEL" seq="SMLPGNFENPYF" missed_cleavages="0">
+<aa type="M" at="590" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="5" mh="1399.717238" z="3" rt="" expect="1.1e+00" label="sp|O93590|ZAX_XENLA Homeobox protein zampogna OS=Xenopus laevis GN=zax PE=2 SV=1" type="model" sumI="4.15" maxI="2944" fI="29.44" act="0" >
+<protein expect="0.0" id="5.1" uid="15" label="sp|O93590|ZAX_XENLA Homeobox protein zampogna OS=Xenopus laevis GN=zax PE=2 SV=1" sumI="4.49" >
+<note label="description">sp|O93590|ZAX_XENLA Homeobox protein zampogna OS=Xenopus laevis GN=zax PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="224">
+	
+<domain id="5.1.1" start="60" end="71" expect="1.1e+00" mh="1392.534" delta="7.183" hyperscore="22.3" nextscore="21.8" y_score="12.8" y_ions="5" b_score="5.3" b_ions="2" pre="EKEK" post="ERDT" seq="TDTDSGTEDFHW" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="6" mh="575.347440" z="1" rt="" expect="5.1e+00" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." type="model" sumI="3.53" maxI="832" fI="8.32" act="0" >
+<protein expect="0.0" id="6.1" uid="20" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." sumI="4.58" >
+<note label="description">sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="384">
+	
+<domain id="6.1.1" start="220" end="224" expect="5.1e+00" mh="492.245" delta="83.102" hyperscore="13.8" nextscore="13.5" y_score="9.7" y_ions="2" b_score="10.5" b_ions="2" pre="TSSR" post="RAKK" seq="ESPPV" missed_cleavages="0">
+<aa type="E" at="220" modified="-18.01056" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="7" mh="922.521724" z="2" rt="" expect="2.6e+00" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="4.04" maxI="1543" fI="15.43" act="0" >
+<protein expect="0.0" id="7.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="7.1.1" start="462" end="470" expect="2.6e+00" mh="896.484" delta="26.038" hyperscore="18.7" nextscore="18.6" y_score="7.2" y_ions="3" b_score="12.4" b_ions="3" pre="TGER" post="NSGM" seq="NDSLAGPLK" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="8" mh="1324.654624" z="2" rt="" expect="2.1e+00" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." type="model" sumI="3.67" maxI="453" fI="4.53" act="0" >
+<protein expect="-1.2" id="8.1" uid="14" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." sumI="4.77" >
+<note label="description">tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="328">
+	
+<domain id="8.1.1" start="1" end="12" expect="2.1e+00" mh="1354.635" delta="-29.980" hyperscore="20.3" nextscore="18.7" y_score="8.9" y_ions="3" b_score="11.3" b_ions="4" pre="[" post="LVDD" seq="MDFSILPVNSSF" missed_cleavages="0">
+<aa type="M" at="1" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="9" mh="1502.678164" z="2" rt="" expect="4.4e-01" label="sp|P22807|SLOU_DROME Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2..." type="model" sumI="3.98" maxI="999" fI="9.99" act="0" >
+<protein expect="0.0" id="9.1" uid="24" label="sp|P22807|SLOU_DROME Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2..." sumI="4.22" >
+<note label="description">sp|P22807|SLOU_DROME Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="659">
+	
+<domain id="9.1.1" start="564" end="575" expect="4.4e-01" mh="1484.768" delta="17.910" hyperscore="21.8" nextscore="19.1" y_score="8.4" y_ions="4" b_score="10.3" b_ions="4" pre="LENK" post="LNLA" seq="FKTTRYLSVCER" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="10" mh="1107.559904" z="2" rt="" expect="2.5e+00" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." type="model" sumI="4.02" maxI="1779" fI="17.79" act="0" >
+<protein expect="0.0" id="10.1" uid="12" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." sumI="4.79" >
+<note label="description">tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="260">
+	
+<domain id="10.1.1" start="242" end="251" expect="2.5e+00" mh="1019.542" delta="88.018" hyperscore="20.0" nextscore="19.1" y_score="11.7" y_ions="5" b_score="0.0" b_ions="0" pre="VPDA" post="GAGK" seq="WSPPLPAGGR" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="11" mh="1161.485744" z="2" rt="" expect="2.3e+00" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." type="model" sumI="3.48" maxI="151" fI="1.51" act="0" >
+<protein expect="0.0" id="11.1" uid="25" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." sumI="4.61" >
+<note label="description">sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="429">
+	
+<domain id="11.1.1" start="354" end="365" expect="2.3e+00" mh="1104.480" delta="57.005" hyperscore="22.1" nextscore="20.9" y_score="10.3" y_ions="6" b_score="7.7" b_ions="1" pre="PGKQ" post="HGKL" seq="PGEATSSSGDSK" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="12" mh="1749.738158" z="3" rt="" expect="2.5e+00" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." type="model" sumI="3.90" maxI="1053" fI="10.53" act="0" >
+<protein expect="0.0" id="12.1" uid="10" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." sumI="4.73" >
+<note label="description">sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="318">
+	
+<domain id="12.1.1" start="1" end="16" expect="2.5e+00" mh="1756.873" delta="-7.135" hyperscore="21.7" nextscore="21.0" y_score="6.3" y_ions="3" b_score="8.6" b_ions="7" pre="[" post="ILNL" seq="MFPSPALTHTPFSVKD" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="13" mh="1747.773984" z="2" rt="" expect="1.1e+00" label="sp|P26797|HM19_CAEEL Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19..." type="model" sumI="3.73" maxI="496" fI="4.96" act="0" >
+<protein expect="0.0" id="13.1" uid="23" label="sp|P26797|HM19_CAEEL Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19..." sumI="4.27" >
+<note label="description">sp|P26797|HM19_CAEEL Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="199">
+	
+<domain id="13.1.1" start="118" end="132" expect="1.1e+00" mh="1758.986" delta="-11.212" hyperscore="19.3" nextscore="16.6" y_score="8.9" y_ions="4" b_score="9.9" b_ions="3" pre="QTDK" post="LTET" seq="YLSVNKRIQLSQTLN" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="14" mh="1800.698978" z="3" rt="" expect="2.2e+00" label="sp|O93367|TLX3_CHICK T-cell leukemia homeobox protein 3 OS=Gallus gallus GN=TLX3..." type="model" sumI="3.45" maxI="155" fI="1.55" act="0" >
+<protein expect="0.0" id="14.1" uid="7" label="sp|O93367|TLX3_CHICK T-cell leukemia homeobox protein 3 OS=Gallus gallus GN=TLX3..." sumI="3.45" >
+<note label="description">sp|O93367|TLX3_CHICK T-cell leukemia homeobox protein 3 OS=Gallus gallus GN=TLX3 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="297">
+	
+<domain id="14.1.1" start="123" end="138" expect="2.2e+00" mh="1701.842" delta="98.857" hyperscore="22.0" nextscore="21.8" y_score="9.3" y_ions="4" b_score="10.1" b_ions="4" pre="AIPA" post="RFVK" seq="VPGLGGLSFPWMESSR" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="15" mh="1262.649164" z="2" rt="" expect="1.8e+00" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." type="model" sumI="3.57" maxI="1109" fI="11.09" act="0" >
+<protein expect="0.0" id="15.1" uid="12" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." sumI="4.79" >
+<note label="description">tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="260">
+	
+<domain id="15.1.1" start="175" end="186" expect="1.8e+00" mh="1184.646" delta="78.004" hyperscore="18.4" nextscore="17.2" y_score="10.1" y_ions="5" b_score="0.0" b_ions="0" pre="VATR" post="PAPA" seq="ALPTTLAMRAAA" missed_cleavages="1">
+<aa type="M" at="182" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="16" mh="1901.975798" z="3" rt="" expect="1.7e+00" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." type="model" sumI="3.47" maxI="208" fI="2.08" act="0" >
+<protein expect="0.0" id="16.1" uid="21" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." sumI="5.01" >
+<note label="description">sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="544">
+	
+<domain id="16.1.1" start="358" end="376" expect="1.7e+00" mh="1960.029" delta="-58.053" hyperscore="22.4" nextscore="22.0" y_score="10.0" y_ions="6" b_score="9.5" b_ions="4" pre="WKRQ" post="LYGG" seq="TAVGLELLAEAGNFAAFQR" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="17" mh="1123.554904" z="2" rt="" expect="2.2e+00" label="sp|P22711|TIN_DROME Muscle-specific homeobox protein tinman OS=Drosophila melanogaster..." type="model" sumI="3.88" maxI="678" fI="6.78" act="0" >
+<protein expect="0.0" id="17.1" uid="13" label="sp|P22711|TIN_DROME Muscle-specific homeobox protein tinman OS=Drosophila melanogaster..." sumI="3.88" >
+<note label="description">sp|P22711|TIN_DROME Muscle-specific homeobox protein tinman OS=Drosophila melanogaster GN=tin PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="416">
+	
+<domain id="17.1.1" start="374" end="384" expect="2.2e+00" mh="1124.547" delta="-0.992" hyperscore="19.2" nextscore="19.1" y_score="9.8" y_ions="3" b_score="12.7" b_ions="3" pre="LKLK" post="PPIP" seq="SEPLDSPTSLP" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="18" mh="1107.557704" z="2" rt="" expect="4.7e-01" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." type="model" sumI="3.69" maxI="722" fI="7.22" act="0" >
+<protein expect="0.0" id="18.1" uid="25" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." sumI="4.61" >
+<note label="description">sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="429">
+	
+<domain id="18.1.1" start="231" end="240" expect="4.7e-01" mh="1108.531" delta="-0.973" hyperscore="21.7" nextscore="19.2" y_score="7.4" y_ions="5" b_score="13.4" b_ions="1" pre="GTYK" post="SLFG" seq="SVDPYFLSQA" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="19" mh="1174.443864" z="2" rt="" expect="5.3e-01" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." type="model" sumI="3.61" maxI="253" fI="2.53" act="0" >
+<protein expect="0.0" id="19.1" uid="21" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." sumI="5.01" >
+<note label="description">sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="544">
+	
+<domain id="19.1.1" start="75" end="83" expect="5.3e-01" mh="1106.566" delta="67.878" hyperscore="21.6" nextscore="19.2" y_score="10.1" y_ions="6" b_score="0.0" b_ions="0" pre="KPNR" post="AGSA" seq="SRFMINDIL" missed_cleavages="1">
+<aa type="M" at="78" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="20" mh="1554.715024" z="2" rt="" expect="2.0e+00" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." type="model" sumI="3.80" maxI="1631" fI="16.31" act="0" >
+<protein expect="-1.2" id="20.1" uid="14" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." sumI="4.77" >
+<note label="description">tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="328">
+	
+<domain id="20.1.1" start="9" end="21" expect="2.0e+00" mh="1544.854" delta="9.861" hyperscore="18.1" nextscore="17.6" y_score="6.7" y_ions="6" b_score="0.0" b_ions="0" pre="ILPV" post="HYEN" seq="NSSFLVDDILRRK" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="21" mh="1119.551324" z="2" rt="" expect="2.0e+00" label="sp|Q22909|HM30_CAEEL Homeobox protein ceh-30 OS=Caenorhabditis elegans GN=ceh-30..." type="model" sumI="4.35" maxI="5103" fI="51.03" act="0" >
+<protein expect="0.0" id="21.1" uid="22" label="sp|Q22909|HM30_CAEEL Homeobox protein ceh-30 OS=Caenorhabditis elegans GN=ceh-30..." sumI="4.48" >
+<note label="description">sp|Q22909|HM30_CAEEL Homeobox protein ceh-30 OS=Caenorhabditis elegans GN=ceh-30 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="237">
+	
+<domain id="21.1.1" start="8" end="16" expect="2.0e+00" mh="1093.608" delta="25.943" hyperscore="17.3" nextscore="16.0" y_score="5.2" y_ions="3" b_score="11.0" b_ions="3" pre="LDPR" post="DPTT" seq="QFLLPAFYL" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="22" mh="1554.714008" z="3" rt="" expect="1.8e+00" label="sp|O93590|ZAX_XENLA Homeobox protein zampogna OS=Xenopus laevis GN=zax PE=2 SV=1" type="model" sumI="4.23" maxI="1221" fI="12.21" act="0" >
+<protein expect="0.0" id="22.1" uid="15" label="sp|O93590|ZAX_XENLA Homeobox protein zampogna OS=Xenopus laevis GN=zax PE=2 SV=1" sumI="4.49" >
+<note label="description">sp|O93590|ZAX_XENLA Homeobox protein zampogna OS=Xenopus laevis GN=zax PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="224">
+	
+<domain id="22.1.1" start="77" end="91" expect="1.8e+00" mh="1491.646" delta="63.068" hyperscore="28.2" nextscore="27.0" y_score="12.3" y_ions="9" b_score="8.3" b_ions="2" pre="RDTE" post="LADS" seq="TANNGAFTDPSSGDR" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="23" mh="927.525744" z="2" rt="" expect="1.9e+00" label="tr|Q24786|Q24786_9METZ Homeobox-containing protein (Fragment) OS=Ephydatia fluviatilis..." type="model" sumI="4.06" maxI="1783" fI="17.83" act="0" >
+<protein expect="0.0" id="23.1" uid="9" label="tr|Q24786|Q24786_9METZ Homeobox-containing protein (Fragment) OS=Ephydatia fluviatilis..." sumI="4.06" >
+<note label="description">tr|Q24786|Q24786_9METZ Homeobox-containing protein (Fragment) OS=Ephydatia fluviatilis GN=prox1 PE=3 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="118">
+	
+<domain id="23.1.1" start="50" end="56" expect="1.9e+00" mh="893.499" delta="34.027" hyperscore="17.2" nextscore="16.7" y_score="8.9" y_ions="5" b_score="0.0" b_ions="0" pre="ELER" post="LTAH" seq="RFAVQKY" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="24" mh="1778.885978" z="3" rt="" expect="1.7e+00" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." type="model" sumI="3.89" maxI="825" fI="8.25" act="0" >
+<protein expect="0.0" id="24.1" uid="11" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." sumI="5.14" >
+<note label="description">tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="344">
+	
+<domain id="24.1.1" start="130" end="149" expect="1.7e+00" mh="1869.814" delta="-90.928" hyperscore="22.3" nextscore="22.3" y_score="8.2" y_ions="5" b_score="9.3" b_ions="6" pre="FMAP" post="SMAP" seq="SSGMNMGGMGGLSSLGDVSK" missed_cleavages="0">
+<aa type="M" at="138" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="25" mh="927.529690" z="1" rt="" expect="3.6e+00" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." type="model" sumI="3.21" maxI="127" fI="1.27" act="0" >
+<protein expect="0.0" id="25.1" uid="21" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." sumI="5.01" >
+<note label="description">sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="544">
+	
+<domain id="25.1.1" start="519" end="528" expect="3.6e+00" mh="977.516" delta="-49.987" hyperscore="17.8" nextscore="16.8" y_score="0.0" y_ions="0" b_score="12.2" b_ions="4" pre="TPSP" post="SVDS" seq="TLNPGSPPGR" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="26" mh="1290.754144" z="2" rt="" expect="2.8e+00" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." type="model" sumI="3.71" maxI="499" fI="4.99" act="0" >
+<protein expect="0.0" id="26.1" uid="12" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." sumI="4.79" >
+<note label="description">tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="260">
+	
+<domain id="26.1.1" start="17" end="29" expect="2.8e+00" mh="1318.723" delta="-27.968" hyperscore="20.5" nextscore="20.1" y_score="9.1" y_ions="6" b_score="0.0" b_ions="0" pre="RILW" post="LGAR" seq="GSHVKTPPGTISR" missed_cleavages="2">
+</domain>
+<domain id="26.1.2" start="18" end="29" expect="2.8e+00" mh="1261.701" delta="29.053" hyperscore="20.5" nextscore="20.1" y_score="9.1" y_ions="6" b_score="0.0" b_ions="0" pre="ILWG" post="LGAR" seq="SHVKTPPGTISR" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="27" mh="1358.694068" z="3" rt="" expect="2.7e-01" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" type="model" sumI="3.85" maxI="1193" fI="11.93" act="0" >
+<protein expect="0.0" id="27.1" uid="1" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" sumI="4.64" >
+<note label="description">tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="227">
+	
+<domain id="27.1.1" start="24" end="38" expect="2.7e-01" mh="1422.650" delta="-63.955" hyperscore="24.0" nextscore="20.4" y_score="12.2" y_ions="6" b_score="7.4" b_ions="4" pre="EEDK" post="ERID" seq="EEQPGGNAVVSGAPE" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="28" mh="1321.721884" z="2" rt="" expect="1.7e-01" label="sp|P22807|SLOU_DROME Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2..." type="model" sumI="3.86" maxI="493" fI="4.93" act="0" >
+<protein expect="0.0" id="28.1" uid="24" label="sp|P22807|SLOU_DROME Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2..." sumI="4.22" >
+<note label="description">sp|P22807|SLOU_DROME Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="659">
+	
+<domain id="28.1.1" start="512" end="524" expect="1.7e-01" mh="1377.565" delta="-55.843" hyperscore="23.8" nextscore="21.8" y_score="12.4" y_ions="6" b_score="0.0" b_ions="0" pre="CDDG" post="KGGS" seq="SDIDDPSSETDSK" missed_cleavages="0">
+</domain>
+<domain id="28.1.2" start="513" end="524" expect="1.7e-01" mh="1290.533" delta="31.189" hyperscore="23.8" nextscore="21.8" y_score="12.4" y_ions="6" b_score="0.0" b_ions="0" pre="DDGS" post="KGGS" seq="DIDDPSSETDSK" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="29" mh="1305.767164" z="2" rt="" expect="1.9e+00" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." type="model" sumI="4.20" maxI="1632" fI="16.32" act="0" >
+<protein expect="0.0" id="29.1" uid="10" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." sumI="4.73" >
+<note label="description">sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="318">
+	
+<domain id="29.1.1" start="197" end="208" expect="1.9e+00" mh="1272.647" delta="33.120" hyperscore="22.2" nextscore="21.9" y_score="8.6" y_ions="5" b_score="10.3" b_ions="3" pre="KRQR" post="PPAR" seq="QDQTLELLGPPP" missed_cleavages="0">
+<aa type="Q" at="197" modified="-17.02655" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="30" mh="1439.865908" z="3" rt="" expect="2.3e+00" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." type="model" sumI="3.96" maxI="1531" fI="15.31" act="0" >
+<protein expect="0.0" id="30.1" uid="12" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." sumI="4.79" >
+<note label="description">tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="260">
+	
+<domain id="30.1.1" start="51" end="63" expect="2.3e+00" mh="1421.808" delta="18.058" hyperscore="20.9" nextscore="20.1" y_score="9.6" y_ions="5" b_score="6.4" b_ions="4" pre="DMRR" post="SRVL" seq="GGPVSTRTRPQRK" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="31" mh="651.367980" z="1" rt="" expect="7.4e+00" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." type="model" sumI="3.75" maxI="541" fI="5.41" act="0" >
+<protein expect="0.0" id="31.1" uid="25" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." sumI="4.61" >
+<note label="description">sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="429">
+	
+<domain id="31.1.1" start="135" end="141" expect="7.4e+00" mh="721.315" delta="-69.947" hyperscore="13.7" nextscore="13.3" y_score="10.6" y_ions="3" b_score="4.0" b_ions="1" pre="ASGY" post="SMHS" seq="AGEDYGK" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="32" mh="1305.759364" z="2" rt="" expect="1.4e+00" label="sp|Q01702|DLX3B_DANRE Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1" type="model" sumI="3.78" maxI="666" fI="6.66" act="0" >
+<protein expect="0.0" id="32.1" uid="28" label="sp|Q01702|DLX3B_DANRE Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1" sumI="4.01" >
+<note label="description">sp|Q01702|DLX3B_DANRE Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="269">
+	
+<domain id="32.1.1" start="10" end="22" expect="1.4e+00" mh="1262.593" delta="43.166" hyperscore="21.9" nextscore="19.6" y_score="9.8" y_ions="5" b_score="8.4" b_ions="3" pre="YDRK" post="CHPT" seq="IPGISTDLSGSMS" missed_cleavages="0">
+<aa type="M" at="21" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="34" mh="1142.753764" z="2" rt="" expect="1.4e+00" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." type="model" sumI="3.60" maxI="239" fI="2.39" act="0" >
+<protein expect="0.0" id="34.1" uid="10" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." sumI="4.73" >
+<note label="description">sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="318">
+	
+<domain id="34.1.1" start="26" end="36" expect="1.4e+00" mh="1055.584" delta="87.169" hyperscore="22.8" nextscore="22.8" y_score="9.8" y_ions="4" b_score="11.1" b_ions="4" pre="QQQR" post="EATL" seq="SLAAGDLSARL" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="33" mh="1305.770184" z="2" rt="" expect="2.0e+00" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." type="model" sumI="3.73" maxI="540" fI="5.4" act="0" >
+<protein expect="0.0" id="33.1" uid="10" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." sumI="4.73" >
+<note label="description">sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="318">
+	
+<domain id="33.1.1" start="36" end="47" expect="2.0e+00" mh="1217.590" delta="88.180" hyperscore="21.4" nextscore="21.2" y_score="9.6" y_ions="5" b_score="7.3" b_ions="3" pre="LSAR" post="AAFK" seq="LEATLAPASCML" missed_cleavages="0">
+<aa type="M" at="46" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="35" mh="1576.831088" z="3" rt="" expect="1.8e+00" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." type="model" sumI="4.18" maxI="3004" fI="30.04" act="0" >
+<protein expect="-1.2" id="35.1" uid="14" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." sumI="4.77" >
+<note label="description">tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="328">
+	
+<domain id="35.1.1" start="1" end="14" expect="1.8e+00" mh="1608.798" delta="-31.967" hyperscore="22.2" nextscore="22.1" y_score="9.9" y_ions="6" b_score="9.2" b_ions="4" pre="[" post="DDIL" seq="MDFSILPVNSSFLV" missed_cleavages="0">
+<aa type="M" at="1" modified="15.99492" />
+<aa type="M" at="1" modified="42.01057" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="36" mh="1576.833144" z="2" rt="" expect="2.3e+00" label="sp|P52955|LBX1_MOUSE Transcription factor LBX1 OS=Mus musculus GN=Lbx1 PE=1 SV=2" type="model" sumI="3.76" maxI="1172" fI="11.72" act="0" >
+<protein expect="0.0" id="36.1" uid="4" label="sp|P52955|LBX1_MOUSE Transcription factor LBX1 OS=Mus musculus GN=Lbx1 PE=1 SV=2" sumI="3.94" >
+<note label="description">sp|P52955|LBX1_MOUSE Transcription factor LBX1 OS=Mus musculus GN=Lbx1 PE=1 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="282">
+	
+<domain id="36.1.1" start="231" end="246" expect="2.3e+00" mh="1481.786" delta="95.047" hyperscore="21.0" nextscore="20.3" y_score="9.6" y_ions="6" b_score="0.0" b_ions="0" pre="GRAK" post="GGGP" seq="SRPGSPALPPGAPQAP" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="37" mh="1640.000544" z="2" rt="" expect="1.6e+00" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" type="model" sumI="4.01" maxI="3555" fI="35.55" act="0" >
+<protein expect="-1.0" id="37.1" uid="16" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" sumI="4.91" >
+<note label="description">tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="368">
+	
+<domain id="37.1.1" start="318" end="333" expect="1.6e+00" mh="1594.844" delta="45.157" hyperscore="15.7" nextscore="15.6" y_score="6.6" y_ions="4" b_score="9.9" b_ions="1" pre="LPRR" post="HLCR" seq="LPSLPSLADDGTRLSA" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="39" mh="1692.927188" z="3" rt="" expect="2.1e+00" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." type="model" sumI="3.99" maxI="920" fI="9.2" act="0" >
+<protein expect="0.0" id="39.1" uid="20" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." sumI="4.58" >
+<note label="description">sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="384">
+	
+<domain id="39.1.1" start="116" end="133" expect="2.1e+00" mh="1730.893" delta="-37.966" hyperscore="22.3" nextscore="22.0" y_score="6.8" y_ions="3" b_score="9.4" b_ions="7" pre="QQPP" post="TSTS" seq="PQPQSAAQQLGSAAAAPR" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="40" mh="1639.998968" z="3" rt="" expect="1.8e+00" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." type="model" sumI="4.90" maxI="13596" fI="135.96" act="0" >
+<protein expect="0.0" id="40.1" uid="11" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." sumI="5.14" >
+<note label="description">tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="344">
+	
+<domain id="40.1.1" start="126" end="141" expect="1.8e+00" mh="1558.616" delta="81.383" hyperscore="23.2" nextscore="22.6" y_score="8.5" y_ions="7" b_score="6.7" b_ions="5" pre="SISR" post="SSLG" seq="FMAPSSGMNMGGMGGL" missed_cleavages="0">
+<aa type="M" at="133" modified="15.99492" />
+<aa type="M" at="138" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="42" mh="1640.003138" z="3" rt="" expect="2.0e+00" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" type="model" sumI="3.79" maxI="655" fI="6.55" act="0" >
+<protein expect="0.0" id="42.1" uid="1" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" sumI="4.64" >
+<note label="description">tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="227">
+	
+<domain id="42.1.1" start="1" end="15" expect="2.0e+00" mh="1723.843" delta="-83.840" hyperscore="22.3" nextscore="22.1" y_score="9.9" y_ions="1" b_score="9.5" b_ions="7" pre="[" post="SPAA" seq="METPQDSRQSIQKPP" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="41" mh="1002.617720" z="1" rt="" expect="1.9e+00" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" type="model" sumI="3.97" maxI="594" fI="5.94" act="0" >
+<protein expect="0.0" id="41.1" uid="1" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" sumI="4.64" >
+<note label="description">tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="227">
+	
+<domain id="41.1.1" start="24" end="34" expect="1.9e+00" mh="1068.496" delta="-65.878" hyperscore="18.5" nextscore="17.7" y_score="11.2" y_ions="4" b_score="9.5" b_ions="2" pre="EEDK" post="GAPE" seq="EEQPGGNAVVS" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="43" mh="1283.757904" z="2" rt="" expect="2.9e+00" label="sp|Q22909|HM30_CAEEL Homeobox protein ceh-30 OS=Caenorhabditis elegans GN=ceh-30..." type="model" sumI="3.90" maxI="1400" fI="14" act="0" >
+<protein expect="0.0" id="43.1" uid="22" label="sp|Q22909|HM30_CAEEL Homeobox protein ceh-30 OS=Caenorhabditis elegans GN=ceh-30..." sumI="4.48" >
+<note label="description">sp|Q22909|HM30_CAEEL Homeobox protein ceh-30 OS=Caenorhabditis elegans GN=ceh-30 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="237">
+	
+<domain id="43.1.1" start="78" end="92" expect="2.9e+00" mh="1363.537" delta="-79.779" hyperscore="17.5" nextscore="17.1" y_score="9.2" y_ions="5" b_score="0.0" b_ions="0" pre="TSPR" post="KKSR" seq="ASSPGGDRMGSPGSC" missed_cleavages="1">
+<aa type="M" at="86" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="44" mh="1576.831868" z="3" rt="" expect="2.9e-01" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." type="model" sumI="3.83" maxI="1369" fI="13.69" act="0" >
+<protein expect="0.0" id="44.1" uid="21" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." sumI="5.01" >
+<note label="description">sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="544">
+	
+<domain id="44.1.1" start="357" end="373" expect="2.9e-01" mh="1639.833" delta="-63.001" hyperscore="23.9" nextscore="20.4" y_score="7.7" y_ions="5" b_score="9.5" b_ions="7" pre="KWKR" post="FQRL" seq="QTAVGLELLAEAGNFAA" missed_cleavages="0">
+<aa type="Q" at="357" modified="-17.02655" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="45" mh="1880.991938" z="3" rt="" expect="1.5e+00" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." type="model" sumI="4.50" maxI="3895" fI="38.95" act="0" >
+<protein expect="0.0" id="45.1" uid="11" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." sumI="5.14" >
+<note label="description">tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="344">
+	
+<domain id="45.1.1" start="27" end="44" expect="1.5e+00" mh="1818.880" delta="62.112" hyperscore="24.6" nextscore="22.9" y_score="9.0" y_ions="3" b_score="8.7" b_ions="8" pre="SYKK" post="QVSQ" seq="VGMEGSNLGAPLSAYRQS" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="46" mh="1467.792064" z="2" rt="" expect="2.4e+00" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." type="model" sumI="4.85" maxI="6322" fI="63.22" act="0" >
+<protein expect="0.0" id="46.1" uid="21" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." sumI="5.01" >
+<note label="description">sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="544">
+	
+<domain id="46.1.1" start="284" end="297" expect="2.4e+00" mh="1381.663" delta="86.129" hyperscore="21.2" nextscore="20.7" y_score="9.8" y_ions="6" b_score="0.0" b_ions="0" pre="DGNS" post="KQRK" seq="VKSGSTSDMSGLSK" missed_cleavages="2">
+<aa type="M" at="292" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="47" mh="1520.714618" z="3" rt="" expect="1.8e+00" label="tr|O97671|O97671_RABIT Homeobox protein (Fragment) OS=Oryctolagus cuniculus GN=HEX..." type="model" sumI="4.09" maxI="1671" fI="16.71" act="0" >
+<protein expect="0.0" id="47.1" uid="17" label="tr|O97671|O97671_RABIT Homeobox protein (Fragment) OS=Oryctolagus cuniculus GN=HEX..." sumI="4.09" >
+<note label="description">tr|O97671|O97671_RABIT Homeobox protein (Fragment) OS=Oryctolagus cuniculus GN=HEX PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="138">
+	
+<domain id="47.1.1" start="77" end="90" expect="1.8e+00" mh="1593.750" delta="-73.036" hyperscore="23.4" nextscore="23.2" y_score="10.6" y_ions="7" b_score="6.6" b_ions="3" pre="RRLK" post="DSSC" seq="QENPQSGKKEQENL" missed_cleavages="2">
+<aa type="Q" at="77" modified="-17.02655" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="48" mh="1419.746498" z="3" rt="" expect="5.0e-01" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" type="model" sumI="4.74" maxI="4762" fI="47.62" act="0" >
+<protein expect="-1.0" id="48.1" uid="16" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" sumI="4.91" >
+<note label="description">tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="368">
+	
+<domain id="48.1.1" start="75" end="88" expect="5.0e-01" mh="1485.819" delta="-66.072" hyperscore="25.9" nextscore="23.2" y_score="10.6" y_ions="7" b_score="7.5" b_ions="4" pre="ICPR" post="GGTR" seq="LVLFHRGPAGHRSG" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="49" mh="1163.676304" z="2" rt="" expect="1.3e+00" label="sp|P20269|HM05_CAEEL Homeobox protein ceh-5 OS=Caenorhabditis elegans GN=ceh-5 PE=2..." type="model" sumI="4.58" maxI="4289" fI="42.89" act="0" >
+<protein expect="0.0" id="49.1" uid="2" label="sp|P20269|HM05_CAEEL Homeobox protein ceh-5 OS=Caenorhabditis elegans GN=ceh-5 PE=2..." sumI="4.58" >
+<note label="description">sp|P20269|HM05_CAEEL Homeobox protein ceh-5 OS=Caenorhabditis elegans GN=ceh-5 PE=2 SV=4</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="134">
+	
+<domain id="49.1.1" start="92" end="101" expect="1.3e+00" mh="1150.658" delta="13.018" hyperscore="21.0" nextscore="19.3" y_score="9.6" y_ions="6" b_score="0.0" b_ions="0" pre="TKQK" post="ETLK" seq="KIDSRDPIKP" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="50" mh="1217.612244" z="2" rt="" expect="2.0e+00" label="sp|P52955|LBX1_MOUSE Transcription factor LBX1 OS=Mus musculus GN=Lbx1 PE=1 SV=2" type="model" sumI="3.47" maxI="257" fI="2.57" act="0" >
+<protein expect="0.0" id="50.1" uid="4" label="sp|P52955|LBX1_MOUSE Transcription factor LBX1 OS=Mus musculus GN=Lbx1 PE=1 SV=2" sumI="3.94" >
+<note label="description">sp|P52955|LBX1_MOUSE Transcription factor LBX1 OS=Mus musculus GN=Lbx1 PE=1 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="282">
+	
+<domain id="50.1.1" start="39" end="49" expect="2.0e+00" mh="1308.738" delta="-91.126" hyperscore="19.3" nextscore="18.5" y_score="10.0" y_ions="4" b_score="12.1" b_ions="2" pre="PFSI" post="SYSL" seq="EDILNKPSVRR" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="51" mh="1179.669664" z="2" rt="" expect="4.9e-01" label="sp|P56407|HM09_CAEEL Homeobox protein ceh-9 OS=Caenorhabditis elegans GN=ceh-9 PE=4..." type="model" sumI="3.70" maxI="293" fI="2.93" act="0" >
+<protein expect="0.0" id="51.1" uid="8" label="sp|P56407|HM09_CAEEL Homeobox protein ceh-9 OS=Caenorhabditis elegans GN=ceh-9 PE=4..." sumI="3.70" >
+<note label="description">sp|P56407|HM09_CAEEL Homeobox protein ceh-9 OS=Caenorhabditis elegans GN=ceh-9 PE=4 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="147">
+	
+<domain id="51.1.1" start="106" end="115" expect="4.9e-01" mh="1170.648" delta="9.022" hyperscore="25.7" nextscore="22.7" y_score="10.9" y_ions="7" b_score="0.0" b_ions="0" pre="ELAK" post="IWFQ" seq="RLDVTETQVK" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="52" mh="1419.746384" z="2" rt="" expect="1.1e+00" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." type="model" sumI="4.22" maxI="1679" fI="16.79" act="0" >
+<protein expect="0.0" id="52.1" uid="12" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." sumI="4.79" >
+<note label="description">tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="260">
+	
+<domain id="52.1.1" start="147" end="161" expect="1.1e+00" mh="1493.800" delta="-74.053" hyperscore="23.4" nextscore="21.4" y_score="9.6" y_ions="5" b_score="11.4" b_ions="3" pre="GTGR" post="KPPR" seq="QPLPGSDVAAFLVPT" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="53" mh="1511.894224" z="2" rt="" expect="2.5e+00" label="sp|O08686|BARX2_MOUSE Homeobox protein BarH-like 2 OS=Mus musculus GN=Barx2 PE=2..." type="model" sumI="4.26" maxI="2519" fI="25.19" act="0" >
+<protein expect="0.0" id="53.1" uid="26" label="sp|O08686|BARX2_MOUSE Homeobox protein BarH-like 2 OS=Mus musculus GN=Barx2 PE=2..." sumI="4.26" >
+<note label="description">sp|O08686|BARX2_MOUSE Homeobox protein BarH-like 2 OS=Mus musculus GN=Barx2 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="283">
+	
+<domain id="53.1.1" start="122" end="135" expect="2.5e+00" mh="1585.745" delta="-73.851" hyperscore="17.6" nextscore="16.8" y_score="9.3" y_ions="5" b_score="0.0" b_ions="0" pre="EALA" post="KPRR" seq="SSESETEQPTPRQK" missed_cleavages="1">
+</domain>
+<domain id="53.1.2" start="123" end="135" expect="2.5e+00" mh="1498.713" delta="13.181" hyperscore="17.6" nextscore="16.8" y_score="9.3" y_ions="5" b_score="0.0" b_ions="0" pre="ALAS" post="KPRR" seq="SESETEQPTPRQK" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="54" mh="1419.743288" z="3" rt="" expect="2.8e+00" label="sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23..." type="model" sumI="3.97" maxI="734" fI="7.34" act="0" >
+<protein expect="0.0" id="54.1" uid="3" label="sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23..." sumI="4.61" >
+<note label="description">sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="305">
+	
+<domain id="54.1.1" start="271" end="282" expect="2.8e+00" mh="1414.633" delta="5.110" hyperscore="22.8" nextscore="22.6" y_score="9.3" y_ions="7" b_score="8.5" b_ions="2" pre="RRKQ" post="SEEI" seq="QEEQQSTTLEEK" missed_cleavages="0">
+<aa type="Q" at="271" modified="-17.02655" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="55" mh="1419.744664" z="2" rt="" expect="1.8e+00" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." type="model" sumI="3.70" maxI="415" fI="4.15" act="0" >
+<protein expect="0.0" id="55.1" uid="20" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." sumI="4.58" >
+<note label="description">sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="384">
+	
+<domain id="55.1.1" start="130" end="142" expect="1.8e+00" mh="1360.758" delta="58.986" hyperscore="19.4" nextscore="19.4" y_score="11.0" y_ions="5" b_score="5.6" b_ions="1" pre="GSAA" post="DILG" seq="AAPRTSTSSFLIK" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="56" mh="1014.653384" z="2" rt="" expect="3.8e-01" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." type="model" sumI="3.75" maxI="513" fI="5.13" act="0" >
+<protein expect="0.0" id="56.1" uid="20" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." sumI="4.58" >
+<note label="description">sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="384">
+	
+<domain id="56.1.1" start="260" end="268" expect="3.8e-01" mh="929.476" delta="85.177" hyperscore="22.0" nextscore="19.6" y_score="10.6" y_ions="6" b_score="0.0" b_ions="0" pre="VQDR" post="TDTQ" seq="MDLAAALNL" missed_cleavages="0">
+<aa type="M" at="260" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="57" mh="1467.789484" z="2" rt="" expect="1.8e+00" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." type="model" sumI="4.20" maxI="1308" fI="13.08" act="0" >
+<protein expect="0.0" id="57.1" uid="21" label="sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2..." sumI="5.01" >
+<note label="description">sp|Q24255|BARH1_DROME Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="544">
+	
+<domain id="57.1.1" start="284" end="297" expect="1.8e+00" mh="1381.663" delta="86.127" hyperscore="21.4" nextscore="20.8" y_score="9.9" y_ions="6" b_score="0.0" b_ions="0" pre="DGNS" post="KQRK" seq="VKSGSTSDMSGLSK" missed_cleavages="2">
+<aa type="M" at="292" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="58" mh="1357.729904" z="2" rt="" expect="1.4e+00" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." type="model" sumI="3.70" maxI="422" fI="4.22" act="0" >
+<protein expect="0.0" id="58.1" uid="11" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." sumI="5.14" >
+<note label="description">tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="344">
+	
+<domain id="58.1.1" start="237" end="249" expect="1.4e+00" mh="1430.895" delta="-73.166" hyperscore="20.1" nextscore="18.3" y_score="11.8" y_ions="5" b_score="0.0" b_ions="0" pre="CQQQ" post="DGKP" seq="QSPRRVAVPVLVK" missed_cleavages="2">
+</domain>
+<domain id="58.1.2" start="237" end="249" expect="1.4e+00" mh="1413.869" delta="-56.139" hyperscore="20.1" nextscore="18.3" y_score="11.8" y_ions="5" b_score="0.0" b_ions="0" pre="CQQQ" post="DGKP" seq="QSPRRVAVPVLVK" missed_cleavages="2">
+<aa type="Q" at="237" modified="-17.02655" />
+</domain>
+<domain id="58.1.3" start="238" end="249" expect="1.4e+00" mh="1302.837" delta="54.893" hyperscore="20.1" nextscore="18.3" y_score="11.8" y_ions="5" b_score="0.0" b_ions="0" pre="QQQQ" post="DGKP" seq="SPRRVAVPVLVK" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="59" mh="1511.830484" z="2" rt="" expect="1.7e+00" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." type="model" sumI="3.76" maxI="339" fI="3.39" act="0" >
+<protein expect="0.0" id="59.1" uid="12" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." sumI="4.79" >
+<note label="description">tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="260">
+	
+<domain id="59.1.1" start="121" end="134" expect="1.7e+00" mh="1467.723" delta="44.108" hyperscore="20.7" nextscore="19.2" y_score="6.1" y_ions="1" b_score="12.4" b_ions="5" pre="KSQR" post="RPGS" seq="QDQNLELAGHPLAP" missed_cleavages="0">
+<aa type="Q" at="121" modified="-17.02655" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="60" mh="1163.672204" z="2" rt="" expect="2.7e+00" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." type="model" sumI="4.14" maxI="1346" fI="13.46" act="0" >
+<protein expect="0.0" id="60.1" uid="25" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." sumI="4.61" >
+<note label="description">sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="429">
+	
+<domain id="60.1.1" start="354" end="365" expect="2.7e+00" mh="1104.480" delta="59.192" hyperscore="18.7" nextscore="18.7" y_score="9.0" y_ions="5" b_score="5.3" b_ions="2" pre="PGKQ" post="HGKL" seq="PGEATSSSGDSK" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="61" mh="1415.741544" z="2" rt="" expect="2.1e+00" label="sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23..." type="model" sumI="4.39" maxI="3211" fI="32.11" act="0" >
+<protein expect="0.0" id="61.1" uid="3" label="sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23..." sumI="4.61" >
+<note label="description">sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="305">
+	
+<domain id="61.1.1" start="126" end="139" expect="2.1e+00" mh="1508.818" delta="-93.076" hyperscore="21.3" nextscore="20.7" y_score="8.3" y_ions="5" b_score="8.9" b_ions="3" pre="SQAT" post="RYSE" seq="VTLQVPSTGSPERR" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="62" mh="1468.670648" z="3" rt="" expect="1.7e+00" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." type="model" sumI="3.49" maxI="211" fI="2.11" act="0" >
+<protein expect="0.0" id="62.1" uid="20" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." sumI="4.58" >
+<note label="description">sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="384">
+	
+<domain id="62.1.1" start="196" end="208" expect="1.7e+00" mh="1429.638" delta="39.033" hyperscore="21.5" nextscore="21.2" y_score="10.6" y_ions="5" b_score="12.7" b_ions="1" pre="LDKR" post="EEGD" seq="EDSQSDIKCHGTK" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="63" mh="579.331680" z="1" rt="" expect="1.6e+00" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." type="model" sumI="3.93" maxI="623" fI="6.23" act="0" >
+<protein expect="0.0" id="63.1" uid="25" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." sumI="4.61" >
+<note label="description">sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="429">
+	
+<domain id="63.1.1" start="314" end="319" expect="1.6e+00" mh="673.352" delta="-94.020" hyperscore="14.5" nextscore="13.9" y_score="10.5" y_ions="3" b_score="9.8" b_ions="1" pre="ALGL" post="TWFQ" seq="SETQVK" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="64" mh="1907.994578" z="3" rt="" expect="1.8e+00" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." type="model" sumI="4.16" maxI="3912" fI="39.12" act="0" >
+<protein expect="-1.2" id="64.1" uid="14" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." sumI="4.77" >
+<note label="description">tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="328">
+	
+<domain id="64.1.1" start="184" end="199" expect="1.8e+00" mh="1881.030" delta="26.964" hyperscore="20.3" nextscore="20.0" y_score="6.1" y_ions="5" b_score="10.3" b_ions="5" pre="KKPR" post="DQKY" seq="ILFSQSQVMELGKKFK" missed_cleavages="2">
+<aa type="M" at="192" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="65" mh="1537.854764" z="2" rt="" expect="2.1e+00" label="tr|Q23819|Q23819_HYDVD Cnox3 protein (Fragment) OS=Hydra viridissima GN=cnox3 PE=2..." type="model" sumI="3.70" maxI="541" fI="5.41" act="0" >
+<protein expect="0.0" id="65.1" uid="27" label="tr|Q23819|Q23819_HYDVD Cnox3 protein (Fragment) OS=Hydra viridissima GN=cnox3 PE=2..." sumI="3.70" >
+<note label="description">tr|Q23819|Q23819_HYDVD Cnox3 protein (Fragment) OS=Hydra viridissima GN=cnox3 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="116">
+	
+<domain id="65.1.1" start="32" end="45" expect="2.1e+00" mh="1480.859" delta="56.995" hyperscore="18.0" nextscore="17.5" y_score="9.6" y_ions="5" b_score="4.3" b_ions="1" pre="PSTY" post="CRKP" seq="LQLKQNNAKGSGIK" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="66" mh="1479.850004" z="2" rt="" expect="2.2e-01" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="4.31" maxI="2597" fI="25.97" act="0" >
+<protein expect="0.0" id="66.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="66.1.1" start="436" end="448" expect="2.2e-01" mh="1495.729" delta="-15.879" hyperscore="22.1" nextscore="21.7" y_score="9.7" y_ions="6" b_score="9.2" b_ions="1" pre="LSTS" post="GIQA" seq="QTSGNRFLNFSDK" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="67" mh="1163.666464" z="2" rt="" expect="2.6e+00" label="tr|Q23824|Q23824_HYDVD Msh protein (Fragment) OS=Hydra viridissima GN=msh PE=2 SV=1" type="model" sumI="3.96" maxI="948" fI="9.48" act="0" >
+<protein expect="0.0" id="67.1" uid="30" label="tr|Q23824|Q23824_HYDVD Msh protein (Fragment) OS=Hydra viridissima GN=msh PE=2 SV=1" sumI="4.62" >
+<note label="description">tr|Q23824|Q23824_HYDVD Msh protein (Fragment) OS=Hydra viridissima GN=msh PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="128">
+	
+<domain id="67.1.1" start="75" end="85" expect="2.6e+00" mh="1258.627" delta="-94.961" hyperscore="22.7" nextscore="21.6" y_score="9.6" y_ions="6" b_score="7.7" b_ions="2" pre="KQKR" post="NRLP" seq="SKEAEIEESVR" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="69" mh="1415.738584" z="2" rt="" expect="2.1e+00" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." type="model" sumI="3.83" maxI="736" fI="7.36" act="0" >
+<protein expect="0.0" id="69.1" uid="12" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." sumI="4.79" >
+<note label="description">tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="260">
+	
+<domain id="69.1.1" start="247" end="260" expect="2.1e+00" mh="1349.653" delta="66.085" hyperscore="21.2" nextscore="20.7" y_score="9.8" y_ions="6" b_score="0.0" b_ions="0" pre="SPPL" post="]" seq="PAGGRGAGKHCPPY" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="70" mh="1544.742398" z="3" rt="" expect="1.9e-01" label="sp|Q01702|DLX3B_DANRE Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1" type="model" sumI="3.64" maxI="308" fI="3.08" act="0" >
+<protein expect="0.0" id="70.1" uid="28" label="sp|Q01702|DLX3B_DANRE Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1" sumI="4.01" >
+<note label="description">sp|Q01702|DLX3B_DANRE Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="269">
+	
+<domain id="70.1.1" start="182" end="195" expect="1.9e-01" mh="1592.843" delta="-48.101" hyperscore="27.5" nextscore="22.7" y_score="13.4" y_ions="6" b_score="10.2" b_ions="4" pre="SKFK" post="NASD" seq="KLYKNGEVPLEHSP" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="71" mh="1491.809124" z="2" rt="" expect="1.8e+00" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="4.49" maxI="3874" fI="38.74" act="0" >
+<protein expect="0.0" id="71.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="71.1.1" start="32" end="45" expect="1.8e+00" mh="1457.676" delta="34.133" hyperscore="18.4" nextscore="18.3" y_score="7.2" y_ions="4" b_score="9.3" b_ions="3" pre="SSSI" post="HIEE" seq="PTLAVPECESMGNK" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="72" mh="1507.808984" z="2" rt="" expect="2.9e+00" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." type="model" sumI="3.66" maxI="287" fI="2.87" act="0" >
+<protein expect="0.0" id="72.1" uid="12" label="tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6..." sumI="4.79" >
+<note label="description">tr|O35455|O35455_MOUSE Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="260">
+	
+<domain id="72.1.1" start="121" end="134" expect="2.9e+00" mh="1467.723" delta="40.086" hyperscore="18.8" nextscore="18.3" y_score="8.6" y_ions="2" b_score="11.9" b_ions="4" pre="KSQR" post="RPGS" seq="QDQNLELAGHPLAP" missed_cleavages="0">
+<aa type="Q" at="121" modified="-17.02655" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="73" mh="1479.842204" z="2" rt="" expect="2.2e+00" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" type="model" sumI="3.75" maxI="575" fI="5.75" act="0" >
+<protein expect="0.0" id="73.1" uid="1" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" sumI="4.64" >
+<note label="description">tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="227">
+	
+<domain id="73.1.1" start="211" end="223" expect="2.2e+00" mh="1524.807" delta="-44.964" hyperscore="19.1" nextscore="18.7" y_score="10.8" y_ions="5" b_score="0.0" b_ions="0" pre="QRNR" post="SDSP]" seq="RVLMFCELPPLPQ" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="74" mh="1399.743464" z="2" rt="" expect="1.9e+00" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="4.29" maxI="2640" fI="26.4" act="0" >
+<protein expect="0.0" id="74.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="74.1.1" start="449" end="461" expect="1.9e+00" mh="1411.660" delta="-11.917" hyperscore="21.4" nextscore="21.0" y_score="8.6" y_ions="6" b_score="5.3" b_ions="2" pre="FSDK" post="NDSL" seq="GIQAGSYYQTGER" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="75" mh="1491.806404" z="2" rt="" expect="2.8e+00" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." type="model" sumI="3.82" maxI="891" fI="8.91" act="0" >
+<protein expect="0.0" id="75.1" uid="10" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." sumI="4.73" >
+<note label="description">sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="318">
+	
+<domain id="75.1.1" start="67" end="80" expect="2.8e+00" mh="1443.795" delta="48.011" hyperscore="19.5" nextscore="18.6" y_score="9.9" y_ions="5" b_score="5.1" b_ions="2" pre="PGLA" post="CSPA" seq="ELRAELGPAPSPPK" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="76" mh="1740.892404" z="2" rt="" expect="3.0e+00" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." type="model" sumI="4.04" maxI="1255" fI="12.55" act="0" >
+<protein expect="-1.2" id="76.1" uid="14" label="tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris..." sumI="4.77" >
+<note label="description">tr|O16132|O16132_HYDVU NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="328">
+	
+<domain id="76.1.1" start="71" end="85" expect="3.0e+00" mh="1836.854" delta="-95.962" hyperscore="19.5" nextscore="19.2" y_score="8.8" y_ions="4" b_score="10.3" b_ions="3" pre="KPFQ" post="SSIS" seq="MNDKNITETERDFNK" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="77" mh="1163.660344" z="2" rt="" expect="3.1e-01" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="4.25" maxI="3223" fI="32.23" act="0" >
+<protein expect="0.0" id="77.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="77.1.1" start="471" end="481" expect="3.1e-01" mh="1208.540" delta="-44.880" hyperscore="21.8" nextscore="18.5" y_score="7.0" y_ions="5" b_score="6.4" b_ions="4" pre="GPLK" post="FGSN" seq="NSGMSFDFPPK" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="80" mh="1051.554024" z="2" rt="" expect="2.9e+00" label="sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23..." type="model" sumI="3.79" maxI="593" fI="5.93" act="0" >
+<protein expect="0.0" id="80.1" uid="3" label="sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23..." sumI="4.61" >
+<note label="description">sp|P34663|HM23_CAEEL Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="305">
+	
+<domain id="80.1.1" start="289" end="296" expect="2.9e+00" mh="991.301" delta="60.253" hyperscore="18.6" nextscore="18.5" y_score="10.1" y_ions="5" b_score="6.4" b_ions="1" pre="EIGK" post="DEDD" seq="DEEEDDEE" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="81" mh="1567.804804" z="2" rt="" expect="1.5e-01" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." type="model" sumI="3.68" maxI="541" fI="5.41" act="0" >
+<protein expect="0.0" id="81.1" uid="25" label="sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh..." sumI="4.61" >
+<note label="description">sp|Q04787|BSH_DROME Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="429">
+	
+<domain id="81.1.1" start="26" end="41" expect="1.5e-01" mh="1565.803" delta="2.002" hyperscore="21.2" nextscore="18.1" y_score="0.0" y_ions="0" b_score="9.8" b_ions="6" pre="TPTH" post="TPFS" seq="SKAAAMASATTMLTTK" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="84" mh="997.624570" z="1" rt="" expect="3.4e+00" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" type="model" sumI="3.87" maxI="2416" fI="24.16" act="0" >
+<protein expect="0.0" id="84.1" uid="1" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" sumI="4.64" >
+<note label="description">tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="227">
+	
+<domain id="84.1.1" start="212" end="219" expect="3.4e+00" mh="949.452" delta="48.172" hyperscore="13.2" nextscore="12.8" y_score="10.1" y_ions="2" b_score="9.0" b_ions="2" pre="RNRR" post="PLPQ" seq="VLMFCELP" missed_cleavages="0">
+<aa type="M" at="214" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="85" mh="997.624750" z="1" rt="" expect="4.2e+00" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" type="model" sumI="3.92" maxI="2562" fI="25.62" act="0" >
+<protein expect="0.0" id="85.1" uid="1" label="tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" sumI="4.64" >
+<note label="description">tr|O70238|O70238_MOUSE Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="227">
+	
+<domain id="85.1.1" start="212" end="219" expect="4.2e+00" mh="949.452" delta="48.173" hyperscore="12.8" nextscore="12.4" y_score="9.8" y_ions="2" b_score="8.3" b_ions="2" pre="RNRR" post="PLPQ" seq="VLMFCELP" missed_cleavages="0">
+<aa type="M" at="214" modified="15.99492" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="86" mh="997.626640" z="1" rt="" expect="2.0e+00" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." type="model" sumI="3.83" maxI="1879" fI="18.79" act="0" >
+<protein expect="0.0" id="86.1" uid="10" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." sumI="4.73" >
+<note label="description">sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="318">
+	
+<domain id="86.1.1" start="59" end="69" expect="2.0e+00" mh="1079.584" delta="-81.958" hyperscore="14.3" nextscore="13.6" y_score="9.3" y_ions="2" b_score="8.0" b_ions="3" pre="YSGP" post="AELG" seq="EAAAPGLAELR" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="88" mh="666.617820" z="1" rt="" expect="1.9e+00" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" type="model" sumI="3.75" maxI="1666" fI="16.66" act="0" >
+<protein expect="-1.0" id="88.1" uid="16" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" sumI="4.91" >
+<note label="description">tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="368">
+	
+<domain id="88.1.1" start="340" end="347" expect="1.9e+00" mh="759.404" delta="-92.786" hyperscore="15.6" nextscore="10.3" y_score="10.8" y_ions="2" b_score="12.7" b_ions="2" pre="CRDR" post="SSFT" seq="GPEPPPLA" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="89" mh="640.601300" z="1" rt="" expect="7.6e+00" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." type="model" sumI="3.78" maxI="3191" fI="31.91" act="0" >
+<protein expect="0.0" id="89.1" uid="11" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." sumI="5.14" >
+<note label="description">tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="344">
+	
+<domain id="89.1.1" start="113" end="119" expect="7.6e+00" mh="738.353" delta="-97.752" hyperscore="11.6" nextscore="8.0" y_score="8.4" y_ions="3" b_score="0.7" b_ions="1" pre="TGWY" post="FSSI" seq="GTNPDPR" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="90" mh="682.614900" z="1" rt="" expect="1.7e+00" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" type="model" sumI="3.83" maxI="2887" fI="28.87" act="0" >
+<protein expect="-1.0" id="90.1" uid="16" label="tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" sumI="4.91" >
+<note label="description">tr|Q90853|Q90853_CHICK Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="368">
+	
+<domain id="90.1.1" start="340" end="347" expect="1.7e+00" mh="759.404" delta="-76.789" hyperscore="15.6" nextscore="9.4" y_score="10.8" y_ions="2" b_score="12.7" b_ions="2" pre="CRDR" post="SSFT" seq="GPEPPPLA" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="92" mh="612.565510" z="1" rt="" expect="1.1e+00" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." type="model" sumI="3.87" maxI="2038" fI="20.38" act="0" >
+<protein expect="0.0" id="92.1" uid="11" label="tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2..." sumI="5.14" >
+<note label="description">tr|Q9YH59|Q9YH59_CHICK Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="344">
+	
+<domain id="92.1.1" start="114" end="119" expect="1.1e+00" mh="681.331" delta="-68.766" hyperscore="16.2" nextscore="14.3" y_score="12.9" y_ions="3" b_score="9.4" b_ions="1" pre="GWYG" post="FSSI" seq="TNPDPR" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="93" mh="654.590650" z="1" rt="" expect="3.6e+00" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." type="model" sumI="3.85" maxI="3597" fI="35.97" act="0" >
+<protein expect="0.0" id="93.1" uid="10" label="sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2..." sumI="4.73" >
+<note label="description">sp|O35767|NKX25_RAT Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="318">
+	
+<domain id="93.1.1" start="1" end="7" expect="3.6e+00" mh="744.375" delta="-89.784" hyperscore="14.0" nextscore="11.6" y_score="10.9" y_ions="3" b_score="3.0" b_ions="1" pre="[" post="THTP" seq="MFPSPAL" missed_cleavages="0">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="94" mh="1197.967230" z="1" rt="" expect="3.6e+00" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="4.33" maxI="4631" fI="46.31" act="0" >
+<protein expect="0.0" id="94.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="94.1.1" start="100" end="110" expect="3.6e+00" mh="1163.594" delta="34.373" hyperscore="12.3" nextscore="11.7" y_score="9.0" y_ions="1" b_score="4.9" b_ions="3" pre="RSKK" post="ILKN" seq="DSTVLKFGIDS" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="99" mh="3075.213008" z="3" rt="" expect="1.4e+00" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." type="model" sumI="4.04" maxI="1198" fI="11.98" act="0" >
+<protein expect="0.0" id="99.1" uid="20" label="sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2..." sumI="4.58" >
+<note label="description">sp|O88181|BARH2_RAT BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="384">
+	
+<domain id="99.1.1" start="143" end="172" expect="1.4e+00" mh="3121.472" delta="-46.259" hyperscore="21.9" nextscore="20.0" y_score="6.0" y_ions="4" b_score="10.7" b_ions="4" pre="FLIK" post="NAAH" seq="DILGDSKPLAACAPYSTSVSSPHHTPKQEC" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="102" mh="1197.967200" z="1" rt="" expect="4.6e+00" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="4.52" maxI="7697" fI="76.97" act="0" >
+<protein expect="0.0" id="102.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="102.1.1" start="100" end="110" expect="4.6e+00" mh="1163.594" delta="34.373" hyperscore="12.2" nextscore="11.0" y_score="9.0" y_ions="1" b_score="4.3" b_ions="3" pre="RSKK" post="ILKN" seq="DSTVLKFGIDS" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="103" mh="1179.959150" z="1" rt="" expect="3.0e+00" label="tr|Q23824|Q23824_HYDVD Msh protein (Fragment) OS=Hydra viridissima GN=msh PE=2 SV=1" type="model" sumI="4.51" maxI="6364" fI="63.64" act="0" >
+<protein expect="0.0" id="103.1" uid="30" label="tr|Q23824|Q23824_HYDVD Msh protein (Fragment) OS=Hydra viridissima GN=msh PE=2 SV=1" sumI="4.62" >
+<note label="description">tr|Q23824|Q23824_HYDVD Msh protein (Fragment) OS=Hydra viridissima GN=msh PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="128">
+	
+<domain id="103.1.1" start="60" end="68" expect="3.0e+00" mh="1214.679" delta="-34.720" hyperscore="14.8" nextscore="13.8" y_score="1.6" y_ions="1" b_score="6.4" b_ions="5" pre="LTET" post="RAKQ" seq="QIKIWFQNR" missed_cleavages="2">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="106" mh="1197.966870" z="1" rt="" expect="3.5e+00" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." type="model" sumI="4.33" maxI="4380" fI="43.8" act="0" >
+<protein expect="0.0" id="106.1" uid="19" label="sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2..." sumI="5.26" >
+<note label="description">sp|P28468|HOX1_HALRO Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="741">
+	
+<domain id="106.1.1" start="100" end="110" expect="3.5e+00" mh="1163.594" delta="34.373" hyperscore="14.8" nextscore="14.0" y_score="9.1" y_ions="1" b_score="5.0" b_ions="4" pre="RSKK" post="ILKN" seq="DSTVLKFGIDS" missed_cleavages="1">
+</domain>
+</peptide>
+</protein>
+</group>
+<group id="108" mh="1179.961480" z="1" rt="" expect="3.0e+00" label="sp|P26797|HM19_CAEEL Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19..." type="model" sumI="4.12" maxI="2530" fI="25.3" act="0" >
+<protein expect="0.0" id="108.1" uid="23" label="sp|P26797|HM19_CAEEL Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19..." sumI="4.27" >
+<note label="description">sp|P26797|HM19_CAEEL Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19 PE=2 SV=2</note>
+<file type="peptide" URL="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<peptide start="1" end="199">
+	
+<domain id="108.1.1" start="33" end="41" expect="3.0e+00" mh="1129.417" delta="50.545" hyperscore="13.8" nextscore="13.7" y_score="6.2" y_ions="3" b_score="9.2" b_ions="2" pre="EKNG" post="NVID" seq="EEDEEEEEK" missed_cleavages="0">
+<aa type="E" at="33" modified="-18.01056" />
+</domain>
+</peptide>
+</protein>
+</group>
+<group label="input parameters" type="parameters">
+	<note type="input" label="list path, default parameters">/Users/icooke/.rvm/gems/ruby-2.0.0-p353/gems/protk-1.2.6.pre6/lib/protk/data/tandem_isb_native_defaults.xml</note>
+	<note type="input" label="list path, taxonomy information">/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem.tandem.taxonomy.xml</note>
+	<note type="input" label="output, histogram column width">30</note>
+	<note type="input" label="output, histograms">no</note>
+	<note type="input" label="output, log path"></note>
+	<note type="input" label="output, maximum valid expectation value">0.1</note>
+	<note type="input" label="output, message">1234567890</note>
+	<note type="input" label="output, one sequence copy">no</note>
+	<note type="input" label="output, parameters">yes</note>
+	<note type="input" label="output, path">/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem.tandem</note>
+	<note type="input" label="output, path hashing">no</note>
+	<note type="input" label="output, performance">yes</note>
+	<note type="input" label="output, proteins">yes</note>
+	<note type="input" label="output, results">all</note>
+	<note type="input" label="output, sequence path"></note>
+	<note type="input" label="output, sequences">no</note>
+	<note type="input" label="output, sort results by">spectrum</note>
+	<note type="input" label="output, spectra">no</note>
+	<note type="input" label="output, xsl path">tandem-style.xsl</note>
+	<note type="input" label="protein, C-terminal residue modification mass"></note>
+	<note type="input" label="protein, N-terminal residue modification mass"></note>
+	<note type="input" label="protein, cleavage C-terminal mass change"></note>
+	<note type="input" label="protein, cleavage N-terminal mass change"></note>
+	<note type="input" label="protein, cleavage semi">yes</note>
+	<note type="input" label="protein, cleavage site">[RK]|{P}</note>
+	<note type="input" label="protein, homolog management">no</note>
+	<note type="input" label="protein, modified residue mass file"></note>
+	<note type="input" label="protein, quick acetyl">yes</note>
+	<note type="input" label="protein, taxon">AASequences.fasta</note>
+	<note type="input" label="refine">no</note>
+	<note type="input" label="refine, maximum valid expectation value">0.1</note>
+	<note type="input" label="refine, sequence path"></note>
+	<note type="input" label="refine, spectrum synthesis">yes</note>
+	<note type="input" label="residue, modification mass"></note>
+	<note type="input" label="residue, potential modification mass">15.994915@M</note>
+	<note type="input" label="residue, potential modification motif"></note>
+	<note type="input" label="scoring, a ions">no</note>
+	<note type="input" label="scoring, b ions">yes</note>
+	<note type="input" label="scoring, c ions">no</note>
+	<note type="input" label="scoring, cyclic permutation">no</note>
+	<note type="input" label="scoring, include reverse">no</note>
+	<note type="input" label="scoring, maximum missed cleavage sites">2</note>
+	<note type="input" label="scoring, minimum ion count">4</note>
+	<note type="input" label="scoring, x ions">no</note>
+	<note type="input" label="scoring, y ions">yes</note>
+	<note type="input" label="scoring, z ions">no</note>
+	<note type="input" label="spectrum, dynamic range">100.0</note>
+	<note type="input" label="spectrum, fragment mass type">monoisotopic</note>
+	<note type="input" label="spectrum, fragment monoisotopic mass error">0.4</note>
+	<note type="input" label="spectrum, fragment monoisotopic mass error units">Daltons</note>
+	<note type="input" label="spectrum, maximum parent charge">5</note>
+	<note type="input" label="spectrum, minimum fragment mz">50.0</note>
+	<note type="input" label="spectrum, minimum parent m+h">600.0</note>
+	<note type="input" label="spectrum, minimum peaks">6</note>
+	<note type="input" label="spectrum, parent monoisotopic mass error minus">100.0</note>
+	<note type="input" label="spectrum, parent monoisotopic mass error plus">100.0</note>
+	<note type="input" label="spectrum, parent monoisotopic mass error units">Daltons</note>
+	<note type="input" label="spectrum, parent monoisotopic mass isotope error">no</note>
+	<note type="input" label="spectrum, path">/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d.mgf</note>
+	<note type="input" label="spectrum, sequence batch size">1000</note>
+	<note type="input" label="spectrum, threads">1</note>
+	<note type="input" label="spectrum, total peaks">50</note>
+	<note type="input" label="spectrum, use conditioning">yes</note>
+	<note type="input" label="spectrum, use noise suppression">no</note>
+</group>
+<group label="unused input parameters"  type="parameters">
+	<note type="input" label="protein, use minimal annotations">yes</note>
+	<note type="input" label="refine, modification mass"></note>
+	<note type="input" label="refine, point mutations">no</note>
+	<note type="input" label="refine, potential C-terminus modifications"></note>
+	<note type="input" label="refine, potential N-terminus modifications"></note>
+	<note type="input" label="refine, potential modification mass"></note>
+	<note type="input" label="refine, potential modification motif"></note>
+	<note type="input" label="refine, tic percent">10</note>
+	<note type="input" label="refine, unanticipated cleavage">no</note>
+	<note type="input" label="refine, use potential modifications for full refinement">no</note>
+	<note type="input" label="scoring, pluggable scoring">no</note>
+	<note type="input" label="spectrum, maximum parent m+h">4000.0</note>
+</group>
+<group label="performance parameters" type="parameters">
+	<note label="list path, sequence source #1">/Users/icooke/Desktop/iptest/AASequences.fasta</note>
+	<note label="list path, sequence source description #1">no description</note>
+	<note label="modelling, duplicate peptide ids">0</note>
+	<note label="modelling, duplicate proteins">0</note>
+	<note label="modelling, total peptides used">528901</note>
+	<note label="modelling, total proteins used">33</note>
+	<note label="modelling, total spectra used">118</note>
+	<note label="process, start time">2014:06:22:13:57:04</note>
+	<note label="process, version">X! Tandem Sledgehammer (2013.09.01.1)</note>
+	<note label="quality values">6 7 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</note>
+	<note label="refining, # input models">0</note>
+	<note label="refining, # input spectra">0</note>
+	<note label="refining, # partial cleavage">0</note>
+	<note label="refining, # point mutations">0</note>
+	<note label="refining, # potential C-terminii">0</note>
+	<note label="refining, # potential N-terminii">0</note>
+	<note label="refining, # unanticipated cleavage">0</note>
+	<note label="timing, initial modelling total (sec)">0.61</note>
+	<note label="timing, initial modelling/spectrum (sec)">0.0052</note>
+	<note label="timing, load sequence models (sec)">0.00</note>
+	<note label="timing, refinement/spectrum (sec)">0.0000</note>
+</group>
+</bioml>

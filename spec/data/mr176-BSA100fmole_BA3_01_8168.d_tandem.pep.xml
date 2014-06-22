@@ -1,0 +1,1651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="pepXML_std.xsl"?>
+<msms_pipeline_analysis date="2014-06-22T13:57:05" summary_xml="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/pepXML/pepXML_v117.xsd">
+   <msms_run_summary base_name="mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem" search_engine="X! Tandem" raw_data_type="raw" raw_data=".?">
+      <sample_enzyme name="trypsin">
+<specificity cut="KR" no_cut="P" sense="C"/>
+</sample_enzyme>
+<search_summary base_name="mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem" search_engine="X! Tandem" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" search_id="1">
+         <search_database local_path="/Users/icooke/Desktop/iptest/AASequences.fasta" type="AA"/>
+         <enzymatic_search_constraint enzyme="trypsin" max_num_internal_cleavages="2" min_number_termini="1" />
+         <aminoacid_modification aminoacid="E" massdiff="-18.0106" mass="111.0320" variable="Y" symbol="^" /><!--X! Tandem n-terminal AA variable modification-->
+         <aminoacid_modification aminoacid="M" massdiff="15.9949" mass="147.0354" variable="Y" />
+         <aminoacid_modification aminoacid="Q" massdiff="-17.0265" mass="111.0321" variable="Y" symbol="^" /><!--X! Tandem n-terminal AA variable modification-->
+         <terminal_modification terminus="n" massdiff="42.0106" mass="43.0184" protein_terminus="N" variable="Y" symbol="^" /><!--X! Tandem n-terminal AA variable modification-->
+         
+         <!-- Input parameters -->
+         <parameter name="list path, default parameters" value="/Users/icooke/.rvm/gems/ruby-2.0.0-p353/gems/protk-1.2.6.pre6/lib/protk/data/tandem_isb_native_defaults.xml"/>
+         <parameter name="list path, taxonomy information" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem.taxonomy.xml"/>
+         <parameter name="output, histogram column width" value="30"/>
+         <parameter name="output, histograms" value="no"/>
+         <parameter name="output, log path" value=""/>
+         <parameter name="output, maximum valid expectation value" value="0.1"/>
+         <parameter name="output, message" value="1234567890"/>
+         <parameter name="output, one sequence copy" value="no"/>
+         <parameter name="output, parameters" value="yes"/>
+         <parameter name="output, path" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem"/>
+         <parameter name="output, path hashing" value="no"/>
+         <parameter name="output, performance" value="yes"/>
+         <parameter name="output, proteins" value="yes"/>
+         <parameter name="output, results" value="all"/>
+         <parameter name="output, sequence path" value=""/>
+         <parameter name="output, sequences" value="no"/>
+         <parameter name="output, sort results by" value="spectrum"/>
+         <parameter name="output, spectra" value="no"/>
+         <parameter name="output, xsl path" value="tandem-style.xsl"/>
+         <parameter name="protein, C-terminal residue modification mass" value=""/>
+         <parameter name="protein, N-terminal residue modification mass" value=""/>
+         <parameter name="protein, cleavage C-terminal mass change" value=""/>
+         <parameter name="protein, cleavage N-terminal mass change" value=""/>
+         <parameter name="protein, cleavage semi" value="yes"/>
+         <parameter name="protein, cleavage site" value="[RK]|{P}"/>
+         <parameter name="protein, homolog management" value="no"/>
+         <parameter name="protein, modified residue mass file" value=""/>
+         <parameter name="protein, quick acetyl" value="yes"/>
+         <parameter name="protein, taxon" value="AASequences.fasta"/>
+         <parameter name="refine" value="no"/>
+         <parameter name="refine, maximum valid expectation value" value="0.1"/>
+         <parameter name="refine, sequence path" value=""/>
+         <parameter name="refine, spectrum synthesis" value="yes"/>
+         <parameter name="residue, modification mass" value=""/>
+         <parameter name="residue, potential modification mass" value="15.994915@M"/>
+         <parameter name="residue, potential modification motif" value=""/>
+         <parameter name="scoring, a ions" value="no"/>
+         <parameter name="scoring, b ions" value="yes"/>
+         <parameter name="scoring, c ions" value="no"/>
+         <parameter name="scoring, cyclic permutation" value="no"/>
+         <parameter name="scoring, include reverse" value="no"/>
+         <parameter name="scoring, maximum missed cleavage sites" value="2"/>
+         <parameter name="scoring, minimum ion count" value="4"/>
+         <parameter name="scoring, x ions" value="no"/>
+         <parameter name="scoring, y ions" value="yes"/>
+         <parameter name="scoring, z ions" value="no"/>
+         <parameter name="spectrum, dynamic range" value="100.0"/>
+         <parameter name="spectrum, fragment mass type" value="monoisotopic"/>
+         <parameter name="spectrum, fragment monoisotopic mass error" value="0.4"/>
+         <parameter name="spectrum, fragment monoisotopic mass error units" value="Daltons"/>
+         <parameter name="spectrum, maximum parent charge" value="5"/>
+         <parameter name="spectrum, minimum fragment mz" value="50.0"/>
+         <parameter name="spectrum, minimum parent m+h" value="600.0"/>
+         <parameter name="spectrum, minimum peaks" value="6"/>
+         <parameter name="spectrum, parent monoisotopic mass error minus" value="100.0"/>
+         <parameter name="spectrum, parent monoisotopic mass error plus" value="100.0"/>
+         <parameter name="spectrum, parent monoisotopic mass error units" value="Daltons"/>
+         <parameter name="spectrum, parent monoisotopic mass isotope error" value="no"/>
+         <parameter name="spectrum, path" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d.mgf"/>
+         <parameter name="spectrum, sequence batch size" value="1000"/>
+         <parameter name="spectrum, threads" value="1"/>
+         <parameter name="spectrum, total peaks" value="50"/>
+         <parameter name="spectrum, use conditioning" value="yes"/>
+         <parameter name="spectrum, use noise suppression" value="no"/>
+         <!-- Unused input parameters -->
+         <parameter name="protein, use minimal annotations" value="yes"/>
+         <parameter name="refine, modification mass" value=""/>
+         <parameter name="refine, point mutations" value="no"/>
+         <parameter name="refine, potential C-terminus modifications" value=""/>
+         <parameter name="refine, potential N-terminus modifications" value=""/>
+         <parameter name="refine, potential modification mass" value=""/>
+         <parameter name="refine, potential modification motif" value=""/>
+         <parameter name="refine, tic percent" value="10"/>
+         <parameter name="refine, unanticipated cleavage" value="no"/>
+         <parameter name="refine, use potential modifications for full refinement" value="no"/>
+         <parameter name="scoring, pluggable scoring" value="no"/>
+         <parameter name="spectrum, maximum parent m+h" value="4000.0"/>
+         <!-- Performance parameters -->
+         <parameter name="list path, sequence source #1" value="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+         <parameter name="list path, sequence source description #1" value="no description"/>
+         <parameter name="modelling, duplicate peptide ids" value="0"/>
+         <parameter name="modelling, duplicate proteins" value="0"/>
+         <parameter name="modelling, total peptides used" value="542390"/>
+         <parameter name="modelling, total proteins used" value="33"/>
+         <parameter name="modelling, total spectra used" value="118"/>
+         <parameter name="process, start time" value="2014:06:22:13:57:05"/>
+         <parameter name="process, version" value="X! Tandem Sledgehammer (2013.09.01.1)"/>
+         <parameter name="quality values" value="12 10 7 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+         <parameter name="refining, # input models" value="0"/>
+         <parameter name="refining, # input spectra" value="0"/>
+         <parameter name="refining, # partial cleavage" value="0"/>
+         <parameter name="refining, # point mutations" value="0"/>
+         <parameter name="refining, # potential C-terminii" value="0"/>
+         <parameter name="refining, # potential N-terminii" value="0"/>
+         <parameter name="refining, # unanticipated cleavage" value="0"/>
+         <parameter name="timing, initial modelling total (sec)" value="0.63"/>
+         <parameter name="timing, initial modelling/spectrum (sec)" value="0.0053"/>
+         <parameter name="timing, load sequence models (sec)" value="0.00"/>
+         <parameter name="timing, refinement/spectrum (sec)" value="0.0000"/>
+      </search_summary>
+      
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00001.00001.2" start_scan="1" end_scan="1" precursor_neutral_mass="1442.6899" assumed_charge="2" index="1">
+      <search_result>
+         <search_hit hit_rank="1" peptide="DLIRQQCYLFN" peptide_prev_aa="K" peptide_next_aa="H" protein="sp|Q26604|SMOX5_SCHMA" protein_descr="Homeobox protein SMOX-5 OS=Schistosoma mansoni GN=SMOX-5 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="20" calc_neutral_pep_mass="1393.6817" massdiff="49.008" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="19.0"/>
+            <search_score name="nextscore" value="19.0"/>
+            <search_score name="bscore" value="3.2"/>
+            <search_score name="yscore" value="10.7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.1"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00002.00002.3" start_scan="2" end_scan="2" precursor_neutral_mass="1248.6649" assumed_charge="3" index="2">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ANTNNYAPKSSR" peptide_prev_aa="A" peptide_next_aa="N" protein="sp|Q04787|BSH_DROME" protein_descr="Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="44" calc_neutral_pep_mass="1303.6267" massdiff="-54.962" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="20.6"/>
+            <search_score name="nextscore" value="20.6"/>
+            <search_score name="bscore" value="9.2"/>
+            <search_score name="yscore" value="10.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00003.00003.2" start_scan="3" end_scan="3" precursor_neutral_mass="1398.7025" assumed_charge="2" index="3">
+      <search_result>
+         <search_hit hit_rank="1" peptide="NRAVFSLMQRR" peptide_prev_aa="W" peptide_next_aa="G" protein="sp|P28468|HOX1_HALRO" protein_descr="Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="20" calc_neutral_pep_mass="1374.7307" massdiff="23.972" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="8" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="19.6"/>
+            <search_score name="nextscore" value="19.1"/>
+            <search_score name="bscore" value="2.7"/>
+            <search_score name="yscore" value="10"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.32"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00004.00004.2" start_scan="4" end_scan="4" precursor_neutral_mass="921.5162" assumed_charge="2" index="4">
+      <search_result>
+         <search_hit hit_rank="1" peptide="YLASAERA" peptide_prev_aa="K" peptide_next_aa="A" protein="sp|O93367|TLX3_CHICK" protein_descr="T-cell leukemia homeobox protein 3 OS=Gallus gallus GN=TLX3 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="14" calc_neutral_pep_mass="861.4347" massdiff="60.081" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="19.5"/>
+            <search_score name="nextscore" value="18.5"/>
+            <search_score name="bscore" value="5.9"/>
+            <search_score name="yscore" value="9.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00005.00005.2" start_scan="5" end_scan="5" precursor_neutral_mass="1501.6666" assumed_charge="2" index="5">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FKTTRYLSVCER" peptide_prev_aa="K" peptide_next_aa="L" protein="sp|P22807|SLOU_DROME" protein_descr="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="22" calc_neutral_pep_mass="1483.7607" massdiff="17.906" num_tol_term="2" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="22.1"/>
+            <search_score name="nextscore" value="19.8"/>
+            <search_score name="bscore" value="10.5"/>
+            <search_score name="yscore" value="8.5"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.3"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00006.00006.3" start_scan="6" end_scan="6" precursor_neutral_mass="1748.7227" assumed_charge="3" index="6">
+      <search_result>
+         <search_hit hit_rank="1" peptide="RQTAVGLELLAEAGNYSA" peptide_prev_aa="K" peptide_next_aa="L" protein="sp|O88181|BARH2_RAT" protein_descr="BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="11" tot_num_ions="68" calc_neutral_pep_mass="1843.9427" massdiff="-95.220" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="21.5"/>
+            <search_score name="nextscore" value="21.1"/>
+            <search_score name="bscore" value="8.5"/>
+            <search_score name="yscore" value="9.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00007.00007.2" start_scan="7" end_scan="7" precursor_neutral_mass="1160.4761" assumed_charge="2" index="7">
+      <search_result>
+         <search_hit hit_rank="1" peptide="EEPETEVRM" peptide_prev_aa="K" peptide_next_aa="V" protein="sp|Q01702|DLX3B_DANRE" protein_descr="Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="16" calc_neutral_pep_mass="1100.4807" massdiff="59.995" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="23.1"/>
+            <search_score name="nextscore" value="23.1"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="11.7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.068"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00008.00008.2" start_scan="8" end_scan="8" precursor_neutral_mass="1106.5508" assumed_charge="2" index="8">
+      <search_result>
+         <search_hit hit_rank="1" peptide="RQATSGMDLLS" peptide_prev_aa="K" peptide_next_aa="E" protein="sp|Q22909|HM30_CAEEL" protein_descr="Homeobox protein ceh-30 OS=Caenorhabditis elegans GN=ceh-30 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="20" calc_neutral_pep_mass="1175.5607" massdiff="-69.010" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="7" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="19.2"/>
+            <search_score name="nextscore" value="17.3"/>
+            <search_score name="bscore" value="8.8"/>
+            <search_score name="yscore" value="8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00009.00009.2" start_scan="9" end_scan="9" precursor_neutral_mass="1746.7706" assumed_charge="2" index="9">
+      <search_result>
+         <search_hit hit_rank="1" peptide="EQLAQLMPPTSQLPGM" peptide_prev_aa="R" peptide_next_aa="P" protein="sp|P34663|HM23_CAEEL" protein_descr="Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="30" calc_neutral_pep_mass="1753.8377" massdiff="-7.067" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="7" mass="147.0354" />
+               <mod_aminoacid_mass position="16" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="20.5"/>
+            <search_score name="nextscore" value="20.5"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="9.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00010.00010.3" start_scan="10" end_scan="10" precursor_neutral_mass="1746.7642" assumed_charge="3" index="10">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SGMNMGGMGGLSSLGDVSK" peptide_prev_aa="S" peptide_next_aa="S" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="72" calc_neutral_pep_mass="1813.7647" massdiff="-67.001" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="3" mass="147.0354" />
+               <mod_aminoacid_mass position="5" mass="147.0354" />
+               <mod_aminoacid_mass position="8" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="22.7"/>
+            <search_score name="nextscore" value="21.6"/>
+            <search_score name="bscore" value="11.1"/>
+            <search_score name="yscore" value="6.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00011.00011.2" start_scan="11" end_scan="11" precursor_neutral_mass="1261.6340" assumed_charge="2" index="11">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FLVDDILRRK" peptide_prev_aa="S" peptide_next_aa="H" protein="tr|O16132|O16132_HYDVU" protein_descr="NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="18" calc_neutral_pep_mass="1255.7397" massdiff="5.894" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="17.7"/>
+            <search_score name="nextscore" value="17.0"/>
+            <search_score name="bscore" value="11"/>
+            <search_score name="yscore" value="3.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00012.00012.2" start_scan="12" end_scan="12" precursor_neutral_mass="1746.7675" assumed_charge="2" index="12">
+      <search_result>
+         <search_hit hit_rank="1" peptide="KQNPGMDVNSPTIPPP" peptide_prev_aa="K" peptide_next_aa="G" protein="sp|P22807|SLOU_DROME" protein_descr="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="30" calc_neutral_pep_mass="1672.8247" massdiff="73.943" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="17.1"/>
+            <search_score name="nextscore" value="16.3"/>
+            <search_score name="bscore" value="6.4"/>
+            <search_score name="yscore" value="8.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.3"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00013.00013.2" start_scan="13" end_scan="13" precursor_neutral_mass="1122.5442" assumed_charge="2" index="13">
+      <search_result>
+         <search_hit hit_rank="1" peptide="PDPAKDPRADK" peptide_prev_aa="D" peptide_next_aa="K" protein="sp|O35767|NKX25_RAT" protein_descr="Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="20" calc_neutral_pep_mass="1190.6047" massdiff="-68.061" num_tol_term="1" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="25.8"/>
+            <search_score name="nextscore" value="24.0"/>
+            <search_score name="bscore" value="13.9"/>
+            <search_score name="yscore" value="12"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.035"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00014.00014.3" start_scan="14" end_scan="14" precursor_neutral_mass="1900.9309" assumed_charge="3" index="14">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ADVESAKKLGPSGQMDIV" peptide_prev_aa="K" peptide_next_aa="A" protein="sp|P52955|LBX1_MOUSE" protein_descr="Transcription factor LBX1 OS=Mus musculus GN=Lbx1 PE=1 SV=2" num_tot_proteins="1" num_matched_ions="12" tot_num_ions="68" calc_neutral_pep_mass="1825.9247" massdiff="75.006" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="27.4"/>
+            <search_score name="nextscore" value="22.0"/>
+            <search_score name="bscore" value="9.7"/>
+            <search_score name="yscore" value="11.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.15"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00015.00015.2" start_scan="15" end_scan="15" precursor_neutral_mass="1106.5432" assumed_charge="2" index="15">
+      <search_result>
+         <search_hit hit_rank="1" peptide="KLNLSATQVK" peptide_prev_aa="Q" peptide_next_aa="I" protein="sp|P22711|TIN_DROME" protein_descr="Muscle-specific homeobox protein tinman OS=Drosophila melanogaster GN=tin PE=2 SV=2" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="18" calc_neutral_pep_mass="1082.6447" massdiff="23.898" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="23.0"/>
+            <search_score name="nextscore" value="19.1"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="8.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.17"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00016.00016.3" start_scan="16" end_scan="16" precursor_neutral_mass="1747.7361" assumed_charge="3" index="16">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ERAELAAQLGLTQTQVK" peptide_prev_aa="P" peptide_next_aa="I" protein="sp|Q01702|DLX3B_DANRE" protein_descr="Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="64" calc_neutral_pep_mass="1837.0057" massdiff="-89.270" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="24.8"/>
+            <search_score name="nextscore" value="23.8"/>
+            <search_score name="bscore" value="9.7"/>
+            <search_score name="yscore" value="7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00017.00017.1" start_scan="17" end_scan="17" precursor_neutral_mass="560.2519" assumed_charge="1" index="17">
+      <search_result>
+         <search_hit hit_rank="1" peptide="NSASATG" peptide_prev_aa="R" peptide_next_aa="W" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="12" calc_neutral_pep_mass="588.2507" massdiff="-27.999" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="12.4"/>
+            <search_score name="nextscore" value="11.3"/>
+            <search_score name="bscore" value="5.5"/>
+            <search_score name="yscore" value="4"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="3.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00018.00018.2" start_scan="18" end_scan="18" precursor_neutral_mass="1102.4914" assumed_charge="2" index="18">
+      <search_result>
+         <search_hit hit_rank="1" peptide="QMLLGVSARK" peptide_prev_aa="L" peptide_next_aa="H" protein="sp|P26797|HM19_CAEEL" protein_descr="Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="18" calc_neutral_pep_mass="1082.5907" massdiff="19.901" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="1" mass="111.0321" />
+               <mod_aminoacid_mass position="2" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="19.2"/>
+            <search_score name="nextscore" value="19.2"/>
+            <search_score name="bscore" value="4.5"/>
+            <search_score name="yscore" value="10.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.9"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00019.00019.2" start_scan="19" end_scan="19" precursor_neutral_mass="1553.7028" assumed_charge="2" index="19">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ARTTFSGKQVFELE" peptide_prev_aa="K" peptide_next_aa="K" protein="sp|P56407|HM09_CAEEL" protein_descr="Homeobox protein ceh-9 OS=Caenorhabditis elegans GN=ceh-9 PE=4 SV=2" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="26" calc_neutral_pep_mass="1593.8147" massdiff="-40.112" num_tol_term="1" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="17.4"/>
+            <search_score name="nextscore" value="17.0"/>
+            <search_score name="bscore" value="8.1"/>
+            <search_score name="yscore" value="6.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00020.00020.3" start_scan="20" end_scan="20" precursor_neutral_mass="1553.7040" assumed_charge="3" index="20">
+      <search_result>
+         <search_hit hit_rank="1" peptide="TANNGAFTDPSSGDR" peptide_prev_aa="E" peptide_next_aa="L" protein="sp|O93590|ZAX_XENLA" protein_descr="Homeobox protein zampogna OS=Xenopus laevis GN=zax PE=2 SV=1" num_tot_proteins="1" num_matched_ions="10" tot_num_ions="56" calc_neutral_pep_mass="1490.6387" massdiff="63.065" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="26.1"/>
+            <search_score name="nextscore" value="24.9"/>
+            <search_score name="bscore" value="8.4"/>
+            <search_score name="yscore" value="12"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00021.00021.2" start_scan="21" end_scan="21" precursor_neutral_mass="926.5199" assumed_charge="2" index="21">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ETEMEMK" peptide_prev_aa="E" peptide_next_aa="S" protein="tr|O77024|O77024_EPHMU" protein_descr="EmH-3 (Fragment) OS=Ephydatia muelleri GN=EmH-3 PE=3 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="12" calc_neutral_pep_mass="892.3307" massdiff="34.189" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="1" mass="111.0320" />
+               <mod_aminoacid_mass position="4" mass="147.0354" />
+               <mod_aminoacid_mass position="6" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="17.9"/>
+            <search_score name="nextscore" value="16.4"/>
+            <search_score name="bscore" value="7.5"/>
+            <search_score name="yscore" value="8.5"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00022.00022.3" start_scan="22" end_scan="22" precursor_neutral_mass="1777.8744" assumed_charge="3" index="22">
+      <search_result>
+         <search_hit hit_rank="1" peptide="EEPETEVRMVNGKPKK" peptide_prev_aa="K" peptide_next_aa="I" protein="sp|Q01702|DLX3B_DANRE" protein_descr="Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="60" calc_neutral_pep_mass="1867.9457" massdiff="-90.071" num_tol_term="2" num_missed_cleavages="1" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="9" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="24.3"/>
+            <search_score name="nextscore" value="22.0"/>
+            <search_score name="bscore" value="6.9"/>
+            <search_score name="yscore" value="10.2"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.1"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00023.00023.1" start_scan="23" end_scan="23" precursor_neutral_mass="926.5111" assumed_charge="1" index="23">
+      <search_result>
+         <search_hit hit_rank="1" peptide="MDTHLPF" peptide_prev_aa="-" peptide_next_aa="Q" protein="sp|P34663|HM23_CAEEL" protein_descr="Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="12" calc_neutral_pep_mass="883.3897" massdiff="43.121" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info mod_nterm_mass="43.0184" />
+            <search_score name="hyperscore" value="17.2"/>
+            <search_score name="nextscore" value="15.8"/>
+            <search_score name="bscore" value="12.5"/>
+            <search_score name="yscore" value="10"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00024.00024.2" start_scan="24" end_scan="24" precursor_neutral_mass="1304.7563" assumed_charge="2" index="24">
+      <search_result>
+         <search_hit hit_rank="1" peptide="QDQTLELLGPPP" peptide_prev_aa="R" peptide_next_aa="P" protein="sp|O35767|NKX25_RAT" protein_descr="Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="22" calc_neutral_pep_mass="1271.6397" massdiff="33.117" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="1" mass="111.0321" />
+            </modification_info>
+            <search_score name="hyperscore" value="22.1"/>
+            <search_score name="nextscore" value="21.7"/>
+            <search_score name="bscore" value="10"/>
+            <search_score name="yscore" value="8.7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.45"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00025.00025.2" start_scan="25" end_scan="25" precursor_neutral_mass="1289.7434" assumed_charge="2" index="25">
+      <search_result>
+         <search_hit hit_rank="1" peptide="IAQLLKKHKPGAG" peptide_prev_aa="K" peptide_next_aa="G" protein="tr|Q9YHC2|Q9YHC2_CHICK" protein_descr="Homeodomain protein (Fragment) OS=Gallus gallus GN=Nkx-6.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="24" calc_neutral_pep_mass="1341.8247" massdiff="-52.081" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="22.3"/>
+            <search_score name="nextscore" value="19.8"/>
+            <search_score name="bscore" value="7.1"/>
+            <search_score name="yscore" value="9.2"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.1"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00026.00026.2" start_scan="26" end_scan="26" precursor_neutral_mass="1319.7180" assumed_charge="2" index="26">
+      <search_result>
+         <search_hit hit_rank="1" peptide="PTVNGEIDEFGR" peptide_prev_aa="L" peptide_next_aa="C" protein="sp|P56407|HM09_CAEEL" protein_descr="Homeobox protein ceh-9 OS=Caenorhabditis elegans GN=ceh-9 PE=4 SV=2" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="22" calc_neutral_pep_mass="1314.6207" massdiff="5.097" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="22.6"/>
+            <search_score name="nextscore" value="21.9"/>
+            <search_score name="bscore" value="8"/>
+            <search_score name="yscore" value="10.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="3"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00027.00027.2" start_scan="27" end_scan="27" precursor_neutral_mass="1123.5366" assumed_charge="2" index="27">
+      <search_result>
+         <search_hit hit_rank="1" peptide="CKKQTIESR" peptide_prev_aa="K" peptide_next_aa="T" protein="tr|O16132|O16132_HYDVU" protein_descr="NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="16" calc_neutral_pep_mass="1073.5647" massdiff="49.972" num_tol_term="2" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="18.9"/>
+            <search_score name="nextscore" value="17.6"/>
+            <search_score name="bscore" value="8.3"/>
+            <search_score name="yscore" value="9.5"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00028.00028.2" start_scan="28" end_scan="28" precursor_neutral_mass="1348.7433" assumed_charge="2" index="28">
+      <search_result>
+         <search_hit hit_rank="1" peptide="PENLLLHGPFSR" peptide_prev_aa="S" peptide_next_aa="K" protein="tr|Q90263|Q90263_DANRE" protein_descr="Empty spiracles homeobox 3 OS=Danio rerio GN=emx3 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="22" calc_neutral_pep_mass="1360.7247" massdiff="-11.981" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="20.1"/>
+            <search_score name="nextscore" value="18.0"/>
+            <search_score name="bscore" value="11.1"/>
+            <search_score name="yscore" value="8.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.3"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00029.00029.2" start_scan="29" end_scan="29" precursor_neutral_mass="1122.5332" assumed_charge="2" index="29">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ERLFQETR" peptide_prev_aa="L" peptide_next_aa="Y" protein="tr|O70238|O70238_MOUSE" protein_descr="Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="14" calc_neutral_pep_mass="1059.5457" massdiff="62.988" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="19.8"/>
+            <search_score name="nextscore" value="19.8"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="8.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00030.00030.2" start_scan="30" end_scan="30" precursor_neutral_mass="1186.6753" assumed_charge="2" index="30">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SPNLPFSATIPR" peptide_prev_aa="L" peptide_next_aa="V" protein="sp|P34663|HM23_CAEEL" protein_descr="Homeobox protein ceh-23 OS=Caenorhabditis elegans GN=ceh-23 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="22" calc_neutral_pep_mass="1280.6877" massdiff="-94.012" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="24.1"/>
+            <search_score name="nextscore" value="20.7"/>
+            <search_score name="bscore" value="7.9"/>
+            <search_score name="yscore" value="11.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.38"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00031.00031.1" start_scan="31" end_scan="31" precursor_neutral_mass="650.3617" assumed_charge="1" index="31">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ILPSSLK" peptide_prev_aa="N" peptide_next_aa="H" protein="sp|Q26604|SMOX5_SCHMA" protein_descr="Homeobox protein SMOX-5 OS=Schistosoma mansoni GN=SMOX-5 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="12" calc_neutral_pep_mass="738.4637" massdiff="-88.102" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="15.5"/>
+            <search_score name="nextscore" value="14.3"/>
+            <search_score name="bscore" value="12.4"/>
+            <search_score name="yscore" value="3.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="3.1"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00032.00032.2" start_scan="32" end_scan="32" precursor_neutral_mass="926.5107" assumed_charge="2" index="32">
+      <search_result>
+         <search_hit hit_rank="1" peptide="DEDQIQV" peptide_prev_aa="D" peptide_next_aa="-" protein="sp|Q24255|BARH1_DROME" protein_descr="Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="12" calc_neutral_pep_mass="827.3657" massdiff="99.145" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="16.8"/>
+            <search_score name="nextscore" value="16.7"/>
+            <search_score name="bscore" value="8.7"/>
+            <search_score name="yscore" value="10.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.4"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00033.00033.3" start_scan="33" end_scan="33" precursor_neutral_mass="1438.8547" assumed_charge="3" index="33">
+      <search_result>
+         <search_hit hit_rank="1" peptide="CPPRAPSPPPCTLR" peptide_prev_aa="S" peptide_next_aa="K" protein="sp|P70354|MSX3_MOUSE" protein_descr="Homeobox protein MSX-3 OS=Mus musculus GN=Msx3 PE=1 SV=1" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="52" calc_neutral_pep_mass="1472.7377" massdiff="-33.883" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="20.1"/>
+            <search_score name="nextscore" value="19.4"/>
+            <search_score name="bscore" value="5.5"/>
+            <search_score name="yscore" value="10.2"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.1"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00034.00034.2" start_scan="34" end_scan="34" precursor_neutral_mass="1304.7497" assumed_charge="2" index="34">
+      <search_result>
+         <search_hit hit_rank="1" peptide="PENLLLHGPFSR" peptide_prev_aa="S" peptide_next_aa="K" protein="tr|Q90263|Q90263_DANRE" protein_descr="Empty spiracles homeobox 3 OS=Danio rerio GN=emx3 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="22" calc_neutral_pep_mass="1360.7247" massdiff="-55.975" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="19.3"/>
+            <search_score name="nextscore" value="16.9"/>
+            <search_score name="bscore" value="10.3"/>
+            <search_score name="yscore" value="7.6"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00035.00035.1" start_scan="35" end_scan="35" precursor_neutral_mass="650.3643" assumed_charge="1" index="35">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LLDPQN" peptide_prev_aa="R" peptide_next_aa="K" protein="sp|P28468|HOX1_HALRO" protein_descr="Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="10" calc_neutral_pep_mass="680.3497" massdiff="-29.985" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="17.0"/>
+            <search_score name="nextscore" value="15.1"/>
+            <search_score name="bscore" value="11.6"/>
+            <search_score name="yscore" value="11.4"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.64"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00036.00036.1" start_scan="36" end_scan="36" precursor_neutral_mass="650.3623" assumed_charge="1" index="36">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ILWGSH" peptide_prev_aa="R" peptide_next_aa="V" protein="tr|O35455|O35455_MOUSE" protein_descr="Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="10" calc_neutral_pep_mass="693.3597" massdiff="-42.997" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="14.5"/>
+            <search_score name="nextscore" value="13.5"/>
+            <search_score name="bscore" value="9.2"/>
+            <search_score name="yscore" value="8.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="3.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00037.00037.2" start_scan="37" end_scan="37" precursor_neutral_mass="1141.7448" assumed_charge="2" index="37">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SLAAGDLSARL" peptide_prev_aa="R" peptide_next_aa="E" protein="sp|O35767|NKX25_RAT" protein_descr="Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="20" calc_neutral_pep_mass="1054.5767" massdiff="87.168" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="25.9"/>
+            <search_score name="nextscore" value="24.7"/>
+            <search_score name="bscore" value="11.3"/>
+            <search_score name="yscore" value="10.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.3"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00038.00038.2" start_scan="38" end_scan="38" precursor_neutral_mass="1575.8289" assumed_charge="2" index="38">
+      <search_result>
+         <search_hit hit_rank="1" peptide="TQPPSISNILPSSLK" peptide_prev_aa="L" peptide_next_aa="H" protein="sp|Q26604|SMOX5_SCHMA" protein_descr="Homeobox protein SMOX-5 OS=Schistosoma mansoni GN=SMOX-5 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="28" calc_neutral_pep_mass="1562.8667" massdiff="12.962" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="27.1"/>
+            <search_score name="nextscore" value="21.0"/>
+            <search_score name="bscore" value="2.1"/>
+            <search_score name="yscore" value="12.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.15"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00039.00039.3" start_scan="39" end_scan="39" precursor_neutral_mass="1620.9787" assumed_charge="3" index="39">
+      <search_result>
+         <search_hit hit_rank="1" peptide="QKGGSSDHASDEEDD" peptide_prev_aa="K" peptide_next_aa="D" protein="sp|Q18273|HM43_CAEEL" protein_descr="Homeobox protein ceh-43 OS=Caenorhabditis elegans GN=ceh-43 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="10" tot_num_ions="56" calc_neutral_pep_mass="1557.5817" massdiff="63.397" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="26.3"/>
+            <search_score name="nextscore" value="23.3"/>
+            <search_score name="bscore" value="9.1"/>
+            <search_score name="yscore" value="11.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.43"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00040.00040.3" start_scan="40" end_scan="40" precursor_neutral_mass="1638.9916" assumed_charge="3" index="40">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FMAPSSGMNMGGMGGL" peptide_prev_aa="R" peptide_next_aa="S" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="14" tot_num_ions="60" calc_neutral_pep_mass="1557.6087" massdiff="81.383" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="8" mass="147.0354" />
+               <mod_aminoacid_mass position="13" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="28.4"/>
+            <search_score name="nextscore" value="25.1"/>
+            <search_score name="bscore" value="6.8"/>
+            <search_score name="yscore" value="8.5"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.4"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00041.00041.2" start_scan="41" end_scan="41" precursor_neutral_mass="1638.9911" assumed_charge="2" index="41">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LPSLPSLADDGTRLSA" peptide_prev_aa="R" peptide_next_aa="H" protein="tr|Q90853|Q90853_CHICK" protein_descr="Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="30" calc_neutral_pep_mass="1593.8367" massdiff="45.154" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="15.6"/>
+            <search_score name="nextscore" value="15.4"/>
+            <search_score name="bscore" value="9.9"/>
+            <search_score name="yscore" value="6.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.6"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00042.00042.1" start_scan="42" end_scan="42" precursor_neutral_mass="650.3651" assumed_charge="1" index="42">
+      <search_result>
+         <search_hit hit_rank="1" peptide="EHTTTK" peptide_prev_aa="P" peptide_next_aa="I" protein="sp|Q18273|HM43_CAEEL" protein_descr="Homeobox protein ceh-43 OS=Caenorhabditis elegans GN=ceh-43 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="10" calc_neutral_pep_mass="697.3397" massdiff="-46.975" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="9.8"/>
+            <search_score name="nextscore" value="8.0"/>
+            <search_score name="bscore" value="5.8"/>
+            <search_score name="yscore" value="5.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="28"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00043.00043.2" start_scan="43" end_scan="43" precursor_neutral_mass="1304.7553" assumed_charge="2" index="43">
+      <search_result>
+         <search_hit hit_rank="1" peptide="MEPAAGAQGPHQ" peptide_prev_aa="-" peptide_next_aa="H" protein="sp|O93367|TLX3_CHICK" protein_descr="T-cell leukemia homeobox protein 3 OS=Gallus gallus GN=TLX3 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="22" calc_neutral_pep_mass="1216.5297" massdiff="88.226" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info mod_nterm_mass="43.0184" />
+            <search_score name="hyperscore" value="21.5"/>
+            <search_score name="nextscore" value="20.9"/>
+            <search_score name="bscore" value="6.7"/>
+            <search_score name="yscore" value="9.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00044.00044.2" start_scan="44" end_scan="44" precursor_neutral_mass="1282.7467" assumed_charge="2" index="44">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ARTVFSDPQLSGL" peptide_prev_aa="K" peptide_next_aa="E" protein="sp|Q04787|BSH_DROME" protein_descr="Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="24" calc_neutral_pep_mass="1371.7147" massdiff="-88.968" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="20.4"/>
+            <search_score name="nextscore" value="19.5"/>
+            <search_score name="bscore" value="7.4"/>
+            <search_score name="yscore" value="8.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00045.00045.3" start_scan="45" end_scan="45" precursor_neutral_mass="1879.9879" assumed_charge="3" index="45">
+      <search_result>
+         <search_hit hit_rank="1" peptide="VGMEGSNLGAPLSAYRQS" peptide_prev_aa="K" peptide_next_aa="Q" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="11" tot_num_ions="68" calc_neutral_pep_mass="1817.8727" massdiff="62.115" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="24.2"/>
+            <search_score name="nextscore" value="22.9"/>
+            <search_score name="bscore" value="8.2"/>
+            <search_score name="yscore" value="9.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.7"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00046.00046.2" start_scan="46" end_scan="46" precursor_neutral_mass="1418.7402" assumed_charge="2" index="46">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FMAPSSGMNMGGMGG" peptide_prev_aa="R" peptide_next_aa="L" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="28" calc_neutral_pep_mass="1460.5197" massdiff="-41.780" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="2" mass="147.0354" />
+               <mod_aminoacid_mass position="10" mass="147.0354" />
+               <mod_aminoacid_mass position="13" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="24.8"/>
+            <search_score name="nextscore" value="24.7"/>
+            <search_score name="bscore" value="6.4"/>
+            <search_score name="yscore" value="9.7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.56"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00047.00047.3" start_scan="47" end_scan="47" precursor_neutral_mass="1418.7405" assumed_charge="3" index="47">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FMAPSSGMNMGGMGG" peptide_prev_aa="R" peptide_next_aa="L" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="11" tot_num_ions="56" calc_neutral_pep_mass="1476.5137" massdiff="-57.773" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="2" mass="147.0354" />
+               <mod_aminoacid_mass position="8" mass="147.0354" />
+               <mod_aminoacid_mass position="10" mass="147.0354" />
+               <mod_aminoacid_mass position="13" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="22.9"/>
+            <search_score name="nextscore" value="22.4"/>
+            <search_score name="bscore" value="7.6"/>
+            <search_score name="yscore" value="9.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00048.00048.2" start_scan="48" end_scan="48" precursor_neutral_mass="1466.7865" assumed_charge="2" index="48">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SDIDDPSSETDSK" peptide_prev_aa="G" peptide_next_aa="K" protein="sp|P22807|SLOU_DROME" protein_descr="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="24" calc_neutral_pep_mass="1376.5577" massdiff="90.229" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="23.7"/>
+            <search_score name="nextscore" value="23.3"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="12.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.098"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00049.00049.2" start_scan="49" end_scan="49" precursor_neutral_mass="1332.7450" assumed_charge="2" index="49">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FMAPSSGMNMGGMG" peptide_prev_aa="R" peptide_next_aa="G" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="26" calc_neutral_pep_mass="1387.5027" massdiff="-54.758" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="8" mass="147.0354" />
+               <mod_aminoacid_mass position="10" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="17.6"/>
+            <search_score name="nextscore" value="17.6"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="9.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="3.4"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00050.00050.2" start_scan="50" end_scan="50" precursor_neutral_mass="1510.8827" assumed_charge="2" index="50">
+      <search_result>
+         <search_hit hit_rank="1" peptide="AVQKYLTAHEQSK" peptide_prev_aa="F" peptide_next_aa="L" protein="tr|Q24786|Q24786_9METZ" protein_descr="Homeobox-containing protein (Fragment) OS=Ephydatia fluviatilis GN=prox1 PE=3 SV=1" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="24" calc_neutral_pep_mass="1483.7787" massdiff="27.104" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="23.7"/>
+            <search_score name="nextscore" value="20.7"/>
+            <search_score name="bscore" value="6.7"/>
+            <search_score name="yscore" value="8.7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.52"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00051.00051.2" start_scan="51" end_scan="51" precursor_neutral_mass="1178.6636" assumed_charge="2" index="51">
+      <search_result>
+         <search_hit hit_rank="1" peptide="MIHLTPTQVK" peptide_prev_aa="S" peptide_next_aa="I" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="18" calc_neutral_pep_mass="1148.6377" massdiff="30.026" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="21.1"/>
+            <search_score name="nextscore" value="20.1"/>
+            <search_score name="bscore" value="12.2"/>
+            <search_score name="yscore" value="8.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.3"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00052.00052.2" start_scan="52" end_scan="52" precursor_neutral_mass="950.5069" assumed_charge="2" index="52">
+      <search_result>
+         <search_hit hit_rank="1" peptide="IESLLEKK" peptide_prev_aa="N" peptide_next_aa="S" protein="sp|P26797|HM19_CAEEL" protein_descr="Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="14" calc_neutral_pep_mass="940.5597" massdiff="9.947" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="18.0"/>
+            <search_score name="nextscore" value="17.3"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="9.6"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00053.00053.2" start_scan="53" end_scan="53" precursor_neutral_mass="1201.6716" assumed_charge="2" index="53">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LSSPGQLKAARR" peptide_prev_aa="R" peptide_next_aa="R" protein="sp|O08686|BARX2_MOUSE" protein_descr="Homeobox protein BarH-like 2 OS=Mus musculus GN=Barx2 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="22" calc_neutral_pep_mass="1264.7367" massdiff="-63.065" num_tol_term="2" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="20.1"/>
+            <search_score name="nextscore" value="20.0"/>
+            <search_score name="bscore" value="8.2"/>
+            <search_score name="yscore" value="10.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00054.00054.2" start_scan="54" end_scan="54" precursor_neutral_mass="1162.6670" assumed_charge="2" index="54">
+      <search_result>
+         <search_hit hit_rank="1" peptide="HSSGSNASTINK" peptide_prev_aa="P" peptide_next_aa="Q" protein="tr|Q24785|Q24785_9METZ" protein_descr="Homeobox-containing protein (Fragment) OS=Ephydatia fluviatilis GN=prox3 PE=3 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="22" calc_neutral_pep_mass="1183.5577" massdiff="-20.891" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="19.4"/>
+            <search_score name="nextscore" value="18.4"/>
+            <search_score name="bscore" value="8.1"/>
+            <search_score name="yscore" value="9.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00055.00055.2" start_scan="55" end_scan="55" precursor_neutral_mass="1418.7378" assumed_charge="2" index="55">
+      <search_result>
+         <search_hit hit_rank="1" peptide="QPLPGSDVAAFLVPT" peptide_prev_aa="R" peptide_next_aa="K" protein="tr|O35455|O35455_MOUSE" protein_descr="Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="28" calc_neutral_pep_mass="1492.7927" massdiff="-74.055" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="24.2"/>
+            <search_score name="nextscore" value="21.8"/>
+            <search_score name="bscore" value="12.4"/>
+            <search_score name="yscore" value="10"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.4"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00056.00056.3" start_scan="56" end_scan="56" precursor_neutral_mass="1418.7358" assumed_charge="3" index="56">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LVLFHRGPAGHRSG" peptide_prev_aa="R" peptide_next_aa="G" protein="tr|Q90853|Q90853_CHICK" protein_descr="Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="10" tot_num_ions="52" calc_neutral_pep_mass="1484.8117" massdiff="-66.076" num_tol_term="1" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="24.3"/>
+            <search_score name="nextscore" value="23.8"/>
+            <search_score name="bscore" value="7.6"/>
+            <search_score name="yscore" value="10"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00057.00057.2" start_scan="57" end_scan="57" precursor_neutral_mass="1466.7853" assumed_charge="2" index="57">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SDIDDPSSETDSK" peptide_prev_aa="G" peptide_next_aa="K" protein="sp|P22807|SLOU_DROME" protein_descr="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="24" calc_neutral_pep_mass="1376.5577" massdiff="90.228" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="23.9"/>
+            <search_score name="nextscore" value="23.5"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="12.4"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.25"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00058.00058.2" start_scan="58" end_scan="58" precursor_neutral_mass="1013.6479" assumed_charge="2" index="58">
+      <search_result>
+         <search_hit hit_rank="1" peptide="TQLIALERK" peptide_prev_aa="S" peptide_next_aa="F" protein="tr|Q24785|Q24785_9METZ" protein_descr="Homeobox-containing protein (Fragment) OS=Ephydatia fluviatilis GN=prox3 PE=3 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="16" calc_neutral_pep_mass="1052.6347" massdiff="-38.987" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="22.9"/>
+            <search_score name="nextscore" value="20.2"/>
+            <search_score name="bscore" value="11.5"/>
+            <search_score name="yscore" value="8.4"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.46"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00059.00059.2" start_scan="59" end_scan="59" precursor_neutral_mass="1356.7262" assumed_charge="2" index="59">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LVAAVAARTTQASST" peptide_prev_aa="K" peptide_next_aa="S" protein="sp|P22807|SLOU_DROME" protein_descr="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="28" calc_neutral_pep_mass="1427.7737" massdiff="-71.048" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="20.1"/>
+            <search_score name="nextscore" value="18.9"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="8.7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00060.00060.2" start_scan="60" end_scan="60" precursor_neutral_mass="1510.8183" assumed_charge="2" index="60">
+      <search_result>
+         <search_hit hit_rank="1" peptide="MFQHNKKCFTIE" peptide_prev_aa="-" peptide_next_aa="S" protein="tr|Q90263|Q90263_DANRE" protein_descr="Empty spiracles homeobox 3 OS=Danio rerio GN=emx3 PE=2 SV=1" num_tot_proteins="2" num_matched_ions="6" tot_num_ions="22" calc_neutral_pep_mass="1522.7057" massdiff="-11.887" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="1" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="19.8"/>
+            <search_score name="nextscore" value="19.8"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="8.4"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00061.00061.2" start_scan="61" end_scan="61" precursor_neutral_mass="1414.7370" assumed_charge="2" index="61">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LPAGGRGAGKHCPPY" peptide_prev_aa="P" peptide_next_aa="-" protein="tr|O35455|O35455_MOUSE" protein_descr="Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="28" calc_neutral_pep_mass="1461.7297" massdiff="-46.993" num_tol_term="1" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="21.2"/>
+            <search_score name="nextscore" value="20.5"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="9.8"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00062.00062.2" start_scan="62" end_scan="62" precursor_neutral_mass="1429.7331" assumed_charge="2" index="62">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LVAAVAARTTQASST" peptide_prev_aa="K" peptide_next_aa="S" protein="sp|P22807|SLOU_DROME" protein_descr="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="28" calc_neutral_pep_mass="1427.7737" massdiff="1.959" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="26.1"/>
+            <search_score name="nextscore" value="22.0"/>
+            <search_score name="bscore" value="8.3"/>
+            <search_score name="yscore" value="9.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.046"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00063.00063.3" start_scan="63" end_scan="63" precursor_neutral_mass="1906.9863" assumed_charge="3" index="63">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SLNESIQPDPLCLHNSSL" peptide_prev_aa="K" peptide_next_aa="F" protein="sp|O93367|TLX3_CHICK" protein_descr="T-cell leukemia homeobox protein 3 OS=Gallus gallus GN=TLX3 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="68" calc_neutral_pep_mass="1947.9357" massdiff="-40.949" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="21.9"/>
+            <search_score name="nextscore" value="20.9"/>
+            <search_score name="bscore" value="9.4"/>
+            <search_score name="yscore" value="12"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00064.00064.2" start_scan="64" end_scan="64" precursor_neutral_mass="1906.9855" assumed_charge="2" index="64">
+      <search_result>
+         <search_hit hit_rank="1" peptide="DSMSILTQTPSEPNAAHP" peptide_prev_aa="K" peptide_next_aa="Q" protein="sp|Q24255|BARH1_DROME" protein_descr="Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="34" calc_neutral_pep_mass="1876.8627" massdiff="30.123" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="15.9"/>
+            <search_score name="nextscore" value="15.8"/>
+            <search_score name="bscore" value="7.3"/>
+            <search_score name="yscore" value="12.7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.4"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00065.00065.2" start_scan="65" end_scan="65" precursor_neutral_mass="1162.6667" assumed_charge="2" index="65">
+      <search_result>
+         <search_hit hit_rank="1" peptide="HSSGSNASTINK" peptide_prev_aa="P" peptide_next_aa="Q" protein="tr|Q24785|Q24785_9METZ" protein_descr="Homeobox-containing protein (Fragment) OS=Ephydatia fluviatilis GN=prox3 PE=3 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="22" calc_neutral_pep_mass="1183.5577" massdiff="-20.891" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="19.8"/>
+            <search_score name="nextscore" value="19.0"/>
+            <search_score name="bscore" value="8.2"/>
+            <search_score name="yscore" value="9.6"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00066.00066.2" start_scan="66" end_scan="66" precursor_neutral_mass="1536.8528" assumed_charge="2" index="66">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LQLKQNNAKGSGIK" peptide_prev_aa="Y" peptide_next_aa="C" protein="tr|Q23819|Q23819_HYDVD" protein_descr="Cnox3 protein (Fragment) OS=Hydra viridissima GN=cnox3 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="26" calc_neutral_pep_mass="1479.8517" massdiff="57.001" num_tol_term="1" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="21.7"/>
+            <search_score name="nextscore" value="19.3"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="10.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.29"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00067.00067.3" start_scan="67" end_scan="67" precursor_neutral_mass="2109.0833" assumed_charge="3" index="67">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FMAPSSGMNMGGMGGLSSLGD" peptide_prev_aa="R" peptide_next_aa="V" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="12" tot_num_ions="80" calc_neutral_pep_mass="2048.7947" massdiff="60.289" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="2" mass="147.0354" />
+               <mod_aminoacid_mass position="8" mass="147.0354" />
+               <mod_aminoacid_mass position="10" mass="147.0354" />
+               <mod_aminoacid_mass position="13" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="28.4"/>
+            <search_score name="nextscore" value="27.1"/>
+            <search_score name="bscore" value="10.1"/>
+            <search_score name="yscore" value="5.5"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.1"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00068.00068.2" start_scan="68" end_scan="68" precursor_neutral_mass="1478.8432" assumed_charge="2" index="68">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FMAPSSGMNMGGMG" peptide_prev_aa="R" peptide_next_aa="G" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="26" calc_neutral_pep_mass="1387.5027" massdiff="91.341" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="8" mass="147.0354" />
+               <mod_aminoacid_mass position="10" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="22.1"/>
+            <search_score name="nextscore" value="22.0"/>
+            <search_score name="bscore" value="2.6"/>
+            <search_score name="yscore" value="7.2"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.1"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00069.00069.2" start_scan="69" end_scan="69" precursor_neutral_mass="1493.8317" assumed_charge="2" index="69">
+      <search_result>
+         <search_hit hit_rank="1" peptide="FIISANGAAVAGKQE" peptide_prev_aa="K" peptide_next_aa="Q" protein="sp|P22807|SLOU_DROME" protein_descr="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="28" calc_neutral_pep_mass="1456.7677" massdiff="37.064" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="21.9"/>
+            <search_score name="nextscore" value="19.5"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="10.4"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.22"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00070.00070.2" start_scan="70" end_scan="70" precursor_neutral_mass="979.4841" assumed_charge="2" index="70">
+      <search_result>
+         <search_hit hit_rank="1" peptide="RQTAVGLEL" peptide_prev_aa="K" peptide_next_aa="L" protein="sp|O88181|BARH2_RAT" protein_descr="BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1" num_tot_proteins="2" num_matched_ions="6" tot_num_ions="16" calc_neutral_pep_mass="967.5447" massdiff="11.939" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <alternative_protein protein="sp|Q24255|BARH1_DROME" protein_descr="Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2" num_tol_term="1"/>
+            <search_score name="hyperscore" value="22.4"/>
+            <search_score name="nextscore" value="22.4"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="11"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.27"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00071.00071.2" start_scan="71" end_scan="71" precursor_neutral_mass="1110.5765" assumed_charge="2" index="71">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LPPYQDTMR" peptide_prev_aa="E" peptide_next_aa="N" protein="tr|Q9YH59|Q9YH59_CHICK" protein_descr="Homeodomain protein NKx2.1 OS=Gallus gallus GN=NKx2.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="16" calc_neutral_pep_mass="1101.5277" massdiff="9.049" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="19.2"/>
+            <search_score name="nextscore" value="18.0"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="10.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.3"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00072.00072.2" start_scan="72" end_scan="72" precursor_neutral_mass="1490.8072" assumed_charge="2" index="72">
+      <search_result>
+         <search_hit hit_rank="1" peptide="DQIANKLNLTPTQV" peptide_prev_aa="R" peptide_next_aa="K" protein="tr|O16132|O16132_HYDVU" protein_descr="NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="26" calc_neutral_pep_mass="1535.8307" massdiff="-45.023" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="18.4"/>
+            <search_score name="nextscore" value="18.1"/>
+            <search_score name="bscore" value="8.8"/>
+            <search_score name="yscore" value="8.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00073.00073.2" start_scan="73" end_scan="73" precursor_neutral_mass="1506.8015" assumed_charge="2" index="73">
+      <search_result>
+         <search_hit hit_rank="1" peptide="WPFAASVRKSYD" peptide_prev_aa="S" peptide_next_aa="P" protein="sp|P28468|HOX1_HALRO" protein_descr="Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="22" calc_neutral_pep_mass="1407.6937" massdiff="99.108" num_tol_term="0" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="19.2"/>
+            <search_score name="nextscore" value="17.8"/>
+            <search_score name="bscore" value="12"/>
+            <search_score name="yscore" value="9.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00074.00074.2" start_scan="74" end_scan="74" precursor_neutral_mass="1162.6670" assumed_charge="2" index="74">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SKEAEIEESVR" peptide_prev_aa="R" peptide_next_aa="N" protein="tr|Q23824|Q23824_HYDVD" protein_descr="Msh protein (Fragment) OS=Hydra viridissima GN=msh PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="20" calc_neutral_pep_mass="1257.6197" massdiff="-94.953" num_tol_term="2" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="21.2"/>
+            <search_score name="nextscore" value="19.4"/>
+            <search_score name="bscore" value="6.5"/>
+            <search_score name="yscore" value="9.5"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00075.00075.2" start_scan="75" end_scan="75" precursor_neutral_mass="1529.8090" assumed_charge="2" index="75">
+      <search_result>
+         <search_hit hit_rank="1" peptide="IGIGTFPARTTDSISS" peptide_prev_aa="K" peptide_next_aa="N" protein="tr|Q24785|Q24785_9METZ" protein_descr="Homeobox-containing protein (Fragment) OS=Ephydatia fluviatilis GN=prox3 PE=3 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="30" calc_neutral_pep_mass="1603.8207" massdiff="-74.012" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="18.9"/>
+            <search_score name="nextscore" value="18.9"/>
+            <search_score name="bscore" value="10.6"/>
+            <search_score name="yscore" value="0"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00076.00076.2" start_scan="76" end_scan="76" precursor_neutral_mass="1414.7345" assumed_charge="2" index="76">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LVAAVAARTTQASST" peptide_prev_aa="K" peptide_next_aa="S" protein="sp|P22807|SLOU_DROME" protein_descr="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="28" calc_neutral_pep_mass="1427.7737" massdiff="-13.039" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="20.3"/>
+            <search_score name="nextscore" value="17.6"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="8.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.1"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00077.00077.2" start_scan="77" end_scan="77" precursor_neutral_mass="1521.7961" assumed_charge="2" index="77">
+      <search_result>
+         <search_hit hit_rank="1" peptide="EERTNNITTMAMK" peptide_prev_aa="E" peptide_next_aa="R" protein="sp|P28468|HOX1_HALRO" protein_descr="Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="24" calc_neutral_pep_mass="1501.7017" massdiff="20.094" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="1" mass="111.0320" />
+            </modification_info>
+            <search_score name="hyperscore" value="23.9"/>
+            <search_score name="nextscore" value="23.8"/>
+            <search_score name="bscore" value="4"/>
+            <search_score name="yscore" value="9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.18"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00078.00078.1" start_scan="78" end_scan="78" precursor_neutral_mass="494.2668" assumed_charge="1" index="78">
+      <search_result>
+         <search_hit hit_rank="1" peptide="RAAAGGG" peptide_prev_aa="R" peptide_next_aa="G" protein="tr|Q90853|Q90853_CHICK" protein_descr="Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="12" calc_neutral_pep_mass="540.2767" massdiff="-46.010" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="12.7"/>
+            <search_score name="nextscore" value="9.7"/>
+            <search_score name="bscore" value="10"/>
+            <search_score name="yscore" value="7.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="4.3"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00079.00079.2" start_scan="79" end_scan="79" precursor_neutral_mass="1478.8394" assumed_charge="2" index="79">
+      <search_result>
+         <search_hit hit_rank="1" peptide="NLLLHGPFSRKPK" peptide_prev_aa="E" peptide_next_aa="R" protein="tr|Q90263|Q90263_DANRE" protein_descr="Empty spiracles homeobox 3 OS=Danio rerio GN=emx3 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="24" calc_neutral_pep_mass="1487.8727" massdiff="-9.033" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="19.4"/>
+            <search_score name="nextscore" value="18.9"/>
+            <search_score name="bscore" value="10"/>
+            <search_score name="yscore" value="9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.9"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00080.00080.2" start_scan="80" end_scan="80" precursor_neutral_mass="1340.7300" assumed_charge="2" index="80">
+      <search_result>
+         <search_hit hit_rank="1" peptide="DNSSDVDIVGDAK" peptide_prev_aa="E" peptide_next_aa="L" protein="sp|Q04787|BSH_DROME" protein_descr="Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="24" calc_neutral_pep_mass="1315.5887" massdiff="25.141" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="18.4"/>
+            <search_score name="nextscore" value="18.0"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="10.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00081.00081.2" start_scan="81" end_scan="81" precursor_neutral_mass="1304.7524" assumed_charge="2" index="81">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LGHFPPTAGGNGL" peptide_prev_aa="K" peptide_next_aa="N" protein="sp|Q24255|BARH1_DROME" protein_descr="Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="24" calc_neutral_pep_mass="1218.6147" massdiff="86.138" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="16.5"/>
+            <search_score name="nextscore" value="16.1"/>
+            <search_score name="bscore" value="10"/>
+            <search_score name="yscore" value="6.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00082.00082.2" start_scan="82" end_scan="82" precursor_neutral_mass="1955.0314" assumed_charge="2" index="82">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SYDPALRSYFSRFNNSD" peptide_prev_aa="K" peptide_next_aa="A" protein="sp|P28468|HOX1_HALRO" protein_descr="Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="32" calc_neutral_pep_mass="2019.9077" massdiff="-64.876" num_tol_term="1" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="16.7"/>
+            <search_score name="nextscore" value="16.4"/>
+            <search_score name="bscore" value="2.8"/>
+            <search_score name="yscore" value="13.6"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00084.00084.2" start_scan="84" end_scan="84" precursor_neutral_mass="1414.7363" assumed_charge="2" index="83">
+      <search_result>
+         <search_hit hit_rank="1" peptide="AHAHANATTPTHSK" peptide_prev_aa="D" peptide_next_aa="A" protein="sp|Q04787|BSH_DROME" protein_descr="Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="26" calc_neutral_pep_mass="1424.6907" massdiff="-9.954" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="20.4"/>
+            <search_score name="nextscore" value="19.4"/>
+            <search_score name="bscore" value="6.1"/>
+            <search_score name="yscore" value="8.6"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.8"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00083.00083.2" start_scan="83" end_scan="83" precursor_neutral_mass="1398.7408" assumed_charge="2" index="84">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SEPGKQPGEATSSSG" peptide_prev_aa="R" peptide_next_aa="D" protein="sp|Q04787|BSH_DROME" protein_descr="Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="28" calc_neutral_pep_mass="1399.6217" massdiff="-0.881" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="21.1"/>
+            <search_score name="nextscore" value="18.3"/>
+            <search_score name="bscore" value="2.5"/>
+            <search_score name="yscore" value="9.6"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.43"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00085.00085.2" start_scan="85" end_scan="85" precursor_neutral_mass="1535.7957" assumed_charge="2" index="85">
+      <search_result>
+         <search_hit hit_rank="1" peptide="KHKPGAGGLLPHPAEG" peptide_prev_aa="K" peptide_next_aa="E" protein="tr|Q9YHC2|Q9YHC2_CHICK" protein_descr="Homeodomain protein (Fragment) OS=Gallus gallus GN=Nkx-6.1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="30" calc_neutral_pep_mass="1546.8367" massdiff="-11.041" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="26.5"/>
+            <search_score name="nextscore" value="25.4"/>
+            <search_score name="bscore" value="5"/>
+            <search_score name="yscore" value="11.6"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.12"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00086.00086.2" start_scan="86" end_scan="86" precursor_neutral_mass="1490.8037" assumed_charge="2" index="86">
+      <search_result>
+         <search_hit hit_rank="1" peptide="AELRAELGPAPSPPK" peptide_prev_aa="L" peptide_next_aa="C" protein="sp|O35767|NKX25_RAT" protein_descr="Homeobox protein Nkx-2.5 OS=Rattus norvegicus GN=Nkx2-5 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="28" calc_neutral_pep_mass="1513.8257" massdiff="-23.022" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="18.2"/>
+            <search_score name="nextscore" value="18.2"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="9.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00087.00087.2" start_scan="87" end_scan="87" precursor_neutral_mass="1755.8887" assumed_charge="2" index="87">
+      <search_result>
+         <search_hit hit_rank="1" peptide="ALPTTLAMRAAAPAPAPAP" peptide_prev_aa="R" peptide_next_aa="G" protein="tr|O35455|O35455_MOUSE" protein_descr="Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="36" calc_neutral_pep_mass="1768.9657" massdiff="-13.077" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="22.9"/>
+            <search_score name="nextscore" value="16.4"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="11.5"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.075"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00088.00088.2" start_scan="88" end_scan="88" precursor_neutral_mass="1739.8888" assumed_charge="2" index="88">
+      <search_result>
+         <search_hit hit_rank="1" peptide="MNDKNITETERDFNK" peptide_prev_aa="Q" peptide_next_aa="S" protein="tr|O16132|O16132_HYDVU" protein_descr="NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="28" calc_neutral_pep_mass="1835.8467" massdiff="-95.958" num_tol_term="1" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="21.8"/>
+            <search_score name="nextscore" value="19.1"/>
+            <search_score name="bscore" value="10.3"/>
+            <search_score name="yscore" value="8.3"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.48"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00089.00089.2" start_scan="89" end_scan="89" precursor_neutral_mass="1162.6627" assumed_charge="2" index="89">
+      <search_result>
+         <search_hit hit_rank="1" peptide="NSGMSFDFPPK" peptide_prev_aa="K" peptide_next_aa="F" protein="sp|P28468|HOX1_HALRO" protein_descr="Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="10" tot_num_ions="20" calc_neutral_pep_mass="1207.5327" massdiff="-44.870" num_tol_term="2" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="24.4"/>
+            <search_score name="nextscore" value="17.7"/>
+            <search_score name="bscore" value="6.5"/>
+            <search_score name="yscore" value="6.7"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.085"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00090.00090.2" start_scan="90" end_scan="90" precursor_neutral_mass="1398.7382" assumed_charge="2" index="90">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SEPGKQPGEATSSSG" peptide_prev_aa="R" peptide_next_aa="D" protein="sp|Q04787|BSH_DROME" protein_descr="Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="28" calc_neutral_pep_mass="1399.6217" massdiff="-0.883" num_tol_term="1" num_missed_cleavages="1" is_rejected="0">
+            <search_score name="hyperscore" value="21.3"/>
+            <search_score name="nextscore" value="18.2"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="9.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.38"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00091.00091.2" start_scan="91" end_scan="91" precursor_neutral_mass="1050.5504" assumed_charge="2" index="91">
+      <search_result>
+         <search_hit hit_rank="1" peptide="DYNGLSTSQT" peptide_prev_aa="K" peptide_next_aa="S" protein="sp|P28468|HOX1_HALRO" protein_descr="Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="18" calc_neutral_pep_mass="1066.4567" massdiff="-15.906" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="19.6"/>
+            <search_score name="nextscore" value="19.4"/>
+            <search_score name="bscore" value="0"/>
+            <search_score name="yscore" value="11.2"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="3.5"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00092.00092.1" start_scan="92" end_scan="92" precursor_neutral_mass="495.2877" assumed_charge="1" index="92">
+      <search_result>
+         <search_hit hit_rank="1" peptide="SRPGSP" peptide_prev_aa="K" peptide_next_aa="A" protein="sp|P52955|LBX1_MOUSE" protein_descr="Transcription factor LBX1 OS=Mus musculus GN=Lbx1 PE=1 SV=2" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="10" calc_neutral_pep_mass="581.2917" massdiff="-86.004" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="17.8"/>
+            <search_score name="nextscore" value="16.6"/>
+            <search_score name="bscore" value="10.9"/>
+            <search_score name="yscore" value="6.9"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="2.4"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00093.00093.2" start_scan="93" end_scan="93" precursor_neutral_mass="1566.7976" assumed_charge="2" index="93">
+      <search_result>
+         <search_hit hit_rank="1" peptide="TSRCGPHSPLRLGASG" peptide_prev_aa="R" peptide_next_aa="C" protein="tr|Q90853|Q90853_CHICK" protein_descr="Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="30" calc_neutral_pep_mass="1576.7897" massdiff="-9.992" num_tol_term="1" num_missed_cleavages="2" is_rejected="0">
+            <search_score name="hyperscore" value="22.5"/>
+            <search_score name="nextscore" value="18.6"/>
+            <search_score name="bscore" value="7.6"/>
+            <search_score name="yscore" value="7.4"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="0.071"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00094.00094.1" start_scan="94" end_scan="94" precursor_neutral_mass="501.3357" assumed_charge="1" index="94">
+      <search_result>
+         <search_hit hit_rank="1" peptide="LNPGSV" peptide_prev_aa="K" peptide_next_aa="G" protein="sp|Q04787|BSH_DROME" protein_descr="Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="10" calc_neutral_pep_mass="567.3017" massdiff="-65.966" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <search_score name="hyperscore" value="16.3"/>
+            <search_score name="nextscore" value="14.0"/>
+            <search_score name="bscore" value="8.6"/>
+            <search_score name="yscore" value="13.1"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="1.9"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00096.00096.1" start_scan="96" end_scan="96" precursor_neutral_mass="996.6218" assumed_charge="1" index="95">
+      <search_result>
+         <search_hit hit_rank="1" peptide="VLMFCELP" peptide_prev_aa="R" peptide_next_aa="P" protein="tr|O70238|O70238_MOUSE" protein_descr="Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="14" calc_neutral_pep_mass="948.4447" massdiff="48.177" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="3" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="13.2"/>
+            <search_score name="nextscore" value="11.0"/>
+            <search_score name="bscore" value="8.7"/>
+            <search_score name="yscore" value="10.2"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="3.9"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00099.00099.1" start_scan="99" end_scan="99" precursor_neutral_mass="997.0408" assumed_charge="1" index="96">
+      <search_result>
+         <search_hit hit_rank="1" peptide="VLMFCELP" peptide_prev_aa="R" peptide_next_aa="P" protein="tr|O70238|O70238_MOUSE" protein_descr="Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="14" calc_neutral_pep_mass="948.4447" massdiff="48.596" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="3" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="13.0"/>
+            <search_score name="nextscore" value="11.6"/>
+            <search_score name="bscore" value="8.6"/>
+            <search_score name="yscore" value="10"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="4.7"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+      <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.d.mgf.00100.00100.1" start_scan="100" end_scan="100" precursor_neutral_mass="996.6215" assumed_charge="1" index="97">
+      <search_result>
+         <search_hit hit_rank="1" peptide="VLMFCELP" peptide_prev_aa="R" peptide_next_aa="P" protein="tr|O70238|O70238_MOUSE" protein_descr="Homeobox protein PSX OS=Mus musculus GN=Rhox6 PE=2 SV=2" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="14" calc_neutral_pep_mass="948.4447" massdiff="48.177" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+            <modification_info>
+               <mod_aminoacid_mass position="3" mass="147.0354" />
+            </modification_info>
+            <search_score name="hyperscore" value="13.1"/>
+            <search_score name="nextscore" value="11.1"/>
+            <search_score name="bscore" value="8.6"/>
+            <search_score name="yscore" value="10"/>
+            <search_score name="cscore" value="0"/>
+            <search_score name="zscore" value="0"/>
+            <search_score name="ascore" value="0"/>
+            <search_score name="xscore" value="0"/>
+            <search_score name="expect" value="4"/>
+         </search_hit>
+      </search_result>
+      </spectrum_query>
+   </msms_run_summary>
+</msms_pipeline_analysis>

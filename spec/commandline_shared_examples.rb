@@ -35,3 +35,23 @@ RSpec.shared_examples "a protk tool with default file output" do
 	end
 
 end
+
+RSpec.shared_examples "a protk tool with default file output from multiple inputs" do
+
+	before(:each) do
+		@tool_name=subject[0]
+		@output_ext=subject[1]
+		@suffix=subject[2]
+		@prefix=""
+		throw "@input_files must be defined to use this example" unless @input_files
+		throw "@extra_args must be defined to use this example" unless @extra_args
+		@default_output_file=Tool.default_output_path(@input_files[0],@output_ext,@prefix,@suffix)
+	end
+
+	it "should produce a default output file" do
+		%x[#{@tool_name} #{@extra_args} #{@input_files.join(" ")}]
+		expect(@default_output_file).to exist?
+	end
+
+end
+
