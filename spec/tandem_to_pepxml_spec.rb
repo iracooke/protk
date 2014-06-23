@@ -25,8 +25,8 @@ describe "The tandem_to_pepxml tool" do
 		it_behaves_like "a protk tool with default file output"
 	end
 
-	it "Support the -o option" do
-		puts %x[tandem_to_pepxml.rb #{@input_file} -o #{@output_file}]
+	it "Support the -o option", :dependencies_not_installed => tandem2xml_not_installed do
+		%x[tandem_to_pepxml.rb #{@input_file} -o #{@output_file}]
 		expect(@output_file).to exist?
 	end
 

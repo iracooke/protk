@@ -35,10 +35,10 @@ describe "The peptide_prophet command", :broken => false do
 		
 		expect(@output_file).to exist?
 		expect(@output_file).to be_pepxml		
-		expect(@output_file).to have_pepxml_hits_matching(18,/./)
+		expect(@output_file).to have_pepxml_hits_matching(34,/./)
 	end
 
-	it "supports the -F (one at a time) option" do
+	it "supports the -F (one at a time) option", :dependencies_not_installed => tpp_not_installed do
 		output_files= [@input_file,@input_file_1].collect { |f| Tool.default_output_path(f,".pep.xml","","_pproph")}
 
 		%x[peptide_prophet.rb -d #{@db_file} #{@input_file} #{@input_file_1} -F]
