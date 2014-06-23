@@ -15,7 +15,12 @@ require 'protk/mascot_util'
 #
 genv=Constants.new
 
-tool=SearchTool.new([:database,:explicit_output,:over_write,:enzyme])
+tool=SearchTool.new([
+  :database,
+  :explicit_output,
+  :over_write,
+  :enzyme])
+
 tool.option_parser.banner = "Convert mascot dat files to pep.xml files.\n\nUsage: mascot_to_pepxml.rb [options] file1.dat file2.dat ... "
 
 tool.options.enzyme="trypsin"

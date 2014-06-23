@@ -22,6 +22,9 @@ search_tool=SearchTool.new([
   :over_write,
   :enzyme,
   :modifications,
+  :methionine_oxidation,
+  :carbamidomethyl,
+  :glyco,
   :instrument,
   :mass_tolerance_units,
   :mass_tolerance,
@@ -143,38 +146,24 @@ ARGV.each do |filename|
 
     # Variable Modifications
     #
-    if ( search_tool.var_mods !="" && !(search_tool.var_mods =~/None/)) # Checking for none is to cope with galaxy input
-      var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }.join(",")
-
-      if ( var_mods !="" )
-        cmd << " -mv #{var_mods}"
-      end
-    else 
-      # Add options related to peptide modifications
-      #
-      if ( search_tool.glyco )
-        cmd << " -mv 119 "
-      end
+    if ( search_tool.var_mods  && !(search_tool.var_mods =~/None/)) # Checking for none is to cope with galaxy input
+      var_mods = search_tool.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }
     end
 
-    if ( search_tool.fix_mods !="" && !(search_tool.fix_mods=~/None/))
-      fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")
-      if ( fix_mods !="")
-        cmd << " -mf #{fix_mods}"    
-      end
-    else
-      if ( search_tool.has_modifications )
-        cmd << " -mf "
-        if ( search_tool.carbamidomethyl )
-          cmd<<"3 "
-        end
+    var_mods=[] unless var_mods
+    var_mods << "119" if search_tool.glyco
+    var_mods << "1" if search_tool.methionine_oxidation
 
-        if ( search_tool.methionine_oxidation )
-          cmd<<"1 "
-        end
+    cmd << " -mv #{var_mods.join(",")}" if var_mods.length > 0
 
-      end
+
+    if ( search_tool.fix_mods  && !(search_tool.fix_mods=~/None/))
+      fix_mods = search_tool.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }
     end
+    fix_mods=[] unless fix_mods
+    fix_mods << ["3"] if search_tool.carbamidomethyl
+
+    cmd << " -mf #{fix_mods.join(",")}" if fix_mods.length > 0
     
     if ( search_tool.searched_ions !="" && !(search_tool.searched_ions=~/None/))
       searched_ions=search_tool.searched_ions.split(",").collect{ |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }.join(",")

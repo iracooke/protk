@@ -19,23 +19,9 @@ include LibXML
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Convert a protXML file to a tab delimited table.\n\nUsage: protxml_to_table.rb [options] file1.protXML"
 
-tool.options.groups=false
-tool.option_parser.on("--groups","Print output by groups rather than for each protein") do 
-	tool.options.groups=true
-end
+tool.add_boolean_option(:groups,false,["--groups","Print output by groups rather than for each protein"])
 
-# tool.options.proteinid_regex=".*?\|.*?\|(.*)"
-# tool.option_parser.on( '--regex rexpr', 'Regex' ) do |regex| 
-#   tool.options.proteinid_regex=regex
-# end
-
-exit unless tool.check_options 
-
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts tool.option_parser 
-    exit
-end
+exit unless tool.check_options(true)
 
 input_file=ARGV[0]
 
