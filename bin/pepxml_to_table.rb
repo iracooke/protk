@@ -19,25 +19,16 @@ include LibXML
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Convert a pepXML file to a tab delimited table.\n\nUsage: pepxml_to_table.rb [options] file1.pep.xml"
 
-exit unless tool.check_options 
-
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts tool.option_parser 
-    exit
-end
-
-# Obtain a global environment object
-#genv=Constants.new
+exit unless tool.check_options(true)
 
 input_file=ARGV[0]
 
-output_file="#{input_file}.txt"
+if tool.explicit_output
+  output_fh=File.new("#{tool.explicit_output}",'w')  
+else
+  output_fh=$stdout
+end
 
-output_file = tool.explicit_output if tool.explicit_output!=nil
-
-output_fh=File.new("#{output_file}",'w')
-# output_fh=$stdout
 output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\traw_score\tpeptideprophet_prob\tinterprophet_prob\n"
 
 XML::Error.set_handler(&XML::Error::QUIET_HANDLER)

@@ -29,9 +29,26 @@ RSpec.shared_examples "a protk tool with default file output" do
 		@default_output_file=Tool.default_output_path(@input_file,@output_ext,@prefix,@suffix)
 	end
 
-	it "should produce a default output file" do
+	it "produces a default output file" do
 		%x[#{@tool_name} #{@extra_args} #{@input_file}]
 		expect(@default_output_file).to exist?
+	end
+end
+
+RSpec.shared_examples "a protk tool that defaults to stdout" do
+
+	before(:each) do
+		@tool_name=subject[0]
+	end
+
+	it "should produce a default output file" do
+		output=%x[#{@tool_name} #{input_file}]
+
+		match_text=match_requirement[0]
+		expected_num_matches=match_requirement[1]
+		n_matches=0
+		output.each_line { |line| n_matches+=1 if line=~/#{match_text}/ }
+		expect(n_matches).to eq(expected_num_matches)
 	end
 
 end
