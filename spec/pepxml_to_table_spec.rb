@@ -31,39 +31,14 @@ describe "The pepxml_to_table command", :broken => false do
 			let(:input_file) { @msgfplus_pepxml }
 			let(:match_requirement) { ["MS-GF",70] }
 		end
+
+		it_behaves_like "a protk tool that supports explicit output" do
+			let(:input_file) { @tandem_pepxml }
+			let(:output_file) { @output_file }
+			let(:match_requirement) { ["X! Tandem",91] }
+		end
+
 	end
-
-	# it "should run a search using absolute pathnames", :dependencies_not_installed => tandem_not_installed do
-		
-	# 	%x[tandem_search.rb -d #{@db_file} #{@input_file} -o #{@output_file}]
-		
-	# 	expect(@output_file).to exist?
-	# 	expect(@output_file).not_to contain_text("default from tandem_search.rb")
-	# end
-
-
-	# it "should run a search using relative pathnames", :dependencies_not_installed => tandem_not_installed do
-
-	# 	Dir.chdir("#{@tmp_dir}") do
-	# 		input_file="tiny.mzML"
-	# 		db_file = "testdb.fasta"
-
-	# 		output_file="tiny_tandem.tandem"
-	# 		expect(output_file).not_to exist?
-
-	# 		%x[tandem_search.rb -d #{db_file} #{input_file} -o #{output_file}]
-		
-	# 		expect(output_file).to exist?
-	# 	end
-	# end
-
-	# it "should output spectra when requested" , :dependencies_not_installed => tandem_not_installed do
-
-	# 	%x[tandem_search.rb -d #{@db_file} #{@input_file} -o #{@output_file} --output-spectra]
-	# 	expect(@output_file).to contain_text("type=\"tandem mass spectrum\"")
-	
-	# end
-
 
 end
 

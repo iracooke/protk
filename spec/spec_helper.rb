@@ -71,6 +71,23 @@ RSpec::Matchers.define :have_fasta_entries_matching  do |expected_num_entries,pa
 end
 
 
+RSpec::Matchers.define :have_lines_matching  do |expected_num_lines,pattern|
+  match do |filename|
+    @n_entries=0
+    File.read(filename).each_line do |line|
+      if line =~/#{pattern}/
+        @n_entries+=1
+      end
+    end
+    @n_entries==expected_num_lines
+  end
+
+  failure_message do
+    "\nexpected #{expected_num_lines} but found #{@n_entries} lines matching #{pattern}\n"
+  end
+
+end
+
 RSpec::Matchers.define :have_pepxml_hits_matching  do |expected_num_entries,pattern|
   match do |filename|
     filename.chomp!

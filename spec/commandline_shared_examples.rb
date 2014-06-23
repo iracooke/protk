@@ -41,7 +41,7 @@ RSpec.shared_examples "a protk tool that defaults to stdout" do
 		@tool_name=subject[0]
 	end
 
-	it "should produce a default output file" do
+	it "produces valid output" do
 		output=%x[#{@tool_name} #{input_file}]
 
 		match_text=match_requirement[0]
@@ -52,6 +52,25 @@ RSpec.shared_examples "a protk tool that defaults to stdout" do
 	end
 
 end
+
+
+RSpec.shared_examples "a protk tool that supports explicit output" do
+
+	before(:each) do
+		@tool_name=subject[0]
+	end
+
+	it "produces a valid output file with the specified name" do
+
+		%x[#{@tool_name} #{input_file} -o #{output_file}]
+
+		match_text=match_requirement[0]
+		expected_num_matches=match_requirement[1]
+		expect(output_file).to have_lines_matching(expected_num_matches,match_text)
+	end
+
+end
+
 
 RSpec.shared_examples "a protk tool with default file output from multiple inputs" do
 
