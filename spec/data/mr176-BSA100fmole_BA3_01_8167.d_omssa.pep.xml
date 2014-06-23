@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE msms_pipeline_analysis PUBLIC "-//NCBI//pepXML/EN" "pepXML.dtd">
+<msms_pipeline_analysis date="2014-06-23T06:55:56" summary_xml="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_omssa.pep.xml">
+  <msms_run_summary base_name="mr176-BSA100fmole_BA3_01_8167.d.mgf" raw_data_type="raw" raw_data="mgf">
+    <sample_enzyme name="Trypsin">
+      <specificity sense="C" cut="KR" no_cut="P"/>
+    </sample_enzyme>
+    <search_summary base_name="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_omssa.pep.xml" search_engine="OMSSA" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" out_data_type="n/a" out_data="n/a" search_id="1">
+      <search_database local_path="/Users/icooke/Desktop/iptest/AASequences.fasta" size_in_db_entries="33" type="AA"/>
+      <enzymatic_search_constraint enzyme="Trypsin" max_num_internal_cleavages="2" min_number_termini="2"/>
+      <aminoacid_modification aminoacid="C" massdiff="57.021000000000001" mass="160.03019" variable="N" description="Carbamidomethyl"/>
+      <aminoacid_modification aminoacid="M" massdiff="15.995000000000001" mass="147.03549" variable="Y" description="Oxidation"/>
+    <parameter name="to" value="0.65"/></search_summary>
+    <spectrum_query spectrum=" Cmpd 66, +MSn(740.4286), 58.6 min.65.65.2" start_scan="65" end_scan="65" precursor_neutral_mass="1478.84301757812" assumed_charge="2" index="1">
+      <search_result>
+        <search_hit hit_rank="1" peptide="FQKTQYLALPDR" peptide_prev_aa="K" peptide_next_aa="A" protein="Q18273" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="22" calc_neutral_pep_mass="1478.78894042969" massdiff="0.0540771484375" is_rejected="0" protein_descr="Homeobox protein ceh-43 OS=Caenorhabditis elegans GN=ceh-43 PE=2 SV=1">
+          <search_score name="pvalue" value="11.167661281371762"/>
+          <search_score name="expect" value="22.335322562743524"/>
+        </search_hit>
+      </search_result>
+    </spectrum_query>
+    <spectrum_query spectrum=" Cmpd 73, +MSn(740.4247), 60.9 min.72.72.2" start_scan="72" end_scan="72" precursor_neutral_mass="1478.8349609375" assumed_charge="2" index="2">
+      <search_result>
+        <search_hit hit_rank="1" peptide="FQKTQYLALPDR" peptide_prev_aa="K" peptide_next_aa="A" protein="Q18273" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="22" calc_neutral_pep_mass="1478.78894042969" massdiff="0.0460205078125" is_rejected="0" protein_descr="Homeobox protein ceh-43 OS=Caenorhabditis elegans GN=ceh-43 PE=2 SV=1">
+          <search_score name="pvalue" value="17.979453436845212"/>
+          <search_score name="expect" value="35.958906873690424"/>
+        </search_hit>
+      </search_result>
+    </spectrum_query>
+  </msms_run_summary>
+</msms_pipeline_analysis>
