@@ -14,7 +14,7 @@ describe "The omssa_search command", :broken => false do
 		it_behaves_like "a protk tool"
 	end
 
-	describe ["omssa_search.rb"] do
+	describe ["omssa_search.rb"] , :dependencies_installed => omssa_installed do
 
 		let(:db_file) { "#{@tmp_dir}/AASequences.fasta" }
 		let(:extra_args) { "-d #{db_file} --max-hit-expect 1000" }
