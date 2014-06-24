@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'commandline_shared_examples.rb'
 
-def tpp_not_installed
+def tpp_installed
 	installed=(%x[which xinteract].length>0)
-	!installed
+	installed
 end
 
 describe "The peptide_prophet command", :broken => false do
@@ -13,35 +13,32 @@ describe "The peptide_prophet command", :broken => false do
 		"mr176-BSA100fmole_BA3_01_8167.d_tandem.pep.xml",
 		"AASequences.fasta"]
 
-	before(:each) do
-		@input_file="#{@tmp_dir}/mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml"
-		@input_file_1="#{@tmp_dir}/mr176-BSA100fmole_BA3_01_8167.d_tandem.pep.xml"
-		@db_file="#{@tmp_dir}/AASequences.fasta"
-		@extra_args="-d #{@db_file}"
-		@output_file="#{@tmp_dir}/out.pep.xml"
-	end
+	let(:db_file) { "#{@tmp_dir}/AASequences.fasta" }
+	let(:extra_args) { "-d #{db_file}" }
+	let(:input_file) { "#{@tmp_dir}/mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml" }
+	let(:input_files) { ["#{@tmp_dir}/mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml",
+			"#{@tmp_dir}/mr176-BSA100fmole_BA3_01_8167.d_tandem.pep.xml"] }
+	let(:output_ext) {".pep.xml"}
+	let(:suffix) {"_pproph"}
+	let(:validator) { be_pepxml } 				
 
 	describe ["peptide_prophet.rb"] do
 		it_behaves_like "a protk tool"
+		it_behaves_like "a protk tool with default file output", :dependencies_installed => tpp_installed do
+			let(:validator1) { have_pepxml_hits_matching(34,/./) }
+		end
+		it_behaves_like "a protk tool that supports explicit output", :dependencies_installed => tpp_installed do
+			let(:output_file) { "#{@tmp_dir}/out.pep.xml" }
+			let(:validator) { have_pepxml_hits_matching(34,/./) }
+		end
+		it_behaves_like "a protk tool with default file output from multiple inputs", :dependencies_installed => tpp_installed 
+
 	end
 
-	describe ["peptide_prophet.rb",".pep.xml","_pproph"], :dependencies_not_installed => tpp_not_installed do
-		it_behaves_like "a protk tool with default file output"
-	end
+	it "supports the -F (one at a time) option", :dependencies_installed => tpp_installed do
+		output_files= input_files.collect { |f| Tool.default_output_path(f,output_ext,"",suffix)}
 
-	it "produce a named output file with valid content", :dependencies_not_installed => tpp_not_installed do
-
-		%x[peptide_prophet.rb -d #{@db_file} #{@input_file} -o #{@output_file}]
-		
-		expect(@output_file).to exist?
-		expect(@output_file).to be_pepxml		
-		expect(@output_file).to have_pepxml_hits_matching(34,/./)
-	end
-
-	it "supports the -F (one at a time) option", :dependencies_not_installed => tpp_not_installed do
-		output_files= [@input_file,@input_file_1].collect { |f| Tool.default_output_path(f,".pep.xml","","_pproph")}
-
-		%x[peptide_prophet.rb -d #{@db_file} #{@input_file} #{@input_file_1} -F]
+		%x[peptide_prophet.rb -d #{db_file} #{input_files[0]} #{input_files[1]} -F]
 
 		output_files.each do |f|  
 			expect(f).to exist?

@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'commandline_shared_examples.rb'
 
-def tpp_not_installed
+def tpp_installed
 	installed=(%x[which xinteract].length>0)
-	!installed
+	installed
 end
 
 describe "The interprophet tool" do
@@ -28,7 +28,7 @@ describe "The interprophet tool" do
 	end
 
 	# InterProphetParser is broken for this example data
-	describe ["interprophet.rb",".pep.xml","_iproph"],:broken=>true, :dependencies_not_installed => tpp_not_installed do
+	describe ["interprophet.rb",".pep.xml","_iproph"],:broken=>true, :dependencies_installed => tpp_installed do
 		it_behaves_like "a protk tool with default file output from multiple inputs"
 	end
 

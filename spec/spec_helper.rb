@@ -19,7 +19,7 @@ end
 
 RSpec.configure do |c|
 	c.filter_run_excluding :broken => true unless (swissprot_installed && blast_installed)
-  c.filter_run_excluding :dependencies_not_installed => true  
+  c.filter_run_excluding :dependencies_installed => false  
 end
 
 RSpec::Matchers.define :exist? do
@@ -29,7 +29,7 @@ RSpec::Matchers.define :exist? do
 
   failure_message do |filename|
     listing=%x[ls #{Pathname.new(filename).dirname.to_s}]
-    "\nDid you mean one of these files:\n#{listing}\n"
+    "\nLooking for #{filename}. Did you mean one of these files:\n#{listing}\n"
   end
 
 end
@@ -74,7 +74,13 @@ end
 RSpec::Matchers.define :have_lines_matching  do |expected_num_lines,pattern|
   match do |filename|
     @n_entries=0
-    File.read(filename).each_line do |line|
+    if File.exists?(filename)
+      content=File.read(filename)
+    else
+      content=filename
+    end
+    content.each_line do |line|
+      # puts line
       if line =~/#{pattern}/
         @n_entries+=1
       end

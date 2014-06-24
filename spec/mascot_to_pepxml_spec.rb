@@ -1,14 +1,14 @@
 require 'spec_helper'
 require 'commandline_shared_examples.rb'
 
-def sphuman_not_installed
+def sphuman_installed
 	res=%x[ls ~/.protk/Databases/sphuman/current.fasta]
-	$?.exitstatus>0
+	$?.exitstatus==0
 end
 
-def mascot2xml_not_installed
+def mascot2xml_installed
 	installed=(%x[which Mascot2XML].length>0)
-	!installed
+	installed
 end
 
 describe "The mascot_to_pepxml tool" do
@@ -19,7 +19,7 @@ describe "The mascot_to_pepxml tool" do
 
 	# This is currently broken because the TPP Mascot2XML itself seems broken
 	#
-	describe "Running with sample data",:broken => true, :dependencies_not_installed => sphuman_not_installed && mascot2xml_not_installed do
+	describe "Running with sample data",:broken => true, :dependencies_installed => sphuman_installed && mascot2xml_installed do
 
 		include_context :tmp_dir_with_fixtures, ["tinymgfresults.mascotdat"]
 

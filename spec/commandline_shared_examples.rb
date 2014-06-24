@@ -21,35 +21,27 @@ RSpec.shared_examples "a protk tool with default file output" do
 
 	before(:each) do
 		@tool_name=subject[0]
-		@output_ext=subject[1]
-		@suffix=subject[2]
-		@prefix=""
-		throw "@input_file must be defined to use this example" unless @input_file
-		throw "@extra_args must be defined to use this example" unless @extra_args
-		@default_output_file=Tool.default_output_path(@input_file,@output_ext,@prefix,@suffix)
+		prefix="" unless defined? prefix
+		@default_output_file=Tool.default_output_path(input_file,output_ext,prefix,suffix)
 	end
 
 	it "produces a default output file" do
-		%x[#{@tool_name} #{@extra_args} #{@input_file}]
+		%x[#{@tool_name} #{extra_args} #{input_file}]
 		expect(@default_output_file).to exist?
-	end
-end
-
-RSpec.shared_examples "a protk tool that defaults to stdout" do
-
-	before(:each) do
-		@tool_name=subject[0]
+		expect(@default_output_file).to validator1 if defined? validator1
 	end
 
-	it "produces valid output" do
-		output=%x[#{@tool_name} #{input_file}]
-
-		match_text=match_requirement[0]
-		expected_num_matches=match_requirement[1]
-		n_matches=0
-		output.each_line { |line| n_matches+=1 if line=~/#{match_text}/ }
-		expect(n_matches).to eq(expected_num_matches)
+	it "produces a default output file when run using relative paths" do
+		Dir.chdir(@tmp_dir) do
+			rinput_file=Pathname.new(input_file).basename.to_s
+			expect(@default_output_file).not_to exist?
+			%x[#{@tool_name} #{extra_args} #{rinput_file}]
+			expect(@default_output_file).to exist?
+			expect(@default_output_file).to validator if defined? validator
+			expect(@default_output_file).to validator1 if defined? validator1
+		end
 	end
+
 
 end
 
@@ -61,32 +53,40 @@ RSpec.shared_examples "a protk tool that supports explicit output" do
 	end
 
 	it "produces a valid output file with the specified name" do
-
-		%x[#{@tool_name} #{input_file} -o #{output_file}]
-
-		match_text=match_requirement[0]
-		expected_num_matches=match_requirement[1]
-		expect(output_file).to have_lines_matching(expected_num_matches,match_text)
+		%x[#{@tool_name} #{input_file} #{extra_args} -o #{output_file}]
+		expect(output_file).to validator
 	end
 
 end
+
+RSpec.shared_examples "a protk tool that defaults to stdout" do
+
+	before(:each) do
+		@tool_name=subject[0]
+	end
+
+	it "produces valid output" do
+		output=%x[#{@tool_name} #{extra_args} #{input_file}]
+		expect(output).to validator if defined? validator
+	end
+
+end
+
+
 
 
 RSpec.shared_examples "a protk tool with default file output from multiple inputs" do
 
 	before(:each) do
 		@tool_name=subject[0]
-		@output_ext=subject[1]
-		@suffix=subject[2]
-		@prefix=""
-		throw "@input_files must be defined to use this example" unless @input_files
-		throw "@extra_args must be defined to use this example" unless @extra_args
-		@default_output_file=Tool.default_output_path(@input_files[0],@output_ext,@prefix,@suffix)
+		prefix="" unless defined? prefix
+		@default_output_file=Tool.default_output_path(input_files[0],output_ext,prefix,suffix)
 	end
 
 	it "should produce a default output file" do
-		%x[#{@tool_name} #{@extra_args} #{@input_files.join(" ")}]
+		%x[#{@tool_name} #{extra_args} #{input_files.join(" ")}]
 		expect(@default_output_file).to exist?
+		expect(@default_output_file).to validator if defined? validator
 	end
 
 end
