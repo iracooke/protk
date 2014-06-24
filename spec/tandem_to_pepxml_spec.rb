@@ -16,10 +16,15 @@ describe "The tandem_to_pepxml tool" do
 	let(:suffix) { ""}
 	let(:output_ext) {".pep.xml"}
 
-	describe ["tandem_to_pepxml.rb"] do
+	describe ["tandem_to_pepxml.rb"]  do
 		it_behaves_like "a protk tool"
-		it_behaves_like "a protk tool with default file output", :dependencies_installed => tandem2xml_installed		
-		it_behaves_like "a protk tool that supports explicit output" , :dependencies_installed => tandem2xml_installed do
+	end
+
+
+	describe ["tandem_to_pepxml.rb"] , :dependencies_installed => tandem2xml_installed do
+		it_behaves_like "a protk tool"
+		it_behaves_like "a protk tool with default file output"		
+		it_behaves_like "a protk tool that supports explicit output" do
 			let(:output_file) { "#{@tmp_dir}/out.txt" }
 			let(:validator) { have_lines_matching(182,"search_hit") }
 		end

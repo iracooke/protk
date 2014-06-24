@@ -20,18 +20,26 @@ describe "The xtandem_search command", :broken => false do
 
 	describe ["tandem_search.rb"] do
 		it_behaves_like "a protk tool"
+	end
+
+	describe ["tandem_search.rb"] , :dependencies_installed => tandem_installed do
+		it_behaves_like "a protk tool"
 		it_behaves_like "a protk tool with default file output", :dependencies_installed => tandem_installed		
 		it_behaves_like "a protk tool that supports explicit output",:dependencies_installed => tandem_installed do
 			let(:output_file) { "#{@tmp_dir}/out.tandem" }
 			let(:validator) { have_lines_matching(26,"protein") }
 		end
+
+
+		it "should output spectra when requested" do
+			output_file="#{@tmp_dir}/tmp.tandem"
+			%x[tandem_search.rb -d #{db_file} #{input_file} -o #{output_file} --output-spectra]
+			expect(output_file).to contain_text("type=\"tandem mass spectrum\"")	
+		end
+
 	end
 
-	it "should output spectra when requested" , :dependencies_installed => tandem_installed do
-		output_file="#{@tmp_dir}/tmp.tandem"
-		%x[tandem_search.rb -d #{db_file} #{input_file} -o #{output_file} --output-spectra]
-		expect(output_file).to contain_text("type=\"tandem mass spectrum\"")	
-	end
+
 
 
 end

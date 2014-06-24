@@ -6,7 +6,7 @@ def tpp_installed
 	installed
 end
 
-describe "The peptide_prophet command", :broken => false do
+describe "The peptide_prophet command", :broken => true do
 
 	include_context :tmp_dir_with_fixtures, [
 		"mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml",
@@ -24,28 +24,35 @@ describe "The peptide_prophet command", :broken => false do
 
 	describe ["peptide_prophet.rb"] do
 		it_behaves_like "a protk tool"
-		it_behaves_like "a protk tool with default file output", :dependencies_installed => tpp_installed do
+	end
+
+	describe ["peptide_prophet.rb"] , :dependencies_installed => tpp_installed do
+		
+		it_behaves_like "a protk tool with default file output" do
 			let(:validator1) { have_pepxml_hits_matching(34,/./) }
 		end
-		it_behaves_like "a protk tool that supports explicit output", :dependencies_installed => tpp_installed do
+		it_behaves_like "a protk tool that supports explicit output" do
 			let(:output_file) { "#{@tmp_dir}/out.pep.xml" }
 			let(:validator) { have_pepxml_hits_matching(34,/./) }
 		end
-		it_behaves_like "a protk tool with default file output from multiple inputs", :dependencies_installed => tpp_installed 
+		it_behaves_like "a protk tool with default file output from multiple inputs" 
 
-	end
 
-	it "supports the -F (one at a time) option", :dependencies_installed => tpp_installed do
-		output_files= input_files.collect { |f| Tool.default_output_path(f,output_ext,"",suffix)}
+		it "supports the -F (one at a time) option" , :dependencies_installed => tpp_installed do
+			output_files= input_files.collect { |f| Tool.default_output_path(f,output_ext,"",suffix)}
 
-		%x[peptide_prophet.rb -d #{db_file} #{input_files[0]} #{input_files[1]} -F]
+			%x[peptide_prophet.rb -d #{db_file} #{input_files[0]} #{input_files[1]} -F]
 
-		output_files.each do |f|  
-			expect(f).to exist?
-			expect(f).to be_pepxml
+			output_files.each do |f|  
+				expect(f).to exist?
+				expect(f).to be_pepxml
+			end
+
 		end
-
 	end
+
+
+
 
 end
 

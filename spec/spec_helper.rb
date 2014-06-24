@@ -19,7 +19,7 @@ end
 
 RSpec.configure do |c|
 	c.filter_run_excluding :broken => true unless (swissprot_installed && blast_installed)
-  c.filter_run_excluding :dependencies_installed => false  
+  c.filter_run_excluding :dependencies_installed => false 
 end
 
 RSpec::Matchers.define :exist? do
