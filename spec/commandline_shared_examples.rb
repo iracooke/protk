@@ -6,12 +6,12 @@ RSpec.shared_examples "a protk tool" do
 		@tool_name=subject[0]
 	end
 
-	it "should be installed" do
+	it "is installed" do
 		output=%x[which #{@tool_name}]
 		expect(output).to match(/#{@tool_name}$/)
 	end
 
-	it "should print help text if no arguments are given" do
+	it "prints help text if no arguments are given" do
 		output=%x[#{@tool_name}]
 		expect(output).to match("Usage: #{@tool_name}")
 	end
@@ -73,17 +73,15 @@ RSpec.shared_examples "a protk tool that defaults to stdout" do
 end
 
 
-
-
-RSpec.shared_examples "a protk tool with default file output from multiple inputs" do
+RSpec.shared_examples "a protk tool that merges multiple inputs" do
 
 	before(:each) do
 		@tool_name=subject[0]
 		prefix="" unless defined? prefix
-		@default_output_file=Tool.default_output_path(input_files[0],output_ext,prefix,suffix)
+		@default_output_file=Tool.default_output_path(input_files,output_ext,prefix,suffix)
 	end
 
-	it "should produce a default output file" do
+	it "produces a default output file" do
 		%x[#{@tool_name} #{extra_args} #{input_files.join(" ")}]
 		expect(@default_output_file).to exist?
 		expect(@default_output_file).to validator if defined? validator
@@ -91,3 +89,20 @@ RSpec.shared_examples "a protk tool with default file output from multiple input
 
 end
 
+RSpec.shared_examples "a protk tool that handles multiple inputs sequentially" do
+
+	before(:each) do
+		@tool_name=subject[0]
+		prefix="" unless defined? prefix
+		@default_output_files=input_files.each { |input_file| Tool.default_output_path(input_file,output_ext,prefix,suffix) }
+	end
+
+	it "produces several default output files" do
+		%x[#{@tool_name} #{extra_args} #{input_files.join(" ")}]
+		@default_output_files.each do |output_file|  
+			expect(output_file).to exist?
+			expect(output_file).to validator if defined? validator
+		end
+	end
+
+end

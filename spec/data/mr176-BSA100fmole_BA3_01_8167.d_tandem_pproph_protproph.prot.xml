@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protein_summary xmlns="http://regis-web.systemsbiology.net/protXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/protXML/protXML_v6.xsd" summary_xml="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem_pproph_protproph.prot.xml">
+<protein_summary_header reference_database="/Users/icooke/Sources/protk/spec/data/AASequences.fasta" residue_substitution_list="I -> L" source_files="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem_pproph.pep.xml" source_files_alt="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem_pproph.pep.xml" min_peptide_probability="0.20" min_peptide_weight="0.50" num_predicted_correct_prots="8.6" num_input_1_spectra="0" num_input_2_spectra="15" num_input_3_spectra="0" num_input_4_spectra="0" num_input_5_spectra="0" initial_min_peptide_prob="0.05" total_no_spectrum_ids="12.2" sample_enzyme="trypsin">
+<program_details analysis="proteinprophet" time="2014-06-24T07:06:08" version=" Insilicos_LabKey_C++ (TPP v4.7 POLAR VORTEX rev 0, Build 201405141111 (linux))">
+<proteinprophet_details  occam_flag="Y" groups_flag="Y" degen_flag="Y" nsp_flag="Y" fpkm_flag="N" initial_peptide_wt_iters="1" nsp_distribution_iters="2" final_peptide_wt_iters="0" run_options="NOPLOT">
+      <nsp_information neighboring_bin_smoothing="Y">
+         <nsp_distribution bin_no="0" nsp_lower_bound_incl="0.00" nsp_upper_bound_excl="0.10" pos_freq="0.252" neg_freq="0.412" pos_to_neg_ratio="0.61"/>
+         <nsp_distribution bin_no="1" nsp_lower_bound_incl="0.10" nsp_upper_bound_excl="0.25" pos_freq="0.109" neg_freq="0.142" pos_to_neg_ratio="0.77"/>
+         <nsp_distribution bin_no="2" nsp_lower_bound_incl="0.25" nsp_upper_bound_excl="0.50" pos_freq="0.106" neg_freq="0.074" pos_to_neg_ratio="1.43"/>
+         <nsp_distribution bin_no="3" nsp_lower_bound_incl="0.50" nsp_upper_bound_excl="1.00" pos_freq="0.212" neg_freq="0.083" pos_to_neg_ratio="2.55"/>
+         <nsp_distribution bin_no="4" nsp_lower_bound_incl="1.00" nsp_upper_bound_excl="2.00" pos_freq="0.106" neg_freq="0.074" pos_to_neg_ratio="1.43" alt_pos_to_neg_ratio="2.55"/>
+         <nsp_distribution bin_no="5" nsp_lower_bound_incl="2.00" nsp_upper_bound_excl="5.00" pos_freq="0.071" neg_freq="0.071" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="2.55"/>
+         <nsp_distribution bin_no="6" nsp_lower_bound_incl="5.00" nsp_upper_bound_excl="15.00" pos_freq="0.071" neg_freq="0.071" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="2.55"/>
+         <nsp_distribution bin_no="7" nsp_lower_bound_incl="15.00" nsp_upper_bound_excl="inf" pos_freq="0.071" neg_freq="0.071" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="2.55"/>
+      </nsp_information>
+      <fpkm_information neighboring_bin_smoothing="Y">
+         <fpkm_distribution bin_no="0" fpkm_lower_bound_excl="0.00" fpkm_upper_bound_incl="2.00" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="1" fpkm_lower_bound_excl="2.00" fpkm_upper_bound_incl="4.00" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="2" fpkm_lower_bound_excl="4.00" fpkm_upper_bound_incl="6.00" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="3" fpkm_lower_bound_excl="6.00" fpkm_upper_bound_incl="8.00" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="4" fpkm_lower_bound_excl="8.00" fpkm_upper_bound_incl="10.00" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="5" fpkm_lower_bound_excl="10.00" fpkm_upper_bound_incl="12.50" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="6" fpkm_lower_bound_excl="12.50" fpkm_upper_bound_incl="15.00" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="7" fpkm_lower_bound_excl="15.00" fpkm_upper_bound_incl="17.50" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="8" fpkm_lower_bound_excl="17.50" fpkm_upper_bound_incl="20.00" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+         <fpkm_distribution bin_no="9" fpkm_lower_bound_excl="20.00" fpkm_upper_bound_excl="inf" pos_freq="0.100" neg_freq="0.100" pos_to_neg_ratio="1.00" alt_pos_to_neg_ratio="1.00"/>
+      </fpkm_information>
+      <ni_information>
+      </ni_information>
+      <protein_summary_data_filter min_probability="0.00" sensitivity="1.000" false_positive_error_rate="0.284" predicted_num_correct="9" predicted_num_incorrect="3" />
+      <protein_summary_data_filter min_probability="0.10" sensitivity="1.000" false_positive_error_rate="0.045" predicted_num_correct="9" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.20" sensitivity="1.000" false_positive_error_rate="0.045" predicted_num_correct="9" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.30" sensitivity="1.000" false_positive_error_rate="0.045" predicted_num_correct="9" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.40" sensitivity="1.000" false_positive_error_rate="0.045" predicted_num_correct="9" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.50" sensitivity="1.000" false_positive_error_rate="0.045" predicted_num_correct="9" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.60" sensitivity="1.000" false_positive_error_rate="0.045" predicted_num_correct="9" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.70" sensitivity="0.925" false_positive_error_rate="0.007" predicted_num_correct="8" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.80" sensitivity="0.925" false_positive_error_rate="0.007" predicted_num_correct="8" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.90" sensitivity="0.925" false_positive_error_rate="0.007" predicted_num_correct="8" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.95" sensitivity="0.925" false_positive_error_rate="0.007" predicted_num_correct="8" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.96" sensitivity="0.925" false_positive_error_rate="0.007" predicted_num_correct="8" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.97" sensitivity="0.813" false_positive_error_rate="0.003" predicted_num_correct="7" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.98" sensitivity="0.813" false_positive_error_rate="0.003" predicted_num_correct="7" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="0.99" sensitivity="0.698" false_positive_error_rate="0.001" predicted_num_correct="6" predicted_num_incorrect="0" />
+      <protein_summary_data_filter min_probability="1.00" sensitivity="0.349" false_positive_error_rate="0.000" predicted_num_correct="3" predicted_num_incorrect="0" />
+</proteinprophet_details>
+</program_details>
+</protein_summary_header>
+<dataset_derivation generation_no="0">
+</dataset_derivation>
+<protein_group group_number="1" probability="1.0000">
+      <protein protein_name="sp|P22807|SLOU_DROME" n_indistinguishable_proteins="1" probability="1.0000" percent_coverage="3.8" unique_stripped_peptides="FKTTRYLSVCER+SDIDDPSSETDSK" group_sibling_id="a" total_number_peptides="2" pct_spectrum_ids="16.00" confidence="0.95">
+         <parameter name="prot_length" value="659"/>
+         <annotation protein_description="Homeobox protein slou OS=Drosophila melanogaster GN=slou PE=2 SV=1"/>
+         <peptide peptide_sequence="FKTTRYLSVCER" charge="2" initial_probability="0.9929" nsp_adjusted_probability="0.9972" fpkm_adjusted_probability="0.9972" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="2" n_sibling_peptides="0.96" n_sibling_peptides_bin="3" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="0.99" is_contributing_evidence="Y" calc_neutral_pep_mass="1483.7607">
+         </peptide>
+         <peptide peptide_sequence="SDIDDPSSETDSK" charge="2" initial_probability="0.9646" nsp_adjusted_probability="0.9858" fpkm_adjusted_probability="0.9858" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.99" n_sibling_peptides_bin="3" max_fpkm="7381613748788071015161658472872017665779402714732560384.00" fpkm_bin="0" n_instances="1" exp_tot_instances="0.96" is_contributing_evidence="Y" calc_neutral_pep_mass="1376.5577">
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="2" probability="1.0000">
+      <protein protein_name="sp|P28468|HOX1_HALRO" n_indistinguishable_proteins="1" probability="1.0000" percent_coverage="3.2" unique_stripped_peptides="NSGMSFDFPPK+QTSGNRFLNFSDK" group_sibling_id="a" total_number_peptides="2" pct_spectrum_ids="15.91" confidence="0.93">
+         <parameter name="prot_length" value="741"/>
+         <annotation protein_description="Homeobox protein AHox1 OS=Halocynthia roretzi GN=AHOX1 PE=2 SV=1"/>
+         <peptide peptide_sequence="NSGMSFDFPPK" charge="2" initial_probability="0.9986" nsp_adjusted_probability="0.9995" fpkm_adjusted_probability="0.9995" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="2" n_sibling_peptides="0.95" n_sibling_peptides_bin="3" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="1.00" is_contributing_evidence="Y" calc_neutral_pep_mass="1207.5327">
+         </peptide>
+         <peptide peptide_sequence="QTSGNRFLNFSDK" charge="2" initial_probability="0.9474" nsp_adjusted_probability="0.9787" fpkm_adjusted_probability="0.9787" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="1.00" n_sibling_peptides_bin="3" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="0.95" is_contributing_evidence="Y" calc_neutral_pep_mass="1494.7217">
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="3" probability="1.0000">
+      <protein protein_name="sp|Q04787|BSH_DROME" n_indistinguishable_proteins="1" probability="1.0000" percent_coverage="6.1" unique_stripped_peptides="SKAAAMASATTMLTTK+SVDPYFLSQA" group_sibling_id="a" total_number_peptides="2" pct_spectrum_ids="16.25" confidence="0.98">
+         <parameter name="prot_length" value="429"/>
+         <annotation protein_description="Brain-specific homeobox protein OS=Drosophila melanogaster GN=bsh PE=2 SV=5"/>
+         <peptide peptide_sequence="SKAAAMASATTMLTTK" charge="2" initial_probability="0.9990" nsp_adjusted_probability="0.9996" fpkm_adjusted_probability="0.9996" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.99" n_sibling_peptides_bin="3" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="1.00" is_contributing_evidence="Y" calc_neutral_pep_mass="1564.7957">
+         </peptide>
+         <peptide peptide_sequence="SVDPYFLSQA" charge="2" initial_probability="0.9893" nsp_adjusted_probability="0.9958" fpkm_adjusted_probability="0.9958" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="1.00" n_sibling_peptides_bin="3" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="0.99" is_contributing_evidence="Y" calc_neutral_pep_mass="1107.5237">
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="4" probability="0.9984">
+      <protein protein_name="sp|P56407|HM09_CAEEL" n_indistinguishable_proteins="1" probability="0.9984" percent_coverage="6.8" unique_stripped_peptides="RLDVTETQVK" group_sibling_id="a" total_number_peptides="1" pct_spectrum_ids="8.17" confidence="0.85">
+         <parameter name="prot_length" value="147"/>
+         <annotation protein_description="Homeobox protein ceh-9 OS=Caenorhabditis elegans GN=ceh-9 PE=4 SV=2"/>
+         <peptide peptide_sequence="RLDVTETQVK" charge="2" initial_probability="0.9990" nsp_adjusted_probability="0.9984" fpkm_adjusted_probability="0.9984" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="2" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="1.00" is_contributing_evidence="Y" calc_neutral_pep_mass="1169.6407">
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="5" probability="0.9979">
+      <protein protein_name="tr|Q90853|Q90853_CHICK" n_indistinguishable_proteins="1" probability="0.9979" percent_coverage="3.3" unique_stripped_peptides="SQVFQLESTFDV" group_sibling_id="a" total_number_peptides="1" pct_spectrum_ids="8.16" confidence="0.65">
+         <parameter name="prot_length" value="368"/>
+         <annotation protein_description="Homeobox protein OS=Gallus gallus GN=GH6 PE=2 SV=1"/>
+         <peptide peptide_sequence="SQVFQLESTFDV" charge="2" initial_probability="0.9987" nsp_adjusted_probability="0.9979" fpkm_adjusted_probability="0.9979" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="1.00" is_contributing_evidence="Y" calc_neutral_pep_mass="1380.6557">
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="6" probability="0.9977">
+      <protein protein_name="tr|O16132|O16132_HYDVU" n_indistinguishable_proteins="1" probability="0.9977" percent_coverage="4.0" unique_stripped_peptides="NVPVLVQNNQVSS" group_sibling_id="a" total_number_peptides="1" pct_spectrum_ids="8.16" confidence="0.68">
+         <parameter name="prot_length" value="328"/>
+         <annotation protein_description="NK-2 class homeobox transcription factor OS=Hydra vulgaris GN=CnNK-2 PE=2 SV=1"/>
+         <peptide peptide_sequence="NVPVLVQNNQVSS" charge="2" initial_probability="0.9986" nsp_adjusted_probability="0.9977" fpkm_adjusted_probability="0.9977" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="1.00" is_contributing_evidence="Y" calc_neutral_pep_mass="1378.7207">
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="7" probability="0.9875">
+      <protein protein_name="sp|O88181|BARH2_RAT" n_indistinguishable_proteins="1" probability="0.9875" percent_coverage="2.3" unique_stripped_peptides="MDLAAALNL" group_sibling_id="a" total_number_peptides="1" pct_spectrum_ids="8.11" confidence="0.63">
+         <parameter name="prot_length" value="384"/>
+         <annotation protein_description="BarH-like 2 homeobox protein OS=Rattus norvegicus GN=Barhl2 PE=2 SV=1"/>
+         <peptide peptide_sequence="MDLAAALNL" charge="2" initial_probability="0.9923" nsp_adjusted_probability="0.9875" fpkm_adjusted_probability="0.9875" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="0.99" is_contributing_evidence="Y" calc_neutral_pep_mass="928.4687">
+<modification_info modified_peptide="M[147]DLAAALNL">
+<mod_aminoacid_mass position="1" mass="147.035400"/>
+</modification_info>
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="8" probability="0.9619">
+      <protein protein_name="sp|Q24255|BARH1_DROME" n_indistinguishable_proteins="1" probability="0.9619" percent_coverage="1.7" unique_stripped_peptides="SRFMINDIL" group_sibling_id="a" total_number_peptides="1" pct_spectrum_ids="7.98" confidence="0.52">
+         <parameter name="prot_length" value="544"/>
+         <annotation protein_description="Homeobox protein B-H1 OS=Drosophila melanogaster GN=B-H1 PE=2 SV=2"/>
+         <peptide peptide_sequence="SRFMINDIL" charge="2" initial_probability="0.9763" nsp_adjusted_probability="0.9619" fpkm_adjusted_probability="0.9619" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="905669253581826986545857282796657083489976320.00" fpkm_bin="76" n_instances="1" exp_tot_instances="0.98" is_contributing_evidence="Y" calc_neutral_pep_mass="1105.5587">
+<modification_info modified_peptide="SRFM[147]INDIL">
+<mod_aminoacid_mass position="4" mass="147.035400"/>
+</modification_info>
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="9" probability="0.6473">
+      <protein protein_name="sp|P26797|HM19_CAEEL" n_indistinguishable_proteins="1" probability="0.6473" percent_coverage="7.5" unique_stripped_peptides="YLSVNKRIQLSQTLN" group_sibling_id="a" total_number_peptides="1" pct_spectrum_ids="6.13" confidence="0.59">
+         <parameter name="prot_length" value="199"/>
+         <annotation protein_description="Homeobox protein ceh-19 OS=Caenorhabditis elegans GN=ceh-19 PE=2 SV=2"/>
+         <peptide peptide_sequence="YLSVNKRIQLSQTLN" charge="2" initial_probability="0.7497" nsp_adjusted_probability="0.6473" fpkm_adjusted_probability="0.6473" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="0.00" fpkm_bin="1430913032" n_instances="1" exp_tot_instances="0.75" is_contributing_evidence="Y" calc_neutral_pep_mass="1757.9787">
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="10" probability="0.0000">
+      <protein protein_name="sp|P20269|HM05_CAEEL" n_indistinguishable_proteins="1" probability="0.0000" unique_stripped_peptides="KIDSRDPIKP" group_sibling_id="a" total_number_peptides="0" confidence="0.1430">
+         <parameter name="prot_length" value="134"/>
+         <annotation protein_description="Homeobox protein ceh-5 OS=Caenorhabditis elegans GN=ceh-5 PE=2 SV=4"/>
+         <peptide peptide_sequence="KIDSRDPIKP" charge="2" initial_probability="0.1293" nsp_adjusted_probability="0.0834" fpkm_adjusted_probability="0.0834" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="643286545425533761589430685566980664959095982808776709758601735484108143353658304301081199527816461078865719300588429666492675522560.00" fpkm_bin="1563898929" n_instances="1" exp_tot_instances="0.13" is_contributing_evidence="N" calc_neutral_pep_mass="1149.6507">
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="11" probability="0.0000">
+      <protein protein_name="sp|Q01702|DLX3B_DANRE" n_indistinguishable_proteins="1" probability="0.0000" unique_stripped_peptides="IPGISTDLSGSMS" group_sibling_id="a" total_number_peptides="0" confidence="0.1436">
+         <parameter name="prot_length" value="269"/>
+         <annotation protein_description="Homeobox protein Dlx3b OS=Danio rerio GN=dlx3b PE=2 SV=1"/>
+         <peptide peptide_sequence="IPGISTDLSGSMS" charge="2" initial_probability="0.2077" nsp_adjusted_probability="0.1384" fpkm_adjusted_probability="0.1384" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="650475121890903614516544898642997367369195342917130149411645468056008873469342924499774760091315642061298777999392760195222473801728.00" fpkm_bin="1563898929" n_instances="1" exp_tot_instances="0.21" is_contributing_evidence="N" calc_neutral_pep_mass="1261.5857">
+<modification_info modified_peptide="IPGISTDLSGSM[147]S">
+<mod_aminoacid_mass position="12" mass="147.035400"/>
+</modification_info>
+         </peptide>
+      </protein>
+</protein_group>
+<protein_group group_number="12" probability="0.0000">
+      <protein protein_name="tr|O35455|O35455_MOUSE" n_indistinguishable_proteins="1" probability="0.0000" unique_stripped_peptides="QPLPGSDVAAFLVPT" group_sibling_id="a" total_number_peptides="0" confidence="0.1818">
+         <parameter name="prot_length" value="260"/>
+         <annotation protein_description="Homeobox protein Nkx2.6 (Fragment) OS=Mus musculus GN=Nkx2-6 PE=2 SV=1"/>
+         <peptide peptide_sequence="QPLPGSDVAAFLVPT" charge="2" initial_probability="0.2894" nsp_adjusted_probability="0.1997" fpkm_adjusted_probability="0.1997" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="1" n_sibling_peptides="0.00" n_sibling_peptides_bin="0" max_fpkm="0.00" fpkm_bin="0" n_instances="1" exp_tot_instances="0.29" is_contributing_evidence="N" calc_neutral_pep_mass="1492.7927">
+         </peptide>
+      </protein>
+</protein_group>
+</protein_summary>

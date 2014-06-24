@@ -44,8 +44,8 @@ inputs = ARGV.collect {|file_name| file_name.chomp }
 
 if ( prophet_tool.explicit_output )
   output_file=prophet_tool.explicit_output
-else 
-  output_file=Tool.default_output_path(inputs[0],".prot.xml",prophet_tool.output_prefix,@output_suffix)
+else
+  output_file=Tool.default_output_path(inputs,".prot.xml",prophet_tool.output_prefix,@output_suffix)
 end
 
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )

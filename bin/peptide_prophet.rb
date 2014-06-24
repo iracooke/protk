@@ -205,7 +205,7 @@ if ( prophet_tool.one_ata_time )
 else  
 
   if (prophet_tool.explicit_output==nil)
-    output_file_name=Tool.default_output_path(inputs[0],".pep.xml",prophet_tool.output_prefix,@output_suffix)    
+    output_file_name=Tool.default_output_path(inputs,".pep.xml",prophet_tool.output_prefix,@output_suffix)    
   else
     output_file_name=prophet_tool.explicit_output
   end

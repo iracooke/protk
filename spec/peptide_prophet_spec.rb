@@ -6,7 +6,7 @@ def tpp_installed
 	installed
 end
 
-describe "The peptide_prophet command", :broken => true do
+describe "The peptide_prophet command" do
 
 	include_context :tmp_dir_with_fixtures, [
 		"mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml",
@@ -35,24 +35,13 @@ describe "The peptide_prophet command", :broken => true do
 			let(:output_file) { "#{@tmp_dir}/out.pep.xml" }
 			let(:validator) { have_pepxml_hits_matching(34,/./) }
 		end
-		it_behaves_like "a protk tool with default file output from multiple inputs" 
+		it_behaves_like "a protk tool that merges multiple inputs" 
 
-
-		it "supports the -F (one at a time) option" , :dependencies_installed => tpp_installed do
-			output_files= input_files.collect { |f| Tool.default_output_path(f,output_ext,"",suffix)}
-
-			%x[peptide_prophet.rb -d #{db_file} #{input_files[0]} #{input_files[1]} -F]
-
-			output_files.each do |f|  
-				expect(f).to exist?
-				expect(f).to be_pepxml
-			end
-
+		it_behaves_like "a protk tool that handles multiple inputs sequentially" do
+			let(:extra_args) { "-d #{db_file} -F" }
 		end
+
 	end
-
-
-
 
 end
 

@@ -125,11 +125,20 @@ class Tool
    end
 
   def self.default_output_path(input_path,newext,prefix,suffix)
-    dir=Pathname.new(input_path).dirname.realpath.to_s
-    basename=Pathname.new(input_path).basename.to_s
-    oldext=Tool.extension_from_filename(input_path)
-    basename=basename.gsub(/#{oldext}$/,"")
-    "#{dir}/#{prefix}#{basename}#{suffix}#{newext}"
+    path=""
+    input_path=input_path[0] if (input_path.instance_of?(Array) && input_path.length==1)
+    if input_path.instance_of?(Array)
+      dir=Pathname.new(input_path[0]).dirname.realpath.to_s
+      basename="collected_outputs"
+      path="#{dir}/#{prefix}#{basename}#{suffix}#{newext}"
+    else
+      dir=Pathname.new(input_path).dirname.realpath.to_s
+      basename=Pathname.new(input_path).basename.to_s
+      oldext=Tool.extension_from_filename(input_path)
+      basename=basename.gsub(/#{oldext}$/,"")
+      path="#{dir}/#{prefix}#{basename}#{suffix}#{newext}"
+    end
+    path
    end
 
    def check_options(require_input_file=false,mandatory=[])

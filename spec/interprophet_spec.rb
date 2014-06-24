@@ -29,7 +29,7 @@ describe "The interprophet tool" do
 
 	# InterProphetParser is broken for this example data
 	describe ["interprophet.rb",".pep.xml","_iproph"],:broken=>true, :dependencies_installed => tpp_installed do
-		it_behaves_like "a protk tool with default file output from multiple inputs"
+		it_behaves_like "a protk tool that merges multiple inputs"
 	end
 
 end
