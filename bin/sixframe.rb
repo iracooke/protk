@@ -16,30 +16,19 @@ def check_coords(naseq,aaseq,frame,pstart,pend)
     orf_from_coords=naseq[pstart-1..pend-1].translate(1)
   else
     orf_from_coords=naseq[pstart-1..pend-1].reverse_complement.translate(1)
-    # current coords give
-    # naseq.reverse_complement[pstart-1..pend-1].translate(1)
-    # naseq[350368-pend..(350367-pstart+1)].reverse_complement.translate(1)
-#    orf_from_coords=naseq[naseq.length-pend..naseq.length-pstart].reverse_complement.translate(1)
   end
   if ( orf_from_coords!=aaseq)
     require 'debugger'; debugger
   end
-#  p "#{aaseq} #{frame}"
 end
 
 
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Create a sixframe translation of a genome.\n\nUsage: sixframe.rb [options] genome.fasta"
 
-tool.options.print_coords=false
-tool.option_parser.on( '--coords', 'Write genomic coordinates in the fasta header' ) do 
-  tool.options.print_coords=true
-end
-
-tool.options.keep_header=true
-tool.option_parser.on( '--strip-header', 'Dont write sequence definition' ) do 
-  tool.options.keep_header=false
-end
+tool.add_boolean_option(:print_coords,false,['--coords', 'Write genomic coordinates in the fasta header'])
+tool.add_boolean_option(:keep_header,true,['--strip-header', 'Dont write sequence definition'])
+tool.add_value_option(:min_len,20,['--min-len','Minimum ORF length to keep'])
 
 exit unless tool.check_options(true)
 
@@ -48,7 +37,6 @@ input_file=ARGV[0]
 output_file = tool.explicit_output!=nil ? tool.explicit_output : nil
 
 output_fh = output_file!=nil ? File.new("#{output_file}",'w') : $stdout
-
 
 
 file = Bio::FastaFormat.open(input_file)
@@ -66,7 +54,7 @@ file.each do |entry|
     oi=0
     orfs.each do |orf|
       oi+=1
-      if ( orf.length > 20 )
+      if ( orf.length > tool.min_len )
 
         position_start = position
         position_end = position_start + orf.length*3 -1
