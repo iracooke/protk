@@ -19,7 +19,7 @@ task :compile => :clean
 
 Rake::ExtensionTask.new "decoymaker" do |ext|
 	ext.ext_dir = 'ext/decoymaker'	
-	ext.lib_dir = "lib/protk/"
+	ext.lib_dir = "lib/"
 end
 
 CLEAN.include('lib/**/*{.o,.log,.so,.bundle}')

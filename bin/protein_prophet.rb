@@ -50,7 +50,7 @@ end
 
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
-  cmd="ProteinProphet NOPLOT "
+  cmd="ProteinProphet "
 
   if for_galaxy
     inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }

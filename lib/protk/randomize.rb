@@ -1,4 +1,4 @@
-require 'protk/decoymaker'
+require File.expand_path('../../decoymaker', __FILE__)
 
 class Randomize
 	def self.make_decoys input_path, db_len, output_path, prefix

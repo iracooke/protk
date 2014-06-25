@@ -52,7 +52,11 @@ Protk includes a setup tool to install various third party proteomics tools such
     protk_setup.rb tpp omssa blast msgfplus pwiz
 ```
 
-By default protk will install tools and databases into `.protk` in your home directory.  If this is not desirable you can change the protk root default by setting the environment variable `PROTK_INSTALL_DIR`. If you prefer to install the tools yourself protk will find them provided they are included in your `$PATH`. Those executables will be used as a fallback if nothing is available under the `.protk` installation directory.
+By default protk will install tools and databases into `.protk` in your home directory.  If this is not desirable you can change the protk root default by setting the environment variable `PROTK_INSTALL_DIR`. If you prefer to install the tools yourself protk will find them provided they are included in your `$PATH`. Those executables will be used as a fallback if nothing is available under the `.protk` installation directory.  A common source of errors when running the protk_setup script is missing dependencies. The setup script has been tested on ubuntu 12 with the following dependencies installed;
+
+```
+	apt-get install build-essential autoconf automake git-core mercurial subversion pkg-config libc6-dev curl libxml2-dev openjdk-6-jre libbz2-dev libgd2-noxpm-dev unzip
+```
 
 
 ## Sequence databases
@@ -94,13 +98,13 @@ Many protk tools have equivalent galaxy wrappers available on the [galaxy toolsh
 
 4.  Install protk in an isolated gemset using rvm.
 
-	This sets up an isolated environment where only a specific version of protk is available.  We name the environment according to the protk version (1.2.6 in this example).
+	This sets up an isolated environment where only a specific version of protk is available.  We name the environment according to the protk intermediate version numer (1.3 in this example). Minor bugfixes will be released as 1.3.x and can be installed without updating the toolshed wrappers
 
 	```bash
 		rvm 2.1
-		rvm gemset create protk1.2.6
-		rvm use 2.1@protk1.2.6
-		gem install protk -v 1.2.6
+		rvm gemset create protk1.3
+		rvm use 2.1@protk1.3
+		gem install protk -v '~>1.3'
 	```
 
 5. Configure Galaxy's tool dependency directory.
@@ -114,31 +118,32 @@ Many protk tools have equivalent galaxy wrappers available on the [galaxy toolsh
 
 6.  Create a tool dependency that sets up protk in the environment created by rvm
 
-	In this example we create the environment for protk `1.2.6` as this was the version installed in step 4 above.
+	In this example we create the environment for protk `1.3.0` as this was the version installed in step 4 above.
 
 	```bash
 		cd <tool_dependency_dir>
 		mkdir protk
 		cd protk
-		mkdir 1.2.6
-		ln -s 1.2.6 default
-		echo `rvm env --path 2.1@protk1.2.6` > 1.2.6/env.sh
+		mkdir 1.3
+		ln -s 1.3 default
+		rvmenv=`rvm env --path 2.1@protk1.3`
+		echo ". $rvmenv" > 1.3/env.sh
 	```
 
 7. Keep things up to date
 
-	When new versions of galaxy tools are released they may change the version of protk that is required.  Check the release notes on the tool to see what is needed.  For example, if upgrading to version 1.2.7 you would do the following;
+	When new versions of galaxy tools are released they may change the version of protk that is required.  Check the release notes on the tool to see what is needed.  For example, if upgrading to version 1.4.0 you would do the following;
 
 	```bash
 		rvm 2.1
-		rvm gemset create protk1.2.7
-		rvm use 2.1@protk1.2.7
-		gem install protk -v 1.2.7
+		rvm gemset create protk1.4
+		rvm use 2.1@protk1.4
+		gem install protk -v '~>1.4'
 		cd <tool_dependency_dir>/protk/
-		mkdir 1.2.7
-		rvmenv=`rvm env --path 2.1@protk1.2.7`
-		echo ". $rvmenv" > 1.2.7/env.sh
-		ln -s 1.2.7 default
+		mkdir 1.4
+		rvmenv=`rvm env --path 2.1@protk1.4`
+		echo ". $rvmenv" > 1.4/env.sh
+		ln -s 1.4 default
 	```
 
 
