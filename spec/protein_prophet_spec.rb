@@ -17,6 +17,7 @@ describe "The protein_prophet command", :broken => false do
   let(:output_ext) { ".prot.xml"}
   let(:suffix) { "_protproph" }
   let(:extra_args) { "" }
+  let(:tmp_dir) {@tmp_dir}
 
   describe ["protein_prophet.rb"] do
     it_behaves_like "a protk tool"

@@ -21,6 +21,7 @@ describe "The omssa_search command", :broken => false do
 		let(:input_file) { "#{@tmp_dir}/mr176-BSA100fmole_BA3_01_8168.d.mgf" }
 		let(:output_ext) {".pep.xml"}
 		let(:suffix) {"_omssa"}
+		let(:tmp_dir) {@tmp_dir}
 		
 		it_behaves_like "a protk tool with default file output"
 		it_behaves_like "a protk tool that supports explicit output" do

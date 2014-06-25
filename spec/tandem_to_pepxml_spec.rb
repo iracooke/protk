@@ -15,7 +15,8 @@ describe "The tandem_to_pepxml tool" do
 	let(:extra_args) {""}
 	let(:suffix) { ""}
 	let(:output_ext) {".pep.xml"}
-
+	let(:tmp_dir) {@tmp_dir}
+	
 	describe ["tandem_to_pepxml.rb"]  do
 		it_behaves_like "a protk tool"
 	end

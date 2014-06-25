@@ -19,6 +19,7 @@ describe "The protxml_to_gff command" do
 	let(:input_file ) { "#{@tmp_dir}/small.prot.xml" }
 	let(:output_ext) {".gff"}
 	let(:suffix) {""}
+	let(:tmp_dir) {@tmp_dir}
 
 	describe ["protxml_to_gff.rb"] , :dependencies_installed=>blast_installed do
 		it_behaves_like "a protk tool"

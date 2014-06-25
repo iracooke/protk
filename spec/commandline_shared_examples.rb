@@ -29,10 +29,11 @@ RSpec.shared_examples "a protk tool with default file output" do
 		%x[#{@tool_name} #{extra_args} #{input_file}]
 		expect(@default_output_file).to exist?
 		expect(@default_output_file).to validator1 if defined? validator1
+		expect(@default_output_file).to validator1 if defined? validator1		
 	end
 
 	it "produces a default output file when run using relative paths" do
-		Dir.chdir(@tmp_dir) do
+		Dir.chdir(tmp_dir) do
 			rinput_file=Pathname.new(input_file).basename.to_s
 			expect(@default_output_file).not_to exist?
 			%x[#{@tool_name} #{extra_args} #{rinput_file}]
@@ -54,7 +55,8 @@ RSpec.shared_examples "a protk tool that supports explicit output" do
 
 	it "produces a valid output file with the specified name" do
 		%x[#{@tool_name} #{input_file} #{extra_args} -o #{output_file}]
-		expect(output_file).to validator
+		expect(output_file).to validator if defined? validator
+		expect(output_file).to validator1 if defined? validator1
 	end
 
 end
@@ -68,6 +70,7 @@ RSpec.shared_examples "a protk tool that defaults to stdout" do
 	it "produces valid output" do
 		output=%x[#{@tool_name} #{extra_args} #{input_file}]
 		expect(output).to validator if defined? validator
+		expect(output).to validator1 if defined? validator1
 	end
 
 end

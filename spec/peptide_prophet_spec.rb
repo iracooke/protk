@@ -20,6 +20,7 @@ describe "The peptide_prophet command" do
 			"#{@tmp_dir}/mr176-BSA100fmole_BA3_01_8167.d_tandem.pep.xml"] }
 	let(:output_ext) {".pep.xml"}
 	let(:suffix) {"_pproph"}
+	let(:tmp_dir) {@tmp_dir}
 	let(:validator) { be_pepxml } 				
 
 	describe ["peptide_prophet.rb"] do

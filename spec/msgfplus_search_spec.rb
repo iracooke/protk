@@ -21,6 +21,7 @@ describe "The msgfplus_search command" do
 		let(:output_ext) {".mzid"}
 		let(:suffix) {"_msgfplus"}
 		let(:validator) { be_mzidentml }
+		let(:tmp_dir) {@tmp_dir}
 		
 		it_behaves_like "a protk tool with default file output"
 		it_behaves_like "a protk tool with default file output" do

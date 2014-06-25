@@ -82,6 +82,7 @@ RSpec::Matchers.define :have_lines_matching  do |expected_num_lines,pattern|
     content.each_line do |line|
       # puts line
       if line =~/#{pattern}/
+        # puts line
         @n_entries+=1
       end
     end
@@ -154,6 +155,33 @@ RSpec.shared_context :tmp_dir_with_fixtures do |filenames|
 
   after(:each) do
     FileUtils.remove_entry @tmp_dir
+  end
+
+end
+
+
+RSpec.shared_context :galaxy_working_dir_with_fixtures do |filename_mappings|
+
+  before(:each) do
+
+    # Make a tmp dir to represent the galaxy data dir
+    #
+    @galaxy_db_dir=Dir.mktmpdir
+
+    # This will be the working dir
+    @galaxy_work_dir=Dir.mktmpdir
+
+    filename_mappings.each_pair do |original,final| 
+      original_path=Pathname.new("#{$this_dir}/data/#{original}").realpath.to_s
+      throw "test file #{original} does not exist" unless File.exist? original_path
+      File.symlink(original_path,"#{@galaxy_db_dir}/#{final}")
+    end
+
+  end
+
+  after(:each) do
+    FileUtils.remove_entry @galaxy_work_dir
+    FileUtils.remove_entry @galaxy_db_dir
   end
 
 end

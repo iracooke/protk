@@ -7,22 +7,24 @@ def tandem_installed
 	installed
 end
 
-describe "The xtandem_search command", :broken => false do
-
-	include_context :tmp_dir_with_fixtures, ["tiny.mzML","testdb.fasta"]
-
-
-	let(:input_file) { "#{@tmp_dir}/tiny.mzML" }
-	let(:db_file) { "#{@tmp_dir}/testdb.fasta" }
-	let(:extra_args) {"-d #{db_file}"}
-	let(:suffix) { "_tandem"}
-	let(:output_ext) {".tandem"}
+describe "The xtandem_search command" do
 
 	describe ["tandem_search.rb"] do
 		it_behaves_like "a protk tool"
 	end
 
 	describe ["tandem_search.rb"] , :dependencies_installed => tandem_installed do
+
+		include_context :tmp_dir_with_fixtures, ["tiny.mzML","testdb.fasta"]
+
+
+		let(:input_file) { "#{@tmp_dir}/tiny.mzML" }
+		let(:db_file) { "#{@tmp_dir}/testdb.fasta" }
+		let(:extra_args) {"-d #{db_file}"}
+		let(:suffix) { "_tandem"}
+		let(:output_ext) {".tandem"}
+		let(:tmp_dir) {@tmp_dir}
+
 		it_behaves_like "a protk tool"
 		it_behaves_like "a protk tool with default file output", :dependencies_installed => tandem_installed		
 		it_behaves_like "a protk tool that supports explicit output",:dependencies_installed => tandem_installed do
@@ -38,6 +40,30 @@ describe "The xtandem_search command", :broken => false do
 		end
 
 	end
+
+	# describe ["tandem_search.rb"] , :dependencies_installed => tandem_installed , :broken=>true do
+
+	# 	include_context :galaxy_working_dir_with_fixtures, { 
+	# 		"tiny.mzML" => "dataset_1.dat",
+	# 		"testdb.fasta" => "dataset_2.dat"}
+
+	# 	let(:input_file) { "#{@galaxy_db_dir}/dataset_1.dat" }
+	# 	let(:db_file) { "#{@galaxy_db_dir}/dataset_2.dat" }
+	# 	let(:extra_args) {"-d #{db_file}"}
+	# 	let(:suffix) { "_tandem"}
+	# 	let(:output_ext) {".tandem"}
+	# 	let(:tmp_dir) { @galaxy_work_dir }
+
+	# 	# it_behaves_like "a protk tool"
+	# 	# it_behaves_like "a protk tool with default file output", :dependencies_installed => tandem_installed		
+	# 	it_behaves_like "a protk tool that supports explicit output",:dependencies_installed => tandem_installed do
+	# 		let(:output_file) { "out.tandem" }
+	# 		let(:validator) { have_lines_matching(26,Regexp.new("dataset_1.dat")) }
+	# 		# let(:validator1) { have_lines_matching(26,Regexp.new("#{input_file}")) }
+	# 		# let(:validator1) { have_lines_matching(2,Regexp.new("#{@galaxy_work_dir}/dataset_1.dat")) }
+	# 	end
+
+	# end
 
 
 
