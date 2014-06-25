@@ -41,29 +41,19 @@ tool.option_parser.on( '--strip-header', 'Dont write sequence definition' ) do
   tool.options.keep_header=false
 end
 
-exit unless tool.check_options 
+exit unless tool.check_options(true)
 
-if ( ARGV[0].nil? )
-    puts "You must supply an input file"
-    puts tool.option_parser 
-    exit
-end
+input_file=ARGV[0]
 
-inname=ARGV.shift
+output_file = tool.explicit_output!=nil ? tool.explicit_output : nil
 
-outfile=nil
-if ( tool.explicit_output != nil)
-  outfile=File.open(tool.explicit_output,'w')
-else
-  outfile=File.open("#{inname}.translated.fasta",'w')
-end
+output_fh = output_file!=nil ? File.new("#{output_file}",'w') : $stdout
 
 
-file = Bio::FastaFormat.open(inname)
+
+file = Bio::FastaFormat.open(input_file)
 
 file.each do |entry|
-
-  puts entry.entry_id
 
   length = entry.naseq.length
 
@@ -109,7 +99,7 @@ file.each do |entry|
         # Output in fasta format
         # start and end positions are always relative to the forward strand
 
-        outfile.write("#{defline}\n#{orf}\n")
+        output_fh.write("#{defline}\n#{orf}\n")
 
       end
       position += orf.length*3+3
