@@ -23,6 +23,10 @@ describe "The protein_prophet command", :broken => false do
   end
 
   describe ["protein_prophet.rb"] , :dependencies_installed => tpp_installed do
+    it_behaves_like "a protk tool with default file output" do
+      let(:input_file) { input_files[0]}
+      let(:validator) { have_lines_matching(42,"protein_group") }
+    end
     it_behaves_like "a protk tool that merges multiple inputs"
     it_behaves_like "a protk tool that supports explicit output"  do
       let(:output_file) { "#{@tmp_dir}/out.prot.xml" }
