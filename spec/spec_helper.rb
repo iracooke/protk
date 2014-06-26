@@ -29,7 +29,7 @@ RSpec::Matchers.define :exist? do
 
   failure_message do |filename|
     listing=%x[ls #{Pathname.new(filename).dirname.to_s}]
-    "\nLooking for #{filename}. Did you mean one of these files:\n#{listing}\n"
+    "\nLooking for #{filename}. Did you mean one of these files:\n#{listing} in #{Pathname.new(filename).dirname.expand_path.to_s}\n"
   end
 
 end
@@ -166,15 +166,15 @@ RSpec.shared_context :galaxy_working_dir_with_fixtures do |filename_mappings|
 
     # Make a tmp dir to represent the galaxy data dir
     #
-    @galaxy_db_dir=Dir.mktmpdir
+    @galaxy_db_dir=Dir.mktmpdir("galaxy_database_dir")
 
     # This will be the working dir
-    @galaxy_work_dir=Dir.mktmpdir
+    @galaxy_work_dir=Dir.mktmpdir("galaxy_job_working_dir")
 
     filename_mappings.each_pair do |original,final| 
       original_path=Pathname.new("#{$this_dir}/data/#{original}").realpath.to_s
       throw "test file #{original} does not exist" unless File.exist? original_path
-      File.symlink(original_path,"#{@galaxy_db_dir}/#{final}")
+      FileUtils.copy(original_path,"#{@galaxy_db_dir}/#{final}")
     end
 
   end

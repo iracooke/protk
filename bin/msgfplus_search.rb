@@ -83,16 +83,17 @@ database_path=db_info.path
 
 # Database must have fasta extension
 if Pathname.new(database_path).extname.to_s.downcase != ".fasta"
-  make_msgfdb_cmd << "ln -s #{database_path} #{database_path}.fasta;"
+  File.symlink(database_path,"#{database_path}.fasta") unless File.exists?("#{database_path}.fasta")
+  # make_msgfdb_cmd << "ln -s #{database_path} #{database_path}.fasta;"
   database_path="#{database_path}.fasta"
-  db_info.path=database_path
+  database_path
 end
 
 # Database must be indexed
 unless FileTest.exists?("#{database_path}.canno")
-  dbdir = Pathname.new(database_path).dirname.realpath.to_s
+  dbdir = Pathname.new(database_path).dirname.to_s
   tdavalue=search_tool.decoy_search ? 1 : 0;
-  make_msgfdb_cmd << "cd #{dbdir}; java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{database_path} -tda #{tdavalue}; "
+  make_msgfdb_cmd << "java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{database_path} -tda #{tdavalue}; "
 end
 
 
@@ -214,7 +215,6 @@ ARGV.each do |filename|
     else
       cmd << "; mv #{mzid_output_path} #{output_path}"
     end
-      
 
     # Up to here we've formulated the command. The rest is cleanup
     p "Running:#{cmd}"

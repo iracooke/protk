@@ -46,6 +46,25 @@ RSpec.shared_examples "a protk tool with default file output" do
 
 end
 
+RSpec.shared_examples "a protk tool that works with galaxy" do
+
+	before(:each) do
+		@tool_name=subject[0]
+	end
+
+	it "produces a valid output file in its galaxy working dir" do
+		Dir.chdir(working_dir) do
+			%x[#{@tool_name} #{extra_args} #{input_file} -o #{output_file}]
+			expect(output_file).to exist?
+			expect(output_file).to validator if defined? validator
+			expect(output_file).to validator1 if defined? validator1
+			expect(output_file).to validator2 if defined? validator2
+		end
+	end
+
+
+end
+
 
 RSpec.shared_examples "a protk tool that supports explicit output" do
 
