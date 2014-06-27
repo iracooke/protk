@@ -25,19 +25,17 @@
 
 
 static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
-  VALUE db_length_in,VALUE output_file_in,char *prefix_string_in) 
+  VALUE db_length_in,VALUE output_file_in,VALUE prefix_string_in) 
 {
 
-  char *infile = StringValueCStr(input_file_in);  
-  // char *infile = RSTRING_PTR(input_file_in);
-  // long infile_len = RSTRING_LEN(input_file_in);
+  char *infile = StringValueCStr(input_file_in);
   long sequences_to_generate = NUM2INT(db_length_in);
-  char * output_file = RSTRING_PTR(output_file_in);
+  char * outfile = StringValueCStr(output_file_in);
+  char *prefix_string = StringValueCStr(prefix_string_in);
 
   char line[MAX_LINE_LENGTH];      
   char settings_line[60][70];
-  char outfile[255]; /* for reading input and writing output infile[255], */
-  char prefix_string[255];
+
   char *p,**index;
   char *sequence; 
   char one_sequence[MAX_SEQUENCE_LENGTH];
@@ -55,27 +53,16 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
   double x;
 
   /* scanning sequence database */
-  
-  // strcpy(infile,input_file);
 
   if ((inp = fopen(infile, "r"))==NULL) {
     printf("error opening sequence database %s\n",infile);return -1;
   }
 
-  printf("scanning sequence database \n%s\n",infile);
-  fflush(stdout);
-
   i=0;n=0;k=0;
 
   while (fgets(line, MAX_LINE_LENGTH, inp) != NULL) {
     i++; 
-    if(line[0]=='>') {
-      if (!(n%1000)) {
-        printf(".");
-        fflush(stdout); 
-        n++;
-      }
-    } 
+    if (line[0]=='>') { n++; } 
   }
   
   n_sequences=n;
@@ -211,7 +198,6 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
 
   /* generate random protein sequences through Markov chain */
 
-  strcpy(outfile,output_file);
 
     if ((outp = fopen(outfile, "w"))==NULL) {
       printf("error opening output file %s\n",outfile); 
