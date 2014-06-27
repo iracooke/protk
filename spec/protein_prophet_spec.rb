@@ -47,7 +47,7 @@ describe "The protein_prophet command", :broken => false do
     let(:working_dir) { @galaxy_work_dir }
 
     it_behaves_like "a protk tool that works with galaxy",:dependencies_installed => tpp_installed do
-      let(:extra_args) {""}
+      let(:extra_args) {"--galaxy "}
       let(:output_file) { "out.prot.xml" }
       let(:validator) { have_lines_matching(1,Regexp.new("#{input_file}")) }
     end

@@ -221,6 +221,5 @@ if (for_galaxy)
     sg.restore_references(output_file_name)
     sg.restore_references(output_file_name,{:base_only => true})
   end
-
 end
 

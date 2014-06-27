@@ -58,11 +58,6 @@ if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   cmd="ProteinProphet "
 
-  if for_galaxy
-    inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
-  end
-
-
   cmd << " #{inputs.join(" ")} #{output_file}"
 
   if ( prophet_tool.glyco )
@@ -80,8 +75,8 @@ end
 
 if (for_galaxy)
   input_stagers.each do |sg|
-    sg.restore_references(output_file_name)
-    sg.restore_references(output_file_name,{:base_only => true})
+    sg.restore_references(output_file)
+    sg.restore_references(output_file,{:base_only => true})
   end
 end
 
