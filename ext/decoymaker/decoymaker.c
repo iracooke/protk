@@ -65,8 +65,6 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
   long one_index,pl;
   double x;
 
-  printf("1\n");
-
   /* scanning sequence database */
   printf("2\n");fflush(stdout);
   if ((inp = fopen(infile, "r"))==NULL) {
@@ -75,16 +73,14 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
 
   long total_sequence_len=0;
   n=0;
-  printf("2.1\n");fflush(stdout);
+
   while (fgets(line, MAX_LINE_LENGTH, inp) != NULL) {
     total_sequence_len+=strlen(line);
 
     // printf("%ld\n",i);fflush(stdout);
     if (line[0]=='>') { n++; } 
   }
-  
-  printf("%ld\n",total_sequence_len);fflush(stdout);  
-  
+    
   n_sequences=n;
 
 

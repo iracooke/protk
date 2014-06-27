@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+  #!/usr/bin/env ruby
 #
 # This file is part of protk
 # Created by Ira Cooke 14/12/2010
@@ -11,8 +11,6 @@ require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/search_tool'
 require 'protk/galaxy_util'
-
-for_galaxy = GalaxyUtil.for_galaxy?
 
 # Setup specific command-line options for this tool. Other options are inherited from SearchTool
 #
@@ -93,22 +91,6 @@ ARGV.each do |filename|
     #Missed cleavages
     #
     cmd << " -v #{search_tool.missed_cleavages}"
-
-    # If this is for Galaxy and a data directory has been specified
-    # look for a common unimod.xml file.
-    if for_galaxy
-      galaxy_index_dir = search_tool.galaxy_index_dir
-      if galaxy_index_dir
-        galaxy_mods = File.join(galaxy_index_dir, "mods.xml")
-        if( FileTest.exists?(galaxy_mods) )      
-          cmd << " -mx #{galaxy_mods}"
-        end
-        galaxy_usermods = File.join(galaxy_index_dir, "usermods.xml")
-        if( FileTest.exists?(galaxy_usermods) )
-          cmd << " -mux #{galaxy_usermods}"
-        end
-      end
-    end
 
     if ( search_tool.omx_output )
       cmd << " -ox #{search_tool.omx_output} "

@@ -71,6 +71,15 @@ RSpec::Matchers.define :have_fasta_entries_matching  do |expected_num_entries,pa
 end
 
 
+RSpec::Matchers.define :be_fasta  do
+  match do |filename|
+    is_fasta=false
+    is_fasta = ( File.new(filename).readline =~ /^>/ )
+    is_fasta
+  end
+end
+
+
 RSpec::Matchers.define :have_lines_matching  do |expected_num_lines,pattern|
   match do |filename|
     @n_entries=0

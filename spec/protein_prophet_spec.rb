@@ -36,5 +36,25 @@ describe "The protein_prophet command", :broken => false do
     end
   end
 
+
+  describe ["protein_prophet.rb"] , :dependencies_installed => tpp_installed do
+
+    include_context :galaxy_working_dir_with_fixtures, { 
+      "mr176-BSA100fmole_BA3_01_8168.d_tandem_pproph.pep.xml" => "dataset_1.dat"
+    }
+
+    let(:input_file) { "#{@galaxy_db_dir}/dataset_1.dat" }
+    let(:working_dir) { @galaxy_work_dir }
+
+    it_behaves_like "a protk tool that works with galaxy",:dependencies_installed => tpp_installed do
+      let(:extra_args) {"-d #{db_file} "}
+      let(:output_file) { "out.prot.xml" }
+      let(:validator) { have_lines_matching(1,Regexp.new("#{input_file}")) }
+      let(:validator1) { have_lines_matching(0,Regexp.new("galaxy_job_working_dir")) }
+    end
+
+  end
+
+
 end
 

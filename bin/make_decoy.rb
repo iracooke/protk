@@ -64,6 +64,7 @@ end
 
 if ( tool.append )
 	cmd ="awk 'FNR==1{print \"\"}1' #{input_file} #{decoys_tmp_file} > #{output_file};"
+	cmd << "sed -i.bak '/^$/d' #{output_file};"
 	cmd << "rm #{decoys_tmp_file}"
 else
 	cmd = "mv #{decoys_tmp_file} #{output_file}"
