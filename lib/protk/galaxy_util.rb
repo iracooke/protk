@@ -14,7 +14,7 @@ class GalaxyUtil
 
   def self.stage_pepxml(input_pepxml_path)
     stager = GalaxyStager.new(input_pepxml_path, :extension => ".pep.xml")
-    stager.staged_path
+    stager
   end
 
   def self.stage_protxml(input_protxml_path)

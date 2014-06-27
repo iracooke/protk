@@ -51,10 +51,11 @@ throw "When --output and -F options are set only one file at a time can be run" 
 # Obtain a global environment object
 genv=Constants.new
 
-
+input_stagers=[]
 inputs=ARGV.collect { |file_name| file_name.chomp}
 if for_galaxy
-  inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
+  input_stagers = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
+  inputs=input_stagers.collect { |sg| sg.staged_path }
 end
 
 # Interrogate all the input files to obtain the database and search engine from them
@@ -212,7 +213,14 @@ else
 
   cmd=generate_command(genv,prophet_tool,inputs,output_file_name,database,engine)
   run_peptide_prophet(genv,prophet_tool,cmd,output_file_name,engine)
-    
+  
 end
 
+if (for_galaxy)
+  input_stagers.each do |sg|
+    sg.restore_references(output_file_name)
+    sg.restore_references(output_file_name,{:base_only => true})
+  end
+
+end
 

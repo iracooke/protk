@@ -20,14 +20,13 @@ class GalaxyStager
     end
   end
 
-  def replace_references(in_file, options = {})
-    options = { :base_only => false }.merge(options)
-    replacement = options[:base_only] ? @staged_base : @staged_path
+  def replace_references(in_file)
     GalaxyStager.replace_references(in_file, @original_path, replacement)
   end
 
-  def restore_references(in_file)
-    GalaxyStager.replace_references(in_file, @staged_path, @original_path)
+  def restore_references(in_file, options = {})
+    path = options[:base_only] ? @staged_path.gsub(/#{@extension}/,"") : @staged_path
+    GalaxyStager.replace_references(in_file, path, @original_path)
   end
 
   def self.replace_references(in_file, from_path, to_path)

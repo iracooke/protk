@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="pepXML_std.xsl"?>
 <msms_pipeline_analysis date="2014-06-22T13:57:05" summary_xml="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/pepXML/pepXML_v117.xsd">
-   <msms_run_summary base_name="mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem" search_engine="X! Tandem" raw_data_type="raw" raw_data=".?">
+   <msms_run_summary base_name="mr176-BSA100fmole_BA3_01_8168.d_tandem" search_engine="X! Tandem" raw_data_type="raw" raw_data=".?">
       <sample_enzyme name="trypsin">
 <specificity cut="KR" no_cut="P" sense="C"/>
 </sample_enzyme>
-<search_summary base_name="mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem" search_engine="X! Tandem" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" search_id="1">
+<search_summary base_name="mr176-BSA100fmole_BA3_01_8168.d_tandem" search_engine="X! Tandem" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" search_id="1">
          <search_database local_path="/Users/icooke/Desktop/iptest/AASequences.fasta" type="AA"/>
          <enzymatic_search_constraint enzyme="trypsin" max_num_internal_cleavages="2" min_number_termini="1" />
          <aminoacid_modification aminoacid="E" massdiff="-18.0106" mass="111.0320" variable="Y" symbol="^" /><!--X! Tandem n-terminal AA variable modification-->
@@ -15,7 +15,7 @@
          
          <!-- Input parameters -->
          <parameter name="list path, default parameters" value="/Users/icooke/.rvm/gems/ruby-2.0.0-p353/gems/protk-1.2.6.pre6/lib/protk/data/tandem_isb_native_defaults.xml"/>
-         <parameter name="list path, taxonomy information" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem.taxonomy.xml"/>
+         <parameter name="list path, taxonomy information" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.taxonomy.xml"/>
          <parameter name="output, histogram column width" value="30"/>
          <parameter name="output, histograms" value="no"/>
          <parameter name="output, log path" value=""/>
@@ -23,7 +23,7 @@
          <parameter name="output, message" value="1234567890"/>
          <parameter name="output, one sequence copy" value="no"/>
          <parameter name="output, parameters" value="yes"/>
-         <parameter name="output, path" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem"/>
+         <parameter name="output, path" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem"/>
          <parameter name="output, path hashing" value="no"/>
          <parameter name="output, performance" value="yes"/>
          <parameter name="output, proteins" value="yes"/>

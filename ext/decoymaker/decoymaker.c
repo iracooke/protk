@@ -25,19 +25,24 @@
 
 
 static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
-  VALUE db_length_in,VALUE output_file_in,char *prefix_string_in) {
-  
-  char *input_file = RSTRING_PTR(input_file_in);
+  VALUE db_length_in,VALUE output_file_in,char *prefix_string_in) 
+{
+
+  char *infile = StringValueCStr(input_file_in);  
+  // char *infile = RSTRING_PTR(input_file_in);
+  // long infile_len = RSTRING_LEN(input_file_in);
   long sequences_to_generate = NUM2INT(db_length_in);
   char * output_file = RSTRING_PTR(output_file_in);
 
   char line[MAX_LINE_LENGTH];      
   char settings_line[60][70];
-  char infile[255], outfile[255]; /* for reading input and writing output */
+  char outfile[255]; /* for reading input and writing output infile[255], */
   char prefix_string[255];
   char *p,**index;
   char *sequence; 
-  char one_sequence[MAX_SEQUENCE_LENGTH],random_sequence[(int)(MAX_SEQUENCE_LENGTH*1.5)],random_sequence_output[(int)(MAX_SEQUENCE_LENGTH*1.5)];
+  char one_sequence[MAX_SEQUENCE_LENGTH];
+  char random_sequence[(int)(MAX_SEQUENCE_LENGTH*1.5)];
+  char random_sequence_output[(int)(MAX_SEQUENCE_LENGTH*1.5)];
   char *temp_sequence;
   int a;
   FILE *inp, *outp;
@@ -51,7 +56,7 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
 
   /* scanning sequence database */
   
-  strcpy(infile,input_file);
+  // strcpy(infile,input_file);
 
   if ((inp = fopen(infile, "r"))==NULL) {
     printf("error opening sequence database %s\n",infile);return -1;
