@@ -91,7 +91,7 @@ RSpec::Matchers.define :have_lines_matching  do |expected_num_lines,pattern|
     content.each_line do |line|
       # puts line
       if line =~/#{pattern}/
-        # puts line
+        puts line
         @n_entries+=1
       end
     end

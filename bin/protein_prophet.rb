@@ -40,7 +40,13 @@ exit unless prophet_tool.check_options(true)
 # Obtain a global environment object
 genv=Constants.new
 
-inputs = ARGV.collect {|file_name| file_name.chomp }
+input_stagers=[]
+inputs=ARGV.collect { |file_name| file_name.chomp}
+if for_galaxy
+  input_stagers = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
+  inputs=input_stagers.collect { |sg| sg.staged_path }
+end
+
 
 if ( prophet_tool.explicit_output )
   output_file=prophet_tool.explicit_output
@@ -71,11 +77,13 @@ else
   genv.log("Protein Prophet output file #{output_file} already exists. Run with -r option to replace",:warn)   
 end
 
-# if for_galaxy
-  # Restore references to peptide prophet xml so downstream tools like 
-  # libra can find it.
-  # input_stager.restore_references("protein_prophet_results.prot.xml")
-# end
+
+if (for_galaxy)
+  input_stagers.each do |sg|
+    sg.restore_references(output_file_name)
+    sg.restore_references(output_file_name,{:base_only => true})
+  end
+end
 
 
 
