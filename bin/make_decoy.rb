@@ -36,7 +36,6 @@ input_file=ARGV[0]
 db_length=tool.db_length
 if ( db_length==0) #If no db length was specified use the number of entries in the input file
   db_length=Bio::FastaFormat.open(input_file).count
-  puts "Found #{db_length} entries in input file"
 end
 
 output_file = tool.explicit_output if tool.explicit_output!=nil
