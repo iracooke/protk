@@ -79,9 +79,6 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
     printf("error opening sequence database %s\n",infile);
     return -1;
   }
-
-  printf("done\nreading sequence database \n%s\n",infile);
-  fflush(stdout);    
   
   n=-1;
   strcpy(temp_sequence,"\0");
@@ -93,11 +90,9 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
     }
     if (line[0]=='>') { 
       if (n>=0) { 
-        if (!(n%1000)&&n>0) { 
-          printf(".");fflush(stdout);
-        }
         strcpy(index[n],temp_sequence);
-        n++; index[n]=index[n-1]+sizeof(char)*strlen(temp_sequence);
+        n++; 
+        index[n]=index[n-1]+sizeof(char)*strlen(temp_sequence);
         strcpy(temp_sequence,"\0");
       }
       else 
@@ -108,7 +103,9 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
     }
     else 
     {
-      if ( (strlen(temp_sequence)+strlen(line))>=MAX_SEQUENCE_LENGTH ) continue; 
+      if ( (strlen(temp_sequence)+strlen(line))>=MAX_SEQUENCE_LENGTH ) { 
+        continue;
+      } 
       strncat(temp_sequence,line,strlen(line)-1);
     }   
   }
@@ -119,16 +116,18 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
 
   n_sequences=n+1;
 
-  printf("done [read %li sequences (%li amino acids)]\n",n_sequences,(int)(index[n_sequences-1]-index[0])/sizeof(char)+strlen(temp_sequence));fflush(stdout);
+  // printf("done [read %li sequences (%li amino acids)]\n",n_sequences,(int)(index[n_sequences-1]-index[0])/sizeof(char)+strlen(temp_sequence));fflush(stdout);
 
   measured_pl_sum=(int)(index[n_sequences-1]-index[0])/sizeof(char)+strlen(temp_sequence);
 
 
 
+
+
   /* generating Markov probabilities */
 
-  printf("generating Markov probability matrix...");
-  fflush(stdout);
+  // printf("generating Markov probability matrix...");
+  // fflush(stdout);
 
   srand(time(0)); /* replace with constant to re-generate identical random databases */
 
@@ -143,47 +142,39 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
 
   for(protein=0;protein<n_sequences;protein++)
   {
-    if (!(protein%1000)) {
-      printf(".");
-      fflush(stdout);
-    }
-
     if (protein<(n_sequences-1)) 
     {
-     strncpy(one_sequence,index[protein],(index[protein+1]-index[protein])/sizeof(char));
-     one_sequence[(index[protein+1]-index[protein])/sizeof(char)]='\0';
-   }
-   else strcpy(one_sequence,index[protein]);
-   pl=strlen(one_sequence);
-   n=1;one_index=0;
-
-   for(i=0;i<pl;i++)
-   {
-     if(strpbrk(NOT_AMINO_ACIDS,(const char *)&one_sequence)==NULL)
-     {
-      if ( strchr(AMINO_ACIDS,one_sequence[i])==NULL)
-      {
-        printf("Unknown amino acid %c",one_sequence[i]);                
-      } else {
-        a=20-strlen(strchr(AMINO_ACIDS,one_sequence[i])); // current amino acid
-        MP[a][i]++;
-        measured_aa_freq[a]++;
-      }
-  }
-    else {
-    a=floor(20*(float)rand()/RAND_MAX);
-    MP[a][i]++; 
-    measured_aa_freq[a]++;
-    } // replace B, X, Z etc. with random amino acid to preserve size distribution
-  }
-  MP[20][pl]++;
-      measured_aa_freq[20]++; // MP[20][n] is the number of sequences of length n in the database 
+      strncpy(one_sequence,index[protein],(index[protein+1]-index[protein])/sizeof(char));
+      one_sequence[(index[protein+1]-index[protein])/sizeof(char)]='\0';
+    } else { 
+      strcpy(one_sequence,index[protein]);
     }
 
-    printf("done\n"); 
-    fflush(stdout);
+    pl=strlen(one_sequence);
+    n=1;
+    one_index=0;
 
-  
+    for(i=0;i<pl;i++)
+    {
+      if(strpbrk(NOT_AMINO_ACIDS,(const char *)&one_sequence)==NULL)
+      {
+        if ( strchr(AMINO_ACIDS,one_sequence[i])==NULL)
+        {
+          printf("Unknown amino acid %c",one_sequence[i]);                
+        } else {
+          a=20-strlen(strchr(AMINO_ACIDS,one_sequence[i])); // current amino acid
+          MP[a][i]++;
+          measured_aa_freq[a]++;
+        }
+      } else {
+        a=floor(20*(float)rand()/RAND_MAX);
+        MP[a][i]++; 
+        measured_aa_freq[a]++;
+      } // replace B, X, Z etc. with random amino acid to preserve size distribution
+    }
+    MP[20][pl]++;
+    measured_aa_freq[20]++; // MP[20][n] is the number of sequences of length n in the database 
+  }  
 
   for(i=0;i<MAX_SEQUENCE_LENGTH;i++){
      row_sum[i]=0;
@@ -199,37 +190,34 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
   /* generate random protein sequences through Markov chain */
 
 
-    if ((outp = fopen(outfile, "w"))==NULL) {
-      printf("error opening output file %s\n",outfile); 
-      return -1;
-    }
+  if ((outp = fopen(outfile, "w"))==NULL) {
+    printf("error opening output file %s\n",outfile); 
+    return -1;
+  }
 
-    printf("generating %li random protein sequences",sequences_to_generate);fflush(stdout);
-
-    strcpy(prefix_string,RSTRING_PTR(prefix_string_in));
-
-    for(protein=0;protein<sequences_to_generate;protein++)
-    {
-      if (!(protein%1000)) {
-        printf(".");fflush(stdout);
-      }
+  for(protein=0;protein<sequences_to_generate;protein++)
+  {
       
-      i=0; j=0;
-      while (1)
+    i=0; j=0;
+    while (1)
+    {
+      x=(double)row_sum[j]*((double)rand()/RAND_MAX);
+      partial_sum=MP[0][j]; i=1;
+       
+      while (partial_sum<x) {partial_sum+=MP[i][j]; i++;}
+
+      if (j>=MAX_SEQUENCE_LENGTH) { i=21; }/* terminate when sequence has reached MAX_SEQUENCE_LENGTH */
+     
+      if (i<21)
       {
-       x=(double)row_sum[j]*((double)rand()/RAND_MAX);
-       partial_sum=MP[0][j]; i=1;
-       while (partial_sum<x) {partial_sum+=MP[i][j]; i++;}
-    if (j>=MAX_SEQUENCE_LENGTH) i=21; /* terminate when sequence has reached MAX_SEQUENCE_LENGTH */
-       if (i<21)
-       {
-         random_sequence[j]=AMINO_ACIDS[i-1];j++;generated_aa_freq[i-1]++;
-       }
-    else /* i==21, i.e. protein sequence terminated */
-       {
-         k=0; generated_aa_freq[20]++; generated_pl_sum+=j;
-         for(l=0;l<j;l++) 
-         {
+        random_sequence[j]=AMINO_ACIDS[i-1];j++;generated_aa_freq[i-1]++;
+      } else { /* i==21, i.e. protein sequence terminated */ 
+        k=0; 
+        generated_aa_freq[20]++; 
+        generated_pl_sum+=j;
+        
+        for(l=0;l<j;l++) 
+        {
           random_sequence_output[k]=random_sequence[l]; k++;
           if (!((k+1)%61))
           {
@@ -247,19 +235,13 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
   
   fclose(outp);
 
-
-  /* freeing some memory... */
-
-  free(index);  
   
-  printf("done (wrote %li random protein sequences to %s)\n",sequences_to_generate,outfile);
+  // printf("done (wrote %li random protein sequences to %s)\n",sequences_to_generate,outfile);
 
   k=0;l=0;
   for(i=0;i<=20;i++) {k+=measured_aa_freq[i];l+=generated_aa_freq[i];}
-    // printf("<f(aa) in %s> <f(aa) in %s>\n",infile,outfile);
-  // for(i=0;i<=20;i++) printf("%f %f\n",(float)measured_aa_freq[i]/k,(float)generated_aa_freq[i]/l);
 
-  printf("<average sequence length in %s> = %f\n<average sequence length in %s> = %f\n",infile,measured_pl_sum/(float)n_sequences,outfile,generated_pl_sum/(float)sequences_to_generate);
+  // printf("<average sequence length in %s> = %f\n<average sequence length in %s> = %f\n",infile,measured_pl_sum/(float)n_sequences,outfile,generated_pl_sum/(float)sequences_to_generate);
 
   return 0;
 
