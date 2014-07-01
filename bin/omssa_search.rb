@@ -1,4 +1,4 @@
-  #!/usr/bin/env ruby
+#!/usr/bin/env ruby
 #
 # This file is part of protk
 # Created by Ira Cooke 14/12/2010

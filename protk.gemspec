@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.3.0.pre3'
+  s.version     = '1.3.0'
   s.date        = '2014-06-24'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-mocks', '~> 3.0'
   s.add_development_dependency 'rake-compiler', '~> 0'
+  s.add_runtime_dependency 'sqlite3','~>0'
 
   s.homepage    = 'http://rubygems.org/gems/protk'
 

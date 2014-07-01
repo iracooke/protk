@@ -9,7 +9,7 @@ require "rake/extensiontask"
 RSpec::Core::RakeTask.new(:spec) do |task|
 	example=ENV['EXAMPLE']
 	format=ENV['FORMAT']
-	format="p" unless format
+	format="d" unless format
 	task.rspec_opts="-f #{format} "
 	task.rspec_opts<<"-e #{example}" if example
 end

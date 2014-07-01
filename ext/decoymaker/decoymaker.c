@@ -66,7 +66,7 @@ static VALUE decoymaker_make_decoys(VALUE self,VALUE input_file_in,
   double x;
 
   /* scanning sequence database */
-  printf("2\n");fflush(stdout);
+
   if ((inp = fopen(infile, "r"))==NULL) {
     printf("error opening sequence database %s\n",infile);return -1;
   }

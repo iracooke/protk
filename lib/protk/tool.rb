@@ -53,7 +53,7 @@ class Tool
   end
   
   
-  def add_value_option(symbol,default_value,opts)
+  def add_value_option(symbol,default_value,opts)    
     @options[symbol]=default_value
     @option_parser.on(*opts) do |val|
       @options[symbol]=val
@@ -107,6 +107,8 @@ class Tool
     if ( option_support.include? :threads )
       add_value_option(:threads,1,['-n','--threads num','Number of processing threads to use. Set to 0 to autodetect an appropriate value'])
     end
+
+
 
   end
 
