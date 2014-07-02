@@ -5,3 +5,6 @@ todo.txt
 *.bundle
 tmp/
 spec/data/AASequences.fasta.*
+spec/data/id_AC.index
+spec/data/key_ID.key
+spec/data/config.dat

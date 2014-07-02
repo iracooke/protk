@@ -242,7 +242,7 @@ def insert_psms_from_file(filepath)
 
 	spectrum_queries.each do |query| 
 
-		spectrum_name = query.attributes['spectrum'].chomp.gsub("0","").sub(/\.\d+$/,"")
+		spectrum_name = query.attributes['spectrum'].chomp.gsub(/\.0+/,"\.").sub(/\.\d+$/,"")
 
 		start_scan=query.attributes['start_scan'].to_i
 		end_scan=query.attributes['end_scan'].to_i
@@ -318,7 +318,8 @@ def lookup_spectra_from_files(file_list,matched_spectra)
 				SQL
 
 			else
-
+				# require 'debugger';debugger
+				# puts "Unmatched spectrum #{spec[:title]}"
 			end
 			spec = mzml_parser.next_spectrum
 		end
