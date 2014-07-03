@@ -6,12 +6,19 @@
 # Convert a pepXML file to a tab delimited table
 #
 #
+require 'protk/tool'
 require 'protk/swissprot_database'
+require 'protk/bio_sptr_extensions'
+require 'protk/fastadb'
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
 tool=Tool.new([:explicit_output,:database])
 tool.option_parser.banner = "Query a swissprot flat file and output to tab delimited table.\n\nUsage: swissprot_to_table.rb [options] -d flatfile.dat queries.txt"
+
+tool.add_value_option(:output_keys,nil,['-K','--keys keys','Filter output to only the specified keys'])
+tool.add_value_option(:separator,"\t",['-S','--separator sep','Separator character, default (tab)'])
+tool.add_value_option(:array_separator,",",['-A','--array-separator sep','Array Separator character, default ,'])
 
 exit unless tool.check_options(true,[:database])
 
@@ -23,80 +30,49 @@ else
   output_fh=$stdout
 end
 
-swissprotdb=SwissprotDatabase.new()
-#     @genv.log("Retrieving data for #{ids.length} entries from Swissprot database ",:info)
-#     accs=[]
-#     plasmodbids=[]
-#     found_plasmodb_ids=false
-    
-#     $stdout.putc "\n"
-#     ids.each { |uniprot_id| 
+columns={'recname'=>"Primary Name",'cd'=>"CD Antigen Name",'altnames'=>"Alternate Names", 
+      'location' => "Subcellular Location",
+      'function' => "Known Function",
+      'similarity' => "Similarity",
+      'tissues' => "Tissue Specificity",
+      'disease' => "Disease Association",
+      'domain' => "Domain",
+      'subunit' => "Sub Unit",
+      'nextbio' => "NextBio",
+      'ipi' => "IPI",
+      'intact' => "Interactions",
+      'pride' => 'Pride',
+      'ensembl'=> 'Ensembl',
+      'num_transmem'=>"Transmembrane Regions",
+      'signalp'=>'Signal Peptide',
+      'go_terms'=>"GO Terms",
+      'go_entries'=>"GO Entries"
+    }
 
-#       $stdout.putc "."
-#       $stdout.flush
-
-#       sptr_entry=swissprotdb.get_entry_for_name(uniprot_id)
-
-# output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\traw_score\tpeptideprophet_prob\tinterprophet_prob\n"
-
-# XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
-
-# pepxml_parser=XML::Parser.file("#{input_file}")
-
-# pepxml_ns_prefix="xmlns:"
-# pepxml_ns="xmlns:http://regis-web.systemsbiology.net/pepXML"
-#  pepxml_doc=pepxml_parser.parse
-# if not pepxml_doc.root.namespaces.default
-#   pepxml_ns_prefix=""
-#   pepxml_ns=nil
-# end
+if tool.output_keys
+  columns.delete_if { |key, value| !tool.output_keys.include? key }
+end
 
 
-# spectrum_queries=pepxml_doc.find("//#{pepxml_ns_prefix}spectrum_query", pepxml_ns)
+db_info=tool.database_info
+database_path=db_info.path
 
-# spectrum_queries.each do |query| 
-
-#   retention_time=query.attributes['retention_time_sec']
-#   neutral_mass=query.attributes['precursor_neutral_mass']
-#   assumed_charge=query.attributes['assumed_charge']
-
-#   top_search_hit=query.find("./#{pepxml_ns_prefix}search_result/#{pepxml_ns_prefix}search_hit",pepxml_ns)[0]
-#   peptide=top_search_hit.attributes['peptide']
-#   protein=top_search_hit.attributes['protein']
-#   calc_neutral_pep_mass=top_search_hit.attributes['calc_neutral_pep_mass']
-#   start_scan=query.attributes['start_scan']
-#   end_scan=query.attributes['end_scan']
-
-#   run_summary_node=query.parent
-#   # puts run_summary_node
-#   search_summary_node=run_summary_node.find("./#{pepxml_ns_prefix}search_summary",pepxml_ns)[0]
-#    # puts search_summary_node.attributes.each { |e| puts e }
-#   search_engine=search_summary_node.attributes['search_engine']
-
-#   # search_engine=""
+swissprotdb=SwissprotDatabase.new(database_path)
 
 
-#   raw_score=""
-#   case search_engine
-#   when /[Tt]andem/
-#     search_score_nodes=top_search_hit.find("./#{pepxml_ns_prefix}search_score[@name=\"expect\"]",[pepxml_ns])
-#     raw_score=search_score_nodes[0].attributes['value']
-#   when /MS\-GF/
-#     search_score_nodes=top_search_hit.find("./#{pepxml_ns_prefix}search_score[@name=\"EValue\"]",[pepxml_ns])
-#     raw_score=search_score_nodes[0].attributes['value']    
-#   end
+File.open(ARGV[0]).each_line do |line|  
+  query_id = line.chomp
+  item = swissprotdb.get_entry_for_name(query_id)
 
-  
-#   pp_result=top_search_hit.find("./#{pepxml_ns_prefix}analysis_result/#{pepxml_ns_prefix}peptideprophet_result/@probability",pepxml_ns)
-#   ip_result=top_search_hit.find("./#{pepxml_ns_prefix}analysis_result/#{pepxml_ns_prefix}interprophet_result/@probability",pepxml_ns)
+  if item
+    row=[query_id]
+    row << columns.keys.collect do |name| 
+      colvalue = item.send(name)
+      colvalue = "" unless colvalue
+      colvalue = colvalue.join(tool.array_separator) if colvalue.class==Array
+      colvalue
+    end
+    output_fh.write "#{row.join(tool.separator)}\n"
+  end
+end
 
-#   peptide_prophet_prob=""
-#   interprophet_prob=""
-#   peptide_prophet_prob=pp_result[0].value if ( pp_result.length>0 )
-#   interprophet_prob=ip_result[0].value if ( ip_result.length>0)
-  
-#   output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t#{raw_score}\t#{peptide_prophet_prob}\t#{interprophet_prob}\n"
-
-# end
-
-# output_fh.close

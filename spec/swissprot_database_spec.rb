@@ -115,6 +115,16 @@ describe SwissprotDatabase do
     item=spdatabase.get_entry_for_name('ITAM_HUMAN')
     expect(item.signalp).to eq("1")
   end
-  
+
+  it "should correctly retrieve the GO terms" do
+    item = spdatabase.get_entry_for_name('ITAM_HUMAN')
+    expect(item.go_terms).to be_a Array
+    expect(item.go_terms[0]).to eq("GO:0009897")
+  end
+  it "should correctly retrieve full GO entries" do
+    item = spdatabase.get_entry_for_name('ITAM_HUMAN')
+    expect(item.go_entries).to be_a Array
+    expect(item.go_entries[0][0]).to eq("GO:0009897")
+  end  
 	
 end

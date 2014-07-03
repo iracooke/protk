@@ -132,7 +132,8 @@ class Bio::SPTR < Bio::EMBLDB
   def domain
     return self.cc["DOMAIN"].to_s
   end
-  
+
+
   # 
   # Getting dr entry
   # 
@@ -152,6 +153,20 @@ class Bio::SPTR < Bio::EMBLDB
   def ipi
     return self.safely_get_drentry_for_key("IPI")
   end
+
+  def go_terms
+    terms = self.dr["GO"]
+    if terms
+      return terms.collect { |e| e[0] }
+    else
+      return nil
+    end
+  end
+
+  def go_entries
+    return self.dr["GO"]
+  end  
+
   
   # Intact accession number
   #

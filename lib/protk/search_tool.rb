@@ -13,15 +13,6 @@ require 'optparse'
 require 'pathname'
 require 'protk/tool'
 
-class FastaDatabase
-  attr :name
-  attr :path
-  def initialize(name,path)
-    @name=name
-    @path=path
-  end
-end
-
 class SearchTool < Tool
 
   # Initializes commandline options common to all search tools.
@@ -30,9 +21,9 @@ class SearchTool < Tool
   def initialize(option_support=[])
     super(option_support)
 
-    if (option_support.include? :database)
-      add_value_option(:database,"sphuman",['-d', '--database dbname', 'Specify the database to use for this search. Can be a named protk database or the path to a fasta file'])        
-    end
+    # if (option_support.include? :database)
+    #   add_value_option(:database,"sphuman",['-d', '--database dbname', 'Specify the database to use for this search. Can be a named protk database or the path to a fasta file'])        
+    # end
     
     if ( option_support.include? :enzyme )
       add_value_option(:enzyme,"Trypsin",['--enzyme enz', 'Enzyme'])
@@ -114,18 +105,6 @@ class SearchTool < Tool
       
   end
       
-
-  def database_info
-    case
-      when Pathname.new(@options.database).exist? # It's an explicitly named db  
-        db_path=Pathname.new(@options.database).expand_path.to_s
-        db_name=Pathname.new(@options.database).basename.to_s
-      else
-        db_path=Constants.new.current_database_for_name @options.database
-        db_name=@options.database
-    end
-    FastaDatabase.new(db_name,db_path)
-  end
 
 end
 

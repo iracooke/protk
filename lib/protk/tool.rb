@@ -10,6 +10,17 @@ require 'optparse'
 require 'pathname'
 require 'protk/command_runner'
 
+
+class FastaDatabase
+  attr :name
+  attr :path
+  def initialize(name,path)
+    @name=name
+    @path=path
+  end
+end
+
+
 class Tool
 
   # Options set from the command-line
@@ -108,7 +119,9 @@ class Tool
       add_value_option(:threads,1,['-n','--threads num','Number of processing threads to use. Set to 0 to autodetect an appropriate value'])
     end
 
-
+    if ( option_support.include? :database)
+      add_value_option(:database,"sphuman",['-d', '--database dbname', 'Specify the database to use for this search. Can be a named protk database or the path to a fasta file'])        
+    end
 
   end
 
@@ -175,5 +188,19 @@ class Tool
     cmd_runner.run_local(cmd)
    end
    
-  
+
+   def database_info
+     case
+       when Pathname.new(@options.database).exist? # It's an explicitly named db  
+         db_path=Pathname.new(@options.database).expand_path.to_s
+         db_name=Pathname.new(@options.database).basename.to_s
+       else
+         db_path=Constants.new.current_database_for_name @options.database
+         db_name=@options.database
+     end
+     FastaDatabase.new(db_name,db_path)
+   end
+
+
+
 end

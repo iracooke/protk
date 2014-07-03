@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.3.0'
+  s.version     = '1.3.1.pre1'
   s.date        = '2014-06-24'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
@@ -39,5 +39,7 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['uniprot_mapper.rb']
   s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb']
   s.executables = s.executables + ['protxml_to_table.rb']
+  s.executables = s.executables + ['swissprot_to_table.rb']
+  s.executables = s.executables + ['protxml_to_psql.rb']
 end
 
