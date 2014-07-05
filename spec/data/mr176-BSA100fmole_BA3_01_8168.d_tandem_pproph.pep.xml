@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem_pproph.pep.xsl"?>
-<msms_pipeline_analysis date="2014-06-22T15:28:37" summary_xml="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem_pproph.pep.xml" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://regis-web.systemsbiology.net/pepXML /Users/icooke/bin/tpp/schema/pepXML_v117.xsd">
+<?xml-stylesheet type="text/xsl" href="/Users/icooke/Sources/protk/spec/data/mr176-BSA100fmole_BA3_01_8168.d_tandem_pproph.pep.xsl"?>
+<msms_pipeline_analysis date="2014-06-22T15:28:37" summary_xml="/Users/icooke/Sources/protk/spec/data/mr176-BSA100fmole_BA3_01_8168.d_tandem_pproph.pep.xml" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://regis-web.systemsbiology.net/pepXML /Users/icooke/bin/tpp/schema/pepXML_v117.xsd">
 <analysis_summary analysis="peptideprophet" time="2014-06-22T15:28:37">
 <peptideprophet_summary version="PeptideProphet  (TPP v4.7 POLAR VORTEX rev 0, Build 201405141111 (linux))" author="AKeller@ISB" min_prob="0.05" options=" NOICAT DECOY=decoy " est_tot_num_correct="21.2">
-<inputfile name="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem.pep.xml"/>
+<inputfile name="/Users/icooke/Sources/protk/spec/data/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem.pep.xml"/>
 <roc_error_data charge="all">
 <roc_data_point min_prob="0.9999" sensitivity="0.0945" error="0.0000" num_corr="2" num_incorr="0"/>
 <roc_data_point min_prob="0.9990" sensitivity="0.0945" error="0.0000" num_corr="2" num_incorr="0"/>
@@ -657,17 +657,17 @@
 </analysis_summary>
 <analysis_summary analysis="database_refresh" time="2014-06-22T15:28:37"/>
 <analysis_summary analysis="interact" time="2014-06-22T15:28:37">
-<interact_summary filename="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem_pproph.pep.xml" directory="">
-<inputfile name="mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml" directory="/Users/icooke/Desktop/iptest"/>
+<interact_summary filename="/Users/icooke/Sources/protk/spec/data/mr176-BSA100fmole_BA3_01_8168.d_tandem_pproph.pep.xml" directory="">
+<inputfile name="mr176-BSA100fmole_BA3_01_8168.d_tandem.pep.xml" directory="/Users/icooke/Sources/protk/spec/data"/>
 </interact_summary>
 </analysis_summary>
 <dataset_derivation generation_no="0"/>
-<msms_run_summary base_name="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem" search_engine="X! Tandem" raw_data_type="raw" raw_data=".?">
+<msms_run_summary base_name="/Users/icooke/Sources/protk/spec/data/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem" search_engine="X! Tandem" raw_data_type="raw" raw_data=".?">
 <sample_enzyme name="trypsin">
 <specificity cut="KR" no_cut="P" sense="C"/>
 </sample_enzyme>
 <search_summary base_name="mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem" search_engine="X! Tandem" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" search_id="1">
-<search_database local_path="/Users/icooke/Desktop/iptest/AASequences.fasta" type="AA"/>
+<search_database local_path="/Users/icooke/Sources/protk/spec/data/AASequences.fasta" type="AA"/>
 <enzymatic_search_constraint enzyme="trypsin" max_num_internal_cleavages="2" min_number_termini="1"/>
 <aminoacid_modification aminoacid="E" massdiff="-18.0106" mass="111.0320" variable="Y" symbol="^"/>
 <!--X! Tandem n-terminal AA variable modification-->
@@ -678,7 +678,7 @@
 <!--X! Tandem n-terminal AA variable modification-->
 <!-- Input parameters -->
 <parameter name="list path, default parameters" value="/Users/icooke/.rvm/gems/ruby-2.0.0-p353/gems/protk-1.2.6.pre6/lib/protk/data/tandem_isb_native_defaults.xml"/>
-<parameter name="list path, taxonomy information" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem.taxonomy.xml"/>
+<parameter name="list path, taxonomy information" value="/Users/icooke/Sources/protk/spec/data/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem.taxonomy.xml"/>
 <parameter name="output, histogram column width" value="30"/>
 <parameter name="output, histograms" value="no"/>
 <parameter name="output, log path" value=""/>
@@ -686,7 +686,7 @@
 <parameter name="output, message" value="1234567890"/>
 <parameter name="output, one sequence copy" value="no"/>
 <parameter name="output, parameters" value="yes"/>
-<parameter name="output, path" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem"/>
+<parameter name="output, path" value="/Users/icooke/Sources/protk/spec/data/mr176-BSA100fmole_BA3_01_8168.d_tandem.tandem"/>
 <parameter name="output, path hashing" value="no"/>
 <parameter name="output, performance" value="yes"/>
 <parameter name="output, proteins" value="yes"/>
@@ -735,7 +735,7 @@
 <parameter name="spectrum, parent monoisotopic mass error plus" value="100.0"/>
 <parameter name="spectrum, parent monoisotopic mass error units" value="Daltons"/>
 <parameter name="spectrum, parent monoisotopic mass isotope error" value="no"/>
-<parameter name="spectrum, path" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8168.d.mgf"/>
+<parameter name="spectrum, path" value="/Users/icooke/Sources/protk/spec/data/mr176-BSA100fmole_BA3_01_8168.d.mgf"/>
 <parameter name="spectrum, sequence batch size" value="1000"/>
 <parameter name="spectrum, threads" value="1"/>
 <parameter name="spectrum, total peaks" value="50"/>
@@ -755,7 +755,7 @@
 <parameter name="scoring, pluggable scoring" value="no"/>
 <parameter name="spectrum, maximum parent m+h" value="4000.0"/>
 <!-- Performance parameters -->
-<parameter name="list path, sequence source #1" value="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+<parameter name="list path, sequence source #1" value="/Users/icooke/Sources/protk/spec/data/AASequences.fasta"/>
 <parameter name="list path, sequence source description #1" value="no description"/>
 <parameter name="modelling, duplicate peptide ids" value="0"/>
 <parameter name="modelling, duplicate proteins" value="0"/>
@@ -779,7 +779,7 @@
 </search_summary>
 <analysis_timestamp analysis="peptideprophet" time="2014-06-22T15:28:37" id="1"/>
 <analysis_timestamp analysis="database_refresh" time="2014-06-22T15:28:37" id="1">
-<database_refresh_timestamp database="/Users/icooke/Desktop/iptest/AASequences.fasta" min_num_enz_term="1"/>
+<database_refresh_timestamp database="/Users/icooke/Sources/protk/spec/data/AASequences.fasta" min_num_enz_term="1"/>
 </analysis_timestamp>
 <spectrum_query spectrum="mr176-BSA100fmole_BA3_01_8168.00003.00003.2" start_scan="3" end_scan="3" precursor_neutral_mass="1398.7025" assumed_charge="2" index="1" experiment_label="mr176">
 <search_result>

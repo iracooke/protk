@@ -9,6 +9,7 @@ end
 describe "The protein_prophet command", :broken => false do
 
   include_context :tmp_dir_with_fixtures, [
+    "AASequences.fasta",
     "mr176-BSA100fmole_BA3_01_8168.d_tandem_pproph.pep.xml",
     "mr176-BSA100fmole_BA3_01_8167.d_tandem_pproph.pep.xml"]
 
