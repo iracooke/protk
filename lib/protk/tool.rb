@@ -160,6 +160,10 @@ class Tool
     # Checking for required options
     begin
       self.option_parser.parse!
+
+      if has_override
+        return true
+      end
       missing = mandatory.select{ |param| self.send(param).nil? }
       if not missing.empty?                                            
         puts "Missing options: #{missing.join(', ')}"                  
