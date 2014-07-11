@@ -170,7 +170,7 @@ ARGV.each do |filename|
 
     # Num Threads
     #
-    cmd << " -thread #{search_tool.threads}" if search_tool.threads > 0
+    cmd << " -thread #{search_tool.threads}" if search_tool.threads.to_i > 0
 
     mods_file_content = ""
 

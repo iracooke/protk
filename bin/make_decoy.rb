@@ -49,7 +49,6 @@ if (tool.reverse_only)
 	Bio::FastaFormat.open(input_file).each do |seq| 
 		id=nil
 		begin
-			# require 'debugger';debugger
 			id=seq.definition.chomp.scan(/#{tool.id_regex}/)[0][0]
 			revdef=seq.definition.sub(id,"#{tool.prefix_string}#{id}")
 			decoys_out.write ">#{revdef}\n#{seq.aaseq}\n"
