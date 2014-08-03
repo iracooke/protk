@@ -7,14 +7,16 @@ require 'pathname'
 #
 class SwissprotDatabase 
   
-  def initialize(datfile_path)
+  def initialize(datfile_path,skip_indexing=false)
 
     dbpath=Pathname.new(datfile_path)
     dbclass=Bio::SPTR
-    parser = Bio::FlatFileIndex::Indexer::Parser.new(dbclass, nil, nil)
-      
-    Bio::FlatFileIndex::Indexer::makeindexFlat(dbpath.realpath.dirname.to_s, parser, {}, \
-      dbpath.realpath.to_s)
+
+    unless skip_indexing
+      parser = Bio::FlatFileIndex::Indexer::Parser.new(dbclass, nil, nil)
+      Bio::FlatFileIndex::Indexer::makeindexFlat(dbpath.realpath.dirname.to_s, parser, {}, \
+        dbpath.realpath.to_s)
+    end
       
     @db_object=Bio::FlatFileIndex.new("#{dbpath.realpath.dirname.to_s}")
     

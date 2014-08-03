@@ -9,6 +9,7 @@
 require 'protk/constants'
 require 'protk/protxml_to_gff_tool'
 require 'protk/fastadb'
+require 'protk/gffdb'
 require 'libxml'
 require 'bio'
 
@@ -62,8 +63,72 @@ def prepare_fasta(database_path,type)
   orf_lookup
 end
 
+def get_cds_lines(gene_lines)
+  coding_sequences=[]
+  gene_lines.each do |line|  
+    if line =~ /CDS\t(\d*?)\t/
+      coding_sequences << line
+    end
+  end
+  coding_sequences
+end
+
+# This assumes that for each entry in the protein fasta file
+# we will have a corresponding gff entry
+# The gff entry should correspond to a single transcript, perhaps containing multiple exons
+# but always just one transcript
+# This routine gets coordinates by looking for all CDS records for the entry
+# 
+def cds_info_from_gff(protein_name,protein_fasta_entry,gffdb)
+  # require 'debugger';debugger
+
+  # contig_regex="(scaffold_?\d+)" unless contig_regex
+
+  records=gffdb.get_by_id(protein_name)
+
+  if records.nil?
+    puts "No GFF entry for #{protein_name}" 
+    raise EncodingError
+  end
+
+  prot_info=ProtXMLToGFFTool::CDSInfo.new
+  prot_info.fasta_id=protein_fasta_entry
+  prot_info.coding_sequences=[]
+
+  prot_info.strand = records.first.strand
+  # All should be the same strand or something is wrong
+  records.each { |e|  }  
+
+  min_start=records.first.start
+  max_end=records.first.end
+  records.each do |record|  
+    puts "Multiple strands detected for single gff record" if record.strand!=prot_info.strand
+    if record.feature=="CDS"
+      prot_info.coding_sequences<<[record.start,record.end]
+      
+      min_start=record.start if record.start < min_start
+      max_end=record.end if record.end > max_end
+
+    end
+  end
+
+  prot_info.start = min_start
+  prot_info.end = max_end
+  prot_info.is_sixframe=false
+  prot_info.name = protein_name
+  prot_info.scaffold = records.first.seqid
+  prot_info.frame = records.first.frame
+
+  prot_info
+
+end
+
 proteins = parse_proteins(input_proxml)
 fastadb = prepare_fasta(tool.database,'prot')
+
+gffdb = nil
+gffdb = GFFDB.create(tool.coords_file) if tool.coords_file
+
 genomedb = nil
 if tool.genome
   genomedb = prepare_fasta(tool.genome,'nucl')
@@ -85,7 +150,7 @@ for prot in proteins
     next
   end
 
-  # Gets identifiers of all proteins (includeing indistinguishable ones)
+  # Gets identifiers of all proteins (including indistinguishable ones)
   prot_names=tool.protein_names(prot)
 
 
@@ -102,7 +167,13 @@ for prot in proteins
     begin
 
       protein_fasta_entry = tool.get_fasta_record(protein_name,fastadb)
-      protein_info = tool.cds_info_from_fasta(protein_fasta_entry) 
+      if tool.coords_file
+        protein_info = cds_info_from_gff(protein_name,protein_fasta_entry,gffdb)
+        # require 'debugger';debugger
+        # puts protein_info
+      else  
+        protein_info = tool.cds_info_from_fasta(protein_fasta_entry) 
+      end
 
       unless (tool.collapse_redundant_proteins && !tool.is_new_genome_location(protein_info,entries_covered) )
 
@@ -157,7 +228,7 @@ for prot in proteins
 
       entries_covered<<protein_info
 
-#      puts protein_gff
+     puts protein_gff
 #      puts gff_db.records
     rescue KeyError,EncodingError
       skipped+=0

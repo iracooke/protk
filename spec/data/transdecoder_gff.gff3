@@ -1,0 +1,26 @@
+comp1000018_c0_seq1	transdecoder	gene	1	323	.	-	.	ID=comp1000018_c0_seq1|g.205055;Name=ORF%20comp1000018_c0_seq1%7Cg.205055%20comp1000018_c0_seq1%7Cm.205055%20type%3A3prime_partial%20len%3A68%20%28-%29
+comp1000018_c0_seq1	transdecoder	mRNA	1	323	.	-	.	ID=comp1000018_c0_seq1|m.205055;Parent=comp1000018_c0_seq1|g.205055;Name=ORF%20comp1000018_c0_seq1%7Cg.205055%20comp1000018_c0_seq1%7Cm.205055%20type%3A3prime_partial%20len%3A68%20%28-%29
+comp1000018_c0_seq1	transdecoder	five_prime_UTR	203	323	.	-	.	ID=comp1000018_c0_seq1|m.205055.utr5p1;Parent=comp1000018_c0_seq1|m.205055
+comp1000018_c0_seq1	transdecoder	exon	1	323	.	-	.	ID=comp1000018_c0_seq1|m.205055.exon1;Parent=comp1000018_c0_seq1|m.205055
+comp1000018_c0_seq1	transdecoder	CDS	2	202	.	-	.	ID=cds.comp1000018_c0_seq1|m.205055;Parent=comp1000018_c0_seq1|m.205055
+
+comp1000154_c0_seq1	transdecoder	gene	1	336	.	-	.	ID=comp1000154_c0_seq1|g.205060;Name=ORF%20comp1000154_c0_seq1%7Cg.205060%20comp1000154_c0_seq1%7Cm.205060%20type%3A5prime_partial%20len%3A82%20%28-%29
+comp1000154_c0_seq1	transdecoder	mRNA	1	336	.	-	.	ID=comp1000154_c0_seq1|m.205060;Parent=comp1000154_c0_seq1|g.205060;Name=ORF%20comp1000154_c0_seq1%7Cg.205060%20comp1000154_c0_seq1%7Cm.205060%20type%3A5prime_partial%20len%3A82%20%28-%29
+comp1000154_c0_seq1	transdecoder	exon	1	336	.	-	.	ID=comp1000154_c0_seq1|m.205060.exon1;Parent=comp1000154_c0_seq1|m.205060
+comp1000154_c0_seq1	transdecoder	CDS	89	334	.	-	.	ID=cds.comp1000154_c0_seq1|m.205060;Parent=comp1000154_c0_seq1|m.205060
+comp1000154_c0_seq1	transdecoder	three_prime_UTR	1	88	.	-	.	ID=comp1000154_c0_seq1|m.205060.utr3p1;Parent=comp1000154_c0_seq1|m.205060
+
+comp1000158_c0_seq1	transdecoder	gene	1	562	.	-	.	ID=comp1000158_c0_seq1|g.205062;Name=ORF%20comp1000158_c0_seq1%7Cg.205062%20comp1000158_c0_seq1%7Cm.205062%20type%3Ainternal%20len%3A188%20%28-%29
+comp1000158_c0_seq1	transdecoder	mRNA	1	562	.	-	.	ID=comp1000158_c0_seq1|m.205062;Parent=comp1000158_c0_seq1|g.205062;Name=ORF%20comp1000158_c0_seq1%7Cg.205062%20comp1000158_c0_seq1%7Cm.205062%20type%3Ainternal%20len%3A188%20%28-%29
+comp1000158_c0_seq1	transdecoder	exon	1	562	.	-	.	ID=comp1000158_c0_seq1|m.205062.exon1;Parent=comp1000158_c0_seq1|m.205062
+comp1000158_c0_seq1	transdecoder	CDS	1	561	.	-	.	ID=cds.comp1000158_c0_seq1|m.205062;Parent=comp1000158_c0_seq1|m.205062
+
+comp10001_c0_seq1	transdecoder	gene	1	280	.	+	.	ID=comp10001_c0_seq1|g.5608;Name=ORF%20comp10001_c0_seq1%7Cg.5608%20comp10001_c0_seq1%7Cm.5608%20type%3Ainternal%20len%3A94%20%28%2B%29
+comp10001_c0_seq1	transdecoder	mRNA	1	280	.	+	.	ID=comp10001_c0_seq1|m.5608;Parent=comp10001_c0_seq1|g.5608;Name=ORF%20comp10001_c0_seq1%7Cg.5608%20comp10001_c0_seq1%7Cm.5608%20type%3Ainternal%20len%3A94%20%28%2B%29
+comp10001_c0_seq1	transdecoder	exon	1	280	.	+	.	ID=comp10001_c0_seq1|m.5608.exon1;Parent=comp10001_c0_seq1|m.5608
+comp10001_c0_seq1	transdecoder	CDS	2	280	.	+	.	ID=cds.comp10001_c0_seq1|m.5608;Parent=comp10001_c0_seq1|m.5608
+
+comp10001_c1_seq1	transdecoder	gene	1	435	.	-	.	ID=comp10001_c1_seq1|g.5610;Name=ORF%20comp10001_c1_seq1%7Cg.5610%20comp10001_c1_seq1%7Cm.5610%20type%3Ainternal%20len%3A146%20%28-%29
+comp10001_c1_seq1	transdecoder	mRNA	1	435	.	-	.	ID=comp10001_c1_seq1|m.5610;Parent=comp10001_c1_seq1|g.5610;Name=ORF%20comp10001_c1_seq1%7Cg.5610%20comp10001_c1_seq1%7Cm.5610%20type%3Ainternal%20len%3A146%20%28-%29
+comp10001_c1_seq1	transdecoder	exon	1	435	.	-	.	ID=comp10001_c1_seq1|m.5610.exon1;Parent=comp10001_c1_seq1|m.5610
+comp10001_c1_seq1	transdecoder	CDS	1	435	.	-	.	ID=cds.comp10001_c1_seq1|m.5610;Parent=comp10001_c1_seq1|m.5610

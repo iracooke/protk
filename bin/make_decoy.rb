@@ -51,7 +51,7 @@ if (tool.reverse_only)
 		begin
 			id=seq.definition.chomp.scan(/#{tool.id_regex}/)[0][0]
 			revdef=seq.definition.sub(id,"#{tool.prefix_string}#{id}")
-			decoys_out.write ">#{revdef}\n#{seq.aaseq}\n"
+			decoys_out.write ">#{revdef}\n#{seq.aaseq.reverse}\n"
 		rescue
 			puts "Unable to parse id for #{seq.definition}. Skipping" if (id==nil)
 		end

@@ -10,6 +10,8 @@ class ProtXMLToGFFTool < Tool
 
 		add_value_option(:database,nil,['-d filename','--database filename','Database used for ms/ms searches (Fasta Format)'])
 		add_value_option(:genome,nil,['-g filename','--genome filename', 'Nucleotide sequences for scaffolds (Fasta Format)'])
+		add_value_option(:coords_file,nil,['-c filename','--coords-file filename.gff3', 'If genomic coordinates are not encoded in protein db entries look them up from a supplied gff file'])
+		# add_value_option(:contig_regex,nil,['--contig-regex expression','Regular expression with a single capture group to get contig ids from protein ids'])
 		add_value_option(:protein_find,nil,['-f term','--find term', 'Restrict output to proteins whose name matches the specified string'])
 		add_value_option(:nterm_minlen,7,['-n len','--nterm-min-len len', 'Only include inferred N-terminal sequences if longer than len'])
 		add_boolean_option(:skip_fasta_indexing,false,['--skip-index','Don\'t index database (Index should already exist)'])
@@ -317,7 +319,7 @@ class ProtXMLToGFFTool < Tool
 
 	  check_seq = protein_info.strand=='-' ? concat_seq.reverse_complement.translate : concat_seq.translate
 	  if ( check_seq != peptide_seq)
-	    require 'debugger';debugger
+	    # require 'debugger';debugger
 	    puts "Fragment seqs not equal to peptide seqs"
 	  end
 

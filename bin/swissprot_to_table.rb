@@ -43,9 +43,10 @@ tool.option_parser.banner = "Query a swissprot flat file and output to tab delim
 
 tool.add_value_option(:output_keys,nil,['-K','--keys keys','Filter output to only the specified keys (comma separated)'])
 tool.add_boolean_option(:show_keys,false,['--show-keys','Print a list of possible values for the keys field and exit'])
-tool.add_value_option(:separator,"\t",['-S','--separator sep','Separator character, default (tab)'])
+tool.add_value_option(:separator,"\t",['-S','--separator sep','Separator character for output, default (tab)'])
 tool.add_value_option(:array_separator,",",['-A','--array-separator sep','Array Separator character, default ,'])
-
+tool.add_value_option(:query_separator,"\t",['--query-separator sep','Separator character for queries.txt, default is tab'])
+tool.add_value_option(:id_column,1,['--id-column num','Column in queries.txt in which Uniprot Accessions are found'])
 
 if ARGV.include? "--show-keys"
   columns.each_pair { |name, val| $stdout.write "#{name} (#{val})\n" }
@@ -73,22 +74,38 @@ end
 db_info=tool.database_info
 database_path=db_info.path
 
-swissprotdb=SwissprotDatabase.new(database_path)
+database_index_path = "#{Pathname.new(database_path).dirname}/config.dat"
+
+skip_index = File.exists?(database_index_path) ? true : false
+
+swissprotdb=SwissprotDatabase.new(database_path,skip_index)
 
 
-File.open(ARGV[0]).each_line do |line|  
-  query_id = line.chomp
-  item = swissprotdb.get_entry_for_name(query_id)
+File.open(ARGV[0]).each_line do |line|
 
-  if item
-    row=[query_id]
-    row << columns.keys.collect do |name| 
-      colvalue = item.send(name)
-      colvalue = "" unless colvalue
-      colvalue = colvalue.join(tool.array_separator) if colvalue.class==Array
-      colvalue
+  begin
+    query_id = line.chomp.split(tool.query_separator)[tool.id_column.to_i-1]
+  rescue
+    query_id = line.chomp
+  end
+
+  begin
+    item = swissprotdb.get_entry_for_name(query_id)
+
+    if item
+      row=[query_id]
+      row << columns.keys.collect do |name| 
+        colvalue = item.send(name)
+        colvalue = "" unless colvalue
+        colvalue = colvalue.join(tool.array_separator) if colvalue.class==Array
+        colvalue
+      end
+      output_fh.write "#{row.join(tool.separator)}\n"
     end
-    output_fh.write "#{row.join(tool.separator)}\n"
+  rescue
+    unless output_fh==$stdout
+      $stdout.write "Unable to retrieve entry for #{query_id}"
+    end
   end
 end
 

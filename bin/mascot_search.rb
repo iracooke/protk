@@ -103,6 +103,7 @@ def search_params_dictionary(search_tool,input_file)
     postdict[:FILE]=File.new(input_file)
     postdict[:FORMVER]='1.01'
     postdict[:INTERMEDIATE]=''
+    postdict[:QUANTITATION]=search_tool.quantitation
 
     postdict
 end
@@ -134,6 +135,7 @@ search_tool.options.output_suffix="_mascot"
 
 search_tool.add_value_option(:mascot_server,"#{$genv.default_mascot_server}/mascot/cgi",['-S', '--server url', 'The url to the cgi directory of the mascot server'])
 search_tool.add_value_option(:allowed_charges,"1+,2+,3+",['--allowed-charges ac', 'Allowed precursor ion charges.'])
+search_tool.add_value_option(:quantitation,"",['--quantitation method','Mascot quant method'])
 search_tool.add_value_option(:email,"",['--email em', 'User email.'])
 search_tool.add_value_option(:username,"",['--username un', 'Username.'])
 search_tool.add_value_option(:httpproxy,nil,['--proxy url', 'The url to a proxy server'])
