@@ -29,15 +29,18 @@ class Constants
   attr :info_level
   attr :protk_dir
   attr :data_lib_dir
+  attr_accessor :info_level
 
   # Provides direct access to constants through methods of the same name
   # This will be used for all constants other than paths
   #
   def method_missing(method)
+
     from_env = @env[method.to_s]
     throw "#{method} is undefined" unless from_env!=nil
     from_env
   end
+
 
   # Some constants are paths. They need to be translated into real paths before being returned
   #
@@ -121,7 +124,7 @@ class Constants
   # Read the global constants file and initialize our class @env variable
   # Initialize loggers
   #
-  def initialize 
+  def initialize() 
 
     @data_lib_dir="#{File.dirname(__FILE__)}/data"
     @protk_dir="#{Dir.home}/.protk"
@@ -170,8 +173,10 @@ class Constants
 
     # puts "Path #{ENV['PATH']}"
     throw "No data found in config file" unless @env!=nil
-    @info_level=default_config_yml['message_level']
-    
+
+    @info_level="fatal"
+    @info_level=default_config_yml['message_level'] unless default_config_yml['message_level'].nil?
+
   end
 
 
@@ -196,15 +201,17 @@ class Constants
     throw "Unable to create file logger at path #{self.log_file}" unless @file_logger!=nil
     throw "Unable to create stdout logger " unless @stdout_logger!=nil
 
-  
-
     case @info_level
-    when "info"
+    when /info/i
       @stdout_logger.level=Logger::INFO
-    when "debug"    
+    when /debug/i    
       @stdout_logger.level=Logger::DEBUG
-    when "warn"
-      @stdout_logger.level=Logger::WARN      
+    when /warn/i
+      @stdout_logger.level=Logger::WARN
+    when /fatal/i
+      @stdout_logger.level=Logger::FATAL
+    else
+      throw "Unknown log level #{@info_level}"
     end
 
   end
@@ -215,8 +222,9 @@ class Constants
     if ( @stdout_logger == nil || @file_logger == nil)
       initialize_loggers
     end
-    @stdout_logger.send(level,message)
-    @file_logger.send(level,message)        
+
+   @stdout_logger.send(level,message)
+   @file_logger.send(level,message)        
   end
 
   def path_for_builtin_database(dbname)

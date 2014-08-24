@@ -123,6 +123,10 @@ class Tool
       add_value_option(:database,"sphuman",['-d', '--database dbname', 'Specify the database to use for this search. Can be a named protk database or the path to a fasta file'])        
     end
 
+    if (option_support.include? :debug)
+      add_boolean_option(:debug,false,['--debug','Run in debug mode'])
+    end
+
   end
 
 

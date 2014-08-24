@@ -39,6 +39,10 @@ describe SwissprotDatabase do
     expect(rn).to eq("Integrin alpha-M")
   end
 
+  it "should correctly obtain the list of accessions for ITAM_HUMAN" do
+    item = spdatabase.get_entry_for_name('ITAM_HUMAN')
+    expect(item.accessions).to eq(["P11215", "Q4VAK0", "Q4VAK1", "Q4VAK2"])
+  end
 
 	it "should correctly parse the CD Antigen name for ITAM_HUMAN" do
     item=spdatabase.get_entry_for_name('ITAM_HUMAN')

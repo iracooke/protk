@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-mocks', '~> 3.0'
   s.add_development_dependency 'rake-compiler', '~> 0'
+  s.add_development_dependency 'debugger' , '~>1.6.0'
   s.add_runtime_dependency 'sqlite3','~>0'
 
   s.homepage    = 'http://rubygems.org/gems/protk'
@@ -37,7 +38,7 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['pepxml_to_table.rb']
   s.executables = s.executables + ['unimod_to_loc.rb']
   s.executables = s.executables + ['uniprot_mapper.rb']
-  s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb']
+  s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb','prot_to_genome.rb']
   s.executables = s.executables + ['protxml_to_table.rb']
   s.executables = s.executables + ['swissprot_to_table.rb']
   s.executables = s.executables + ['protxml_to_psql.rb']

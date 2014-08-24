@@ -1,7 +1,6 @@
 require 'protk/tool.rb'
 require 'protk/swissprot_database.rb'
 require 'protk/search_tool.rb'
-require 'protk/protxml.rb'
 require 'protk/prophet_tool.rb'
 require 'protk/omssa_util.rb'
 require 'protk/mascot_util.rb'

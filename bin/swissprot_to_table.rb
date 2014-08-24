@@ -29,7 +29,8 @@ columns={'recname'=>"Primary Name",'cd'=>"CD Antigen Name",'altnames'=>"Alternat
       'num_transmem'=>"Transmembrane Regions",
       'signalp'=>'Signal Peptide',
       'go_terms'=>"GO Terms",
-      'go_entries'=>"GO Entries"
+      'go_entries'=>"GO Entries",
+      'accessions'=>"Uniprot Accessions"
     }
 
 
@@ -38,15 +39,17 @@ columns={'recname'=>"Primary Name",'cd'=>"CD Antigen Name",'altnames'=>"Alternat
 
 # Setup specific command-line options for this tool. Other options are inherited from ProphetTool
 #
-tool=Tool.new([:explicit_output,:database])
+tool=Tool.new([:explicit_output,:debug])
 tool.option_parser.banner = "Query a swissprot flat file and output to tab delimited table.\n\nUsage: swissprot_to_table.rb [options] -d flatfile.dat queries.txt"
 
+tool.add_value_option(:database,nil,['-d','--database file','Uniprot flatfile database containing full records for proteins'])
 tool.add_value_option(:output_keys,nil,['-K','--keys keys','Filter output to only the specified keys (comma separated)'])
 tool.add_boolean_option(:show_keys,false,['--show-keys','Print a list of possible values for the keys field and exit'])
 tool.add_value_option(:separator,"\t",['-S','--separator sep','Separator character for output, default (tab)'])
 tool.add_value_option(:array_separator,",",['-A','--array-separator sep','Array Separator character, default ,'])
 tool.add_value_option(:query_separator,"\t",['--query-separator sep','Separator character for queries.txt, default is tab'])
 tool.add_value_option(:id_column,1,['--id-column num','Column in queries.txt in which Uniprot Accessions are found'])
+
 
 if ARGV.include? "--show-keys"
   columns.each_pair { |name, val| $stdout.write "#{name} (#{val})\n" }
@@ -56,7 +59,11 @@ end
 
 exit unless tool.check_options(true,[:database])
 
-input_file=ARGV[0]
+
+$protk = Constants.new
+log_level = tool.debug ? :debug : :fatal
+$protk.info_level= log_level
+
 
 if tool.explicit_output
   output_fh=File.new("#{tool.explicit_output}",'w')  
@@ -78,6 +85,7 @@ database_index_path = "#{Pathname.new(database_path).dirname}/config.dat"
 
 skip_index = File.exists?(database_index_path) ? true : false
 
+
 swissprotdb=SwissprotDatabase.new(database_path,skip_index)
 
 
@@ -91,21 +99,16 @@ File.open(ARGV[0]).each_line do |line|
 
   begin
     item = swissprotdb.get_entry_for_name(query_id)
-
-    if item
-      row=[query_id]
-      row << columns.keys.collect do |name| 
-        colvalue = item.send(name)
-        colvalue = "" unless colvalue
-        colvalue = colvalue.join(tool.array_separator) if colvalue.class==Array
-        colvalue
-      end
-      output_fh.write "#{row.join(tool.separator)}\n"
+    row=[query_id]
+    row << columns.keys.collect do |name| 
+      colvalue = item.send(name)
+      colvalue = "" unless colvalue
+      colvalue = colvalue.join(tool.array_separator) if colvalue.class==Array
+      colvalue
     end
+    output_fh.write "#{row.join(tool.separator)}\n"
   rescue
-    unless output_fh==$stdout
-      $stdout.write "Unable to retrieve entry for #{query_id}"
-    end
+    $protk.log "Unable to retrieve entry for #{query_id}" , :debug
   end
 end
 

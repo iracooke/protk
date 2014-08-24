@@ -90,7 +90,7 @@ class Bio::SPTR < Bio::EMBLDB
   # SwissProt Accessions
   #
   def accessions 
-    return ""
+    return self.ac
   end
 
   # Subcellular Location
