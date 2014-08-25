@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.post_install_message = "Now run protk_setup.rb to install third party tools"
   s.authors     = ["Ira Cooke"]
   s.email       = 'iracooke@gmail.com'
+  s.licenses    = ['LGPL-2.1'] 
 
   s.files        = Dir["{lib}/**/*.rb","{lib}/protk/*.rake", "bin/*", "LICENSE", "*.md","{lib}/**/data/*"] + Dir.glob('lib/**/*.rb') + Dir.glob('ext/**/*.{c,h,rb}')
   s.require_path = 'lib'
@@ -24,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-mocks', '~> 3.0'
   s.add_development_dependency 'rake-compiler', '~> 0'
-  s.add_development_dependency 'debugger' , '~>1.6.0'
+  s.add_development_dependency 'debugger', '~> 1.6', '>= 1.6.0'
   s.add_runtime_dependency 'sqlite3','~>0'
 
   s.homepage    = 'http://rubygems.org/gems/protk'
