@@ -14,7 +14,7 @@ end
 
 describe Peptide do 
 
-	include_context :tmp_dir_with_fixtures, ["test.protXML","transdecoder_gff.gff3","augustus_sample.gff"]
+	include_context :tmp_dir_with_fixtures, ["test.protXML","transdecoder_gff.gff3","augustus_sample.gff","sixframe.gff"]
 
 	let(:first_peptide) { 
 		xmlnodes = parse_peptides("#{@tmp_dir}/test.protXML")
@@ -53,6 +53,62 @@ describe Peptide do
 		expect(peptide).to be_a(Peptide)
 		expect(peptide.sequence).to eq("WQCKLVAKPESLSTSPS")
 		expect(peptide.charge).to eq(nil)
+	end
+
+
+
+	describe "mapping to sixframe gff coordinates" do
+		let(:sixframe_gff) {
+			gffdb = Bio::GFF::GFF3.new(File.read("#{@tmp_dir}/sixframe.gff"))
+			gffdb			
+		}
+		#
+		#scaffold14	sixframe	CDS	1066	1269	.	+	0	ID=scaffold14_frame_1_orf_29
+		#
+		 let(:orf_positive_strand) {
+		 	sixframe_gff.records[2]
+		 }
+		 let(:protein_orf_positive_strand){
+		 	"IILSISAGLPTNTTLPLAKLYTVFCRRNILATTRLDIYILSNYNTLSIGMISIDSQTTIFFHATPAAI"
+		 }
+
+		 it "works for a sixframe translation on the positive strand" do
+		 	prot_entry = orf_positive_strand
+			expect(prot_entry.feature_type).to eq("CDS")
+
+			peptide = Peptide.from_sequence("TPAA")
+			peptide_coords = peptide.to_gff3_records(protein_orf_positive_strand,prot_entry,[prot_entry])
+
+			expect(peptide_coords).to be_a(Array)
+			expect(peptide_coords[0].end).to eq(1269-3)
+			expect(peptide_coords[0].start).to eq(1269-3-peptide.sequence.length*3+1)
+		 end
+
+
+		 #
+		 #scaffold14	sixframe	CDS	527163	527231	.	-	0	ID=scaffold14_frame_4_orf_32
+		 #
+		 let(:orf_negative_strand) {
+		 	sixframe_gff.records[10]
+		 }
+		 let(:protein_orf_negative_strand){
+		 	"YLQVPTVGLSSTHGRLLACYHEA"
+		 }
+
+
+		 it "works for a sixframe translation on the negative strand" do
+		 	prot_entry = orf_negative_strand
+			expect(prot_entry.feature_type).to eq("CDS")
+
+			peptide = Peptide.from_sequence("LQVP")
+			peptide_coords = peptide.to_gff3_records(protein_orf_negative_strand,prot_entry,[prot_entry])
+
+			expect(peptide_coords).to be_a(Array)
+			expect(peptide_coords[0].end).to eq(527231-3)
+			expect(peptide_coords[0].start).to eq(527231-3-peptide.sequence.length*3+1)
+		 end
+
+
 	end
 
 	describe "mapping to augustus gff coordinates" do

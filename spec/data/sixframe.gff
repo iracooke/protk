@@ -1,0 +1,12 @@
+##gff-version 3
+scaffold14	sixframe	CDS	130	537	.	+	0	ID=scaffold14_frame_1_orf_5
+scaffold14	sixframe	CDS	751	822	.	+	0	ID=scaffold14_frame_1_orf_21
+scaffold14	sixframe	CDS	1066	1269	.	+	0	ID=scaffold14_frame_1_orf_29
+scaffold14	sixframe	CDS	1273	1344	.	+	0	ID=scaffold14_frame_1_orf_30
+scaffold14	sixframe	CDS	1684	1779	.	+	0	ID=scaffold14_frame_1_orf_40
+scaffold14	sixframe	CDS	1993	2247	.	+	0	ID=scaffold14_frame_1_orf_47
+scaffold14	sixframe	CDS	2251	2379	.	+	0	ID=scaffold14_frame_1_orf_48
+scaffold14	sixframe	CDS	528360	532664	.	-	0	ID=scaffold14_frame_4_orf_6
+scaffold14	sixframe	CDS	527550	527900	.	-	0	ID=scaffold14_frame_4_orf_28
+scaffold14	sixframe	CDS	527313	527546	.	-	0	ID=scaffold14_frame_4_orf_29
+scaffold14	sixframe	CDS	527163	527231	.	-	0	ID=scaffold14_frame_4_orf_32

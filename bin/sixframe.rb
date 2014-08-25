@@ -29,6 +29,7 @@ tool.option_parser.banner = "Create a sixframe translation of a genome.\n\nUsage
 tool.add_boolean_option(:print_coords,false,['--coords', 'Write genomic coordinates in the fasta header'])
 tool.add_boolean_option(:keep_header,true,['--strip-header', 'Dont write sequence definition'])
 tool.add_value_option(:min_len,20,['--min-len','Minimum ORF length to keep'])
+tool.add_boolean_option(:write_gff,false,['--gff3','Output gff3 instead of fasta'])
 
 exit unless tool.check_options(true)
 
@@ -38,6 +39,9 @@ output_file = tool.explicit_output!=nil ? tool.explicit_output : nil
 
 output_fh = output_file!=nil ? File.new("#{output_file}",'w') : $stdout
 
+if tool.write_gff
+  output_fh.write "##gff-version 3\n"
+end
 
 file = Bio::FastaFormat.open(input_file)
 
@@ -66,13 +70,11 @@ file.each do |entry|
           position_end=forward_position_end
         end
 
-
-
-
         # Create accession compliant with NCBI naming standard
         # See http://www.ncbi.nlm.nih.gov/books/NBK7183/?rendertype=table&id=ch_demo.T5
         ncbi_scaffold_id = entry.entry_id.gsub('|','_').gsub(' ','_')
         ncbi_accession = "lcl|#{ncbi_scaffold_id}_frame_#{frame}_orf_#{oi}"
+        gff_id = "#{ncbi_scaffold_id}_frame_#{frame}_orf_#{oi}"
 
         defline=">#{ncbi_accession}"
 
@@ -84,11 +86,16 @@ file.each do |entry|
           defline << " #{entry.definition}"
         end
 
-        # Output in fasta format
-        # start and end positions are always relative to the forward strand
-
-        output_fh.write("#{defline}\n#{orf}\n")
-
+        if tool.write_gff
+          strand = frame>3 ? "-" : "+"
+          # score = self.nsp_adjusted_probability.nil? ? "." : self.nsp_adjusted_probability.to_s
+          # gff_string = "#{parent_record.seqid}\tMSMS\tpolypeptide\t#{start_i}\t#{end_i}\t#{score}\t#{parent_record.strand}\t0\tID=#{this_id};Parent=#{cds_id}"
+          output_fh.write("#{ncbi_scaffold_id}\tsixframe\tCDS\t#{position_start}\t#{position_end}\t.\t#{strand}\t0\tID=#{gff_id}\n")
+        else
+          # Output in fasta format
+          # start and end positions are always relative to the forward strand
+          output_fh.write("#{defline}\n#{orf}\n")
+        end
       end
       position += orf.length*3+3
     end

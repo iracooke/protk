@@ -1,0 +1,31 @@
+##gff-version 3
+scaffold10	sixframe	CDS	513537	514187	.	+	0	ID=scaffold10_frame_3_orf_6477
+scaffold10	sixframe	CDS	346373	347986	.	-	0	ID=scaffold10_frame_6_orf_3129
+# start gene g447
+scaffold10	AUGUSTUS	gene	195564	196835	0.75	+	.	ID=g447
+scaffold10	AUGUSTUS	transcript	195564	196835	0.75	+	.	ID=g447.t1;Parent=g447
+scaffold10	AUGUSTUS	start_codon	195564	195566	.	+	0	Parent=g447.t1
+scaffold10	AUGUSTUS	intron	195714	195776	0.93	+	.	Parent=g447.t1
+scaffold10	AUGUSTUS	CDS	195564	195713	0.82	+	0	ID=g447.t1.cds;Parent=g447.t1
+scaffold10	AUGUSTUS	CDS	195777	196835	0.92	+	0	ID=g447.t1.cds;Parent=g447.t1
+scaffold10	AUGUSTUS	stop_codon	196833	196835	.	+	0	Parent=g447.t1
+# coding sequence = [atggcggacaatagagattacgcgccagatactctggccgttcacgccgacgatgcgatgaactcatatacagatgtcg
+# cgcctgctttacacgtttctacaacctaccggtatgataattcaagactggtcccgatttcagatgaagagctagatcccctcaccgccctccctgta
+# tactcccgcctctcggccccaaacatctcgcgcctcgaacttatactgagctccctgacgaacggacaggcactgacttattcgtctggtttaagtgc
+# atttcatgccatgcttgtgtttttacgaccgaaagttatcgctatcagcgacggctaccacggatgtcatggtgttattgctatactggaaaaattat
+# acggattgaagaaggtcaacctctgggatgagaaggaatgggatactttcggtttcggcgaaggcgatgtggtacacgtcgaaactcctctcaatcct
+# accggcgaagccatcaatcttgaggttttcagggagaaagctaggaaaaggggcgcgtatctgacagttgattcgacgtttgggccgccggggttgca
+# ggatccgttcgtgcaaggggcagatgtggttatgcattctgggaccaagtattttggaggacatagtgatatgctttgtggtgtcttggttgttcgga
+# aagaaaagaaagaatggattagggggttgtggaatgagaggatgtatttagggagtgtaatggggaatatggagagttggcttggtgtgaggagtttg
+# aggacattggagttgagggtggcgaggcagagtaagaatgctgagagtattgtgaagtggcttgacgcttccttgcggggggagggggatgatgccgt
+# cgttgtacagaagacggttttgaagattcagcatgcgagtttgcagaaggatgatatggattggattaagacgcaaatgccgggtgggtttggaccgg
+# tgtttgtgatatggatgaagtcgatgcagttagcaagggctcttcccgggaagctgaagctatttcatcatgctacgagtcttggaggcgtggaaagt
+# ctgattgaatggaggaaaatgagcgatagcggtgtagatgtcagagtgttgagagtcagcataggtgtagagcactgggaagacctgagggccgactt
+# cttggaagggttcaaggctttggctctgtcggacgaagtaaatggagcataa]
+# protein sequence = [MADNRDYAPDTLAVHADDAMNSYTDVAPALHVSTTYRYDNSRLVPISDEELDPLTALPVYSRLSAPNISRLELILSSL
+# TNGQALTYSSGLSAFHAMLVFLRPKVIAISDGYHGCHGVIAILEKLYGLKKVNLWDEKEWDTFGFGEGDVVHVETPLNPTGEAINLEVFREKARKRGA
+# YLTVDSTFGPPGLQDPFVQGADVVMHSGTKYFGGHSDMLCGVLVVRKEKKEWIRGLWNERMYLGSVMGNMESWLGVRSLRTLELRVARQSKNAESIVK
+# WLDASLRGEGDDAVVVQKTVLKIQHASLQKDDMDWIKTQMPGGFGPVFVIWMKSMQLARALPGKLKLFHHATSLGGVESLIEWRKMSDSGVDVRVLRV
+# SIGVEHWEDLRADFLEGFKALALSDEVNGA]
+# end gene g447
+###

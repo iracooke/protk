@@ -57,7 +57,7 @@
 
 
 <protein_group group_number="7" probability="1.0000">
-      <protein protein_name="lcl|scaffold10_fwd_g447.t1" n_indistinguishable_proteins="1" probability="1.0000" percent_coverage="5.0" unique_stripped_peptides="LVPISDEELDPLTALPVYSR" group_sibling_id="a" total_number_peptides="2" pct_spectrum_ids="0.006" confidence="0.007">
+      <protein protein_name="lcl|g447.t1" n_indistinguishable_proteins="1" probability="1.0000" percent_coverage="5.0" unique_stripped_peptides="LVPISDEELDPLTALPVYSR" group_sibling_id="a" total_number_peptides="2" pct_spectrum_ids="0.006" confidence="0.007">
          <parameter name="prot_length" value="402"/>
          <annotation protein_description="195564 196835"/>
          <peptide peptide_sequence="LVPISDEELDPLTALPVYSR" charge="2" initial_probability="0.9990" nsp_adjusted_probability="0.9996" peptide_group_designator="a" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="2" n_sibling_peptides="0.75" n_sibling_peptides_bin="2" n_instances="1" exp_tot_instances="1.00" is_contributing_evidence="Y" calc_neutral_pep_mass="2226.1793">

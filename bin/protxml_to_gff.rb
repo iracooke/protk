@@ -1,45 +1,51 @@
 #!/usr/bin/env ruby
 #
 # This file is part of protk
-# Original python version created by Max Grant
-# Translated to ruby by Ira Cooke 29/1/2013
+# Created by Ira Cooke 3/8/2014
 #
 # 
 
 require 'protk/constants'
-require 'protk/protxml_to_gff_tool'
 require 'protk/fastadb'
 require 'protk/gffdb'
+require 'protk/protein'
+require 'protk/peptide'
+require 'protk/tool'
 require 'libxml'
 require 'bio'
 
 include LibXML
 
-tool=ProtXMLToGFFTool.new()
 
-@output_extension=".gff"
-@output_suffix=""
-
-exit unless tool.check_options(true,[:database])
-
-input_proxml=ARGV[0]
-
-if ( tool.explicit_output!=nil)
-    gff_out_file=tool.explicit_output
-  else
-    gff_out_file=Tool.default_output_path(input_proxml,@output_extension,tool.output_prefix,@output_suffix)
+class NoGFFEntryFoundError < StandardError
 end
 
-gff_db = Bio::GFF.new()
-f = open(gff_out_file,'w+')
+class ProteinNotInDBError < StandardError
+end
 
+class MultipleGFFEntriesForProteinError < StandardError
+end
 
 def parse_proteins(protxml_file)
-  puts "Parsing proteins from protxml"
   protxml_parser=XML::Parser.file(protxml_file)
   protxml_doc=protxml_parser.parse
   proteins = protxml_doc.find('.//protxml:protein','protxml:http://regis-web.systemsbiology.net/protXML')
-  proteins
+  proteins.collect { |node| Protein.from_protxml(node)   }
+end
+
+def protein_id_to_gffid(protein_id,gff_idregex)
+	return protein_id if gff_idregex.nil?
+	return protein_id.match(/#{gff_idregex}/)[1]
+end
+
+def protein_id_to_genomeid(protein_id,genome_idregex)
+	return protein_id if genome_idregex.nil?
+	return protein_id.match(/#{genome_idregex}/)[1]
+end
+
+def protein_id_to_protdbid(protein_id)
+	# return protein_id.sub(/^lcl\|/,"")
+	return protein_id
 end
 
 def prepare_fasta(database_path,type)
@@ -51,204 +57,106 @@ def prepare_fasta(database_path,type)
     db_filename=Constants.new.current_database_for_name(database_path)
   end
 
-  db_indexfilename = "#{db_filename}.pin"
+
+  db_indexfilename = type=='prot' ? "#{db_filename}.pin" : "#{db_filename}.nhr"
 
   if File.exist?(db_indexfilename)
-    puts "Using existing indexed database"
     orf_lookup = FastaDB.new(db_filename)
   else
-    puts "Indexing database"
     orf_lookup = FastaDB.create(db_filename,db_filename,type)
   end
   orf_lookup
 end
 
-def get_cds_lines(gene_lines)
-  coding_sequences=[]
-  gene_lines.each do |line|  
-    if line =~ /CDS\t(\d*?)\t/
-      coding_sequences << line
-    end
-  end
-  coding_sequences
+
+
+tool=Tool.new([:explicit_output,:debug])
+tool.option_parser.banner = "Map proteins and peptides to genomic coordinates.\n\nUsage: protxml_to_gff.rb [options] proteins.<protXML>"
+
+tool.add_value_option(:database,nil,['-d filename','--database filename','Database used for ms/ms searches (Fasta Format)'])
+# tool.add_value_option(:genome,nil,['-g filename','--genome filename', 'Nucleotide sequences for scaffolds (Fasta Format)'])
+tool.add_value_option(:coords_file,nil,['-c filename','--coords-file filename.gff3', 'A file containing genomic coordinates for predicted proteins and/or 6-frame translations'])
+tool.add_boolean_option(:stack_charge_states,false,['--stack-charge-states','Different peptide charge states get separate gff entries'])
+tool.add_value_option(:peptide_probability_threshold,0.95,['--threshold prob','Peptide Probability Threshold (Default 0.95)'])
+tool.add_value_option(:protein_probability_threshold,0.99,['--prot-threshold prob','Protein Probability Threshold (Default 0.99)'])
+tool.add_value_option(:gff_idregex,nil,['--gff-idregex pre','Regex with capture group for parsing gff ids from protein ids'])
+tool.add_value_option(:genome_idregex,nil,['--genome-idregex pre','Regex with capture group for parsing genomic ids from protein ids'])
+
+exit unless tool.check_options(true,[:database,:coords_file])
+
+$protk = Constants.new
+log_level = tool.debug ? "info" : "warn"
+$protk.info_level= log_level
+
+
+input_file=ARGV[0]
+
+if tool.explicit_output
+  output_fh=File.new("#{tool.explicit_output}",'w')  
+else
+  output_fh=$stdout
 end
 
-# This assumes that for each entry in the protein fasta file
-# we will have a corresponding gff entry
-# The gff entry should correspond to a single transcript, perhaps containing multiple exons
-# but always just one transcript
-# This routine gets coordinates by looking for all CDS records for the entry
-# 
-def cds_info_from_gff(protein_name,protein_fasta_entry,gffdb)
-  # require 'debugger';debugger
+should_ = tool.debug || (output_fh!=$stdout)
 
-  # contig_regex="(scaffold_?\d+)" unless contig_regex
+input_protxml=ARGV[0]
 
-  records=gffdb.get_by_id(protein_name)
-
-  if records.nil?
-    puts "No GFF entry for #{protein_name}" 
-    raise EncodingError
-  end
-
-  prot_info=ProtXMLToGFFTool::CDSInfo.new
-  prot_info.fasta_id=protein_fasta_entry
-  prot_info.coding_sequences=[]
-
-  prot_info.strand = records.first.strand
-  # All should be the same strand or something is wrong
-  records.each { |e|  }  
-
-  min_start=records.first.start
-  max_end=records.first.end
-  records.each do |record|  
-    puts "Multiple strands detected for single gff record" if record.strand!=prot_info.strand
-    if record.feature=="CDS"
-      prot_info.coding_sequences<<[record.start,record.end]
-      
-      min_start=record.start if record.start < min_start
-      max_end=record.end if record.end > max_end
-
-    end
-  end
-
-  prot_info.start = min_start
-  prot_info.end = max_end
-  prot_info.is_sixframe=false
-  prot_info.name = protein_name
-  prot_info.scaffold = records.first.seqid
-  prot_info.frame = records.first.frame
-
-  prot_info
-
-end
-
-proteins = parse_proteins(input_proxml)
-fastadb = prepare_fasta(tool.database,'prot')
-
-gffdb = nil
 gffdb = GFFDB.create(tool.coords_file) if tool.coords_file
 
-genomedb = nil
-if tool.genome
-  genomedb = prepare_fasta(tool.genome,'nucl')
+# genome_db = prepare_fasta(tool.genome,'nucl')
+prot_db = prepare_fasta(tool.database,'prot')
+
+proteins = parse_proteins(input_protxml)
+
+num_missing_gff_entries = 0
+
+proteins.each do |protein|
+
+	begin
+		# Get the full protein sequence
+		#
+		parsed_name_for_protdb = protein_id_to_protdbid(protein.protein_name)
+		protein_entry = prot_db.get_by_id parsed_name_for_protdb
+		raise ProteinNotInDBError if ( protein_entry == nil)
+
+		protein.sequence = protein_entry.aaseq
+
+		# Get the CDS and parent entries from the gff file
+		#
+		parsed_name_for_gffid = protein_id_to_gffid(protein.protein_name,tool.gff_idregex)
+		gff_parent_entries = gffdb.get_by_id(parsed_name_for_gffid)
+		raise NoGFFEntryFoundError if gff_parent_entries.nil? || gff_parent_entries.length==0
+		raise MultipleGFFEntriesForProteinError if gff_parent_entries.length > 1
+
+		gff_parent_entry = gff_parent_entries.first
+		gff_cds_entries = gffdb.get_cds_by_parent_id(parsed_name_for_gffid)
+
+		# Account for sixframe case. Parent is CDS and there are no children
+		#
+		gff_cds_entries=[gff_parent_entry] if gff_cds_entries.nil? && gff_parent_entry.feature=="CDS"
+
+		peptides = tool.stack_charge_states ? protein.peptides : protein.representative_peptides
+
+		peptides.each do |peptide|
+			peptide_entries = peptide.to_gff3_records(protein_entry.aaseq,gff_parent_entry,gff_cds_entries)
+			peptide_entries.each do |peptide_entry|
+				output_fh.write peptide_entry.to_s
+			end
+		end
+
+	rescue NoGFFEntryFoundError
+		$protk.log "No gff entry for #{parsed_name_for_gffid}", :info
+		num_missing_gff_entries+=1
+	rescue ProteinNotInDBError
+		$protk.log "No entry for #{parsed_name_for_protdb}", :info
+	rescue MultipleGFFEntriesForProteinError
+		$protk.log "Multiple entries in gff file for #{parsed_name_for_gffid}", :info
+	rescue PeptideNotInProteinError
+		$protk.log "A peptide was not found in its parent protein #{protein.protein_name}" , :warn
+	end
 end
 
-puts "Aligning peptides and writing GFF data..."
-
-low_prob = 0
-skipped = 0
-peptide_count = 0
-protein_count = 0
-total_peptides = 0
-
-peptides_covered_genome={}
-
-for prot in proteins
-  prot_prob = prot['probability']
-  if ( prot_prob.to_f < tool.protein_probability_threshold )
-    next
-  end
-
-  # Gets identifiers of all proteins (including indistinguishable ones)
-  prot_names=tool.protein_names(prot)
-
-
-  if tool.protein_find!=nil
-    prot_names=prot_names.keep_if { |pname| pname.include? tool.protein_find }  
-  end
-
-
-  peptides=tool.peptide_nodes(prot)
-  entries_covered=[]
-  for protein_name in prot_names
-    protein_count += 1
-    prot_id = "pr#{protein_count.to_s}"
-    begin
-
-      protein_fasta_entry = tool.get_fasta_record(protein_name,fastadb)
-      if tool.coords_file
-        protein_info = cds_info_from_gff(protein_name,protein_fasta_entry,gffdb)
-        # require 'debugger';debugger
-        # puts protein_info
-      else  
-        protein_info = tool.cds_info_from_fasta(protein_fasta_entry) 
-      end
-
-      unless (tool.collapse_redundant_proteins && !tool.is_new_genome_location(protein_info,entries_covered) )
-
-        protein_gff = tool.generate_protein_gff(protein_name,protein_info,prot_prob,protein_count)
-
-        gff_db.records += ["##gff-version 3\n","##sequence-region #{protein_info.scaffold} 1 160\n",protein_gff]
-
-        prot_seq = protein_fasta_entry.aaseq.to_s
-        throw "Not amino_acids" if prot_seq != protein_fasta_entry.seq.to_s
-
-        peptides_covered_protein=[]
-        peptide_count=1
-        for peptide in peptides
-
-          pprob = peptide['nsp_adjusted_probability'].to_f
-          # puts peptide
-          # puts pprob
-          pep_seq = peptide['peptide_sequence']
-
-          if ( pprob >= tool.peptide_probability_threshold && (!peptides_covered_protein.include?(pep_seq) || tool.stack_charge_states))
-
-            dna_sequence=nil
-            if !protein_info.is_sixframe
-              throw "A genome is required if predicted transcripts are to be mapped" unless genomedb!=nil
-              dna_sequence = tool.get_dna_sequence(protein_info,genomedb)
-            end
-
-
-            peptide_gff = tool.generate_gff_for_peptide_mapped_to_protein(prot_seq,pep_seq,protein_info,prot_id,pprob,peptide_count,dna_sequence,genomedb)
-
-            unless (peptide_gff.length==0 || tool.peptide_gff_is_duplicate(peptide_gff[0],peptides_covered_genome))
-
-              tool.add_putative_nterm_to_gff(peptide_gff,pep_seq,prot_seq,protein_info,prot_id,peptide_count,dna_sequence,genomedb)
-
-              gff_db.records += peptide_gff
-
-              peptides_covered_protein << pep_seq unless tool.stack_charge_states
-              peptides_covered_genome[pep_seq] = peptide_gff[0].start 
-
-              total_peptides += 1
-              peptide_count+=1
-            else
-              puts "Duplicate peptide #{peptide_gff[0]}"
-            end
-#            puts gff_db.records.last
-          end
-        end
-      else
-        puts "Skipping redundant entry #{protein_name}"
-        protein_count-=1 # To counter +1 prior to begin rescue end block
-      end
-
-      entries_covered<<protein_info
-
-     puts protein_gff
-#      puts gff_db.records
-    rescue KeyError,EncodingError
-      skipped+=0
-    end
-
-    # exit
-  end
-
+if num_missing_gff_entries>0
+	$protk.log "Failed to lookup gff entries. Try setting --gff-idregex" if tool.gff_idregex.nil?
 end
 
-f = open(gff_out_file,'w+')
-gff_db.records.each { |rec| 
-  f.write(rec.to_s)
-}
-f.close
-
-p "Finished."
-p "Proteins: #{protein_count}"
-p "Skipped Decoys: #{skipped}"
-p "Total Peptides: #{total_peptides}"
-p "Peptides Written: #{total_peptides - low_prob}"
-p "Peptides Culled: #{low_prob}"
-exit(0)
