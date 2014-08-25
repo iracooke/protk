@@ -66,9 +66,6 @@ file.each do |entry|
           position_end=forward_position_end
         end
 
-
-
-
         # Create accession compliant with NCBI naming standard
         # See http://www.ncbi.nlm.nih.gov/books/NBK7183/?rendertype=table&id=ch_demo.T5
         ncbi_scaffold_id = entry.entry_id.gsub('|','_').gsub(' ','_')
