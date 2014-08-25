@@ -53,4 +53,20 @@ class Protein
 
 	end
 
+	# Return just one peptide for each unique sequence choosing the peptide with highest probability
+	#
+	def representative_peptides()
+		best_peptides={}
+		self.peptides.each do |peptide|
+			seq = peptide.sequence
+			if best_peptides[seq].nil?
+				best_peptides[seq]=peptide				
+			else
+				best_peptides[seq]=peptide if peptide.nsp_adjusted_probability > best_peptides[seq].nsp_adjusted_probability
+			end
+		end
+
+		best_peptides.values
+	end
+
 end

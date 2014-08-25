@@ -96,7 +96,7 @@ describe Peptide do
 		 }
 
 
-		 it "works for a sixframe translation on the negative strand 101" do
+		 it "works for a sixframe translation on the negative strand" do
 		 	prot_entry = orf_negative_strand
 			expect(prot_entry.feature_type).to eq("CDS")
 

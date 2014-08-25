@@ -133,7 +133,9 @@ proteins.each do |protein|
 		#
 		gff_cds_entries=[gff_parent_entry] if gff_cds_entries.nil? && gff_parent_entry.feature=="CDS"
 
-		protein.peptides.each do |peptide|
+		peptides = tool.stack_charge_states ? protein.peptides : protein.representative_peptides
+
+		peptides.each do |peptide|
 			peptide_entries = peptide.to_gff3_records(protein_entry.aaseq,gff_parent_entry,gff_cds_entries)
 			peptide_entries.each do |peptide_entry|
 				output_fh.write peptide_entry.to_s
