@@ -43,11 +43,11 @@ class Peptide
 	def coords_in_protein(prot_seq,reverse=false)
 		if reverse
 			pep_index = prot_seq.reverse.index(self.sequence.reverse)
-			throw PeptideNotInProteinError if pep_index.nil?
+			raise PeptideNotInProteinError if pep_index.nil?
 			pep_start_i = pep_index
 		else
 			pep_start_i = prot_seq.index(self.sequence)
-			throw PeptideNotInProteinError if pep_start_i.nil?			
+			raise PeptideNotInProteinError if pep_start_i.nil?			
 		end
 		pep_end_i = pep_start_i+self.sequence.length
 		{:start => pep_start_i,:end => pep_end_i}
@@ -148,6 +148,7 @@ class Peptide
 	def gff_record_for_peptide_fragment(start_i,end_i,parent_record)
 		cds_id = parent_record.id
 		this_id = "#{cds_id}.#{self.sequence}"
+		this_id << ".#{self.charge}" unless self.charge.nil?
 		score = self.nsp_adjusted_probability.nil? ? "." : self.nsp_adjusted_probability.to_s
 		gff_string = "#{parent_record.seqid}\tMSMS\tpolypeptide\t#{start_i}\t#{end_i}\t#{score}\t#{parent_record.strand}\t0\tID=#{this_id};Parent=#{cds_id}"
 		Bio::GFF::GFF3::Record.new(gff_string)

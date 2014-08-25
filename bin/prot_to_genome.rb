@@ -71,13 +71,12 @@ end
 
 
 tool=Tool.new([:explicit_output,:debug])
-tool.option_parser.banner = "Map proteins and peptides to genomic coordinates.\n\nUsage: prot_to_genome.rb [options] proteins.<protXML,tsv>"
+tool.option_parser.banner = "Map proteins and peptides to genomic coordinates.\n\nUsage: prot_to_genome.rb [options] proteins.<protXML>"
 
 tool.add_value_option(:database,nil,['-d filename','--database filename','Database used for ms/ms searches (Fasta Format)'])
 tool.add_value_option(:genome,nil,['-g filename','--genome filename', 'Nucleotide sequences for scaffolds (Fasta Format)'])
 tool.add_value_option(:coords_file,nil,['-c filename','--coords-file filename.gff3', 'A file containing genomic coordinates for predicted proteins and/or 6-frame translations'])
 tool.add_boolean_option(:stack_charge_states,false,['--stack-charge-states','Different peptide charge states get separate gff entries'])
-tool.add_boolean_option(:collapse_redundant_proteins,false,['--collapse-redundant-proteins','Proteins that cover genomic regions already covered will be skipped'])
 tool.add_value_option(:peptide_probability_threshold,0.95,['--threshold prob','Peptide Probability Threshold (Default 0.95)'])
 tool.add_value_option(:protein_probability_threshold,0.99,['--prot-threshold prob','Protein Probability Threshold (Default 0.99)'])
 tool.add_value_option(:gff_idregex,nil,['--gff-idregex pre','Regex with capture group for parsing gff ids from protein ids'])
@@ -130,6 +129,9 @@ proteins.each do |protein|
 		gff_parent_entry = gff_parent_entries.first
 		gff_cds_entries = gffdb.get_cds_by_parent_id(parsed_name_for_gffid)
 
+		# Account for sixframe case. Parent is CDS and there are no children
+		#
+		gff_cds_entries=[gff_parent_entry] if gff_cds_entries.nil? && gff_parent_entry.feature=="CDS"
 
 		protein.peptides.each do |peptide|
 			peptide_entries = peptide.to_gff3_records(protein_entry.aaseq,gff_parent_entry,gff_cds_entries)
@@ -147,5 +149,7 @@ proteins.each do |protein|
 		$protk.log "No entry for #{parsed_name_for_protdb}", :info
 	rescue MultipleGFFEntriesForProteinError
 		$protk.log "Multiple entries in gff file for #{parsed_name_for_gffid}", :info
+	rescue PeptideNotInProteinError
+		$protk.log "A peptide was not found in its parent protein #{protein.protein_name}" , :warn
 	end
 end
