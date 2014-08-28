@@ -30,7 +30,8 @@ columns={'recname'=>"Primary Name",'cd'=>"CD Antigen Name",'altnames'=>"Alternat
       'signalp'=>'Signal Peptide',
       'go_terms'=>"GO Terms",
       'go_entries'=>"GO Entries",
-      'accessions'=>"Uniprot Accessions"
+      'accessions'=>"Uniprot Accessions",
+      'ncbi_taxon_id'=>"NCBI Taxon ID"
     }
 
 
@@ -89,6 +90,17 @@ skip_index = File.exists?(database_index_path) ? true : false
 swissprotdb=SwissprotDatabase.new(database_path,skip_index)
 
 
+def write_entry(item_name,item,columns,tool,output_fh)
+  row=[item_name]
+  row << columns.keys.collect do |name| 
+    colvalue = item.send(name)
+    colvalue = "" unless colvalue
+    colvalue = colvalue.join(tool.array_separator) if colvalue.class==Array
+    colvalue
+  end
+  output_fh.write "#{row.join(tool.separator)}\n"
+end
+
 File.open(ARGV[0]).each_line do |line|
 
   begin
@@ -99,16 +111,10 @@ File.open(ARGV[0]).each_line do |line|
 
   begin
     item = swissprotdb.get_entry_for_name(query_id)
-    row=[query_id]
-    row << columns.keys.collect do |name| 
-      colvalue = item.send(name)
-      colvalue = "" unless colvalue
-      colvalue = colvalue.join(tool.array_separator) if colvalue.class==Array
-      colvalue
-    end
-    output_fh.write "#{row.join(tool.separator)}\n"
+    write_entry(query_id,item,columns,tool,output_fh)
   rescue
     $protk.log "Unable to retrieve entry for #{query_id}" , :debug
   end
+
 end
 

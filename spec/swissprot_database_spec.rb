@@ -42,6 +42,7 @@ describe SwissprotDatabase do
     its(:signalp) { should eq("1")}
     its(:go_terms) {should include("GO:0009897") }
     its(:go_entries) { should include(["GO:0009897", "C:external side of plasma membrane", "IEA:Ensembl"])}
+    its(:ncbi_taxon_id) { should include("9606")}
   end
 
 	it "should fail gracefully when asked to search for a non-existent protein BLAHBLAH" do

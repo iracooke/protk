@@ -249,8 +249,8 @@ class Bio::SPTR < Bio::EMBLDB
     return self.seq.to_s
   end
 
-  def tax_dump
-    return self.ox.to_s
+  def ncbi_taxon_id
+    return self.ox["NCBI_TaxID"]
   end
 
   def species_dump
