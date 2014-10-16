@@ -21,6 +21,10 @@ class ProphetTool < SearchTool
     
     super(option_support)
 
+    if ( option_support.include? :probability_threshold )
+      add_value_option(:probability_threshold,0.05,['--p-thresh val', 'Probability threshold below which PSMs are discarded'])
+    end
+
   end
     
 

@@ -23,7 +23,8 @@ prophet_tool=ProphetTool.new([
   :over_write,
   :maldi,
   :prefix,
-  :database])
+  :database,
+  :probability_threshold])
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 @output_suffix="_pproph"
 prophet_tool.options.database=nil
@@ -65,6 +66,8 @@ file_info={}
 inputs.each {|file_name| 
   name=file_name.chomp
   
+  throw "Missing input file #{file_name}" unless File.exist?(file_name)
+
   engine=prophet_tool.extract_engine(name)
   if prophet_tool.database
     db_path = prophet_tool.database_info.path
@@ -154,7 +157,7 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
   if prophet_tool.useicat
     cmd << " -Oi "
   else
-    cmd << " -Of"
+#    cmd << " -Of"
   end
   
   if prophet_tool.maldi
@@ -174,6 +177,8 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine)
     end
   end  
   
+  cmd << " -p#{prophet_tool.probability_threshold}"
+
   if ( inputs.class==Array)
     cmd << " #{inputs.join(" ")}"  
   else
