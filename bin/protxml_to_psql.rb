@@ -301,7 +301,7 @@ def lookup_spectra_from_files(file_list,matched_spectra)
 	total_spectra=0
 
 	file_list.each do |file|
-		mzml_parser = MzMLParser.new(file)
+		mzml_parser = MzMLParser.new(find_file(file))
 
 		spec = mzml_parser.next_spectrum
 
@@ -334,7 +334,22 @@ def lookup_spectra_from_files(file_list,matched_spectra)
 
 end
 
-# Setup specific command-line options for this tool. Other options are inherited from ProphetTool
+def find_file(path)
+	if File.exists? path
+		return path
+	else # Search in search paths
+		filename = Pathname.new(path).basename.to_s
+		$search_paths.each do |sp|  
+			pth = File.join(sp,filename)
+			if File.exists? pth
+				return pth				
+			end
+		end
+	end
+	return nil
+end
+
+# Setup specific command-line options for this tool. Other options are inherited
 #
 tool=Tool.new([:explicit_output,:over_write])
 tool.option_parser.banner = "Convert a protXML file to a sqlite database.\n\nUsage: protxml_to_psql.rb [options] file1.protXML"
@@ -347,6 +362,7 @@ exit unless tool.check_options(true,[:explicit_output])
 
 input_file=ARGV.shift
 
+$search_paths = [Pathname.new(input_file).dirname.to_s,Pathname.new(".").realpath.to_s]
 
 if File.exists? tool.explicit_output
 	throw "Cant overwrite existing db #{tool.explicit_output}" unless tool.over_write
@@ -386,7 +402,7 @@ matched_spectra=[]
 headers_with_inputs.each do |header|  
 	pepxml_files = header.attributes['source_files'].split(",")
 	pepxml_files.each do |pepxml_file|
-		matched_spectra.concat insert_psms_from_file(pepxml_file)
+		matched_spectra.concat insert_psms_from_file(find_file(pepxml_file))
 	end
 end
 

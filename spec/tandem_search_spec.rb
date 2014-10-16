@@ -29,7 +29,7 @@ describe "The xtandem_search command" do
 		it_behaves_like "a protk tool with default file output", :dependencies_installed => tandem_installed		
 		it_behaves_like "a protk tool that supports explicit output",:dependencies_installed => tandem_installed do
 			let(:output_file) { "#{@tmp_dir}/out.tandem" }
-			let(:validator) { have_lines_matching(26,"protein") }
+			let(:validator) { have_lines_matching(14,"protein") }
 		end
 
 
