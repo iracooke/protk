@@ -15,14 +15,6 @@
 	</note> 
 	<note type="input" label="list path, default parameters">no default</note>
 
-	<note> MODIFICATIONS. No Default</note>	
-	
-	<note type="input" label="protein, cleavage C-terminal mass change"></note>
-	<note type="input" label="protein, cleavage N-terminal mass change"></note>
-	<note type="input" label="protein, N-terminal residue modification mass"></note>
-	<note type="input" label="protein, C-terminal residue modification mass"></note>
-	<note> These are *static* modifications on the PROTEINS' N or C-termini. </note>
-
 
 	<note> 
 		REFINEMENT. Not supported via tandem_search.rb. 

@@ -10,11 +10,11 @@
 	<note type="input" label="spectrum, fragment monoisotopic mass error units">Daltons</note>
 	<note>The value for this parameter may be 'Daltons' or 'ppm': all other values are ignored</note>
 	<note type="input" label="spectrum, parent monoisotopic mass error units">ppm</note>
-		<note>The value for this parameter may be 'Daltons' or 'ppm': all other values are ignored</note>
+	<note>The value for this parameter may be 'Daltons' or 'ppm': all other values are ignored</note>
 	<note type="input" label="spectrum, fragment mass type">monoisotopic</note>
-		<note>values are monoisotopic|average </note>
+	<note>values are monoisotopic|average </note>
 
-<note>spectrum conditioning parameters</note>
+	<note>spectrum conditioning parameters</note>
 	<note type="input" label="spectrum, dynamic range">100.0</note>
 		<note>The peaks read in are normalized so that the most intense peak
 		is set to the dynamic range value. All peaks with values of less that
