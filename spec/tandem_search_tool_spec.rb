@@ -165,29 +165,33 @@ describe TandemSearchTool do
 	end
 
 
-	describe "residue modification options" do
+	describe "parsed motif options" do
 
 		describe ["residue, modification mass","--fix-mods"] do
-			it_behaves_like "a residue modification option", "57.021464@C , 	65.2@Q","57.021464@C,65.2@Q"
-			it_behaves_like "a residue modification option", "57.021464__at__C ","57.021464@C"
+			it_behaves_like "a parsed motif option", "57.021464@C , 	65.2@Q","57.021464@C,65.2@Q"
+			it_behaves_like "a parsed motif option", "57.021464__at__C ","57.021464@C"
 		end
 
 		describe ["residue, potential modification mass","--var-mods"] do
-			it_behaves_like "a residue modification option", "15.994915@M , 	65.2@Q, 0.998@N!{P}[ST]","15.994915@M,65.2@Q"
-			it_behaves_like "a residue modification option", "15.994915__at__M ","15.994915@M"
+			it_behaves_like "a parsed motif option", "15.994915@M , 	65.2@Q, 0.998@N!{P}[ST]","15.994915@M,65.2@Q"
+			it_behaves_like "a parsed motif option", "15.994915__at__M ","15.994915@M"
 		end
 
 		describe ["residue, potential modification motif","--var-mods"] do
-			it_behaves_like "a residue modification option", "15.994915@M , 	65.2@Q, 0.998@N!{P}[ST]","0.998@N!{P}[ST]"
-			it_behaves_like "a residue modification option", "0.998__at__N!__oc__P__cc____ob__ST__cb__ ","0.998@N!{P}[ST]"
+			it_behaves_like "a parsed motif option", "15.994915@M , 	65.2@Q, 0.998@N!{P}[ST]","0.998@N!{P}[ST]"
+			it_behaves_like "a parsed motif option", "0.998__at__N!__oc__P__cc____ob__ST__cb__ ","0.998@N!{P}[ST]"
 		end
 
 		describe ["residue, potential modification motif","--glyco"] do
-			it_behaves_like "a residue modification option", "","0.998@N!{P}[ST]"
+			it_behaves_like "a parsed motif option", "","0.998@N!{P}[ST]"
 		end
 
 		describe ["residue, potential modification mass","-m"] do
-			it_behaves_like "a residue modification option", "","15.994915@M"
+			it_behaves_like "a parsed motif option", "","15.994915@M"
+		end
+
+		describe ["protein, cleavage site","--enzyme"] do
+			it_behaves_like "a parsed motif option","__ob__RK__cb____pc____oc__P__cc__","[RK]|{P}"
 		end
 
 	end

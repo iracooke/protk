@@ -76,7 +76,7 @@ RSpec.shared_examples "an xtandem option" do |commandlineval,generatedval,extern
 end
 
 
-RSpec.shared_examples "a residue modification option" do |commandlineval,generatedval|
+RSpec.shared_examples "a parsed motif option" do |commandlineval,generatedval|
 
 	before(:each) do
     	@tandem_key=subject[0]

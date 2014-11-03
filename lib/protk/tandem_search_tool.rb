@@ -48,7 +48,8 @@ class TandemSearchTool < SearchTool
 			:fragment_tolu => "spectrum, fragment monoisotopic mass error units",
 			:acetyl_nterm => "protein, quick acetyl",
 			:output_spectra => "output, spectra",
-			:threads => "spectrum, threads"
+			:threads => "spectrum, threads",
+			:enzyme => "protein, cleavage site"
 		}
 
 		@xtandem_keys_for_precursor_tol = {
@@ -61,7 +62,7 @@ class TandemSearchTool < SearchTool
 		
 		@option_parser.banner = "Run an X!Tandem msms search on a set of mzML input files.\n\nUsage: tandem_search.rb [options] file1.mzML file2.mzML ..."
 		@options.output_suffix="_tandem"
-
+		@options.enzyme="[RK]|{P}"
 		add_value_option(:tandem_params,"isb_native",['-T', '--tandem-params tandem', 'Either the full path to an xml file containing a complete set of default parameters, or one of the following (isb_native,isb_kscore,gpm). Default is isb_native'])
 		add_boolean_option(:keep_params_files,false,['-K', '--keep-params-files', 'Keep X!Tandem parameter files'])
 		add_boolean_option(:output_spectra,false,['--output-spectra', 'Include spectra in the output file'])
@@ -71,12 +72,24 @@ class TandemSearchTool < SearchTool
 	private
 	# Galaxy changes things like @ to __at__ we need to change it back
 	#
-	def decode_modification_string(mstring)
+	def decode_galaxy_string(mstring)
   		mstring.gsub!("__at__","@")
   		mstring.gsub!("__oc__","{")
   		mstring.gsub!("__cc__","}")
   		mstring.gsub!("__ob__","[")
   		mstring.gsub!("__cb__","]")
+  		mstring.gsub!("__gt__",">")
+  		mstring.gsub!("__lt__","<")
+  		mstring.gsub!("__sq__","'")
+  		mstring.gsub!("__dq__","\"")
+  		mstring.gsub!("__cn__","\n")
+  		mstring.gsub!("__cr__","\r")
+  		mstring.gsub!("__tc__","\t")
+  		mstring.gsub!("__pd__","#")
+
+  		# For characters not allowed at all by galaxy
+  		mstring.gsub!("__pc__","|")
+
   		mstring
 	end
 
@@ -157,7 +170,6 @@ class TandemSearchTool < SearchTool
 		set_option(std_params,"protein, taxon",db_info.name)
 
 
-
 		# set_option(std_params, "protein, cleavage semi", self.cleavage_semi ? "yes" : "no")
 
 		# Simple options (unique with a 1:1 mapping to parameters from this tool)
@@ -168,7 +180,7 @@ class TandemSearchTool < SearchTool
 				if opt_val.is_a?(TrueClass) || opt_val.is_a?(FalseClass)
 					opt_val = opt_val ? "yes" : "no"
 				end
-				append_option(std_params,xtandem_key,opt_val.to_s) 
+				append_option(std_params,xtandem_key,decode_galaxy_string(opt_val.to_s)) 
 			end
 		end
 
@@ -181,6 +193,7 @@ class TandemSearchTool < SearchTool
 				end
 			end
 		end
+
 
 		# Per residue Fixed and Variable Modifications
 		#
@@ -195,7 +208,7 @@ class TandemSearchTool < SearchTool
 		#
 
 		var_mods = self.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }
-		var_mods=var_mods.collect {|mod| decode_modification_string(mod) }
+		var_mods=var_mods.collect {|mod| decode_galaxy_string(mod) }
 
 		# var_mods allows motif's as well as standard mods. These should be in a separate array
 		var_motifs = [].replace(var_mods)
@@ -203,7 +216,7 @@ class TandemSearchTool < SearchTool
 		var_motifs.keep_if {|mod| mod.xtandem_modification_motif? }
 
 		fix_mods = self.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }
-		fix_mods=fix_mods.collect {|mod| decode_modification_string(mod)}
+		fix_mods=fix_mods.collect {|mod| decode_galaxy_string(mod)}
 
 		# We also support the --glyco and --methionineo shortcuts.
 		# Add these here. No check is made for duplication
