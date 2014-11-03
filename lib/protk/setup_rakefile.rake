@@ -251,7 +251,7 @@ task :blast => blast_installed_file
 #
 # MSGFPlus
 #
-msgfplus_version="20140210"
+msgfplus_version="20140630"
 msgfplus_packagefile="MSGFPlus.#{msgfplus_version}.zip"
 msgfplus_url="http://proteomics.ucsd.edu/Software/MSGFPlus/MSGFPlus.#{msgfplus_version}.zip"
 msgfplus_installed_file="#{env.msgfplus_root}/MSGFPlus.jar"
@@ -274,7 +274,7 @@ def pwiz_platform
 	if RbConfig::CONFIG['host_os'] =~ /darwin/ 
 		return 'darwin-x86-xgcc40'
 	end
-	'linux-x86_64-gcc42'
+	'linux-x86_64-gcc48'
 end
 
 def platform_bunzip
@@ -284,7 +284,7 @@ def platform_bunzip
 	'bunzip2'
 end
 
-pwiz_version="3_0_4388"
+pwiz_version="3_0_6790"
 pwiz_folder_name="pwiz-bin-#{pwiz_platform}-release-#{pwiz_version}"
 pwiz_packagefile="#{pwiz_folder_name}.tar.bz2"
 pwiz_url="https://dl.dropbox.com/u/226794/#{pwiz_packagefile}"
@@ -297,7 +297,8 @@ file pwiz_installed_file => [@build_dir,"#{@download_dir}/#{pwiz_packagefile}"] 
     sh %{cd #{@build_dir}; #{platform_bunzip} -f #{pwiz_packagefile}}
     sh %{cd #{@build_dir}; tar -xvf #{pwiz_packagefile.chomp('.bz2')}}
     sh %{mkdir -p #{env.pwiz_root}}
-    sh %{cd #{@build_dir}; cp ./#{pwiz_folder_name}/* #{env.pwiz_root}/}
+    sh %{cd #{@build_dir}; cp ./msconvert #{env.pwiz_root}/}
+    sh %{cd #{@build_dir}; cp ./idconvert #{env.pwiz_root}/}    
 end
 
 task :pwiz => pwiz_installed_file
