@@ -81,17 +81,21 @@ db_info=search_tool.database_info
 
 database_path=db_info.path
 
-# Database must have fasta extension
-if Pathname.new(database_path).extname.to_s.downcase != ".fasta"
-  File.symlink(database_path,"#{database_path}.fasta") unless File.exists?("#{database_path}.fasta")
-  # make_msgfdb_cmd << "ln -s #{database_path} #{database_path}.fasta;"
-  database_path="#{database_path}.fasta"
-  database_path
+database_stager=nil
+
+if for_galaxy || Pathname.new(database_path).extname.to_s.downcase != ".fasta"
+  database_stager = GalaxyUtil.stage_fasta(database_path)
+  database_path = database_stager.staged_path
+# # Database must have fasta extension
+# if 
+#   File.symlink(database_path,"#{database_path}.fasta") unless File.exists?("#{database_path}.fasta")
+#   # make_msgfdb_cmd << "ln -s #{database_path} #{database_path}.fasta;"
+#   database_path="#{database_path}.fasta"
 end
 
 # Database must be indexed
 unless FileTest.exists?("#{database_path}.canno")
-  dbdir = Pathname.new(database_path).dirname.to_s
+  # dbdir = Pathname.new(database_path).dirname.to_s
   tdavalue=search_tool.decoy_search ? 1 : 0;
   make_msgfdb_cmd << "java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{database_path} -tda #{tdavalue}; "
 end
@@ -210,8 +214,17 @@ ARGV.each do |filename|
       cmd << ";ruby -pi.bak -e \"gsub('post=\\\"?','post=\\\"X')\" #{mzid_output_path}"
       cmd << ";ruby -pi.bak -e \"gsub('pre=\\\"?','pre=\\\"X')\" #{mzid_output_path}"
       cmd << ";idconvert #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
+
+ 
+      pepxml_output_path = "#{mzid_output_path.chomp('.mzid')}.pepXML"
+
+      # Fix the msms_run_summary base_name attribute
+      #
+      if for_galaxy
+        cmd << ";ruby -pi.bak -e \"gsub(/ base_name=[^ ]+/,' base_name=\\\"#{original_input_file}\\\"')\" #{pepxml_output_path}"
+      end
       #Then copy the pepxml to the final output path
-      cmd << "; mv #{mzid_output_path.chomp('.mzid')}.pepXML #{output_path}"
+      cmd << "; mv #{pepxml_output_path} #{output_path}"
     else
       cmd << "; mv #{mzid_output_path} #{output_path}"
     end
@@ -226,6 +239,10 @@ ARGV.each do |filename|
 
   if for_galaxy 
     input_stager.restore_references(output_path)
+  end
+
+  unless database_stager.nil?
+    database_stager.restore_references(output_path)
   end
 
   else

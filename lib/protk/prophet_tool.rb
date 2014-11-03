@@ -26,62 +26,26 @@ class ProphetTool < SearchTool
     end
 
   end
-    
-
-
-  # Obtain the database name from the given input file
+   
+  # TODO: Deal with multiple enzyme combos
   #
-  def extract_db(file_name)
-    reader = XML::Reader.file(file_name)
-    throw "Failed to open xml file #{file_name}" unless reader!=nil
+  def self.xinteract_code_for_enzyme(enzyme_name)
 
-    while(reader.read)
-      # For pep.xml files
-      #
-      if ( reader.name == "search_database" )
-        dbnode=reader.expand
-        dbvalue=dbnode['local_path']
-        reader.close
-        return dbvalue
-      end
+  	codes = {
+  		'trypsin' => 'T',
+  		'stricttrypsin' => 'S',
+  		'chymotrypsin' => 'C',
+  		'ralphtrypsin' => 'R',
+  		'aspn' => 'A',
+  		'gluc' => 'G',
+  		'glucbicarb' => 'B',
+  		'cnbr' => 'M',
+  		'elastase' => 'E',
+  		'lysn' => 'L',
+  		'nonspecific' => 'N'
+  	}
+  	codes[enzyme_name]
 
-      # For prot.xml files
-      #
-      if ( reader.name == "protein_summary_header" )
-        dbnode=reader.expand
-        dbvalue=dbnode['reference_database']
-        reader.close
-        return dbvalue
-      end
-      
-      
-      
-    end
-
-  end
-
-
-
-  # Obtain the search engine name from the input file
-  # The name of the engine is returned in lowercase and should contain no spaces
-  # Names of common engines are searched for and extracted in simplified form if possible
-  #
-  def extract_engine(file_name)
-    reader = XML::Reader.file(file_name)
-    throw "Failed to open xml file #{file_name}" unless reader!=nil
-
-    while(reader.read)
-      if ( reader.name == "search_summary" )
-        dbnode=reader.expand
-        dbvalue=dbnode['search_engine']
-        reader.close
-        engine_name=dbvalue.gsub(/ /,"_")
-        engine_name=engine_name.gsub(/\(/,"")
-        engine_name=engine_name.gsub(/\)/,"")
-        engine_name=engine_name.gsub(/\!/,"")        
-        return engine_name.downcase
-      end
-    end
   end
 
 end

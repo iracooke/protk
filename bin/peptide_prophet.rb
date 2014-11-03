@@ -11,6 +11,7 @@ require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/prophet_tool'
 require 'protk/galaxy_util'
+require 'protk/pepxml'
 
 for_galaxy = GalaxyUtil.for_galaxy?
 input_stager = nil
@@ -24,6 +25,7 @@ prophet_tool=ProphetTool.new([
   :maldi,
   :prefix,
   :database,
+  :threads,
   :probability_threshold])
 prophet_tool.option_parser.banner = "Run PeptideProphet on a set of pep.xml input files.\n\nUsage: peptide_prophet.rb [options] file1.pep.xml file2.pep.xml ..."
 @output_suffix="_pproph"
@@ -55,36 +57,59 @@ genv=Constants.new
 input_stagers=[]
 inputs=ARGV.collect { |file_name| file_name.chomp}
 if for_galaxy
-  input_stagers = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
+
+  # Force a copy since we need to edit it temporarily
+  input_stagers = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip,:force_copy => true) }
+
+  # For each pepxml we will also have some raw files that need staging.
+  # And for each raw file we need to replace references to it in the pep.xml with the staged path
+  #
+  input_stagers.each do |pepxml_stager|
+    staged_pepxml_path = pepxml_stager.staged_path
+    raw_inputs = PepXML.new(staged_pepxml_path).find_runs()
+
+    raw_inputs.each_pair do |base_name,atts|
+      extension = atts[:type]=="" ? "" : ".#{atts[:type]}"
+
+      raw_input_stager = GalaxyStager.new(base_name, :extension => extension)
+
+      GalaxyStager.replace_references(staged_pepxml_path,base_name,raw_input_stager.staged_base_path)
+    end
+  end
+
   inputs=input_stagers.collect { |sg| sg.staged_path }
 end
 
 # Interrogate all the input files to obtain the database and search engine from them
 #
-genv.log("Determining search engine and database used to create input files ...",:info)
+genv.log("Determining search engine, database and digestion enzyme for input files ...",:info)
 file_info={}
 inputs.each {|file_name| 
   name=file_name.chomp
   
   throw "Missing input file #{file_name}" unless File.exist?(file_name)
 
-  engine=prophet_tool.extract_engine(name)
+  file_pepxml = PepXML.new(name)
+
+  engine=file_pepxml.extract_engine()
   if prophet_tool.database
     db_path = prophet_tool.database_info.path
   else
-    db_path=prophet_tool.extract_db(name)
+    db_path=file_pepxml.extract_db()
     throw "Unable to find database #{db_path} used for searching. Specify database path using -d option" unless File.exist?(db_path)
   end
+
+  enzyme = file_pepxml.extract_enzyme() 
   
-  
-  file_info[name]={:engine=>engine , :database=>db_path } 
+  file_info[name]={:engine=>engine , :database=>db_path, :enzyme=>enzyme } 
 }
 
-# Check that all searches were performed with the same engine and database
+# Check that all searches were performed with the same engine, database and enzyme
 #
 #
 engine=nil
 database=nil
+enzyme=nil
 inputs=file_info.collect do |info|
   if ( engine==nil)
     engine=info[1][:engine]
@@ -92,7 +117,11 @@ inputs=file_info.collect do |info|
   if ( database==nil)
     database=info[1][:database]
   end
-  throw "All files to be analyzed must have been searched with the same database and search engine" unless (info[1][:engine]==engine) && (info[1][:database])
+  if ( enzyme==nil)
+    enzyme=info[1][:enzyme]
+  end
+
+  throw "All files to be analyzed must have been searched with the same database and search engine" unless (info[1][:engine]==engine) && (info[1][:database]) && (info[1][:enzyme]==enzyme)
 
   retname=  info[0]
   # if ( info[0]=~/\.dat$/)
@@ -103,12 +132,20 @@ inputs=file_info.collect do |info|
 
 end
 
-def generate_command(genv,prophet_tool,inputs,output,database,engine)
+def generate_command(genv,prophet_tool,inputs,output,database,engine,enzyme)
   
-  cmd="xinteract -N#{output}  -l7 -eT -D'#{database}' "
+  enzyme_code = ProphetTool.xinteract_code_for_enzyme(enzyme)
+
+  throw "Unrecognized enzyme #{enzyme}" if enzyme_code.nil?
+
+  cmd="xinteract -N#{output}  -l7 -e#{enzyme_code} -D'#{database}' "
 
   # Do not produce png plots
   cmd << " -Ot "
+
+  if prophet_tool.threads
+    cmd << " -THREADS=#{prophet_tool.threads}"
+  end
 
   if prophet_tool.glyco 
     cmd << " -Og "
@@ -204,7 +241,7 @@ if ( prophet_tool.one_ata_time )
   inputs.each do |input|
     output_file_name=Tool.default_output_path(input,".pep.xml",prophet_tool.output_prefix,@output_suffix)
     
-    cmd=generate_command(genv,prophet_tool,input,output_file_name,database,engine)
+    cmd=generate_command(genv,prophet_tool,input,output_file_name,database,engine,enzyme)
     run_peptide_prophet(genv,prophet_tool,cmd,output_file_name,engine)        
   end
 
@@ -216,7 +253,7 @@ else
     output_file_name=prophet_tool.explicit_output
   end
 
-  cmd=generate_command(genv,prophet_tool,inputs,output_file_name,database,engine)
+  cmd=generate_command(genv,prophet_tool,inputs,output_file_name,database,engine,enzyme)
   run_peptide_prophet(genv,prophet_tool,cmd,output_file_name,engine)
   
 end

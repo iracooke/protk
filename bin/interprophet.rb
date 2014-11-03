@@ -19,6 +19,8 @@ for_galaxy = GalaxyUtil.for_galaxy?
 prophet_tool=ProphetTool.new([
   :explicit_output,
   :over_write,
+  :probability_threshold,
+  :threads,
   :prefix])
 
 prophet_tool.option_parser.banner = "Run InterProphet on a set of pep.xml input files.\n\nUsage: interprophet.rb [options] file1.pep.xml file2.pep.xml ..."
@@ -30,7 +32,7 @@ prophet_tool.add_boolean_option(:no_nrs,false,['--no-nrs', 'Don\'t use NRS (Numb
 prophet_tool.add_boolean_option(:no_nse,false,['--no-nse', 'Don\'t use NSE (Number of Sibling Experiments) in Model'])
 prophet_tool.add_boolean_option(:no_nsi,false,["--no-nsi",'Don\'t use NSE (Number of Sibling Ions) in Model'])
 prophet_tool.add_boolean_option(:no_nsm,false,["--no-nsm",'Don\'t use NSE (Number of Sibling Modifications) in Model'])
-prophet_tool.add_value_option(:min_prob,"",["--minprob mp","Minimum probability cutoff "])
+# prophet_tool.add_value_option(:min_prob,"",["--minprob mp","Minimum probability cutoff "])
 
 exit unless prophet_tool.check_options(true)
 
@@ -51,20 +53,23 @@ end
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   cmd="InterProphetParser "
-
+  cmd<<"THREADS=#{prophet_tool.threads.to_i}" if prophet_tool.threads.to_i > 0
   cmd<<"NONSS " if prophet_tool.options.no_nss
   cmd<<"NONRS " if prophet_tool.options.no_nrs
   cmd<<"NONSE " if prophet_tool.options.no_nse
   cmd<<"NONSI " if prophet_tool.options.no_nsi
   cmd<<"NONSM " if prophet_tool.options.no_nsm
 
-  cmd << " MINPROB=#{prophet_tool.min_prob}" if ( prophet_tool.min_prob !="" )
+
+  cmd << " MINPROB=#{prophet_tool.probability_threshold}" if ( prophet_tool.probability_threshold !="" )
 
   if for_galaxy
     inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
   end
 
-  cmd << " #{inputs.join(" ")} #{output_file}"
+  input_files = inputs.collect { |e| e.staged_path }
+
+  cmd << " #{input_files.join(" ")} #{output_file}"
 
   genv.log("Running #{cmd}",:info)
 
@@ -72,6 +77,12 @@ if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
   #
   code = prophet_tool.run(cmd,genv)
   throw "Command failed with exit code #{code}" unless code==0
+
+  if for_galaxy
+    inputs.each do |ip_stager|
+      ip_stager.restore_references(output_file)
+    end
+  end
     
 else
   genv.log("Interprophet output file #{output_file} already exists. Run with -r option to replace",:warn)   

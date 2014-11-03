@@ -4,16 +4,11 @@ require 'spec_helper'
 describe ProphetTool do
 
   
-  it "should correctly extract the database from an input file" do
-    tool=ProphetTool.new
-    dbname=tool.extract_db("#{$this_dir}/data/minimal_omssa.pep.xml")
-    expect(dbname).to eq("/var/www/ISB/data/Databases/OnMascot//SPHuman/sphuman_20101013_DECOY.fasta")
-  end
-  
-  it "should correctly extract the search engine name from an input file" do
-    tool=ProphetTool.new
-    dbname=tool.extract_engine("#{$this_dir}/data/minimal_omssa.pep.xml")
-    expect(dbname).to eq("omssa")    
+  it "translates enzyme names to xinteract enzyme codes" do
+
+    expect(ProphetTool.xinteract_code_for_enzyme('trypsin')).to eq("T")
+    expect(ProphetTool.xinteract_code_for_enzyme('chymotrypsin')).to eq("C")
+
   end
     
 end
