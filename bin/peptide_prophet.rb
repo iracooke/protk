@@ -206,12 +206,7 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine,enzyme)
   end
 
   unless prophet_tool.no_decoys
-
-    if engine=="omssa" || engine=="phenyx"
-      cmd << " -Op -P -d#{prophet_tool.decoy_prefix} "
-    else
       cmd << " -d#{prophet_tool.decoy_prefix} "
-    end
   end  
   
   cmd << " -p#{prophet_tool.probability_threshold}"
