@@ -81,7 +81,7 @@ protein_groups.each do |protein_group|
 		column_values << protein_group.attributes['group_number']
 
 		grp_prob = protein_group.attributes['probability']
-		grp_prob = 1.0-grp_prob.to_f if tool.invert_probabilities
+		grp_prob = (1.0-grp_prob.to_f).round(3) if tool.invert_probabilities
 		column_values << grp_prob
 
 		column_values << protein.attributes['protein_name']
@@ -89,7 +89,7 @@ protein_groups.each do |protein_group|
 		column_values << indis_proteins_summary
 
 		prt_prob = protein.attributes['probability']
-		prt_prob = 1.0-prt_prob.to_f if tool.invert_probabilities		
+		prt_prob = (1.0-prt_prob.to_f).round(3) if tool.invert_probabilities		
 		column_values << prt_prob
 
 
@@ -107,7 +107,7 @@ protein_groups.each do |protein_group|
 	group_column_values=[protein_group.attributes['group_number']]
 
 	grp_prob = protein_group.attributes['probability']
-	grp_prob = 1.0-grp_prob.to_f if tool.invert_probabilities
+	grp_prob = (1.0-grp_prob.to_f).round(3) if tool.invert_probabilities
 	group_column_values<<grp_prob
 
 	group_column_values<<group_members.join(" ")
