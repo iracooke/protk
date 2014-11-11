@@ -20,6 +20,7 @@ tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Convert a protXML file to a tab delimited table.\n\nUsage: protxml_to_table.rb [options] file1.protXML"
 
 tool.add_boolean_option(:groups,false,["--groups","Print output by groups rather than for each protein"])
+tool.add_boolean_option(:invert_probabilities,false,["--invert-probabilities","Output 1-p instead of p for all probability values"])
 
 exit unless tool.check_options(true)
 
@@ -78,12 +79,20 @@ protein_groups.each do |protein_group|
 		column_values=[]
 
 		column_values << protein_group.attributes['group_number']
-		column_values << protein_group.attributes['probability']
+
+		grp_prob = protein_group.attributes['probability']
+		grp_prob = 1.0-grp_prob.to_f if tool.invert_probabilities
+		column_values << grp_prob
 
 		column_values << protein.attributes['protein_name']
 		column_values << protein_id
 		column_values << indis_proteins_summary
-		column_values << protein.attributes['probability']
+
+		prt_prob = protein.attributes['probability']
+		prt_prob = 1.0-prt_prob.to_f if tool.invert_probabilities		
+		column_values << prt_prob
+
+
 		column_values << protein.attributes['percent_coverage']
 		column_values << protein.attributes['unique_stripped_peptides']
 		column_values << protein.attributes['total_number_peptides']
@@ -96,7 +105,11 @@ protein_groups.each do |protein_group|
 	end
 
 	group_column_values=[protein_group.attributes['group_number']]
-	group_column_values<<protein_group.attributes['probability']
+
+	grp_prob = protein_group.attributes['probability']
+	grp_prob = 1.0-grp_prob.to_f if tool.invert_probabilities
+	group_column_values<<grp_prob
+
 	group_column_values<<group_members.join(" ")
 
 	if tool.groups

@@ -19,6 +19,8 @@ include LibXML
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Convert a pepXML file to a tab delimited table.\n\nUsage: pepxml_to_table.rb [options] file1.pep.xml"
 
+tool.add_boolean_option(:invert_probabilities,false,["--invert-probabilities","Output 1-p instead of p for all probability values"])
+
 exit unless tool.check_options(true)
 
 input_file=ARGV[0]
@@ -87,6 +89,11 @@ spectrum_queries.each do |query|
   peptide_prophet_prob=pp_result[0].value if ( pp_result.length>0 )
   interprophet_prob=ip_result[0].value if ( ip_result.length>0)
   
+  if tool.invert_probabilities
+    peptide_prophet_prob = 1.0-peptide_prophet_prob.to_f if peptide_prophet_prob!=""
+    interprophet_prob = 1.0 - interprophet_prob.to_f if interprophet_prob!=""
+  end
+
   output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t#{raw_score}\t#{peptide_prophet_prob}\t#{interprophet_prob}\n"
 
 end
