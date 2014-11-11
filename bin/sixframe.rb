@@ -28,7 +28,7 @@ tool.option_parser.banner = "Create a sixframe translation of a genome.\n\nUsage
 
 tool.add_boolean_option(:print_coords,false,['--coords', 'Write genomic coordinates in the fasta header'])
 tool.add_boolean_option(:keep_header,true,['--strip-header', 'Dont write sequence definition'])
-tool.add_value_option(:min_len,20,['--min-len','Minimum ORF length to keep'])
+tool.add_value_option(:min_len,20,['--min-len l','Minimum ORF length to keep'])
 tool.add_boolean_option(:write_gff,false,['--gff3','Output gff3 instead of fasta'])
 
 exit unless tool.check_options(true)
@@ -58,7 +58,7 @@ file.each do |entry|
     oi=0
     orfs.each do |orf|
       oi+=1
-      if ( orf.length > tool.min_len )
+      if ( orf.length > tool.min_len.to_i )
 
         position_start = position
         position_end = position_start + orf.length*3 -1
