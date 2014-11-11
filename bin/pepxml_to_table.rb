@@ -78,6 +78,9 @@ spectrum_queries.each do |query|
   when /MS\-GF/
     search_score_nodes=top_search_hit.find("./#{pepxml_ns_prefix}search_score[@name=\"EValue\"]",[pepxml_ns])
     raw_score=search_score_nodes[0].attributes['value']    
+  when /MASCOT/
+    search_score_nodes=top_search_hit.find("./#{pepxml_ns_prefix}search_score[@name=\"ionscore\"]",[pepxml_ns])
+    raw_score=search_score_nodes[0].attributes['value']
   end
 
   
@@ -90,8 +93,8 @@ spectrum_queries.each do |query|
   interprophet_prob=ip_result[0].value if ( ip_result.length>0)
   
   if tool.invert_probabilities
-    peptide_prophet_prob = 1.0-peptide_prophet_prob.to_f if peptide_prophet_prob!=""
-    interprophet_prob = 1.0 - interprophet_prob.to_f if interprophet_prob!=""
+    peptide_prophet_prob = (1.0-peptide_prophet_prob.to_f).round(3) if peptide_prophet_prob!=""
+    interprophet_prob = (1.0 - interprophet_prob.to_f).round(3) if interprophet_prob!=""
   end
 
   output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t#{raw_score}\t#{peptide_prophet_prob}\t#{interprophet_prob}\n"
