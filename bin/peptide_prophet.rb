@@ -194,7 +194,7 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine,enzyme)
   if prophet_tool.useicat
     cmd << " -Oi "
   else
-#    cmd << " -Of"
+    cmd << " -Of"
   end
   
   if prophet_tool.maldi
@@ -206,7 +206,7 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine,enzyme)
   end
 
   unless prophet_tool.no_decoys
-      cmd << " -d#{prophet_tool.decoy_prefix} "
+      cmd << " -d#{prophet_tool.decoy_prefix} -Od "
   end  
   
   cmd << " -p#{prophet_tool.probability_threshold}"
