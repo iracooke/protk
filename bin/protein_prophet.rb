@@ -60,9 +60,49 @@ if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   cmd << " #{inputs.join(" ")} #{output_file}"
 
+  if ( prophet_tool.iproph )
+    cmd << " IPROPHET "
+  end
+
+  if ( prophet_tool.nooccam )
+    cmd << " NOOCCAM "
+  end
+
+  if ( prophet_tool.groupwts )
+    cmd << " GROUPWTS "
+  end
+
+  if ( prophet_tool.normprotlen )
+    cmd << " NORMPROTLEN "
+  end
+
+  if ( prophet_tool.logprobs )
+    cmd << " LOGPROBS "
+  end
+
+  if ( prophet_tool.allpeps )
+    cmd << " ALLPEPS "
+  end
+
+  if ( prophet_tool.unmapped )
+    cmd << " UNMAPPED "
+  end
+
   if ( prophet_tool.glyco )
     cmd << " GLYC "
   end
+
+  if ( prophet_tool.delude )
+    cmd << " DELUDE "
+  end
+
+  if ( prophet_tool.instances )
+    cmd << " INSTANCES "
+  end
+
+  cmd << " MINPROB=#{prophet_tool.minprob} "
+
+  cmd << " MININDEP=#{prophet_tool.minindep} "
 
   # Run the analysis
   #

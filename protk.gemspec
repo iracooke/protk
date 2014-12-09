@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.3.1.pre1'
-  s.date        = '2014-06-24'
+  s.version     = '1.4.0'
+  s.date        = '2014-11-12'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
-  s.description = "A bunch of tools for proteomics"
+  s.description = "Commandline tools for proteomics"
   s.post_install_message = "Now run protk_setup.rb to install third party tools"
   s.authors     = ["Ira Cooke"]
   s.email       = 'iracooke@gmail.com'

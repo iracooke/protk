@@ -18,3 +18,7 @@ Using the comprehensive database created in step 1, run tandem MS/MS searches.  
 ## Step 3. Map peptides to nucleotides
 
 Instead of blasting or other approximate sequence matching technique, protk uses precise genomic coordinate information encoded in a `gff` file to map peptides to nucleic acid sequence locations.  This is done using the `protxml_to_gff` script.
+
+```bash
+	protxml_to_gff.rb -d transcriptome6f.fasta -c transcriptome6f.gff3 proteomics_results.protxml --gff-idregex='lcl\|([^ ]*)' > proteogenomics.gff
+```

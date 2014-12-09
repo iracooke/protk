@@ -31,7 +31,7 @@ else
   output_fh=$stdout
 end
 
-output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\traw_score\tpeptideprophet_prob\tinterprophet_prob\n"
+output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\traw_score\tpeptideprophet_prob\tinterprophet_prob\texperiment_label\n"
 
 XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
 
@@ -53,6 +53,9 @@ spectrum_queries.each do |query|
   retention_time=query.attributes['retention_time_sec']
   neutral_mass=query.attributes['precursor_neutral_mass']
   assumed_charge=query.attributes['assumed_charge']
+
+  experiment_label=""
+  experiment_label=query.attributes['experiment_label'] unless query.attributes['experiment_label'].nil?
 
   top_search_hit=query.find("./#{pepxml_ns_prefix}search_result/#{pepxml_ns_prefix}search_hit",pepxml_ns)[0]
   peptide=top_search_hit.attributes['peptide']
@@ -97,7 +100,7 @@ spectrum_queries.each do |query|
     interprophet_prob = (1.0 - interprophet_prob.to_f).round(3) if interprophet_prob!=""
   end
 
-  output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t#{raw_score}\t#{peptide_prophet_prob}\t#{interprophet_prob}\n"
+  output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t#{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t#{raw_score}\t#{peptide_prophet_prob}\t#{interprophet_prob}\t#{experiment_label}\n"
 
 end
 
