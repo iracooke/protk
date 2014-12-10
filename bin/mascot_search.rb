@@ -188,7 +188,7 @@ else
     #site = RestClient::Resource.new(mascot_cgi, timeout=300)
     #search_response=site['/nph-mascot.exe?1'].post , postdict, {:cookies=>cookie}
 
-    search_response=RestClient::Request.execute(:method => :post, :url => "#{mascot_cgi}/nph-mascot.exe?1", :payload => postdict,:headers=>{:cookies=>cookie},:timeout => search_tool.options.timeout, :open_timeout => 10)
+    search_response=RestClient::Request.execute(:method => :post, :url => "#{mascot_cgi}/nph-mascot.exe?1", :payload => postdict,:headers=>{:cookies=>cookie},:timeout => search_tool.options.timeout.to_i, :open_timeout => 10)
 
 
     #search_response=RestClient.post "#{mascot_cgi}/nph-mascot.exe?1", postdict, {:cookies=>cookie}
