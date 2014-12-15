@@ -30,7 +30,7 @@ def clean_build_dir
 end
 
 def download_buildfile url, file
-	sh %{cd #{@download_dir}; wget  #{url}}
+	sh %{cd #{@download_dir}; wget -O #{file} #{url}}
 end
 
 def download_task url, packagefile
