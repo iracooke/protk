@@ -229,7 +229,7 @@ def blast_platform
 	'x64-linux'
 end
 
-blast_version="2.2.27+"
+blast_version="2.2.30+"
 blast_packagefile="ncbi-blast-#{blast_version}-#{blast_platform}.tar.gz"
 blast_url="ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/#{blast_version.chomp('+')}/#{blast_packagefile}"
 blast_installed_file="#{env.blast_root}/bin/makeblastdb"
