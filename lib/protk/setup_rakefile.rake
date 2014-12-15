@@ -30,7 +30,7 @@ def clean_build_dir
 end
 
 def download_buildfile url, file
-	sh %{cd #{@download_dir}; wget  #{url}}
+	sh %{cd #{@download_dir}; wget -O #{file} #{url}}
 end
 
 def download_task url, packagefile
@@ -133,10 +133,10 @@ task :perl_locallib => [perl_locallib_installed_file]
 #
 # TPP
 #
-tpp_version="4.6.3"
+tpp_version="4.8.0"
 tpp_packagefile="TPP-#{tpp_version}.tgz"
 tpp_installed_file = "#{env.tpp_root}/bin/xinteract"
-tpp_url = "https://dl.dropbox.com/u/226794/TPP-4.6.3.tgz"
+tpp_url = "http://sourceforge.net/projects/sashimi/files/Trans-Proteomic%20Pipeline%20%28TPP%29/TPP%20v4.8%20%28philae%29%20rev%200/TPP_4.8.0-src.tgz/download"
 
 tpp_download_file = download_task tpp_url, tpp_packagefile
 
