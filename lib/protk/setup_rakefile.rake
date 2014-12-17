@@ -1,5 +1,6 @@
 
 require 'protk/constants.rb'
+require 'rake/clean'
 require 'rbconfig'
 
 env=Constants.new
@@ -9,6 +10,8 @@ env=Constants.new
 
 directory @build_dir
 directory @download_dir
+
+CLEAN.include @build_dir, @download_dir
 
 def package_manager_name 
 	package_managers = ["brew","yum","apt-get"]
