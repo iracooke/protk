@@ -233,6 +233,7 @@ blast_version="2.2.30+"
 blast_packagefile="ncbi-blast-#{blast_version}-#{blast_platform}.tar.gz"
 blast_url="ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/#{blast_version.chomp('+')}/#{blast_packagefile}"
 blast_installed_file="#{env.blast_root}/bin/makeblastdb"
+blast_required_bin=["makeblastdb", "blastdbcmd"]
 
 download_task blast_url, blast_packagefile
 
@@ -241,8 +242,10 @@ file blast_installed_file => [@build_dir,"#{@download_dir}/#{blast_packagefile}"
 	sh %{cp #{@download_dir}/#{blast_packagefile} #{@build_dir}}
     sh %{cd #{@build_dir}; gunzip #{blast_packagefile}}
     sh %{cd #{@build_dir}; tar -xvf #{blast_packagefile.chomp('.gz')}}
-    sh %{mkdir -p #{env.blast_root}}
-    sh %{cd #{@build_dir}; cp -r ncbi-blast-#{blast_version}/* #{env.blast_root}/}
+    sh %{mkdir -p #{env.blast_root}/bin}
+    blast_required_bin.each do |binary|
+        sh %{cd #{@build_dir}; cp -r ncbi-blast-#{blast_version}/bin/#{binary} #{env.blast_root}/bin/}
+    end
 end
 
 task :blast => blast_installed_file
