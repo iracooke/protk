@@ -12,7 +12,7 @@ require 'protk/search_tool'
 
 # Environment with global constants
 #
-genv=Constants.new
+genv=Constants.instance
 
 tool=SearchTool.new([:explicit_output,:over_write,:prefix])
 tool.option_parser.banner = "Convert tandem files to pep.xml files.\n\nUsage: tandem_to_pepxml.rb [options] file1.dat file2.dat ... "

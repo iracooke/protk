@@ -11,7 +11,7 @@ class PlasmoDB
     if ( env!=nil)
       @genv=env
     else
-      @genv=Constants.new
+      @genv=Constants.instance
     end
 
     database_file="#{@genv.protein_database_root}/#{@genv.plasmodb_annotation_database}/raw.txt"

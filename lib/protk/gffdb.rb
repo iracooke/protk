@@ -7,7 +7,6 @@ class GFFDB
   attr_accessor :id_to_records_map
 
   def initialize(gff_file_path)
-    env = Constants.new
     @database = gff_file_path
     @id_to_records_map={}
     @id_to_cds_map={}

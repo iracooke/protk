@@ -12,7 +12,7 @@ require 'protk/tool'
 class ManageDBTool < Tool
 
   def add dbspec, dbname
-    genv=Constants.new()
+    genv=Constants.instance()
     dbdir="#{genv.protein_database_root}/#{dbname}"
     %x[mkdir -p #{dbdir}]
 

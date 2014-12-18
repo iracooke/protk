@@ -60,7 +60,7 @@ exit unless search_tool.check_options(true)
 
 # Environment with global constants
 #
-genv=Constants.new
+genv=Constants.instance
 
 # Set search engine specific parameters on the SearchTool object
 #

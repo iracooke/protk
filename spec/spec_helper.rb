@@ -5,7 +5,7 @@ require 'protk'
 
 
 	
-$protk_env=Constants.new
+$protk_env=Constants.instance
 $this_dir=File.dirname(__FILE__)
 
 

@@ -35,7 +35,7 @@ if ( dbname!=nil)
   throw "Database name should contain no spaces" if ( dbname=~/\s/)
 end
 
-genv=Constants.new()
+genv=Constants.instance()
 
 
 case command

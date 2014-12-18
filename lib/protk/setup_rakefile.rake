@@ -3,7 +3,7 @@ require 'protk/constants.rb'
 require 'rake/clean'
 require 'rbconfig'
 
-env=Constants.new
+env=Constants.instance
 
 @build_dir = "#{env.protk_dir}/tmp/build"
 @download_dir = "#{env.protk_dir}/tmp/download"

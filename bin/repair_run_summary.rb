@@ -17,7 +17,7 @@ include LibXML
 
 # Environment with global constants
 #
-genv=Constants.new
+genv=Constants.instance
 
 
 # Setup specific command-line options for this tool. Other options are inherited from Tool

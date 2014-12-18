@@ -7,9 +7,10 @@
 require 'yaml'
 require 'logger'
 require 'pathname'
+require 'singleton'
 
 class Constants
-
+  include Singleton
   # A Hash holding all the constants
   #
   @env

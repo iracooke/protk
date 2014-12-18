@@ -38,7 +38,7 @@ prophet_tool.add_value_option(:minindep,0,['--minindep mp',"Minimum percentage o
 exit unless prophet_tool.check_options(true)
 
 # Obtain a global environment object
-genv=Constants.new
+genv=Constants.instance
 
 input_stagers=[]
 inputs=ARGV.collect { |file_name| file_name.chomp}

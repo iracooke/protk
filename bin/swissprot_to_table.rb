@@ -61,7 +61,7 @@ end
 exit unless tool.check_options(true,[:database])
 
 
-$protk = Constants.new
+$protk = Constants.instance
 log_level = tool.debug ? :debug : :fatal
 $protk.info_level= log_level
 

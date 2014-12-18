@@ -54,7 +54,7 @@ def prepare_fasta(database_path,type)
   when Pathname.new(database_path).exist? # It's an explicitly named db  
     db_filename = Pathname.new(database_path).expand_path.to_s
   else
-    db_filename=Constants.new.current_database_for_name(database_path)
+    db_filename=Constants.instance.current_database_for_name(database_path)
   end
 
 
@@ -84,10 +84,9 @@ tool.add_value_option(:genome_idregex,nil,['--genome-idregex pre','Regex with ca
 
 exit unless tool.check_options(true,[:database,:coords_file])
 
-$protk = Constants.new
+$protk = Constants.instance
 log_level = tool.debug ? "info" : "warn"
 $protk.info_level= log_level
-
 
 input_file=ARGV[0]
 
@@ -101,11 +100,14 @@ should_ = tool.debug || (output_fh!=$stdout)
 
 input_protxml=ARGV[0]
 
+$protk.log "Creating GFFDB", :info
 gffdb = GFFDB.create(tool.coords_file) if tool.coords_file
 
 # genome_db = prepare_fasta(tool.genome,'nucl')
+$protk.log "Preparing FASTA index", :info
 prot_db = prepare_fasta(tool.database,'prot')
 
+$protk.log "Parsing protxml", :info
 proteins = parse_proteins(input_protxml)
 
 num_missing_gff_entries = 0
@@ -113,6 +115,7 @@ num_missing_gff_entries = 0
 proteins.each do |protein|
 
 	begin
+		$protk.log "Mapping #{protein.protein_name}", :info
 		# Get the full protein sequence
 		#
 		parsed_name_for_protdb = protein_id_to_protdbid(protein.protein_name)

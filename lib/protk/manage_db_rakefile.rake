@@ -13,7 +13,7 @@ dbname=ARGV[0]
 
 # Load database spec file
 #
-$genv=Constants.new()
+$genv=Constants.instance()
 dbdir="#{$genv.protein_database_root}/#{dbname}"
 
 dbspec_file="#{dbdir}/.protkdb.yaml"

@@ -15,7 +15,7 @@ include LibXML
 
 # Environment with global constants
 #
-genv=Constants.new
+genv=Constants.instance
 
 tool=Tool.new([:over_write,:explicit_output])
 tool.option_parser.banner = "Look up retention times in a raw file and \

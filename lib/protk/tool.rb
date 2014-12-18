@@ -203,7 +203,7 @@ class Tool
          db_path=Pathname.new(@options.database).expand_path.to_s
          db_name=Pathname.new(@options.database).basename.to_s
        else
-         db_path=Constants.new.current_database_for_name @options.database
+         db_path=Constants.instance.current_database_for_name @options.database
          db_name=@options.database
      end
      FastaDatabase.new(db_name,db_path)

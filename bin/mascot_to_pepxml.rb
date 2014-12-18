@@ -13,7 +13,7 @@ require 'protk/mascot_util'
 
 # Environment with global constants
 #
-genv=Constants.new
+genv=Constants.instance
 
 tool=SearchTool.new([
   :database,

@@ -13,7 +13,7 @@ toolname=ARGV[0]
 if ARGV[1]=='--change-location'
 	location=ARGV[2]
 	p "Changing default location for #{toolname} to #{location}"
-	env=Constants.new
+	env=Constants.instance
 	env.update_user_config({"#{toolname}_root"=>location})
 	exit
 end
@@ -37,7 +37,7 @@ if ( ARGV.length < 1)
 	exit
 end
 
-env=Constants.new
+env=Constants.instance
 
 toolname=ARGV.shift
 

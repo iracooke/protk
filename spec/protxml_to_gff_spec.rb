@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'commandline_shared_examples.rb'
 
 def blast_installed
-  env=Constants.new
+  env=Constants.instance
   env.makeblastdb.length>0
 end
 

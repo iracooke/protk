@@ -8,7 +8,7 @@ require 'bio'
 class FastaDB
 
   def initialize(blast_database_file_path)
-    env = Constants.new
+    env = Constants.instance
     @database = blast_database_file_path
     @makedbcmd = env.makeblastdb
     @searchdbcmd = env.blastdbcmd

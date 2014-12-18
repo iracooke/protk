@@ -24,7 +24,7 @@ def prepare_fasta(database_path,type)
   when Pathname.new(database_path).exist? # It's an explicitly named db  
     db_filename = Pathname.new(database_path).expand_path.to_s
   else
-    db_filename=Constants.new.current_database_for_name(database_path)
+    db_filename=Constants.instance.current_database_for_name(database_path)
   end
 
   db_indexfilename = "#{db_filename}.pin"

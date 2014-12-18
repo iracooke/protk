@@ -8,7 +8,7 @@ require 'protk/constants'
 class UniprotMapper
 
   def initialize
-    @genv = Constants.new
+    @genv = Constants.instance
   end
 
   def map(from_id_type,from_ids,output_id)

@@ -15,7 +15,7 @@ include LibXML
 
 # Environment with global constants
 #
-genv=Constants.new
+genv=Constants.instance
 search_tool=TandemSearchTool.new()
 
 exit unless search_tool.check_options(true)

@@ -4,7 +4,7 @@ require "protk/constants"
 require 'spec_helper'
 
 def blast_installed
-  env=Constants.new
+  env=Constants.instance
   env.makeblastdb.length>0
 end
 

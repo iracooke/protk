@@ -11,7 +11,7 @@ class ConvertUtil
 
   def self.index_mzml(mzml_file)
     Dir.mktmpdir do |tmpdir|
-      genv=Constants.new
+      genv=Constants.instance
       %x["#{genv.msconvert} -o #{tmpdir} #{mzml_file}"]
       indexed_file = Dir["#{tmpdir}/*"][0]
       FileUtils.mv(indexed_file, mzml_file)

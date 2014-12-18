@@ -52,7 +52,7 @@ exit unless prophet_tool.check_options(true)
 throw "When --output and -F options are set only one file at a time can be run" if  ( ARGV.length> 1 ) && ( prophet_tool.explicit_output!=nil ) && (prophet_tool.one_ata_time!=nil)
 
 # Obtain a global environment object
-genv=Constants.new
+genv=Constants.instance
 
 input_stagers=[]
 inputs=ARGV.collect { |file_name| file_name.chomp}

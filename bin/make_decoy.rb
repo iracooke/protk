@@ -40,7 +40,7 @@ end
 
 output_file = tool.explicit_output if tool.explicit_output!=nil
 
-genv=Constants.new()
+genv=Constants.instance()
 
 decoys_tmp_file = Pathname.new(Tempfile.new("random").path).basename.to_s;
 

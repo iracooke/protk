@@ -38,7 +38,7 @@ exit unless prophet_tool.check_options(true)
 
 
 # Obtain a global environment object
-genv=Constants.new
+genv=Constants.instance
 
 inputs = ARGV.collect {|file_name| 
   file_name.chomp
