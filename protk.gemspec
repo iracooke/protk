@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-mocks', '~> 3.0'
   s.add_development_dependency 'rake-compiler', '~> 0'
-  s.add_development_dependency 'debugger', '~> 1.6', '>= 1.6.0'
+  s.add_development_dependency 'byebug', '~> 3.5'
   s.add_runtime_dependency 'sqlite3','~>0'
 
   s.homepage    = 'http://rubygems.org/gems/protk'
