@@ -28,8 +28,14 @@ class GFFDB
 
 
   def make_index(input_gff)
+    env=Constants.instance
+
     io = File.open(input_gff, "r")
+    env.log "Parsing Input GFF",:info
     gffdb = Bio::GFF::GFF3.new(io)  #parses the entire db
+
+    num_records = gffdb.records.length
+    env.log "Indexing #{num_records}", :info
 
     # Now create the mapping from ids to records
     gffdb.records.each do |record| 
