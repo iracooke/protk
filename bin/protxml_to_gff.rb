@@ -114,48 +114,53 @@ num_missing_gff_entries = 0
 
 proteins.each do |protein|
 
-	begin
-		$protk.log "Mapping #{protein.protein_name}", :info
-		# Get the full protein sequence
-		#
-		parsed_name_for_protdb = protein_id_to_protdbid(protein.protein_name)
-		protein_entry = prot_db.get_by_id parsed_name_for_protdb
-		raise ProteinNotInDBError if ( protein_entry == nil)
+	if protein.probability >= tool.protein_probability_threshold
 
-		protein.sequence = protein_entry.aaseq
+		begin
+			$protk.log "Mapping #{protein.protein_name}", :info
+			# Get the full protein sequence
+			#
+			parsed_name_for_protdb = protein_id_to_protdbid(protein.protein_name)
+			protein_entry = prot_db.get_by_id parsed_name_for_protdb
+			raise ProteinNotInDBError if ( protein_entry == nil)
 
-		# Get the CDS and parent entries from the gff file
-		#
-		parsed_name_for_gffid = protein_id_to_gffid(protein.protein_name,tool.gff_idregex)
-		gff_parent_entries = gffdb.get_by_id(parsed_name_for_gffid)
-		raise NoGFFEntryFoundError if gff_parent_entries.nil? || gff_parent_entries.length==0
-		raise MultipleGFFEntriesForProteinError if gff_parent_entries.length > 1
+			protein.sequence = protein_entry.aaseq
 
-		gff_parent_entry = gff_parent_entries.first
-		gff_cds_entries = gffdb.get_cds_by_parent_id(parsed_name_for_gffid)
+			# Get the CDS and parent entries from the gff file
+			#
+			parsed_name_for_gffid = protein_id_to_gffid(protein.protein_name,tool.gff_idregex)
+			gff_parent_entries = gffdb.get_by_id(parsed_name_for_gffid)
+			raise NoGFFEntryFoundError if gff_parent_entries.nil? || gff_parent_entries.length==0
+			raise MultipleGFFEntriesForProteinError if gff_parent_entries.length > 1
 
-		# Account for sixframe case. Parent is CDS and there are no children
-		#
-		gff_cds_entries=[gff_parent_entry] if gff_cds_entries.nil? && gff_parent_entry.feature=="CDS"
+			gff_parent_entry = gff_parent_entries.first
+			gff_cds_entries = gffdb.get_cds_by_parent_id(parsed_name_for_gffid)
 
-		peptides = tool.stack_charge_states ? protein.peptides : protein.representative_peptides
+			# Account for sixframe case. Parent is CDS and there are no children
+			#
+			gff_cds_entries=[gff_parent_entry] if gff_cds_entries.nil? && gff_parent_entry.feature=="CDS"
 
-		peptides.each do |peptide|
-			peptide_entries = peptide.to_gff3_records(protein_entry.aaseq,gff_parent_entry,gff_cds_entries)
-			peptide_entries.each do |peptide_entry|
-				output_fh.write peptide_entry.to_s
+			peptides = tool.stack_charge_states ? protein.peptides : protein.representative_peptides
+
+			peptides.each do |peptide|
+				if peptide.nsp_adjusted_probability >= tool.peptide_probability_threshold
+					peptide_entries = peptide.to_gff3_records(protein_entry.aaseq,gff_parent_entry,gff_cds_entries)
+					peptide_entries.each do |peptide_entry|
+						output_fh.write peptide_entry.to_s
+					end
+				end
 			end
-		end
 
-	rescue NoGFFEntryFoundError
-		$protk.log "No gff entry for #{parsed_name_for_gffid}", :info
-		num_missing_gff_entries+=1
-	rescue ProteinNotInDBError
-		$protk.log "No entry for #{parsed_name_for_protdb}", :info
-	rescue MultipleGFFEntriesForProteinError
-		$protk.log "Multiple entries in gff file for #{parsed_name_for_gffid}", :info
-	rescue PeptideNotInProteinError
-		$protk.log "A peptide was not found in its parent protein #{protein.protein_name}" , :warn
+		rescue NoGFFEntryFoundError
+			$protk.log "No gff entry for #{parsed_name_for_gffid}", :info
+			num_missing_gff_entries+=1
+		rescue ProteinNotInDBError
+			$protk.log "No entry for #{parsed_name_for_protdb}", :info
+		rescue MultipleGFFEntriesForProteinError
+			$protk.log "Multiple entries in gff file for #{parsed_name_for_gffid}", :info
+		rescue PeptideNotInProteinError
+			$protk.log "A peptide was not found in its parent protein #{protein.protein_name}" , :warn
+		end
 	end
 end
 
