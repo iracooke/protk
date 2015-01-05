@@ -25,12 +25,12 @@ describe "The protxml_to_gff command" do
 		it_behaves_like "a protk tool"
 	    it_behaves_like "a protk tool that defaults to stdout" do
 	    	
-      		let(:validator) { have_lines_matching(17,"polypeptide") }
+      		let(:validator) { have_lines_matching(14,"polypeptide") }
     	end
 
 		it_behaves_like "a protk tool that supports explicit output" do
 			let(:output_file) { "#{@tmp_dir}/out.gff" }
-			let(:validator) { have_lines_matching(17,"polypeptide") }
+			let(:validator) { have_lines_matching(14,"polypeptide") }
 		end
 
 	end
