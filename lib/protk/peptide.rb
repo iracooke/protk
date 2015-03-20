@@ -1,9 +1,11 @@
 require 'libxml'
 require 'bio'
 require 'protk/bio_gff3_extensions'
+require 'protk/error'
+
 include LibXML
 
-class PeptideNotInProteinError < StandardError
+class PeptideNotInProteinError < ProtkError
 end
 
 class Peptide
@@ -43,11 +45,11 @@ class Peptide
 	def coords_in_protein(prot_seq,reverse=false)
 		if reverse
 			pep_index = prot_seq.reverse.index(self.sequence.reverse)
-			raise PeptideNotInProteinError if pep_index.nil?
+			raise PeptideNotInProteinError.new("Peptide #{self.sequence} not found in protein #{prot_seq} ") if pep_index.nil?
 			pep_start_i = pep_index
 		else
 			pep_start_i = prot_seq.index(self.sequence)
-			raise PeptideNotInProteinError if pep_start_i.nil?			
+			raise PeptideNotInProteinError.new("Peptide #{self.sequence} not found in protein #{prot_seq} ") if pep_start_i.nil?			
 		end
 		pep_end_i = pep_start_i+self.sequence.length
 		{:start => pep_start_i,:end => pep_end_i}

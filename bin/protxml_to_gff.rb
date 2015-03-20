@@ -172,10 +172,14 @@ proteins.each do |protein|
 			$protk.log "Multiple entries in gff file for #{parsed_name_for_gffid}", :warn
 			# require 'byebug';byebug
 			# puts gff_parent_entries
-		rescue PeptideNotInProteinError
-			$protk.log "A peptide was not found in its parent protein #{protein.protein_name}" , :warn
+		rescue PeptideNotInProteinError => e
+			# This is generally not fatal. It can happen because of Leucine Isoleucine issues
+			#
+			$protk.log "#{e.message}. Parent protein ID #{protein.protein_name}" , :info
+			# require 'byebug';byebug
+			# puts protein.protein_name
 		rescue GFFIDRegexNotMatchedError => e
-			$protk.log e.message, :warn
+			$protk.log e.message, :info
 		end
 	end
 end
