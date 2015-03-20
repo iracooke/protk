@@ -65,9 +65,11 @@ if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   if for_galaxy
     inputs = inputs.collect {|ip| GalaxyUtil.stage_pepxml(ip) }
+    input_files = inputs.collect { |e| e.staged_path }
+  else
+    input_files = inputs
   end
 
-  input_files = inputs.collect { |e| e.staged_path }
 
   cmd << " #{input_files.join(" ")} #{output_file}"
 
