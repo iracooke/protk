@@ -110,13 +110,25 @@ def sequence_fasta_header(transcript_line,coding_sequences,scaffold)
 
   tmatch=transcript_line.match(/transcript\t(\d+)\t(\d+).*?([-\+]{1}).*?ID=(.*?);/)
 #  require 'debugger'; debugger
-  tstart=tmatch[1]
-  tend=tmatch[2]
-  tstrand="fwd"
-  tstrand = "rev" if tmatch[3]=="-"
+  tstart,tend,tstrand = transcript_line.match(/transcript\t(\d+)\t(\d+).*?([-\+]{1})/).captures
 
-  tid=tmatch[4]
-  header=">lcl|#{sanitize_scaffold_idstring(scaffold)}_#{tstrand}_#{tid} #{tstart}|#{tend}"
+  # tstart=tmatch[1]
+  # tend=tmatch[2]
+  tsidfield = transcript_line.split("\t")[8]
+  tid = nil
+  if tsidfield =~ /ID=/
+    tid = tsidfield.match(/ID=(.*?);/).captures[0]
+  else
+    tid = tsidfield.gsub(" ","_").gsub(";","_")
+  end
+
+   # require 'byebug';byebug
+
+  tstrandfr="fwd"
+  tstrandfr = "rev" if tstrand=="-"
+
+  # tid=tmatch[4]
+  header=">lcl|#{sanitize_scaffold_idstring(scaffold)}_#{tstrandfr}_#{tid} #{tstart}|#{tend}"
   if $add_transcript_info
     coding_sequences.each { |coding_sequence| header << " #{cds_to_header_text(coding_sequence,tid)}" }
   end
@@ -135,13 +147,14 @@ end
 def parse_gene(gene_lines)
 
   geneid=gene_lines[0].match(/start gene (.*)/)[1]
+  scaffold_id = gene_lines[1].split("\t")[0]
   transcripts=get_transcript_lines(gene_lines)
   coding_sequences=get_cds_lines(gene_lines)
   proteins=get_protein_sequence_lines(gene_lines)
   fasta_string=""
   throw "transcripts/protein mismatch" unless transcripts.length == proteins.length
   transcripts.each_with_index do |ts, i|  
-    fh=sequence_fasta_header(ts,coding_sequences,$current_scaffold)
+    fh=sequence_fasta_header(ts,coding_sequences,scaffold_id)
     fasta_string << "#{fh}\n"
     ps=protein_sequence(proteins[i])  
     fasta_string << "#{ps}\n"
@@ -152,14 +165,14 @@ def parse_gene(gene_lines)
   fasta_string
 end
 
-def capture_scaffold(line)
-  if line =~ /-- prediction on sequence number.*?name = (.*)\)/
-    $current_scaffold=line.match(/-- prediction on sequence number.*?name = (.*)\)/)[1]
-    if ( $print_progress)
-      puts $current_scaffold
-    end
-  end
-end
+# def capture_scaffold(line)
+#   if line =~ /-- prediction on sequence number.*?name = (.*)\)/
+#     $current_scaffold=line.match(/-- prediction on sequence number.*?name = (.*)\)/)[1]
+#     if ( $print_progress)
+#       puts $current_scaffold
+#     end
+#   end
+# end
 
 def capture_gene_start(line)
   if line =~ /# start gene/
@@ -174,14 +187,14 @@ def at_gene_end(line)
   return false
 end
 
-$current_scaffold=""
+# $current_scaffold=""
 gene_lines=[]
 $capturing_gene=false
 
 
 File.open(inname).each_with_index do |line, line_i|  
   line.chomp!
-  capture_scaffold(line)
+  # capture_scaffold(line)
   capture_gene_start(line)
 
   if at_gene_end(line)
