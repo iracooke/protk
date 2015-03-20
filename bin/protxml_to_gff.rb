@@ -11,11 +11,11 @@ require 'protk/gffdb'
 require 'protk/protein'
 require 'protk/peptide'
 require 'protk/tool'
+require 'protk/error'
 require 'libxml'
 require 'bio'
 
 include LibXML
-
 
 class NoGFFEntryFoundError < StandardError
 end
@@ -24,6 +24,9 @@ class ProteinNotInDBError < StandardError
 end
 
 class MultipleGFFEntriesForProteinError < StandardError
+end
+
+class GFFIDRegexNotMatchedError < ProtkError
 end
 
 def parse_proteins(protxml_file)
@@ -35,7 +38,14 @@ end
 
 def protein_id_to_gffid(protein_id,gff_idregex)
 	return protein_id if gff_idregex.nil?
-	return protein_id.match(/#{gff_idregex}/)[1]
+
+	m = protein_id.match(/#{gff_idregex}/)
+	if m
+		return m.captures[0]		
+	else
+		raise GFFIDRegexNotMatchedError.new("Unable to parse gff_id from #{protein_id} using regex #{gff_idregex}")
+	end
+
 end
 
 def protein_id_to_genomeid(protein_id,genome_idregex)
@@ -103,6 +113,8 @@ input_protxml=ARGV[0]
 $protk.log "Creating GFFDB", :info
 gffdb = GFFDB.create(tool.coords_file) if tool.coords_file
 
+#require 'byebug';byebug
+
 # genome_db = prepare_fasta(tool.genome,'nucl')
 $protk.log "Preparing FASTA index", :info
 prot_db = prepare_fasta(tool.database,'prot')
@@ -157,14 +169,18 @@ proteins.each do |protein|
 		rescue ProteinNotInDBError
 			$protk.log "No entry for #{parsed_name_for_protdb}", :info
 		rescue MultipleGFFEntriesForProteinError
-			$protk.log "Multiple entries in gff file for #{parsed_name_for_gffid}", :info
+			$protk.log "Multiple entries in gff file for #{parsed_name_for_gffid}", :warn
+			# require 'byebug';byebug
+			# puts gff_parent_entries
 		rescue PeptideNotInProteinError
 			$protk.log "A peptide was not found in its parent protein #{protein.protein_name}" , :warn
+		rescue GFFIDRegexNotMatchedError => e
+			$protk.log e.message, :warn
 		end
 	end
 end
 
 if num_missing_gff_entries>0
-	$protk.log "Failed to lookup gff entries. Try setting --gff-idregex" if tool.gff_idregex.nil?
+	$protk.log "Failed to lookup gff entries. Try setting --gff-idregex", :error if tool.gff_idregex.nil?
 end
 
