@@ -1,4 +1,5 @@
 require 'protk/search_tool'
+require 'protk/galaxy_util'
 
 class String
   def xtandem_modification_motif?
@@ -70,28 +71,6 @@ class TandemSearchTool < SearchTool
 	end
 
 	private
-	# Galaxy changes things like @ to __at__ we need to change it back
-	#
-	def decode_galaxy_string(mstring)
-  		mstring.gsub!("__at__","@")
-  		mstring.gsub!("__oc__","{")
-  		mstring.gsub!("__cc__","}")
-  		mstring.gsub!("__ob__","[")
-  		mstring.gsub!("__cb__","]")
-  		mstring.gsub!("__gt__",">")
-  		mstring.gsub!("__lt__","<")
-  		mstring.gsub!("__sq__","'")
-  		mstring.gsub!("__dq__","\"")
-  		mstring.gsub!("__cn__","\n")
-  		mstring.gsub!("__cr__","\r")
-  		mstring.gsub!("__tc__","\t")
-  		mstring.gsub!("__pd__","#")
-
-  		# For characters not allowed at all by galaxy
-  		mstring.gsub!("__pc__","|")
-
-  		mstring
-	end
 
 	def set_option(std_params, tandem_key, value)
   		notes = std_params.find("/bioml/note[@type=\"input\" and @label=\"#{tandem_key}\"]")
@@ -180,7 +159,7 @@ class TandemSearchTool < SearchTool
 				if opt_val.is_a?(TrueClass) || opt_val.is_a?(FalseClass)
 					opt_val = opt_val ? "yes" : "no"
 				end
-				append_option(std_params,xtandem_key,decode_galaxy_string(opt_val.to_s)) 
+				append_option(std_params,xtandem_key,GalaxyUtil.decode_galaxy_string!(opt_val.to_s)) 
 			end
 		end
 
@@ -208,7 +187,7 @@ class TandemSearchTool < SearchTool
 		#
 
 		var_mods = self.var_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject {|e| e.empty? }
-		var_mods=var_mods.collect {|mod| decode_galaxy_string(mod) }
+		var_mods=var_mods.collect {|mod| GalaxyUtil.decode_galaxy_string!(mod) }
 
 		# var_mods allows motif's as well as standard mods. These should be in a separate array
 		var_motifs = [].replace(var_mods)
@@ -216,7 +195,7 @@ class TandemSearchTool < SearchTool
 		var_motifs.keep_if {|mod| mod.xtandem_modification_motif? }
 
 		fix_mods = self.fix_mods.split(",").collect { |mod| mod.lstrip.rstrip }.reject { |e| e.empty? }
-		fix_mods=fix_mods.collect {|mod| decode_galaxy_string(mod)}
+		fix_mods=fix_mods.collect {|mod| GalaxyUtil.decode_galaxy_string!(mod)}
 
 		# We also support the --glyco and --methionineo shortcuts.
 		# Add these here. No check is made for duplication

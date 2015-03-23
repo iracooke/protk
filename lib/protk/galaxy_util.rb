@@ -23,6 +23,30 @@ class GalaxyUtil
   end
   
 
+    # Galaxy changes things like @ to __at__ we need to change it back
+    #
+    def self.decode_galaxy_string!(mstring)
+        mstring.gsub!("__at__","@")
+        mstring.gsub!("__oc__","{")
+        mstring.gsub!("__cc__","}")
+        mstring.gsub!("__ob__","[")
+        mstring.gsub!("__cb__","]")
+        mstring.gsub!("__gt__",">")
+        mstring.gsub!("__lt__","<")
+        mstring.gsub!("__sq__","'")
+        mstring.gsub!("__dq__","\"")
+        mstring.gsub!("__cn__","\n")
+        mstring.gsub!("__cr__","\r")
+        mstring.gsub!("__tc__","\t")
+        mstring.gsub!("__pd__","#")
+
+        # For characters not allowed at all by galaxy
+        mstring.gsub!("__pc__","|")
+
+        mstring
+    end
+
+
   # Unused
 
   # def self.stage_protxml(input_protxml_path)
