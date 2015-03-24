@@ -93,31 +93,26 @@ class Peptide
 		pep_end_i = pep_start_i+self.sequence.length*3
 		fragments=[]
 		ordered_cds_records.each do |cds_record|
-			# puts cds_record
+
 			fragment = nil
 			fragment_len = 0
 			if on_reverse_strand
 
 				in_peptide = (i<pep_end_i) && (i>=pep_start_i)
 				before_len = [pep_start_i-i,0].max
-				# puts before_len
-				# puts in_peptide
-				# puts "i #{i} pi #{pep_end_i} psi #{pep_start_i}"
-				if in_peptide
 
+				if in_peptide
 					fragment_end = cds_record.end
 					fragment_len = [cds_record.length,pep_end_i-i].min
 					fragment_start = fragment_end-fragment_len+1
-					# fragment = {:start=>fragment_start,:end=>fragment_end}
 					fragment = gff_record_for_peptide_fragment(fragment_start,fragment_end,cds_record)
-
 				elsif before_len>0
 					fragment_end = cds_record.end - before_len
 					fragment_len = [cds_record.length-before_len,pep_end_i-i-before_len].min
-					# puts "Frag len #{fragment_len}"
 					fragment_start = fragment_end - fragment_len + 1
-					fragment = gff_record_for_peptide_fragment(fragment_start,fragment_end,cds_record)
-					# fragment = {:start=>fragment_start,:end=>fragment_end}
+					if fragment_len>0
+						fragment = gff_record_for_peptide_fragment(fragment_start,fragment_end,cds_record)
+					end
 				else
 					fragment=nil
 				end				
@@ -128,14 +123,14 @@ class Peptide
 					fragment_start = cds_record.start
 					fragment_len = [cds_record.length,pep_end_i-i].min
 					fragment_end = fragment_start+fragment_len-1
-					# fragment = {:start=>fragment_start,:end=>fragment_end}
 					fragment = gff_record_for_peptide_fragment(fragment_start,fragment_end,cds_record)
 				elsif before_len>0
 					fragment_start = cds_record.start + before_len
 					fragment_len = [cds_record.length-before_len,pep_end_i-i-before_len].min
 					fragment_end = fragment_start + fragment_len-1
-					# fragment = {:start=>fragment_start,:end=>fragment_end}
-					fragment = gff_record_for_peptide_fragment(fragment_start,fragment_end,cds_record)
+					if fragment_len>0
+						fragment = gff_record_for_peptide_fragment(fragment_start,fragment_end,cds_record)
+					end
 				else
 					fragment=nil
 				end
