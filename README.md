@@ -60,32 +60,28 @@ By default protk will install tools and databases into `.protk` in your home dir
 ```
 
 
-## Sequence databases
-
-Protk also includes a script called manage_db.rb to install specific sequence databases for use by the search engines if desired. Databases installed via manage_db.rb can be invoked using a shorthand name rather than a full path to a fasta file, and Protk also provides some automation for database upgrades. Protk comes with several predefined database configurations. For example, to install a database consisting of human entries from Swissprot plus known contaminants use the following commands;
-
-```sh
-manage_db.rb add --predefined crap
-manage_db.rb add --predefined sphuman
-manage_db.rb update crap
-manage_db.rb update sphuman
-```
-
-You should now be able to run database searches, specifying this database by using the -d sphuman flag.  Every month or so swissprot will release a new database version. You can keep your database up to date using the manage_db.rb update command. This will update the database only if any of its source files (or ftp release notes) have changed. The manage_db.rb tool also allows completely custom databases to be configured. Setup requires adding quite a few command-line options but once setup, databases can easily be updated without further config. The example below shows the commandline arguments required to manually configure the sphuman database.
-
-```sh
-manage_db.rb add --ftp-source 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt' --include-filters '/OS=Homo\ssapiens/' --id-regex 'sp\|.*\|(.*?)\s' --add-decoys --make-blast-index --archive-old sphuman
-```
 
 ## Galaxy Integration
 
-Many protk tools have equivalent galaxy wrappers available on the [galaxy toolshed](http://toolshed.g2.bx.psu.edu/) .  In order for these tools to work you will also need to make sure that protk, as well as the necessary third party dependencies are available to galaxy during tool execution. If you install protk using the default system ruby (without rvm) this will probably just work, however you will lose the ability to run specific versions of tools against specific versions of protk.  The recommended method of installing protk for use with galaxy is as follows;
+Many protk tools have equivalent galaxy wrappers available on the [galaxy toolshed](http://toolshed.g2.bx.psu.edu/) with source code and development occuring in the [protk-galaxytools](github.com/iracooke/protk-galaxytools) repository on github.  In order for these tools to work you will also need to make sure that protk, as well as the necessary third party dependencies are available to galaxy during tool execution. 
+
+There are two ways to do this
+
+**Using Docker:**
+
+By far the easiest way to do this is to set up your Galaxy instance to run tools in Docker containers.  All the tools in the [protk-galaxytools](github.com/iracooke/protk-galaxytools) repository are designed to work with [this](https://github.com/iracooke/protk-dockerfile) docker image, and will download and use the image automatically on apprioriately configured Galaxy instances.
+
+**Manual Install**
+
+If your galaxy instance is unable to use Docker for some reason you will need to install `protk` and its dependencies manually. 
+
+One way to install protk would be to just do `gem install protk` using the default system ruby (without rvm). This will probably just work, however you will lose the ability to run specific versions of tools against specific versions of protk.  The recommended method of installing protk for use with galaxy is as follows;
 
 1. Ensure you have a working install of galaxy. 
 
 	[Full instructions](https://wiki.galaxyproject.org/Admin/GetGalaxy) are available on the official Galaxy project wiki page.  We assume you have galaxy installed in a directory called galaxy-dist.
 
-2. Install rvm if you haven't allready.  See [here](https://rvm.io/) for more information.
+2. Install rvm if you haven't already.  See [here](https://rvm.io/) for more information.
 
 	```bash
 		curl -sSL https://get.rvm.io | bash -s stable
@@ -148,4 +144,22 @@ Many protk tools have equivalent galaxy wrappers available on the [galaxy toolsh
 		ln -s 1.5 default
 	```
 
+## Sequence databases
+
+All `protk` tools are designed to work with sequence databases provided as simple fasta formatted flat files. For most use cases it is simplest to just manage these manually.
+
+Protk includes a script called `manage_db.rb` to install certain sequence databases in a central repository. Databases installed via `manage_db.rb` can be invoked using a shorthand name rather than a full path to a fasta file. Protk comes with several predefined database configurations. For example, to install a database consisting of human entries from Swissprot plus known contaminants use the following commands;
+
+```sh
+manage_db.rb add --predefined crap
+manage_db.rb add --predefined sphuman
+manage_db.rb update crap
+manage_db.rb update sphuman
+```
+
+You should now be able to run database searches, specifying this database by using the -d sphuman flag.  Every month or so swissprot will release a new database version. You can keep your database up to date using the manage_db.rb update command. This will update the database only if any of its source files (or ftp release notes) have changed. The manage_db.rb tool also allows completely custom databases to be configured. Setup requires adding quite a few command-line options but once setup, databases can easily be updated without further config. The example below shows the commandline arguments required to manually configure the sphuman database.
+
+```sh
+manage_db.rb add --ftp-source 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt' --include-filters '/OS=Homo\ssapiens/' --id-regex 'sp\|.*\|(.*?)\s' --add-decoys --make-blast-index --archive-old sphuman
+```
 
