@@ -5,8 +5,7 @@
 # Provides common functionality used by all msms search tools.
 #
 # It allows;
-# 1. Specification of the search database using a simple name ... this class provides the necessary search for the actual file
-# 2. Output files to be specified via a prefix or suffix to be added to the name of the corresponding input file
+# 1. Output files to be specified via a prefix or suffix to be added to the name of the corresponding input file
 # 
 
 require 'optparse'
@@ -21,10 +20,6 @@ class SearchTool < Tool
   def initialize(option_support=[])
     super(option_support)
 
-    # if (option_support.include? :database)
-    #   add_value_option(:database,"sphuman",['-d', '--database dbname', 'Specify the database to use for this search. Can be a named protk database or the path to a fasta file'])        
-    # end
-    
     if ( option_support.include? :enzyme )
       add_value_option(:enzyme,"Trypsin",['--enzyme enz', 'Enzyme'])
     end
