@@ -1,0 +1,1725 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MzIdentML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://psidev.info/psi/pi/mzIdentML/1.1"
+id="PeptideShaker v0.38.2"
+xsi:schemaLocation="http://psidev.info/psi/pi/mzIdentML/1.1 http://www.psidev.info/files/mzIdentML1.1.0.xsd"
+version="1.1.0" creationDate="2015-05-07T01:24:08">
+  <cvList>
+    <cv id="PSI-MS"
+    uri="http://psidev.cvs.sourceforge.net/viewvc/*checkout*/psidev/psi/psi-ms/mzML/controlledVocabulary/psi-ms.obo"
+    version="3.73.0" fullName="PSI-MS" />
+    <cv id="UNIMOD" uri="http://www.unimod.org/obo/unimod.obo"
+    fullName="UNIMOD" />
+    <cv id="UO"
+    uri="http://obo.cvs.sourceforge.net/*checkout*/obo/obo/ontology/phenotype/unit.obo"
+    fullName="UNIT-ONTOLOGY" />
+    <cv id="PRIDE"
+    uri="http://code.google.com/p/ebi-pride/source/browse/trunk/pride-core/schema/pride_cv.obo"
+    fullName="PRIDE" />
+  </cvList>
+  <AnalysisSoftwareList>
+    <AnalysisSoftware name="PeptideShaker" version="0.38.2"
+    id="ID_software" uri="http://peptide-shaker.googlecode.com">
+      <ContactRole contact_ref="PS_DEV">
+        <Role>
+          <cvParam cvRef="PSI-MS" accession="MS:1001267"
+          name="software vendor" value="CompOmics" />
+        </Role>
+      </ContactRole>
+      <SoftwareName>
+        <cvParam cvRef="PSI-MS" accession="MS:1002458"
+        name="PeptideShaker" />
+      </SoftwareName>
+      <Customizations>No customisations</Customizations>
+    </AnalysisSoftware>
+  </AnalysisSoftwareList>
+  <Provider id="PROVIDER">
+    <ContactRole contact_ref="PROVIDER">
+      <Role>
+        <cvParam cvRef="PSI-MS" accession="MS:1001271"
+        name="researcher" />
+      </Role>
+    </ContactRole>
+  </Provider>
+  <AuditCollection>
+    <Person firstName="Proteomics" lastName="Galaxy" id="PROVIDER">
+      <cvParam cvRef="PSI-MS" accession="MS:1000587"
+      name="contact address" value="galaxyp@umn.edu" />
+      <cvParam cvRef="PSI-MS" accession="MS:1000589"
+      name="contact email" value="galaxyp@umn.edu" />
+      <Affiliation organization_ref="ORG_DOC_OWNER" />
+    </Person>
+    <Organization name="University of Minnesota"
+    id="ORG_DOC_OWNER">
+      <cvParam cvRef="PSI-MS" accession="MS:1000586"
+      name="contact name" value="University of Minnesota" />
+      <cvParam cvRef="PSI-MS" accession="MS:1000587"
+      name="contact address"
+      value="Minneapolis, MN 55455, Vereinigte Staaten" />
+      <cvParam cvRef="PSI-MS" accession="MS:1000589"
+      name="contact email" value="galaxyp@umn.edu" />
+    </Organization>
+    <Organization name="PeptideShaker developers" id="PS_DEV">
+      <cvParam cvRef="PSI-MS" accession="MS:1000586"
+      name="contact name" value="PeptideShaker developers" />
+      <cvParam cvRef="PSI-MS" accession="MS:1000587"
+      name="contact address"
+      value="Proteomics Unit, Building for Basic Biology, University of Bergen, Jonas Liesvei 91, N-5009 Bergen, Norway" />
+      <cvParam cvRef="PSI-MS" accession="MS:1000588"
+      name="contact url"
+      value="http://peptide-shaker.googlecode.com" />
+      <cvParam cvRef="PSI-MS" accession="MS:1000589"
+      name="contact email"
+      value="peptide-shaker@googlegroups.com" />
+    </Organization>
+  </AuditCollection>
+  <SequenceCollection>
+    <DBSequence id="JEMP01000193.1_rev_g3500.t1"
+    accession="JEMP01000193.1_rev_g3500.t1"
+    searchDatabase_ref="SearchDB_1">
+      <cvParam cvRef="PSI-MS" accession="MS:1001088"
+      name="protein description" value="280755|283436" />
+    </DBSequence>
+    <DBSequence id="JEMP01000061.1_rev_g10170.t1"
+    accession="JEMP01000061.1_rev_g10170.t1"
+    searchDatabase_ref="SearchDB_1">
+      <cvParam cvRef="PSI-MS" accession="MS:1001088"
+      name="protein description" value="36066|38753" />
+    </DBSequence>
+    <Peptide id="KSPVYKVHFTR">
+      <PeptideSequence>KSPVYKVHFTR</PeptideSequence>
+    </Peptide>
+    <Peptide id="SKIPFIVIFDPIEAAR">
+      <PeptideSequence>SQIPFLVLFDPIEAAR</PeptideSequence>
+    </Peptide>
+    <Peptide id="SSGNWINIFNPATPSFR">
+      <PeptideSequence>SSGNWLNLFNPATPSFR</PeptideSequence>
+    </Peptide>
+    <Peptide id="GGIDSWNAIGYIPVKDFDYK">
+      <PeptideSequence>GGIDSWNALGYIPVQDFDYK</PeptideSequence>
+    </Peptide>
+    <Peptide id="GKSGNPMIMIDITDISDSR">
+      <PeptideSequence>GQSGNPMLMLDLTDLSDSR</PeptideSequence>
+    </Peptide>
+    <Peptide id="TIEYSYNDFCISEMAAGIGGR">
+      <PeptideSequence>TLEYSYNDFCISEMAAGLGGR</PeptideSequence>
+      <Modification monoisotopicMassDelta="57.021464" residues="C"
+      location="10">
+        <cvParam cvRef="UNIMOD" accession="UNIMOD:4"
+        name="Carbamidomethyl" value="57.021464" />
+      </Modification>
+    </Peptide>
+    <Peptide id="TAIFNFRFPK">
+      <PeptideSequence>TALFNFRFPK</PeptideSequence>
+    </Peptide>
+    <Peptide id="NWIGHEFFIK">
+      <PeptideSequence>NWIGHEFFLK</PeptideSequence>
+    </Peptide>
+    <Peptide id="TWGFKDPIGCSKIDEK">
+      <PeptideSequence>TWGFQDPLGCSQIDEK</PeptideSequence>
+      <Modification monoisotopicMassDelta="57.021464" residues="C"
+      location="10">
+        <cvParam cvRef="UNIMOD" accession="UNIMOD:4"
+        name="Carbamidomethyl" value="57.021464" />
+      </Modification>
+    </Peptide>
+    <Peptide id="DGHVFAGASIPYGIAK">
+      <PeptideSequence>DGHVFAGASLPYGLAK</PeptideSequence>
+    </Peptide>
+    <Peptide id="SIIDTYKHEGWIPDCR">
+      <PeptideSequence>SLIDTYKHEGWLPDCR</PeptideSequence>
+      <Modification monoisotopicMassDelta="57.021464" residues="C"
+      location="15">
+        <cvParam cvRef="UNIMOD" accession="UNIMOD:4"
+        name="Carbamidomethyl" value="57.021464" />
+      </Modification>
+    </Peptide>
+    <Peptide id="DATVEPFDWCCKGR">
+      <PeptideSequence>DATVEPFDWCCQGR</PeptideSequence>
+      <Modification monoisotopicMassDelta="57.021464" residues="C"
+      location="10">
+        <cvParam cvRef="UNIMOD" accession="UNIMOD:4"
+        name="Carbamidomethyl" value="57.021464" />
+      </Modification>
+      <Modification monoisotopicMassDelta="57.021464" residues="C"
+      location="11">
+        <cvParam cvRef="UNIMOD" accession="UNIMOD:4"
+        name="Carbamidomethyl" value="57.021464" />
+      </Modification>
+    </Peptide>
+    <Peptide id="IVNNIAVEMTTAR">
+      <PeptideSequence>LVNNIAVEMTTAR</PeptideSequence>
+    </Peptide>
+    <Peptide id="IYDTGIFANSR">
+      <PeptideSequence>IYDTGIFANSR</PeptideSequence>
+    </Peptide>
+    <Peptide id="SINGYPIPGGGTVR">
+      <PeptideSequence>SINGYPLPGGGTVR</PeptideSequence>
+    </Peptide>
+    <Peptide id="FEPPAKETDPITAR">
+      <PeptideSequence>FEPPAKETDPITAR</PeptideSequence>
+    </Peptide>
+    <Peptide id="ENIDWNEGYK">
+      <PeptideSequence>ENIDWNEGYK</PeptideSequence>
+    </Peptide>
+    <Peptide id="RAHYYVPR">
+      <PeptideSequence>RAHYYVPR</PeptideSequence>
+    </Peptide>
+    <PeptideEvidence isDecoy="false" pre="K" post="G" start="712"
+    end="722" peptide_ref="KSPVYKVHFTR"
+    dBSequence_ref="JEMP01000193.1_rev_g3500.t1" id="PepEv_1" />
+    <PeptideEvidence isDecoy="false" pre="R" post="E" start="552"
+    end="568" peptide_ref="SSGNWINIFNPATPSFR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1" id="PepEv_232" />
+    <PeptideEvidence isDecoy="false" pre="R" post="G" start="491"
+    end="510" peptide_ref="GGIDSWNAIGYIPVKDFDYK"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1" id="PepEv_266" />
+    <PeptideEvidence isDecoy="false" pre="K" post="Q" start="192"
+    end="210" peptide_ref="GKSGNPMIMIDITDISDSR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1" id="PepEv_532" />
+    <PeptideEvidence isDecoy="false" pre="R" post="Q" start="522"
+    end="542" peptide_ref="TIEYSYNDFCISEMAAGIGGR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1" id="PepEv_663" />
+    <PeptideEvidence isDecoy="false" pre="R" post="G" start="182"
+    end="191" peptide_ref="TAIFNFRFPK"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1" id="PepEv_963" />
+    <PeptideEvidence isDecoy="false" pre="K" post="G" start="783"
+    end="792" peptide_ref="NWIGHEFFIK"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_1108" />
+    <PeptideEvidence isDecoy="false" pre="R" post="G" start="591"
+    end="606" peptide_ref="TWGFKDPIGCSKIDEK"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_1474" />
+    <PeptideEvidence isDecoy="false" pre="K" post="A" start="67"
+    end="82" peptide_ref="DGHVFAGASIPYGIAK"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_1796" />
+    <PeptideEvidence isDecoy="false" pre="R" post="M" start="420"
+    end="435" peptide_ref="SIIDTYKHEGWIPDCR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_1829" />
+    <PeptideEvidence isDecoy="false" pre="K" post="G" start="477"
+    end="490" peptide_ref="DATVEPFDWCCKGR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_1958" />
+    <PeptideEvidence isDecoy="false" pre="K" post="R" start="168"
+    end="180" peptide_ref="IVNNIAVEMTTAR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_2003" />
+    <PeptideEvidence isDecoy="false" pre="K" post="A" start="253"
+    end="263" peptide_ref="IYDTGIFANSR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_2093" />
+    <PeptideEvidence isDecoy="false" pre="R" post="F" start="276"
+    end="289" peptide_ref="SINGYPIPGGGTVR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_2130" />
+    <PeptideEvidence isDecoy="false" pre="R" post="V" start="290"
+    end="303" peptide_ref="FEPPAKETDPITAR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_2202" />
+    <PeptideEvidence isDecoy="false" pre="K" post="A" start="463"
+    end="472" peptide_ref="ENIDWNEGYK"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_2204" />
+    <PeptideEvidence isDecoy="false" pre="K" post="E" start="688"
+    end="695" peptide_ref="RAHYYVPR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_2444" />
+    <PeptideEvidence isDecoy="false" pre="R" post="M" start="401"
+    end="416" peptide_ref="SKIPFIVIFDPIEAAR"
+    dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+    id="PepEv_3117" />
+  </SequenceCollection>
+  <AnalysisCollection>
+    <SpectrumIdentification spectrumIdentificationList_ref="SIL_1"
+    spectrumIdentificationProtocol_ref="SearchProtocol_1"
+    id="SpecIdent_1">
+      <InputSpectra spectraData_ref="ma201_Vp_1-10.mzML.mgf" />
+      <InputSpectra spectraData_ref="ma201_Vp_11-20.mzML.mgf" />
+      <SearchDatabaseRef searchDatabase_ref="SearchDB_1" />
+    </SpectrumIdentification>
+    <ProteinDetection proteinDetectionProtocol_ref="PeptideShaker_1"
+    proteinDetectionList_ref="Protein_groups" id="PD_1">
+      <InputSpectrumIdentifications spectrumIdentificationList_ref="SIL_1" />
+    </ProteinDetection>
+  </AnalysisCollection>
+  <AnalysisProtocolCollection>
+    <SpectrumIdentificationProtocol analysisSoftware_ref="ID_software"
+    id="SearchProtocol_1">
+      <SearchType>
+        <cvParam cvRef="PSI-MS" accession="MS:1001083"
+        name="ms-ms search" />
+      </SearchType>
+      <AdditionalSearchParams>
+        <cvParam cvRef="PSI-MS" accession="MS:1001211"
+        name="parent mass type mono" />
+        <cvParam cvRef="PSI-MS" accession="MS:1001256"
+        name="fragment mass type mono" />
+      </AdditionalSearchParams>
+      <ModificationParams>
+        <SearchModification residues="C" massDelta="57.021464"
+        fixedMod="true">
+          <cvParam cvRef="PSI-MS" accession="MS:1001460"
+          name="unknown modification" />
+          <cvParam cvRef="PSI-MS" accession="MS:1002504"
+          name="modification index" value="0" />
+        </SearchModification>
+        <SearchModification residues="M" massDelta="15.994915"
+        fixedMod="false">
+          <cvParam cvRef="PSI-MS" accession="MS:1001460"
+          name="unknown modification" />
+          <cvParam cvRef="PSI-MS" accession="MS:1002504"
+          name="modification index" value="1" />
+        </SearchModification>
+      </ModificationParams>
+      <Enzymes independent="false">
+        <Enzyme missedCleavages="2" semiSpecific="false" id="Enz1"
+        name="Trypsin">
+          <EnzymeName>
+            <cvParam cvRef="PSI-MS" accession="MS:1001251"
+            name="Trypsin" />
+          </EnzymeName>
+        </Enzyme>
+      </Enzymes>
+      <FragmentTolerance>
+        <cvParam accession="MS:1001412" cvRef="PSI-MS"
+        unitCvRef="UO" unitName="dalton" unitAccession="UO:0000221"
+        value="0.2" name="search tolerance plus value" />
+        <cvParam accession="MS:1001413" cvRef="PSI-MS"
+        unitCvRef="UO" unitName="dalton" unitAccession="UO:0000221"
+        value="0.2" name="search tolerance minus value" />
+      </FragmentTolerance>
+      <ParentTolerance>
+        <cvParam accession="MS:1001412" cvRef="PSI-MS"
+        unitCvRef="UO" unitName="parts per million"
+        unitAccession="UO:0000169" value="50.0"
+        name="search tolerance plus value" />
+        <cvParam accession="MS:1001413" cvRef="PSI-MS"
+        unitCvRef="UO" unitName="parts per million"
+        unitAccession="UO:0000169" value="50.0"
+        name="search tolerance minus value" />
+      </ParentTolerance>
+      <Threshold>
+        <cvParam cvRef="PSI-MS" accession="MS:1001364"
+        name="distinct peptide-level global FDR" value="1.0" />
+        <cvParam cvRef="PSI-MS" accession="MS:1002350"
+        name="PSM-level global FDR" value="1.0" />
+        <cvParam cvRef="PSI-MS" accession="MS:1002557"
+        name="D-score threshold" value="95.0" />
+      </Threshold>
+    </SpectrumIdentificationProtocol>
+    <ProteinDetectionProtocol analysisSoftware_ref="ID_software"
+    id="PeptideShaker_1">
+      <Threshold>
+        <cvParam cvRef="PSI-MS" accession="MS:1002369"
+        name="protein group-level global FDR" value="0.01" />
+      </Threshold>
+    </ProteinDetectionProtocol>
+  </AnalysisProtocolCollection>
+  <DataCollection>
+    <Inputs>
+      <SourceFile location="/data/galaxy/galaxy/database/job_working_directory/018/18515/PeptideShakerCLI/.PeptideShaker_unzip_temp/searchgui_input_PeptideShaker_temp/ma201_Vp_1-10.mzML.comet.pep.xml"
+      id="SourceFile_1">
+        <FileFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1001421"
+          name="pepXML format" />
+        </FileFormat>
+      </SourceFile>
+      <SourceFile location="/data/galaxy/galaxy/database/job_working_directory/018/18515/PeptideShakerCLI/.PeptideShaker_unzip_temp/searchgui_input_PeptideShaker_temp/ma201_Vp_1-10.mzML.msgf.mzid"
+      id="SourceFile_2">
+        <FileFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1002073"
+          name="mzIdentML format" />
+        </FileFormat>
+      </SourceFile>
+      <SourceFile location="/data/galaxy/galaxy/database/job_working_directory/018/18515/PeptideShakerCLI/.PeptideShaker_unzip_temp/searchgui_input_PeptideShaker_temp/ma201_Vp_11-20.mzML.comet.pep.xml"
+      id="SourceFile_3">
+        <FileFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1001421"
+          name="pepXML format" />
+        </FileFormat>
+      </SourceFile>
+      <SourceFile location="/data/galaxy/galaxy/database/job_working_directory/018/18515/PeptideShakerCLI/.PeptideShaker_unzip_temp/searchgui_input_PeptideShaker_temp/ma201_Vp_11-20.mzML.msgf.mzid"
+      id="SourceFile_4">
+        <FileFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1002073"
+          name="mzIdentML format" />
+        </FileFormat>
+      </SourceFile>
+      <SearchDatabase numDatabaseSequences="23866"
+      location="/data/galaxy/galaxy/database/job_working_directory/018/18515/PeptideShakerCLI/.PeptideShaker_unzip_temp/peptideshaker_output_PeptideShaker_temp/data/input_database.fasta"
+      id="SearchDB_1">
+        <FileFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1001348"
+          name="FASTA format" />
+        </FileFormat>
+        <DatabaseName>
+          <userParam name="input_database.fasta" />
+        </DatabaseName>
+        <cvParam cvRef="PSI-MS" accession="MS:1001073"
+        name="database type amino acid" />
+      </SearchDatabase>
+      <SpectraData location="/data/galaxy/galaxy/database/job_working_directory/018/18515/PeptideShakerCLI/.PeptideShaker_unzip_temp/peptideshaker_output_PeptideShaker_temp/data/ma201_Vp_1-10.mzML.mgf"
+      id="ma201_Vp_1-10.mzML.mgf" name="ma201_Vp_1-10.mzML.mgf">
+        <FileFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1001062"
+          name="Mascot MGF file" />
+        </FileFormat>
+        <SpectrumIDFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1000774"
+          name="multiple peak list nativeID format" />
+        </SpectrumIDFormat>
+      </SpectraData>
+      <SpectraData location="/data/galaxy/galaxy/database/job_working_directory/018/18515/PeptideShakerCLI/.PeptideShaker_unzip_temp/peptideshaker_output_PeptideShaker_temp/data/ma201_Vp_11-20.mzML.mgf"
+      id="ma201_Vp_11-20.mzML.mgf" name="ma201_Vp_11-20.mzML.mgf">
+        <FileFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1001062"
+          name="Mascot MGF file" />
+        </FileFormat>
+        <SpectrumIDFormat>
+          <cvParam cvRef="PSI-MS" accession="MS:1000774"
+          name="multiple peak list nativeID format" />
+        </SpectrumIDFormat>
+      </SpectraData>
+    </Inputs>
+    <AnalysisData>
+      <SpectrumIdentificationList id="SIL_1">
+        <FragmentationTable>
+          <Measure id="Measure_MZ">
+            <cvParam unitCvRef="PSI-MS" accession="MS:1001225"
+            cvRef="PSI-MS" unitName="m/z"
+            unitAccession="MS:1000040" name="product ion m/z" />
+          </Measure>
+          <Measure id="Measure_Int">
+            <cvParam accession="MS:1001226" cvRef="PSI-MS"
+            name="product ion intensity" />
+          </Measure>
+          <Measure id="Measure_Error">
+            <cvParam unitCvRef="PSI-MS" accession="MS:1001227"
+            cvRef="PSI-MS" unitName="m/z"
+            unitAccession="MS:1000040"
+            name="product ion m/z error" />
+          </Measure>
+        </FragmentationTable>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=3152" id="SIR_1">
+          <SpectrumIdentificationItem passThreshold="false"
+          rank="1" peptide_ref="KSPVYKVHFTR"
+          calculatedMassToCharge="1360.7615466836999"
+          experimentalMassToCharge="1362.805053710938"
+          chargeState="1" id="SII_1_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_1" />
+            <Fragmentation>
+              <IonType charge="1" index="1 4">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2081208 560.3388993" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="94.0459823608 116.2766723633" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.08916864948798775 0.0449421494880653" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="0.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="0.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.4757611E-6" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1360.7615466836999" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Not Validated" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.3535.3535.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="6855.00001" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=3148" id="SIR_5">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="SKIPFIVIFDPIEAAR"
+          calculatedMassToCharge="1814.9930716837"
+          experimentalMassToCharge="1816.015747070313"
+          chargeState="1" id="SII_5_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_3117" />
+            <Fragmentation>
+              <IonType charge="1" index="2 3 4 5 6">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="216.0671564 329.0897438 426.082943 573.1137528 686.1894091" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="2255.6081542969 1348.0354003906 410.8401184082 590.9721679688 626.9710083008" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.030726066812007957 -0.09220266681199973 -0.15176746681203213 -0.1893716668118941 -0.19777936681191477" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 3 4 6">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.1170634 317.1104751 446.12835 656.1880758" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="2382.1306152344 2112.2111816406 565.1505126953 19230.751953125" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.0018887505119948855 -0.082705050512061 -0.10742315051203377 -0.18452535051198993" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="5.6121233E-17" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="0.00177" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1814.9930716837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.3499.3499.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="6375.00001" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=2911" id="SIR_232">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="SSGNWINIFNPATPSFR"
+          calculatedMassToCharge="1906.9325946837002"
+          experimentalMassToCharge="1907.959594726563"
+          chargeState="1" id="SII_232_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_232" />
+            <Fragmentation>
+              <IonType charge="1" index="5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="159.1926704" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="1694.6577148438" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.10099555274800309" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000258"
+                name="immonium W" />
+              </IonType>
+              <IonType charge="1" index="2 4 5 6 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2236148 346.1853593 532.2513177 645.3380262 872.4408065" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="8024.4521484375 4179.6333007813 4480.1513671875 2533.8122558594 5507.6391601563" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.1522823331880261 0.04963583318800602 0.03628123318799226 0.038925733187966216 0.014715033188053894" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 2 4 5 7 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2236148 322.2258838 506.3000972 607.3333353 775.4335766 889.4571728" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="8024.4521484375 2361.3647460938 9420.435546875 2011.4813232422 7171.8198242188 1813.6722412109" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.10466264948800585 0.03851764948802838 0.027939049487997636 0.013498149488100353 0.023861449488094877 0.00453064948806059" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="2.226483E-21" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="1.63E-6" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1906.9325946837002" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.3130.3130.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="4395.000039" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=2875" id="SIR_266">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="GGIDSWNAIGYIPVKDFDYK"
+          calculatedMassToCharge="2257.0691326837"
+          experimentalMassToCharge="2258.06640625" chargeState="1"
+          id="SII_266_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_266" />
+            <Fragmentation>
+              <IonType charge="1" index="8 9 11">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="801.2298039 914.333872 1134.323656" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="856.7103271484 526.3665771484 455.4053955078" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.1227895668120027 -0.10278546681195166 -0.19778546681209264" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="4 5 6 7 8 9">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="572.2230968 687.2196287 815.3014307 914.333872 1011.337411 1124.412281" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="869.029296875 914.8277587891 1155.3531494141 526.3665771484 11564.103515625 1552.0529785156" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.0483843505120376 -0.07879545051196146 -0.055571450512047704 -0.0915441505119361 -0.14076915051202832 -0.1499631505121215" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="6.1680666E-19" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="5.56E-4" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="2257.0691326837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.3090.3090.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="4335.000089" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=2595" id="SIR_531">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="GKSGNPMIMIDITDISDSR"
+          calculatedMassToCharge="2048.9506906837"
+          experimentalMassToCharge="2049.973388671875"
+          chargeState="1" id="SII_531_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_532" />
+            <Fragmentation>
+              <IonType charge="1" index="4 7 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="330.1934519 672.2565764 785.3561225" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="812.1585083008 584.9240112305 608.6773681641" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.05264143318800052 -0.020410066812019068 -0.004927966812033446" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 2 3 4 5 6 7 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2043334 262.1996821 377.1780362 464.1727512 577.2515789 692.2688392 793.2825088 906.3857175" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="2373.419921875 12670.84765625 701.4549560547 918.1682739258 7283.443359375 952.5310058594 489.9209289551 5137.2397460938" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.08538124948799464 0.04870194948802009 1.1304948799306658E-4 -0.03719995051204705 -0.042436250511968865 -0.0521189505119537 -0.08612835051201273 -0.06698365051192923" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.1375826E-22" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="3.97E-6" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="2048.9506906837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.2784.2784.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="3945.00013" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=2460" id="SIR_662">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="TIEYSYNDFCISEMAAGIGGR"
+          calculatedMassToCharge="2353.0354666836993"
+          experimentalMassToCharge="2354.055908203125"
+          chargeState="1" id="SII_662_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_663" />
+            <Fragmentation>
+              <IonType charge="1" index="4 6">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="136.2483373" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="841.1395263672" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.17265545274801752" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000259"
+                name="immonium Y" />
+              </IonType>
+              <IonType charge="1" index="2 3">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="215.3163221 344.3207733" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="1592.1259765625 2128.7971191406" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.1773026331880203 0.1391608331879297" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 3 4 5 6 7 8 9 10 13">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.3073715 289.3380414 402.3820588 459.3946788 530.4587634 601.5289066 732.5413482 861.5896146 948.6174862 1368.658885" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="3602.544921875 965.5579833984 952.5689086914 1547.6528320313 1314.4979248047 1342.8278808594 2017.9787597656 805.143737793 832.4652099609 2652.8041992188" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.18841934948798666 0.1761612494879614 0.13611464948792218 0.1272706494879685 0.15424124948799545 0.18727044948809635 0.15922704948809496 0.1649004494880728 0.16074404948813026 0.019015849488141612" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="9.295855E-22" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="1.9E-5" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="2353.0354666836993" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.2639.2639.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="3795.00009" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=2154" id="SIR_960">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="TAIFNFRFPK"
+          calculatedMassToCharge="1239.6764286837"
+          experimentalMassToCharge="1240.672973632813"
+          chargeState="1" id="SII_960_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_963" />
+            <Fragmentation>
+              <IonType charge="1" index="3">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="86.15600682" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="1980.71875" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.059580972747994565" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000249"
+                name="immonium L" />
+              </IonType>
+              <IonType charge="1" index="2 3 4 5 6 7">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="173.1756985 286.2326248 433.2756344 547.2831947 694.3744765 850.4309643" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="1953.3233642578 4693.9848632813 1150.2358398438 1567.4453125 988.5994873047 1339.2094726563" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.08362903318803205 0.05649133318797794 0.03108693318802125 -0.004279766811919217 0.018588033188166264 -0.026035166811880117" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="4 6 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="120.157245" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="1202.0906982422" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.07646915274801813" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000244"
+                name="immonium F" />
+              </IonType>
+              <IonType charge="1" index="2 3 4 5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="244.2239359 391.2658488 547.2831947 694.3744765" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="3205.6369628906 1862.5223388672 1567.4453125 988.5994873047" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.058367749487985066 0.03186664948799489 -0.05189845051199882 -0.029030650511913336" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="4.687549E-11" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="1.17E-4" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1239.6764286837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.2314.2314.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="3510.00003" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=2010" id="SIR_1102">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="NWIGHEFFIK"
+          calculatedMassToCharge="1289.6556926837"
+          experimentalMassToCharge="1290.659057617188"
+          chargeState="1" id="SII_1102_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_1108" />
+            <Fragmentation>
+              <IonType charge="1" index="5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="110.1483753" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="2292.7473144531" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.0771014527480105" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000246"
+                name="immonium H" />
+              </IonType>
+              <IonType charge="1" index="3">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="86.18748451" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="3341.912109375" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.09105866274799723" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000247"
+                name="immonium I" />
+              </IonType>
+              <IonType charge="1" index="9">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="86.18748451" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="3341.912109375" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.09105866274799723" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000249"
+                name="immonium L" />
+              </IonType>
+              <IonType charge="1" index="2 3 4 5 6 7 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="301.2031809 414.2495241 471.2575557 608.3064201 737.3316022 884.3888407 1031.444747" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="3528.5610351563 2292.0844726563 3336.9912109375 3646.4587402344 6842.9594726563 3723.3637695313 2257.533203125" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.07366443318795746 0.03594363318791238 0.022511233187969992 0.012463633187962841 -0.004947266811996087 -0.01612276681203184 -0.028630466812046507" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="7 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="120.1761017" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="2757.1682128906" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.09532585274801875" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000244"
+                name="immonium F" />
+              </IonType>
+              <IonType charge="1" index="4 5 6 7 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="554.3698967 683.386572 820.4158127 877.4458342 990.5329889" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="2390.6420898438 3308.1948242188 2950.76171875 5193.09375 2030.4639892578" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.03620054948805773 0.010282849488021384 -0.01938845051199678 -0.010830950511945048 -0.007740250512028979" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="5.9105287E-13" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="5.93E-7" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1289.6556926837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.2160.2160.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="3360.00006" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=1638" id="SIR_1467">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="TWGFKDPIGCSKIDEK"
+          calculatedMassToCharge="1879.8410656837002"
+          experimentalMassToCharge="1880.853271484375"
+          chargeState="1" id="SII_1467_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_1474" />
+            <Fragmentation>
+              <IonType charge="1" index="6">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="735.4115666" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="571.9797363281" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.1018991331881125" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="3 4 5 6 7 8 10 11 14">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="391.2811912 504.3399882 632.4635661 719.4426364 879.4386819 936.4702445 1146.579995 1261.674915 1593.720618" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="401.0267028809 437.2299194336 416.588684082 951.6014404297 524.7750854492 1855.3865966797 4066.330078125 550.8740844727 457.3592224121" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.09885104948796197 0.07358404948791986 0.13858394948795194 0.08562624948797293 0.05102274948797003 0.06112134948796211 0.03404384948794359 0.1020208494878716 -7.321505120216898E-4" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="6.311287E-20" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="1.93E-5" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1879.8410656837002" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.1764.1764.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="3000.00008" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=1314" id="SIR_1788">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="DGHVFAGASIPYGIAK"
+          calculatedMassToCharge="1601.8201846836998"
+          experimentalMassToCharge="1602.826171875" chargeState="1"
+          id="SII_1788_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_1796" />
+            <Fragmentation>
+              <IonType charge="1" index="10 14">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="86.16025685" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="5797.5991210938" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.06383100274798892" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000249"
+                name="immonium L" />
+              </IonType>
+              <IonType charge="1" index="3 4 5 6 7 8 9">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="310.1317659 409.1861827 556.2425658 627.2770716 684.2657353 755.2986331 842.3129855" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="12802.5849609375 17813.5859375 10815.6474609375 13652.6748046875 5740.2338867188 9100.9169921875 10459.75390625" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.0171704331880278 0.0031732331880220954 -0.008857666811991294 -0.011465866811931846 -0.04426616681200812 -0.04848236681198159 -0.06615796681194297" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="6 7 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="648.3472451 761.3946474 848.3794344" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="29178.005859375 6038.7436523438 5481.1694335938" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.02428505051193497 -0.06094675051190279 -0.10818775051188823" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.45885E-14" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="1.19E-8" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1601.8201846836998" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.1417.1417.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2655.00005" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=1278" id="SIR_1821">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="SIIDTYKHEGWIPDCR"
+          calculatedMassToCharge="1988.9414386837"
+          experimentalMassToCharge="1989.942993164063"
+          chargeState="1" id="SII_1821_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_1829" />
+            <Fragmentation>
+              <IonType charge="1" index="3">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="86.17885706" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="610.5478515625" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.08243121274799137" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000247"
+                name="immonium I" />
+              </IonType>
+              <IonType charge="1" index="2 12">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="86.17885706" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="610.5478515625" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.08243121274799137" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000249"
+                name="immonium L" />
+              </IonType>
+              <IonType charge="1" index="2 5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="201.264965 530.3453957" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="625.8438720703 1064.8774414063" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.14159653318802157 0.0633412331881118" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 2 4 7 12">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2807566 335.2674971 547.3336648 903.534319 1561.736856" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="2446.9299316406 3472.2236328125 1438.3464355469 1453.9185791016 1173.3823242188" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.16180444948798822 0.11789594948800186 0.1043566494879542 0.12016984948786558 0.015239849487898027" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.2110047E-14" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="1.0E-5" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1988.9414386837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.1379.1379.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2625.00017" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=1142" id="SIR_1949">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="DATVEPFDWCCKGR"
+          calculatedMassToCharge="1739.7031926836996"
+          experimentalMassToCharge="1740.722900390625"
+          chargeState="1" id="SII_1949_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_1958" />
+            <Fragmentation>
+              <IonType charge="1" index="3 4 5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="288.199236 387.2451564 516.2884555" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="6720.017578125 3386.6696777344 2882.9345703125" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.0802235331879615 0.05772993318794306 0.0584360331880589" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 2 3 4 5 6 9 13">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2260669 232.2273062 360.2307916 520.2848429 680.307304 866.3628321 1225.497004 1625.806125" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="11933.0283203125 3168.8996582031 14676.55078125 4906.0317382813 2781.6721191406 25219.73046875 6433.9301757813 4687.5185546875" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.10711474948800515 0.08689004948797674 0.031797449487896756 0.05519974948788331 0.047011849487944346 0.023226949487821003 0.009277849487943968 0.12259884948798572" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="4.30327E-17" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="0.00253" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1739.7031926836996" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.1237.1237.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2535.00019" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=1090" id="SIR_1993">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="IVNNIAVEMTTAR"
+          calculatedMassToCharge="1430.7551496836998"
+          experimentalMassToCharge="1431.759643554688"
+          chargeState="1" id="SII_1993_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_2003" />
+            <Fragmentation>
+              <IonType charge="1" index="3 4 5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="327.3735818 441.4439649 554.5004461" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="510.2658691406 936.6388549805 468.2252807617" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.17090033318800124 0.19835643318799612 0.17077363318799144" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.277743 579.4507611" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="2674.9750976563 590.8766479492" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.1587908494879855 0.15885194948805292" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="33.93" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="6.0960174E-11" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="0.0687" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1430.7551496836998" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.1183.1183.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2505.00015" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=997" id="SIR_2082">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="IYDTGIFANSR"
+          calculatedMassToCharge="1255.6196926837"
+          experimentalMassToCharge="1256.614379882813"
+          chargeState="1" id="SII_2082_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_2093" />
+            <Fragmentation>
+              <IonType charge="1" index="1 6">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="86.20147456" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="10754.736328125" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.10504871274798688" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000247"
+                name="immonium I" />
+              </IonType>
+              <IonType charge="1" index="2 3 5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="277.2844704 392.3127177 550.3603379" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="8924.7080078125 14721.9853515625 28991.875" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.12980993318797118 0.13111423318798643 0.10959143318802944" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 2 3 4 5 7 8">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2555437 262.2796952 376.3211017 447.3502895 594.4002348 764.4644456 865.5152152" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="41491.48828125 18407.037109375 8552.75390625 12993.298828125 9164.4599609375 9096.0927734375 54587.18359375" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.13659154948800278 0.12871504948799384 0.12719454948796738 0.11926834948792475 0.10079964948806719 0.0594824494879731 0.06257304948792353" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.9954336E-14" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="4.65E-4" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1255.6196926837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.1086.1086.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2445.00007" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=973" id="SIR_2101">
+          <SpectrumIdentificationItem passThreshold="false"
+          rank="1" peptide_ref="SINGYPIPGGGTVR"
+          calculatedMassToCharge="1386.7255556837001"
+          experimentalMassToCharge="1388.717041015625"
+          chargeState="1" id="SII_2101_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_2130" />
+            <Fragmentation>
+              <IonType charge="1" index="4">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="372.3600029" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="653.9891967773" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.17224343318798674" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 2 7 9 11">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2777284 274.3329063 643.4726564 853.5277253 1073.628499" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="5538.7685546875 706.6557617188 1091.4812011719 592.8056030273 3712.9094238281" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.15877624948799962 0.14554014948794247 0.12045524948803177 0.03869614948803246 0.05468584948789612" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="2.41" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="46.75" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.0158209E-8" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="8.61" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1386.7255556837001" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Not Validated" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.1061.1061.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2430.0001" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=955" id="SIR_2118">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="SINGYPIPGGGTVR"
+          calculatedMassToCharge="1386.7255556837001"
+          experimentalMassToCharge="1387.72802734375"
+          chargeState="1" id="SII_2118_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_2130" />
+            <Fragmentation>
+              <IonType charge="1" index="2 3 4">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="201.2282851 315.2713475 372.2926505" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="7466.9067382813 5411.126953125 15168.6279296875" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.1049166331880258 0.10505203318797385 0.10489103318798243" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 2 4 5 7 9 11">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2302247 274.2876019 432.3142901 489.344765 643.3818046 853.4633707 1073.648728" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="41686.1796875 7923.396484375 5714.796875 6444.76171875 15882.1591796875 9724.2939453125 28239.376953125" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.11127254948800669 0.10023574948797886 0.057780949487948874 0.06679184948797001 0.02960344948803595 -0.025658450511969022 0.0749148494878682" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.14187014E-17" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="0.00836" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1386.7255556837001" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.1042.1042.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2415.00006" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=879" id="SIR_2190">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="FEPPAKETDPITAR"
+          calculatedMassToCharge="1570.7991236837"
+          experimentalMassToCharge="1571.809936523438"
+          chargeState="1" id="SII_2190_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_2202" />
+            <Fragmentation>
+              <IonType charge="1" index="2">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="277.1483322" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="3118.81640625" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.030048733188039023" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="3 4 10">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="70.12450786" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="1723.5908203125" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.05938201274800292" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000252"
+                name="immonium P" />
+              </IonType>
+              <IonType charge="1" index="1 2 3 5 7 12">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.1858597 246.1999213 347.2240156 557.3399899 773.3601814 1295.69305" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="9789.6005859375 2929.2880859375 2458.8120117188 73337.9609375 1881.5656738281 7643.787109375" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.06690754948800759 0.04385514948799596 0.020270449487952646 -5.832505120224596E-4 -0.0550137505119892 -0.002343150511933345" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="7.1195654E-13" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="0.0204" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1570.7991236837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.962.962.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2355.00012" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=877" id="SIR_2192">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="ENIDWNEGYK"
+          calculatedMassToCharge="1266.5516716837"
+          experimentalMassToCharge="1267.614013671875"
+          chargeState="1" id="SII_2192_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_2204" />
+            <Fragmentation>
+              <IonType charge="1" index="5">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="610.3123569" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="772.124206543" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.029248749488033354" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="11.82" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="88.31" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.4174734E-9" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="1.44" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1266.5516716837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Doubtful" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.960.960.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2355.0001" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=650" id="SIR_2410">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="RAHYYVPR"
+          calculatedMassToCharge="1060.5566306837"
+          experimentalMassToCharge="1061.588256835938"
+          chargeState="1" id="SII_2410_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_2444" />
+            <Fragmentation>
+              <IonType charge="1" index="3">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="110.1696057" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="30796.568359375" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.09833185274801792" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000246"
+                name="immonium H" />
+              </IonType>
+              <IonType charge="1" index="5 6">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="691.3809574 790.4449559" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="18008.45703125 18244.6484375" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.049903933188147676 0.04548843318809759" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="2 4 5 7">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="272.2662985 534.3691495 697.4138927 905.5500069" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="47430.9765625 21202.703125 18145.48046875 227399.15625" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.09458234948795052 0.06569934948799983 0.04712254948799455 0.08721074948800833" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="36.41" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="4.67423E-10" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="0.0197" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1060.5566306837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.721.721.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2175.00005" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_1-10.mzML.mgf"
+        spectrumID="index=629" id="SIR_2430">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="RAHYYVPR"
+          calculatedMassToCharge="1060.5566306837"
+          experimentalMassToCharge="1061.542846679688"
+          chargeState="1" id="SII_2430_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_2444" />
+            <Fragmentation>
+              <IonType charge="1" index="3">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="110.1528947" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="7740.4907226563" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.08162085274801711" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000246"
+                name="immonium H" />
+              </IonType>
+              <IonType charge="1" index="6">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="790.3940182" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="3700.0583496094" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.005449266811865527" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="1 2 4 7">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.2001863 272.2404794 534.3261124 905.4964172" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="5039.2456054688 10074.015625 3758.7592773438 44691.39453125" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="0.08123414948801155 0.06876324948797219 0.022662249488007546 0.03362104948803335" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="42.41" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="100.0" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="1.0257421E-10" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="0.0136" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1060.5566306837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 1 to 10_BAF.699.699.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="2160.00005" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <SpectrumIdentificationResult spectraData_ref="ma201_Vp_11-20.mzML.mgf"
+        spectrumID="index=3423" id="SIR_3090">
+          <SpectrumIdentificationItem passThreshold="true" rank="1"
+          peptide_ref="SKIPFIVIFDPIEAAR"
+          calculatedMassToCharge="1814.9930716837"
+          experimentalMassToCharge="1816.009765625" chargeState="1"
+          id="SII_3090_1">
+            <PeptideEvidenceRef peptideEvidence_ref="PepEv_3117" />
+            <Fragmentation>
+              <IonType charge="1" index="2 3">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="216.0187281 329.0569005" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="274.1675720215 210.1901092529" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.0791543668119914 -0.1250459668120243" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001221"
+                name="frag: b ion" />
+              </IonType>
+              <IonType charge="1" index="4 11">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="70.03571772" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="113.7114257813" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.029408127251997485" />
+                <cvParam cvRef="PRIDE" accession="PRIDE:0000252"
+                name="immonium P" />
+              </IonType>
+              <IonType charge="1" index="1 3">
+                <FragmentArray measure_ref="Measure_MZ"
+                values="175.0660555 317.0504645" />
+                <FragmentArray measure_ref="Measure_Int"
+                values="396.195098877 242.8236083984" />
+                <FragmentArray measure_ref="Measure_Error"
+                values="-0.05289665051199677 -0.14271565051205926" />
+                <cvParam cvRef="PSI-MS" accession="MS:1001220"
+                name="frag: y ion" />
+              </IonType>
+            </Fragmentation>
+            <cvParam cvRef="PSI-MS" accession="MS:1002466"
+            name="PeptideShaker PSM score" value="11.29" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002467"
+            name="PeptideShaker PSM confidence" value="84.21" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002052"
+            name="MS-GF:SpecEValue" value="6.26492E-9" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002257"
+            name="Comet:expectation value" value="0.248" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001117"
+            name="theoretical mass" value="1814.9930716837" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002543"
+            name="PeptideShaker PSM confidence type"
+            value="Confident" />
+          </SpectrumIdentificationItem>
+          <cvParam cvRef="PSI-MS" accession="MS:1000796"
+          name="spectrum title"
+          value="Suresh Vp 11 to 20_BAF.3773.3773.1" />
+          <cvParam cvRef="PSI-MS" accession="MS:1000894"
+          name="retention time" value="6360.00001" unitCvRef="UO"
+          unitAccession="UO:0000010" unitName="seconds" />
+        </SpectrumIdentificationResult>
+        <cvParam cvRef="PSI-MS" accession="MS:1002439"
+        name="final PSM list" />
+      </SpectrumIdentificationList>
+      <ProteinDetectionList id="Protein_groups">
+        <ProteinAmbiguityGroup id="PAG_0">
+          <ProteinDetectionHypothesis id="PAG_0_1"
+          dBSequence_ref="JEMP01000193.1_rev_g3500.t1"
+          passThreshold="false">
+            <PeptideHypothesis peptideEvidence_ref="PepEv_1">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1_1" />
+            </PeptideHypothesis>
+            <cvParam cvRef="PSI-MS" accession="MS:1002403"
+            name="group representative" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002401"
+            name="leading protein" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001093"
+            name="sequence coverage" value="0.0" />
+          </ProteinDetectionHypothesis>
+          <cvParam cvRef="PSI-MS" accession="MS:1002470"
+          name="PeptideShaker protein group score" value="0.0" />
+          <cvParam cvRef="PSI-MS" accession="MS:1002471"
+          name="PeptideShaker protein group confidence"
+          value="0.0" />
+          <cvParam cvRef="PSI-MS" accession="MS:1002545"
+          name="PeptideShaker protein confidence type"
+          value="Not Validated" />
+          <cvParam cvRef="PSI-MS" accession="MS:1002415"
+          name="protein group passes threshold" value="false" />
+        </ProteinAmbiguityGroup>
+        <ProteinAmbiguityGroup id="PAG_4">
+          <ProteinDetectionHypothesis id="PAG_4_1"
+          dBSequence_ref="JEMP01000061.1_rev_g10170.t1"
+          passThreshold="true">
+            <PeptideHypothesis peptideEvidence_ref="PepEv_3117">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_5_1" />
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_3090_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_232">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_232_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_266">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_266_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_532">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_531_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_663">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_662_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_963">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_960_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_1108">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1102_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_1474">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1467_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_1796">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1788_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_1829">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1821_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_1958">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1949_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_2003">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1993_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_2093">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_2082_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_2130">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_2101_1" />
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_2118_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_2202">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_2190_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_2204">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_2192_1" />
+            </PeptideHypothesis>
+            <PeptideHypothesis peptideEvidence_ref="PepEv_2444">
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_2410_1" />
+              <SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_2430_1" />
+            </PeptideHypothesis>
+            <cvParam cvRef="PSI-MS" accession="MS:1002403"
+            name="group representative" />
+            <cvParam cvRef="PSI-MS" accession="MS:1002401"
+            name="leading protein" />
+            <cvParam cvRef="PSI-MS" accession="MS:1001093"
+            name="sequence coverage" value="0.28" />
+          </ProteinDetectionHypothesis>
+          <cvParam cvRef="PSI-MS" accession="MS:1002470"
+          name="PeptideShaker protein group score" value="100.0" />
+          <cvParam cvRef="PSI-MS" accession="MS:1002471"
+          name="PeptideShaker protein group confidence"
+          value="100.0" />
+          <cvParam cvRef="PSI-MS" accession="MS:1002545"
+          name="PeptideShaker protein confidence type"
+          value="Confident" />
+          <cvParam cvRef="PSI-MS" accession="MS:1002415"
+          name="protein group passes threshold" value="true" />
+        </ProteinAmbiguityGroup>
+        <cvParam cvRef="PSI-MS" accession="MS:1002404"
+        name="count of identified proteins" value="612" />
+      </ProteinDetectionList>
+    </AnalysisData>
+  </DataCollection>
+</MzIdentML>

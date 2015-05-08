@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'protk/peptide'
+require 'protk/mzidentml_doc'
 require 'rspec/its'
 
 
@@ -12,9 +13,14 @@ def parse_peptides(protxml_file)
   peptides
 end
 
+
+def parse_peptides_from_mzid(mzid_file)
+	MzIdentMLDoc.new(mzid_file).peptides
+end
+
 describe Peptide do 
 
-	include_context :tmp_dir_with_fixtures, ["test.protXML","transdecoder_gff.gff3","augustus_sample.gff","sixframe.gff","braker_min.gff3"]
+	include_context :tmp_dir_with_fixtures, ["test.protXML","transdecoder_gff.gff3","augustus_sample.gff","sixframe.gff","braker_min.gff3","PeptideShaker_tiny.mzid"]
 
 	let(:first_peptide) { 
 		xmlnodes = parse_peptides("#{@tmp_dir}/test.protXML")
@@ -25,7 +31,7 @@ describe Peptide do
 		subject { first_peptide }
 		it { should be_a Peptide}
 		its(:sequence) {should eq("SGELAVQALDQFATVVEAK")}
-		its(:nsp_adjusted_probability) { should eq(0.9981)}
+		its(:probability) { should eq(0.9981)}
 		its(:charge) { should eq(1)}
 
 		it "can map coordinates to protein" do
@@ -47,7 +53,31 @@ describe Peptide do
 		end
 
 	end
+
+
+	let(:first_peptide_from_mzid) { 
+		xmlnodes = parse_peptides_from_mzid("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+		Peptide.from_mzid(xmlnodes[0])
+	}
 	
+	describe "peptide from mzid" do
+		subject { first_peptide_from_mzid }
+		it { should be_a Peptide }
+		its(:sequence) { should eq("KSPVYKVHFTR")}
+		its(:probability) { should eq(0.0)}
+		its(:charge) { should eq(1)}
+		its(:protein_name) { should eq("JEMP01000193.1_rev_g3500.t1")}
+	end
+
+	describe "converting to protxml" do
+		subject { first_peptide_from_mzid.as_protxml }
+		it { should be_a XML::Node }
+		it { should have_attribute_with_value("peptide_sequence","KSPVYKVHFTR")}
+		it { should have_attribute_with_value("charge","1")}
+		it { should have_attribute_with_value("nsp_adjusted_probability","0.0")}
+		it { should have_attribute_with_value("calc_neutral_pep_mass","1360.7615466836999")}
+	end
+
 	it "can be initialized just from a sequence" do
 		peptide = Peptide.from_sequence("WQCKLVAKPESLSTSPS")
 		expect(peptide).to be_a(Peptide)

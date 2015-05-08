@@ -1,4 +1,5 @@
 require 'protk/peptide'
+require 'protk/mzidentml_doc'
 
 include LibXML
 
@@ -13,6 +14,21 @@ class Protein
 	attr_accessor :n_indistinguishable_proteins
 	attr_accessor :percent_coverage
 	attr_accessor :peptides
+
+	def as_protxml
+		node = XML::Node.new('protein')
+    	node['protein_name']=self.protein_name.to_s
+    	node['n_indistinguishable_proteins']=self.n_indistinguishable_proteins.to_s
+    	node['probability']=self.probability.to_s
+    	node['percent_coverage']=self.percent_coverage.to_s
+    	node['unique_stripped_peptides']=self.peptides.collect {|p| p.sequence }.join("+")
+    	node['total_number_peptides']=self.peptides.length.to_s
+    	self.peptides.each do |peptide|  
+    		node<<peptide.as_protxml
+    	end
+    	node
+	end
+
 
 	class << self
 
@@ -46,6 +62,52 @@ class Protein
 			prot.peptides = peptide_nodes.collect { |e| Peptide.from_protxml(e) }
 			prot
 		end
+
+
+		# <ProteinAmbiguityGroup id="PAG_0">
+		# 	<ProteinDetectionHypothesis id="PAG_0_1" dBSequence_ref="JEMP01000193.1_rev_g3500.t1 280755" passThreshold="false">
+		# 		<PeptideHypothesis peptideEvidence_ref="PepEv_1">
+		# 			<SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1_1"/>
+		# 		</PeptideHypothesis>
+		# 		<cvParam cvRef="PSI-MS" accession="MS:1002403" name="group representative"/>
+		# 		<cvParam cvRef="PSI-MS" accession="MS:1002401" name="leading protein"/>
+		# 		<cvParam cvRef="PSI-MS" accession="MS:1001093" name="sequence coverage" value="0.0"/>
+		# 	</ProteinDetectionHypothesis>
+		# 	<cvParam cvRef="PSI-MS" accession="MS:1002470" name="PeptideShaker protein group score" value="0.0"/>
+		# 	<cvParam cvRef="PSI-MS" accession="MS:1002471" name="PeptideShaker protein group confidence" value="0.0"/>
+		# 	<cvParam cvRef="PSI-MS" accession="MS:1002545" name="PeptideShaker protein confidence type" value="Not Validated"/>
+		# 	<cvParam cvRef="PSI-MS" accession="MS:1002415" name="protein group passes threshold" value="false"/>
+		# </ProteinAmbiguityGroup>
+
+
+		# Note:
+		# This is hacked together to work for a specific PeptideShaker output type
+		# Refactor and properly respect cvParams for real conversion
+		#
+		def from_mzid(xmlnode)
+
+			coverage_cvparam=""
+			prot=new()
+			groupnode = xmlnode.parent
+
+			prot.group_number=groupnode.attributes['id'].split("_").last.to_i+1
+			prot.protein_name=MzIdentMLDoc.get_dbsequence(xmlnode,xmlnode.attributes['dBSequence_ref']).attributes['accession']
+			prot.n_indistinguishable_proteins=MzIdentMLDoc.get_proteins_for_group(groupnode).length
+			prot.group_probability=MzIdentMLDoc.get_cvParam(groupnode,"MS:1002470").attributes['value'].to_f
+
+			coverage_node=MzIdentMLDoc.get_cvParam(xmlnode,"MS:1001093")
+
+			prot.percent_coverage=coverage_node.attributes['value'].to_f if coverage_node
+			prot.probability = MzIdentMLDoc.get_protein_probability(xmlnode)
+			# require 'byebug';byebug
+
+			peptide_nodes=MzIdentMLDoc.get_peptides_for_protein(xmlnode)
+
+			prot.peptides = peptide_nodes.collect { |e| Peptide.from_mzid(e) }
+			prot
+		end
+
+
 		private :new
 	end
 
@@ -62,11 +124,12 @@ class Protein
 			if best_peptides[seq].nil?
 				best_peptides[seq]=peptide				
 			else
-				best_peptides[seq]=peptide if peptide.nsp_adjusted_probability > best_peptides[seq].nsp_adjusted_probability
+				best_peptides[seq]=peptide if peptide.probability > best_peptides[seq].probability
 			end
 		end
 
 		best_peptides.values
 	end
+
 
 end

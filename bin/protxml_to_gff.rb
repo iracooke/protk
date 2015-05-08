@@ -155,7 +155,7 @@ proteins.each do |protein|
 			peptides = tool.stack_charge_states ? protein.peptides : protein.representative_peptides
 
 			peptides.each do |peptide|
-				if peptide.nsp_adjusted_probability >= tool.peptide_probability_threshold
+				if peptide.probability >= tool.peptide_probability_threshold
 					peptide_entries = peptide.to_gff3_records(protein_entry.aaseq,gff_parent_entry,gff_cds_entries)
 					peptide_entries.each do |peptide_entry|
 						output_fh.write peptide_entry.to_s

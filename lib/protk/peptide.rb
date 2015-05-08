@@ -1,6 +1,7 @@
 require 'libxml'
 require 'bio'
 require 'protk/bio_gff3_extensions'
+require 'protk/mzidentml_doc'
 require 'protk/error'
 
 include LibXML
@@ -10,19 +11,52 @@ end
 
 class Peptide
 
+	# Stripped sequence (no modifications)
 	attr_accessor :sequence
 	attr_accessor :protein_name
 	attr_accessor :charge
-	attr_accessor :nsp_adjusted_probability
+	attr_accessor :probability
+	attr_accessor :theoretical_neutral_mass
 
-
+	def as_protxml
+		node = XML::Node.new('peptide')
+		node['peptide_sequence']=self.sequence.to_s
+		node['charge']=self.charge.to_s
+		node['nsp_adjusted_probability']=self.probability.to_s
+		node['calc_neutral_pep_mass']=self.theoretical_neutral_mass.to_s
+		node
+	end
 
 	class << self
 		def from_protxml(xmlnode)
 			pep=new()
 			pep.sequence=xmlnode['peptide_sequence']
-			pep.nsp_adjusted_probability=xmlnode['nsp_adjusted_probability'].to_f
+			pep.probability=xmlnode['nsp_adjusted_probability'].to_f
 			pep.charge=xmlnode['charge'].to_i
+			pep
+		end
+
+		# <ProteinDetectionHypothesis id="PAG_0_1" dBSequence_ref="JEMP01000193.1_rev_g3500.t1 280755" passThreshold="false">
+		# 	<PeptideHypothesis peptideEvidence_ref="PepEv_1">
+		# 		<SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1_1"/>
+		# 	</PeptideHypothesis>
+		# 	<cvParam cvRef="PSI-MS" accession="MS:1002403" name="group representative"/>
+		# 	<cvParam cvRef="PSI-MS" accession="MS:1002401" name="leading protein"/>
+		# 	<cvParam cvRef="PSI-MS" accession="MS:1001093" name="sequence coverage" value="0.0"/>
+		# </ProteinDetectionHypothesis>
+
+		def from_mzid(xmlnode)
+			pep=new()
+			pep.sequence=MzIdentMLDoc.get_sequence_for_peptide(xmlnode)
+			best_psm = MzIdentMLDoc.get_best_psm_for_peptide(xmlnode)
+			# require 'byebug';byebug
+			pep.probability = MzIdentMLDoc.get_cvParam(best_psm,"MS:1002466")['value'].to_f
+			pep.theoretical_neutral_mass = MzIdentMLDoc.get_cvParam(best_psm,"MS:1001117")['value'].to_f
+			pep.charge = best_psm.attributes['chargeState'].to_i
+			pep.protein_name = MzIdentMLDoc.get_dbsequence(xmlnode.parent,xmlnode.parent.attributes['dBSequence_ref']).attributes['accession']
+
+			# pep.charge = MzIdentMLDoc.get_charge_for_psm(best_psm)
+
 			pep
 		end
 
@@ -146,7 +180,7 @@ class Peptide
 		cds_id = parent_record.id
 		this_id = "#{cds_id}.#{self.sequence}"
 		this_id << ".#{self.charge}" unless self.charge.nil?
-		score = self.nsp_adjusted_probability.nil? ? "." : self.nsp_adjusted_probability.to_s
+		score = self.probability.nil? ? "." : self.probability.to_s
 		gff_string = "#{parent_record.seqid}\tMSMS\tpolypeptide\t#{start_i}\t#{end_i}\t#{score}\t#{parent_record.strand}\t0\tID=#{this_id};Parent=#{cds_id}"
 		Bio::GFF::GFF3::Record.new(gff_string)
 	end

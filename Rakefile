@@ -1,5 +1,3 @@
-
-
 require 'rspec/core/rake_task'
 require "rake/extensiontask"
 

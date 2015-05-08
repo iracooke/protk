@@ -88,7 +88,7 @@ file.each do |entry|
 
         if tool.write_gff
           strand = frame>3 ? "-" : "+"
-          # score = self.nsp_adjusted_probability.nil? ? "." : self.nsp_adjusted_probability.to_s
+          # score = self.probability.nil? ? "." : self.probability.to_s
           # gff_string = "#{parent_record.seqid}\tMSMS\tpolypeptide\t#{start_i}\t#{end_i}\t#{score}\t#{parent_record.strand}\t0\tID=#{this_id};Parent=#{cds_id}"
           output_fh.write("#{ncbi_scaffold_id}\tsixframe\tCDS\t#{position_start}\t#{position_end}\t.\t#{strand}\t0\tID=#{gff_id}\n")
         else

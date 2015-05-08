@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'libxml'
 require 'protk/protein'
 require 'rspec/its'
+require 'protk/mzidentml_doc'
 
 include LibXML
 
@@ -13,9 +14,13 @@ def parse_proteins(protxml_file)
   proteins
 end
 
+def parse_proteins_from_mzid(mzid_file)
+	MzIdentMLDoc.new(mzid_file).proteins
+end
+
 describe Protein do 
 
-	include_context :tmp_dir_with_fixtures, ["test.protXML","small.prot.xml"]
+	include_context :tmp_dir_with_fixtures, ["test.protXML","small.prot.xml","PeptideShaker_tiny.mzid"]
 
 	let(:test_protxml){
 		xmlnodes = parse_proteins("#{@tmp_dir}/test.protXML")
@@ -27,9 +32,44 @@ describe Protein do
 		xmlnodes		
 	}
 
+	let(:peptideshaker_mzid){
+		xmlnodes = parse_proteins_from_mzid("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+		xmlnodes		
+	}
+
+	let(:basic_protein_from_mzid) {
+		Protein.from_mzid(peptideshaker_mzid[0])
+	}
+
 	let(:basic_protein) { 
 		Protein.from_protxml(test_protxml[0])
 	}
+
+	describe "first protein from mzid" do
+		subject { basic_protein_from_mzid }
+		it { should be_a Protein}
+		its(:group_number) {should eq(1)}
+		its(:group_probability) { should eq(0.0)}
+		its(:probability) { should eq(0.00)}
+		its(:protein_name) { should eq("JEMP01000193.1_rev_g3500.t1") }
+		its(:n_indistinguishable_proteins) { should eq(1)}
+		its(:percent_coverage) { should eq(0.0)}
+		its(:peptides) { should be_a Array }
+
+	end
+
+	describe "converting to protxml" do
+		subject { basic_protein_from_mzid.as_protxml }
+		it { should be_a XML::Node }
+		it { should have_attribute_with_value("protein_name","JEMP01000193.1_rev_g3500.t1")}
+		it { should have_attribute_with_value("n_indistinguishable_proteins","1")}
+		it { should have_attribute_with_value("probability","0.0")}
+		it { should have_attribute_with_value("percent_coverage","0.0")}
+		it { should have_attribute_with_value("unique_stripped_peptides","KSPVYKVHFTR")}
+		it { should have_attribute_with_value("total_number_peptides","1")}
+		its(:children) { should be_a Array }
+		its(:children) { should_not be_empty }
+	end
 
 	describe "first protein" do
 		subject { basic_protein }

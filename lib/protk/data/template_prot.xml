@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protein_summary xmlns="http://regis-web.systemsbiology.net/protXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/protXML/protXML_v6.xsd" summary_xml="">
+<protein_summary_header reference_database="FULLPATH_TO_REFERENCE_DB" residue_substitution_list="I -&gt; L" source_files="FULLPATH_TO_SOURCE_PEPXML" source_files_alt="FULLPATH_TO_SOURCE_PEPXML" min_peptide_probability="" min_peptide_weight="" num_predicted_correct_prots="" num_input_1_spectra="" num_input_2_spectra="" num_input_3_spectra="" num_input_4_spectra="" num_input_5_spectra="" initial_min_peptide_prob="" total_no_spectrum_ids="" sample_enzyme="trypsin">
+<program_details analysis="proteinprophet" time="2014-01-20T14:17:37" version=" Insilicos_LabKey_C++ (TPP v0.0 Development trunk rev 0, Build 201307090846 (linux))">
+<proteinprophet_details occam_flag="Y" groups_flag="Y" degen_flag="Y" nsp_flag="Y" initial_peptide_wt_iters="2" nsp_distribution_iters="2" final_peptide_wt_iters="3">
+      <nsp_information neighboring_bin_smoothing="Y">
+         <nsp_distribution bin_no="0" nsp_lower_bound_incl="0.00" nsp_upper_bound_incl="0.00" pos_freq="0.057" neg_freq="0.625" pos_to_neg_ratio="0.09"/>
+         <nsp_distribution bin_no="1" nsp_lower_bound_excl="0.00" nsp_upper_bound_incl="0.31" pos_freq="0.037" neg_freq="0.152" pos_to_neg_ratio="0.24"/>
+         <nsp_distribution bin_no="2" nsp_lower_bound_excl="0.31" nsp_upper_bound_incl="1.00" pos_freq="0.077" neg_freq="0.032" pos_to_neg_ratio="2.42"/>
+         <nsp_distribution bin_no="3" nsp_lower_bound_excl="1.00" nsp_upper_bound_incl="2.50" pos_freq="0.113" neg_freq="0.033" pos_to_neg_ratio="3.39"/>
+         <nsp_distribution bin_no="4" nsp_lower_bound_excl="2.50" nsp_upper_bound_incl="4.63" pos_freq="0.123" neg_freq="0.032" pos_to_neg_ratio="3.91"/>
+         <nsp_distribution bin_no="5" nsp_lower_bound_excl="4.63" nsp_upper_bound_incl="7.90" pos_freq="0.143" neg_freq="0.032" pos_to_neg_ratio="4.50"/>
+         <nsp_distribution bin_no="6" nsp_lower_bound_excl="7.90" nsp_upper_bound_incl="14.92" pos_freq="0.196" neg_freq="0.041" pos_to_neg_ratio="4.78"/>
+         <nsp_distribution bin_no="7" nsp_lower_bound_excl="14.92" nsp_upper_bound_excl="inf" pos_freq="0.254" neg_freq="0.054" pos_to_neg_ratio="4.72" alt_pos_to_neg_ratio="4.78"/>
+      </nsp_information>
+      <ni_information>
+      </ni_information>
+      <protein_summary_data_filter min_probability="0.00" sensitivity="1.000" false_positive_error_rate="0.835" predicted_num_correct="1787" predicted_num_incorrect="9044"/>
+      <protein_summary_data_filter min_probability="0.10" sensitivity="1.000" false_positive_error_rate="0.235" predicted_num_correct="1787" predicted_num_incorrect="548"/>
+      <protein_summary_data_filter min_probability="0.20" sensitivity="1.000" false_positive_error_rate="0.235" predicted_num_correct="1787" predicted_num_incorrect="548"/>
+      <protein_summary_data_filter min_probability="0.30" sensitivity="0.956" false_positive_error_rate="0.151" predicted_num_correct="1709" predicted_num_incorrect="305"/>
+      <protein_summary_data_filter min_probability="0.40" sensitivity="0.916" false_positive_error_rate="0.095" predicted_num_correct="1638" predicted_num_incorrect="171"/>
+      <protein_summary_data_filter min_probability="0.50" sensitivity="0.887" false_positive_error_rate="0.063" predicted_num_correct="1585" predicted_num_incorrect="106"/>
+      <protein_summary_data_filter min_probability="0.60" sensitivity="0.853" false_positive_error_rate="0.036" predicted_num_correct="1525" predicted_num_incorrect="58"/>
+      <protein_summary_data_filter min_probability="0.70" sensitivity="0.826" false_positive_error_rate="0.020" predicted_num_correct="1477" predicted_num_incorrect="31"/>
+      <protein_summary_data_filter min_probability="0.80" sensitivity="0.805" false_positive_error_rate="0.012" predicted_num_correct="1438" predicted_num_incorrect="18"/>
+      <protein_summary_data_filter min_probability="0.90" sensitivity="0.773" false_positive_error_rate="0.006" predicted_num_correct="1381" predicted_num_incorrect="8"/>
+      <protein_summary_data_filter min_probability="0.95" sensitivity="0.749" false_positive_error_rate="0.004" predicted_num_correct="1339" predicted_num_incorrect="5"/>
+      <protein_summary_data_filter min_probability="0.96" sensitivity="0.738" false_positive_error_rate="0.003" predicted_num_correct="1318" predicted_num_incorrect="4"/>
+      <protein_summary_data_filter min_probability="0.97" sensitivity="0.728" false_positive_error_rate="0.002" predicted_num_correct="1302" predicted_num_incorrect="3"/>
+      <protein_summary_data_filter min_probability="0.98" sensitivity="0.711" false_positive_error_rate="0.002" predicted_num_correct="1272" predicted_num_incorrect="2"/>
+      <protein_summary_data_filter min_probability="0.99" sensitivity="0.609" false_positive_error_rate="0.000" predicted_num_correct="1088" predicted_num_incorrect="0"/>
+      <protein_summary_data_filter min_probability="1.00" sensitivity="0.164" false_positive_error_rate="0.000" predicted_num_correct="294" predicted_num_incorrect="0"/>
+</proteinprophet_details>
+</program_details>
+</protein_summary_header>
+<dataset_derivation generation_no="0">
+</dataset_derivation>
+</protein_summary>
