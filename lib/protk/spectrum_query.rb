@@ -102,10 +102,14 @@ class SpectrumQuery
 
 	end
 
-	def as_protxml()
+# <spectrum_query spectrum="SureshVp1to10_BAF.00833.00833.1" start_scan="833" end_scan="833" 
+# precursor_neutral_mass="1214.5937" assumed_charge="1" index="3222">
+# <search_result>
+
+	def as_pepxml()
 		node = XML::Node.new('spectrum_query')
 		node['spectrum']=self.spectrum_title
-		node['retention_time']=self.retention_time.to_s
+		node['retention_time_sec']=self.retention_time.to_s
 		self.psms.each do |psm|  
 			node << psm.as_protxml
 		end

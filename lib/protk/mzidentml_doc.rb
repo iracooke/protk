@@ -17,6 +17,10 @@ class MzIdentMLDoc < Object
 		@document.find("//#{MZID_NS_PREFIX}:SpectrumIdentificationResult","#{MZID_NS_PREFIX}:#{MZID_NS}")
 	end
 
+	def peptide_evidence
+		@document.find("//#{MZID_NS_PREFIX}:PeptideEvidence","#{MZID_NS_PREFIX}:#{MZID_NS}")
+	end
+
 	def psms
 		@document.find("//#{MZID_NS_PREFIX}:SpectrumIdentificationItem","#{MZID_NS_PREFIX}:#{MZID_NS}")
 	end	

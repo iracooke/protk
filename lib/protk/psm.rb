@@ -1,31 +1,57 @@
 
 require 'protk/mzidentml_doc'
+require 'libxml'
 
 include LibXML
 
+
+class String
+  def to_bool
+    return true if self == true || self =~ (/^(true|t|yes|y|1)$/i)
+    return false if self == false || self =~ (/^(false|f|no|n|0)$/i)
+    raise ArgumentError.new("invalid value for Boolean: \"#{self}\"")
+  end
+end
 
 class PeptideEvidence
 	attr_accessor :peptide_prev_aa
 	attr_accessor :peptide_next_aa
 	attr_accessor :protein
-	attr_accessor :peptide_sequence
+	attr_accessor :protein_descr
+	# attr_accessor :peptide_sequence
 	attr_accessor :is_decoy
 
-	# <PeptideEvidence isDecoy="false" pre="K" post="Y" start="182" end="192" 
-	#peptide_ref="IYVTGESYAGR" dBSequence_ref="JEMP01000005.1_rev_g4624.t1" id="PepEv_2320" />
-
+# <PeptideEvidence isDecoy="false" pre="K" post="G" start="712"
+#     end="722" peptide_ref="KSPVYKVHFTR"
+#     dBSequence_ref="JEMP01000193.1_rev_g3500.t1" id="PepEv_1" />
 	class << self
 
-	end
+		def from_mzid(pe_node)
+			pe = new()
+			pe.peptide_prev_aa=pe_node.attributes['pre']
+			pe.peptide_next_aa=pe_node.attributes['post']
+			pe.is_decoy=pe_node.attributes['isDecoy'].to_bool
 
-	def from_mzid(psm_node)
-		psm = new()
-		psm.peptide = MzIdentMLDoc.get_sequence_for_psm(psm_node)
-		peptide_evidence_nodes = MzIdentMLDoc.get_peptide_evidence_from_psm(psm_node)
+			# peptide_ref = pe_node.attributes['peptide_ref']
+			prot_ref = pe_node.attributes['dBSequence_ref']
+			# pep_node = MzIdentMLDoc.find(pe_node,"Peptide[@id=\'#{peptide_ref}\']",true)[0]
+			prot_node = MzIdentMLDoc.find(pe_node,"DBSequence[@id=\'#{prot_ref}\']",true)[0]
 
-		# query.spectrum_title = MzIdentMLDoc.get_cvParam(query_node,"MS:1000796")['value'].to_s
-		psm
-	end
+
+			# <DBSequence id="JEMP01000193.1_rev_g3500.t1"
+			# accession="JEMP01000193.1_rev_g3500.t1"
+			# searchDatabase_ref="SearchDB_1">
+			#   <cvParam cvRef="PSI-MS" accession="MS:1001088"
+			#   name="protein description" value="280755|283436" />
+			# </DBSequence>
+			pe.protein=prot_node.attributes['accession']
+			pe.protein_descr=MzIdentMLDoc.get_cvParam(prot_node,"MS:1001088")['value']
+
+
+			# pe.peptide_sequence=pep_node
+
+			pe
+		end
 
 
 		private :new
@@ -37,14 +63,17 @@ class PeptideEvidence
 
 #	<alternative_protein protein="lcl|JEMP01000005.1_rev_g4624.t1" 
 # protein_descr="652491|654142" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="Y"/>
+# We use this only for alternative_proteins
+# The first peptide_evidence item is baked into the attributes of a spectrum_query
+	def as_pepxml()
+		alt_node = XML::Node.new('alternative_protein')
+		alt_node['protein']=self.protein
+		alt_node['protein_descr']=self.protein_descr
+		alt_node['peptide_prev_aa']=self.peptide_prev_aa
+		alt_node['peptide_next_aa']=self.peptide_next_aa
 
-	# From what I can tell, search_hit is always trivially wrapped in search_result 1:1
-	#
-	def as_protxml()
-		hit_node = XML::Node.new('search_hit')
-		result_node = XML::Node.new('search_result')
-		result_node << hit_node
-		result_node
+
+		alt_node
 	end
 
 end
@@ -83,14 +112,12 @@ class PSM
 
 
 	attr_accessor :peptide
-	
+	attr_accessor :calculated_mz
+	attr_accessor :experimental_mz
+	attr_accessor :charge
 
-
-	attr_accessor :calc_neutral_pep_mass
-	attr_accessor :massdiff
-	attr_accessor :num_tol_term
 	attr_accessor :scores
-
+	attr_accessor :peptide_evidence
 
 	class << self
 
@@ -134,12 +161,18 @@ class PSM
 		#   unitAccession="UO:0000010" unitName="seconds" />
 		# </SpectrumIdentificationResult>
 
+
+
 		def from_mzid(psm_node)
 			psm = new()
 			psm.peptide = MzIdentMLDoc.get_sequence_for_psm(psm_node)
 			peptide_evidence_nodes = MzIdentMLDoc.get_peptide_evidence_from_psm(psm_node)
+			psm.peptide_evidence = peptide_evidence_nodes.each { |pe| PeptideEvidence.from_mzid(pe) }
 
-			# query.spectrum_title = MzIdentMLDoc.get_cvParam(query_node,"MS:1000796")['value'].to_s
+			psm.calculated_mz = psm_node.attributes['calculatedMassToCharge'].to_f
+			psm.experimental_mz = psm_node.attributes['experimentalMassToCharge'].to_f
+			psm.charge = psm_node.attributes['chargeState'].to_i
+
 			psm
 		end
 
@@ -151,9 +184,19 @@ class PSM
 
 	end
 
+	# <search_hit hit_rank="1" peptide="GGYNQDGGSGGGYQGGGGYSGGGGGYQGGQR" 
+	# peptide_prev_aa="R" peptide_next_aa="N" 
+	# protein="lcl|JEMP01000008.1_fwd_g5144.t1" 
+	# num_tot_proteins="1" 
+	# calc_neutral_pep_mass="2768.11967665812" 
+	# massdiff="0.120361328125" 
+	# protein_descr="4860|5785" 
+	# num_tol_term="2" 
+	# num_missed_cleavages="0">
+
 	# From what I can tell, search_hit is always trivially wrapped in search_result 1:1
 	#
-	def as_protxml()
+	def as_pepxml()
 		hit_node = XML::Node.new('search_hit')
 		result_node = XML::Node.new('search_result')
 		result_node << hit_node
