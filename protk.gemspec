@@ -43,6 +43,6 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['protxml_to_table.rb']
   s.executables = s.executables + ['swissprot_to_table.rb']
   s.executables = s.executables + ['protxml_to_psql.rb']
-  s.executables = s.executables + ['mzid_to_protxml.rb']
+  s.executables = s.executables + ['mzid_to_protxml.rb','mzid_to_pepxml.rb']
 end
 

@@ -19,7 +19,9 @@ def find(node,expression,root=false)
 	node.find("#{pp}#{MZID_NS_PREFIX}:#{expression}","#{MZID_NS_PREFIX}:#{MZID_NS}")
 end
 
-groups_to_keep=Set.new ["PAG_0","PAG_4"]
+# PAG_1436 is ambiguous and therefore quite interesting for testing
+#
+groups_to_keep=Set.new ["PAG_0","PAG_4","PAG_1436"]
 
 groups=@document.find(".//#{MZID_NS_PREFIX}:ProteinAmbiguityGroup","#{MZID_NS_PREFIX}:#{MZID_NS}")
 

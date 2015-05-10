@@ -12,13 +12,22 @@ class MzIdentMLDoc < Object
 		@document=parser.parse
 	end
 
+
+	def spectrum_queries
+		@document.find("//#{MZID_NS_PREFIX}:SpectrumIdentificationResult","#{MZID_NS_PREFIX}:#{MZID_NS}")
+	end
+
+	def psms
+		@document.find("//#{MZID_NS_PREFIX}:SpectrumIdentificationItem","#{MZID_NS_PREFIX}:#{MZID_NS}")
+	end	
+
 	def protein_groups
-		@document.find(".//#{MZID_NS_PREFIX}:ProteinAmbiguityGroup","#{MZID_NS_PREFIX}:#{MZID_NS}")
+		@document.find("//#{MZID_NS_PREFIX}:ProteinAmbiguityGroup","#{MZID_NS_PREFIX}:#{MZID_NS}")
 	end
 
 
 	def proteins
-		@document.find(".//#{MZID_NS_PREFIX}:ProteinDetectionHypothesis","#{MZID_NS_PREFIX}:#{MZID_NS}")
+		@document.find("//#{MZID_NS_PREFIX}:ProteinDetectionHypothesis","#{MZID_NS_PREFIX}:#{MZID_NS}")
 	end
 
 	# Peptides are referenced in many ways in mzidentml. 
@@ -26,7 +35,7 @@ class MzIdentMLDoc < Object
 	# Such peptides may encompass several PSM's
 	#
 	def peptides
-		@document.find(".//#{MZID_NS_PREFIX}:PeptideHypothesis","#{MZID_NS_PREFIX}:#{MZID_NS}")
+		@document.find("//#{MZID_NS_PREFIX}:PeptideHypothesis","#{MZID_NS_PREFIX}:#{MZID_NS}")
 	end
 
 
@@ -95,12 +104,33 @@ class MzIdentMLDoc < Object
 	end
 
 	def self.get_sequence_for_peptide(peptide_node)
-
 		evidence_ref = peptide_node.attributes['peptideEvidence_ref']
 		pep_ref = peptide_node.find("//#{MZID_NS_PREFIX}:PeptideEvidence[@id=\'#{evidence_ref}\']","#{MZID_NS_PREFIX}:#{MZID_NS}")[0].attributes['peptide_ref']
 		peptide=peptide_node.find("//#{MZID_NS_PREFIX}:Peptide[@id=\'#{pep_ref}\']","#{MZID_NS_PREFIX}:#{MZID_NS}")[0]
 		# require 'byebug';byebug
 		peptide.find("./#{MZID_NS_PREFIX}:PeptideSequence","#{MZID_NS_PREFIX}:#{MZID_NS}")[0].content
 	end
+
+	def self.get_sequence_for_psm(psm_node)
+		pep_ref = psm_node.attributes['peptide_ref']
+		peptide=psm_node.find("//#{MZID_NS_PREFIX}:Peptide[@id=\'#{pep_ref}\']","#{MZID_NS_PREFIX}:#{MZID_NS}")[0]
+		peptide.find("./#{MZID_NS_PREFIX}:PeptideSequence","#{MZID_NS_PREFIX}:#{MZID_NS}")[0].content
+	end
+
+	def self.get_peptide_evidence_from_psm(psm_node)
+		pe_nodes = []
+		self.find(psm_node,"PeptideEvidenceRef").each do |pe_node|
+			ev_id=pe_node.attributes['peptideEvidence_ref']   
+			pe_nodes << self.find(pe_node,"PeptideEvidence[@id=\'#{ev_id}\']",true)[0]
+		end
+		pe_nodes
+	end
+
+
+
+
+
+
+
 
 end

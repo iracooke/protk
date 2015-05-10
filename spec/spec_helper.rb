@@ -38,6 +38,11 @@ RSpec::Matchers.define :have_attribute_with_value  do |attribute_name,value|
   match do |xmlnode|
     xmlnode.attributes["#{attribute_name}"]==value
   end
+
+  failure_message do |xmlnode|
+    "Expected #{value} but got #{xmlnode.attributes["#{attribute_name}"]} for #{attribute_name}"
+  end
+
 end
 
 RSpec::Matchers.define :contain_text  do |match_text|
