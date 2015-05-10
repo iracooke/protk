@@ -167,7 +167,7 @@ class PSM
 			psm = new()
 			psm.peptide = MzIdentMLDoc.get_sequence_for_psm(psm_node)
 			peptide_evidence_nodes = MzIdentMLDoc.get_peptide_evidence_from_psm(psm_node)
-			psm.peptide_evidence = peptide_evidence_nodes.each { |pe| PeptideEvidence.from_mzid(pe) }
+			psm.peptide_evidence = peptide_evidence_nodes.collect { |pe| PeptideEvidence.from_mzid(pe) }
 
 			psm.calculated_mz = psm_node.attributes['calculatedMassToCharge'].to_f
 			psm.experimental_mz = psm_node.attributes['experimentalMassToCharge'].to_f
@@ -198,6 +198,21 @@ class PSM
 	#
 	def as_pepxml()
 		hit_node = XML::Node.new('search_hit')
+		hit_node['peptide']=self.peptide.to_s
+
+		# require 'byebug';byebug
+		first_evidence = self.peptide_evidence.first
+
+		hit_node['peptide_prev_aa']=first_evidence.peptide_prev_aa
+		hit_node['peptide_next_aa']=first_evidence.peptide_next_aa
+		hit_node['protein']=first_evidence.protein
+		hit_node['protein_descr']=first_evidence.protein_descr
+
+		hit_node['num_tot_proteins']=self.peptide_evidence.length.to_s
+
+		alt_evidence = peptide_evidence.drop(1)
+		alt_evidence.each { |ae| hit_node << ae.as_pepxml }
+
 		result_node = XML::Node.new('search_result')
 		result_node << hit_node
 		result_node

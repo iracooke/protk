@@ -35,10 +35,12 @@ describe SpectrumQuery do
 	end
 
 	describe "converting to pepxml" do
-		subject { query_from_mzid.as_protxml }
+		subject { query_from_mzid.as_pepxml }
 		it { should be_a XML::Node }
 		it { should have_attribute_with_value("spectrum","Suresh Vp 1 to 10_BAF.3535.3535.1")}
-		it { should have_attribute_with_value("retention_time","6855.00001")}
+		it { should have_attribute_with_value("retention_time_sec","6855.00001")}
+		it { should have_attribute_with_value("precursor_neutral_mass","1361.797113710938")}
+		it { should have_attribute_with_value("assumed_charge","1")}
 		its(:children) { should be_a Array }
 		its(:children) { should_not be_empty }
 	end

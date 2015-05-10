@@ -1,6 +1,7 @@
 
 require 'protk/mzidentml_doc'
 require 'protk/psm'
+require 'protk/physical_constants'
 
 include LibXML
 
@@ -110,8 +111,19 @@ class SpectrumQuery
 		node = XML::Node.new('spectrum_query')
 		node['spectrum']=self.spectrum_title
 		node['retention_time_sec']=self.retention_time.to_s
+
+
+		# Use the first psm to populate spectrum level values
+		first_psm=self.psms.first
+
+		c=first_psm.charge
+
+		node['precursor_neutral_mass']=(first_psm.experimental_mz*c-c*HYDROGEN_MASS).to_s
+		node['assumed_charge']=c.to_s
+
+
 		self.psms.each do |psm|  
-			node << psm.as_protxml
+			node << psm.as_pepxml
 		end
     	node
 	end

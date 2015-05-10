@@ -35,7 +35,7 @@ describe PeptideEvidence do
 	describe "converting to pepxml" do
 		subject { first_pe_from_mzid.as_pepxml }
 		it { should be_a XML::Node }		
-		it { should have_attribute_with_value("JEMP01000193.1_rev_g3500.t1")}
+		it { should have_attribute_with_value("protein","JEMP01000193.1_rev_g3500.t1")}
 		it { should have_attribute_with_value("protein_descr","280755|283436")}
 		it { should have_attribute_with_value("peptide_prev_aa","K")}
 		it { should have_attribute_with_value("peptide_next_aa","G")}
@@ -57,12 +57,12 @@ describe PSM do
 		xmlnodes		
 	}
 
-	let(:psm_from_mzid) {
+	let(:first_psm_from_mzid) {
 		PSM.from_mzid(peptideshaker_mzid[0])
 	}
 
 	describe "first psm from mzid" do
-		subject { psm_from_mzid }
+		subject { first_psm_from_mzid }
 		it { should be_a PSM }
 		its(:peptide) { should eq("KSPVYKVHFTR")}
 		its(:calculated_mz){ should eq(1360.7615466836999) }
@@ -75,10 +75,14 @@ describe PSM do
 	end
 
 	describe "converting to pepxml" do
-		subject { psm_from_mzid.as_pepxml }
+		subject { first_psm_from_mzid.as_pepxml.children.first }
 		it { should be_a XML::Node }
-		# it { should have_attribute_with_value("spectrum","Suresh Vp 1 to 10_BAF.3535.3535.1")}
-		# it { should have_attribute_with_value("retention_time","6855.00001")}
+		it { should have_attribute_with_value("peptide","KSPVYKVHFTR")}
+		it { should have_attribute_with_value("protein","JEMP01000193.1_rev_g3500.t1")}
+		it { should have_attribute_with_value("protein_descr","280755|283436")}
+		it { should have_attribute_with_value("peptide_prev_aa","K")}
+		it { should have_attribute_with_value("peptide_next_aa","G")}
+
 		# its(:children) { should be_a Array }
 		# its(:children) { should_not be_empty }
 	end
