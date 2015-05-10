@@ -12,6 +12,7 @@ require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/mzidentml_doc'
 require 'protk/spectrum_query'
+require 'protk/pepxml_writer'
 require 'protk/tool'
 
 include LibXML
@@ -62,7 +63,7 @@ spectrum_queries.each do |query_node|
 	# require 'byebug';byebug
 
 	query = SpectrumQuery.from_mzid(query_node)		
-	pep_xml_writer.append_spectrum_query(query.as_protxml)
+	pep_xml_writer.append_spectrum_query(query.as_pepxml)
 	n_written+=1
 
 	i+=1
