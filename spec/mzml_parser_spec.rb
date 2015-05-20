@@ -39,7 +39,10 @@ describe MzMLParser do
 			i+=1
 		end
 		expect(i).to be < max_entries_in_test_file
+	end
 
+	it "can detect the first runid" do
+		expect(@parser.next_runid).to eq("tiny")
 	end
 
 end

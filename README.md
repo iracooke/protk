@@ -22,7 +22,10 @@ Protk is a ruby gem and requires ruby 2.0 or higher with support for libxml2. To
     gem install protk
 ```
 
+## Ruby Compatibility
 
+In general Protk requires ruby with a version >=2.0.
+Do not use ruby 2.1.5 as this has a bug that causes a deadlock related to open4 and child processes writing to stderr.
 
 ## Usage
 

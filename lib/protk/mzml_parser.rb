@@ -14,6 +14,15 @@ class MzMLParser < Object
 		@file_reader=XML::Reader.document(doc)
 	end
 
+	def next_runid()
+		until @file_reader.name=="run" 
+			if !@file_reader.read()
+				return nil
+			end
+		end
+		return @file_reader.get_attribute('id')
+	end
+
 	def next_spectrum()
 
 		until @file_reader.name=="spectrum" 

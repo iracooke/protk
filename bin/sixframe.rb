@@ -25,7 +25,7 @@ end
 
 tool=Tool.new([:explicit_output])
 tool.option_parser.banner = "Create a sixframe translation of a genome.\n\nUsage: sixframe.rb [options] genome.fasta"
-
+tool.add_boolean_option(:peptideshaker,false,['--peptideshaker', 'Format fasta output for peptideshaker compatibility'])
 tool.add_boolean_option(:print_coords,false,['--coords', 'Write genomic coordinates in the fasta header'])
 tool.add_boolean_option(:keep_header,true,['--strip-header', 'Dont write sequence definition'])
 tool.add_value_option(:min_len,20,['--min-len l','Minimum ORF length to keep'])
@@ -43,7 +43,21 @@ if tool.write_gff
   output_fh.write "##gff-version 3\n"
 end
 
+accession_prefix=tool.peptideshaker ? "generic" : "lcl"
+coords_separator=tool.peptideshaker ? "|" : " "
+
 file = Bio::FastaFormat.open(input_file)
+
+def passes_qc(orf,tool)
+  long_enough = orf.length > tool.min_len.to_i
+
+  composition_ok=true
+  if tool.peptideshaker && (orf=~/X/)
+    composition_ok=false
+  end
+
+  (long_enough && composition_ok)
+end
 
 file.each do |entry|
 
@@ -58,7 +72,7 @@ file.each do |entry|
     oi=0
     orfs.each do |orf|
       oi+=1
-      if ( orf.length > tool.min_len.to_i )
+      if ( passes_qc(orf,tool) )
 
         position_start = position
         position_end = position_start + orf.length*3 -1
@@ -71,15 +85,20 @@ file.each do |entry|
         end
 
         # Create accession compliant with NCBI naming standard
+        #
         # See http://www.ncbi.nlm.nih.gov/books/NBK7183/?rendertype=table&id=ch_demo.T5
+        # 
+        # Or with PeptideShaker standard
+        #
+        #
         ncbi_scaffold_id = entry.entry_id.gsub('|','_').gsub(' ','_')
-        ncbi_accession = "lcl|#{ncbi_scaffold_id}_frame_#{frame}_orf_#{oi}"
+        ncbi_accession = "#{accession_prefix}|#{ncbi_scaffold_id}_frame_#{frame}_orf_#{oi}"
         gff_id = "#{ncbi_scaffold_id}_frame_#{frame}_orf_#{oi}"
 
         defline=">#{ncbi_accession}"
 
         if tool.print_coords
-          defline << " #{position_start}|#{position_end}"
+          defline << "#{coords_separator}#{position_start}|#{position_end}"
         end
 
         if tool.keep_header

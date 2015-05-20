@@ -30,7 +30,7 @@ class CommandRunner
   def run_local(command_string)
     @env.log("Command: #{command_string} started",:info)
     status = Open4::popen4("#{command_string} ") do |pid, stdin, stdout, stderr|
-      puts "PID #{pid}" 
+      @env.log "PID #{pid}" , :info
       
       stdout.each { |line| @env.log(line.chomp,:info) }
 

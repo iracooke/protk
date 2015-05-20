@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.4.1'
-  s.date        = '2015-03-24'
+  s.version     = '1.4.2'
+  s.date        = '2015-05-20'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
   s.description = "Commandline tools for proteomics"
@@ -44,5 +44,6 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['swissprot_to_table.rb']
   s.executables = s.executables + ['protxml_to_psql.rb']
   s.executables = s.executables + ['mzid_to_protxml.rb','mzid_to_pepxml.rb']
+  s.executables = s.executables + ['spectrast_create.rb','spectrast_filter.rb']
 end
 
