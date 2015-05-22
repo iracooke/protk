@@ -84,26 +84,33 @@ class Protein
 		# This is hacked together to work for a specific PeptideShaker output type
 		# Refactor and properly respect cvParams for real conversion
 		#
-		def from_mzid(xmlnode)
+		def from_mzid(xmlnode,mzid_doc)
 
 			coverage_cvparam=""
 			prot=new()
 			groupnode = xmlnode.parent
 
 			prot.group_number=groupnode.attributes['id'].split("_").last.to_i+1
-			prot.protein_name=MzIdentMLDoc.get_dbsequence(xmlnode,xmlnode.attributes['dBSequence_ref']).attributes['accession']
-			prot.n_indistinguishable_proteins=MzIdentMLDoc.get_proteins_for_group(groupnode).length
-			prot.group_probability=MzIdentMLDoc.get_cvParam(groupnode,"MS:1002470").attributes['value'].to_f
+			prot.protein_name=mzid_doc.get_dbsequence(xmlnode,xmlnode.attributes['dBSequence_ref']).attributes['accession']
 
-			coverage_node=MzIdentMLDoc.get_cvParam(xmlnode,"MS:1001093")
+			prot.n_indistinguishable_proteins=mzid_doc.get_proteins_for_group(groupnode).length
+
+
+			prot.group_probability=mzid_doc.get_cvParam(groupnode,"MS:1002470").attributes['value'].to_f
+
+
+			coverage_node=mzid_doc.get_cvParam(xmlnode,"MS:1001093")
 
 			prot.percent_coverage=coverage_node.attributes['value'].to_f if coverage_node
-			prot.probability = MzIdentMLDoc.get_protein_probability(xmlnode)
+			prot.probability = mzid_doc.get_protein_probability(xmlnode)
 			# require 'byebug';byebug
 
-			peptide_nodes=MzIdentMLDoc.get_peptides_for_protein(xmlnode)
+			peptide_nodes=mzid_doc.get_peptides_for_protein(xmlnode)
 
-			prot.peptides = peptide_nodes.collect { |e| Peptide.from_mzid(e) }
+			prot.peptides = peptide_nodes.collect { |e| Peptide.from_mzid(e,mzid_doc) }
+
+			Constants.instance.log "Generated protein entry with probability #{prot.probability}" , :debug
+
 			prot
 		end
 

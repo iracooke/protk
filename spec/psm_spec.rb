@@ -6,21 +6,21 @@ require 'protk/mzidentml_doc'
 
 include LibXML
 
-def parse_evidence_from_mzid(mzid_file)
-	MzIdentMLDoc.new(mzid_file).peptide_evidence
-end
-
-
 describe PeptideEvidence do
 	include_context :tmp_dir_with_fixtures, ["PeptideShaker_tiny.mzid"]
 
+	let(:mzid_doc){
+		MzIdentMLDoc.new("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+	}
+
 	let(:peptideshaker_mzid){
-		xmlnodes = parse_evidence_from_mzid("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+		# xmlnodes = parse_evidence_from_mzid("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+		xmlnodes = mzid_doc.peptide_evidence
 		xmlnodes		
 	}
 
 	let(:first_pe_from_mzid) {
-		PeptideEvidence.from_mzid(peptideshaker_mzid[0])
+		PeptideEvidence.from_mzid(peptideshaker_mzid[0],mzid_doc)
 	}
 
 	describe "first pe from mzid" do
@@ -43,22 +43,21 @@ describe PeptideEvidence do
 
 end
 
-def parse_psms_from_mzid(mzid_file)
-	MzIdentMLDoc.new(mzid_file).psms
-end
-
-
 describe PSM do 
 
 	include_context :tmp_dir_with_fixtures, ["PeptideShaker_tiny.mzid"]
 
+	let(:mzid_doc){
+		MzIdentMLDoc.new("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+	}
+
 	let(:peptideshaker_mzid){
-		xmlnodes = parse_psms_from_mzid("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+		xmlnodes = mzid_doc.psms
 		xmlnodes		
 	}
 
 	let(:first_psm_from_mzid) {
-		PSM.from_mzid(peptideshaker_mzid[0])
+		PSM.from_mzid(peptideshaker_mzid[0],mzid_doc)
 	}
 
 	describe "first psm from mzid" do

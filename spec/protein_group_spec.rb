@@ -15,25 +15,24 @@ include LibXML
 #   end
 # end
 
-def parse_protein_groups_from_mzid(mzid_file)
-	MzIdentMLDoc.new(mzid_file).protein_groups
-end
-
 describe ProteinGroup do 
 
 	include_context :tmp_dir_with_fixtures, ["PeptideShaker_tiny.mzid"]
 
+	let("mzid_doc"){
+		MzIdentMLDoc.new("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+	}
+
 	let(:peptideshaker_mzid){
-		xmlnodes = parse_protein_groups_from_mzid("#{@tmp_dir}/PeptideShaker_tiny.mzid")
-		xmlnodes		
+		mzid_doc.protein_groups	
 	}
 
 	let(:basic_protein_group_from_mzid) {
-		ProteinGroup.from_mzid(peptideshaker_mzid[0])
+		ProteinGroup.from_mzid(peptideshaker_mzid[0],mzid_doc)
 	}
 
 	let(:protxml_node) {
-		ProteinGroup.from_mzid(peptideshaker_mzid[0]).as_protxml
+		ProteinGroup.from_mzid(peptideshaker_mzid[0],mzid_doc).as_protxml
 	}	
 
 	describe "first protein group from mzid" do

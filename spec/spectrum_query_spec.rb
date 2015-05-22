@@ -15,13 +15,12 @@ describe SpectrumQuery do
 
 	include_context :tmp_dir_with_fixtures, ["PeptideShaker_tiny.mzid"]
 
-	let(:peptideshaker_mzid){
-		xmlnodes = parse_spectrum_queries_from_mzid("#{@tmp_dir}/PeptideShaker_tiny.mzid")
-		xmlnodes		
+	let(:mzid_doc){
+		MzIdentMLDoc.new("#{@tmp_dir}/PeptideShaker_tiny.mzid")
 	}
 
 	let(:query_from_mzid) {
-		SpectrumQuery.from_mzid(peptideshaker_mzid[0])
+		SpectrumQuery.from_mzid(mzid_doc.spectrum_queries[0],mzid_doc)
 	}
 
 	describe "first query from mzid" do

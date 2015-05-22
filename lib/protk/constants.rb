@@ -17,7 +17,7 @@ class Constants
   
   # These are logger attributes with thresholds as indicated
   #  DEBUG < INFO < WARN < ERROR < FATAL < UNKNOWN
-  #Debug (development mode) or Info (production)
+  # Debug (development mode) or Info (production)
   #
   @stdout_logger 
   

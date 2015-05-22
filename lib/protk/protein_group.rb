@@ -35,18 +35,25 @@ class ProteinGroup
 		# This is hacked together to work for a specific PeptideShaker output type
 		# Refactor and properly respect cvParams for real conversion
 		#
-		def from_mzid(groupnode)
+		def from_mzid(groupnode,mzid_doc,minprob=0)
 
 			group=new()
 
 			group.group_number=groupnode.attributes['id'].split("_").last.to_i+1
-			group.group_probability=MzIdentMLDoc.get_cvParam(groupnode,"MS:1002470").attributes['value'].to_f
+			group.group_probability=mzid_doc.get_cvParam(groupnode,"MS:1002470").attributes['value'].to_f
 
 			# require 'byebug';byebug
 
-			protein_nodes=MzIdentMLDoc.get_proteins_for_group(groupnode)
+			protein_nodes=mzid_doc.get_proteins_for_group(groupnode)
 
-			group.proteins = protein_nodes.collect { |e| Protein.from_mzid(e) }
+
+
+			group_members = protein_nodes.select do |e| 
+				mzid_doc.get_protein_probability(e)>=minprob
+			end
+
+			group.proteins = group_members.collect { |e| Protein.from_mzid(e,mzid_doc) }
+
 			group
 		end
 

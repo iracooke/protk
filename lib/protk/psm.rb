@@ -26,7 +26,7 @@ class PeptideEvidence
 #     dBSequence_ref="JEMP01000193.1_rev_g3500.t1" id="PepEv_1" />
 	class << self
 
-		def from_mzid(pe_node)
+		def from_mzid(pe_node,mzid_doc)
 			pe = new()
 			pe.peptide_prev_aa=pe_node.attributes['pre']
 			pe.peptide_next_aa=pe_node.attributes['post']
@@ -45,7 +45,7 @@ class PeptideEvidence
 			#   name="protein description" value="280755|283436" />
 			# </DBSequence>
 			pe.protein=prot_node.attributes['accession']
-			pe.protein_descr=MzIdentMLDoc.get_cvParam(prot_node,"MS:1001088")['value']
+			pe.protein_descr=mzid_doc.get_cvParam(prot_node,"MS:1001088")['value']
 
 
 			# pe.peptide_sequence=pep_node
@@ -163,11 +163,11 @@ class PSM
 
 
 
-		def from_mzid(psm_node)
+		def from_mzid(psm_node,mzid_doc)
 			psm = new()
-			psm.peptide = MzIdentMLDoc.get_sequence_for_psm(psm_node)
-			peptide_evidence_nodes = MzIdentMLDoc.get_peptide_evidence_from_psm(psm_node)
-			psm.peptide_evidence = peptide_evidence_nodes.collect { |pe| PeptideEvidence.from_mzid(pe) }
+			psm.peptide = mzid_doc.get_sequence_for_psm(psm_node)
+			peptide_evidence_nodes = mzid_doc.get_peptide_evidence_from_psm(psm_node)
+			psm.peptide_evidence = peptide_evidence_nodes.collect { |pe| PeptideEvidence.from_mzid(pe,mzid_doc) }
 
 			psm.calculated_mz = psm_node.attributes['calculatedMassToCharge'].to_f
 			psm.experimental_mz = psm_node.attributes['experimentalMassToCharge'].to_f

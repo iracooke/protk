@@ -29,7 +29,7 @@ tool.option_parser.banner = "Convert an mzIdentML file to protXML.\n\nUsage: mzi
 exit unless tool.check_options(true)
 
 $protk = Constants.instance
-log_level = tool.debug ? "info" : "warn"
+log_level = tool.debug ? "debug" : "info"
 $protk.info_level= log_level
 
 input_file=ARGV[0]
@@ -42,6 +42,7 @@ end
 
 prot_xml_writer = ProtXMLWriter.new
 
+$protk.log "Parsing MzIdentML input file" , :info
 mzid_doc = MzIdentMLDoc.new(input_file)
 
 protein_groups = mzid_doc.protein_groups
@@ -59,11 +60,13 @@ protein_groups.each do |group_node|
 		$stdout.write "Scanned #{i} and read #{n_written} of #{n_prots}\r"
 	end
 
-	# require 'byebug';byebug
-	group_prob = MzIdentMLDoc.get_cvParam(group_node,"MS:1002470").attributes['value'].to_f*0.01
 
-	if group_prob > tool.minprob.to_f
-		group = ProteinGroup.from_mzid(group_node)		
+	group_prob = mzid_doc.get_cvParam(group_node,"MS:1002470").attributes['value'].to_f*0.01
+
+	if group_prob >= tool.minprob.to_f
+		$stdout.write "\n" if tool.debug
+		$protk.log "Writing group with probability #{group_prob}" , :info
+		group = ProteinGroup.from_mzid(group_node,mzid_doc,tool.minprob.to_f)		
 		prot_xml_writer.append_protein_group(group.as_protxml)
 		n_written+=1
 	end

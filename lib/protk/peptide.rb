@@ -45,15 +45,15 @@ class Peptide
 		# 	<cvParam cvRef="PSI-MS" accession="MS:1001093" name="sequence coverage" value="0.0"/>
 		# </ProteinDetectionHypothesis>
 
-		def from_mzid(xmlnode)
+		def from_mzid(xmlnode,mzid_doc)
 			pep=new()
-			pep.sequence=MzIdentMLDoc.get_sequence_for_peptide(xmlnode)
-			best_psm = MzIdentMLDoc.get_best_psm_for_peptide(xmlnode)
+			pep.sequence=mzid_doc.get_sequence_for_peptide(xmlnode)
+			best_psm = mzid_doc.get_best_psm_for_peptide(xmlnode)
 			# require 'byebug';byebug
-			pep.probability = MzIdentMLDoc.get_cvParam(best_psm,"MS:1002466")['value'].to_f
-			pep.theoretical_neutral_mass = MzIdentMLDoc.get_cvParam(best_psm,"MS:1001117")['value'].to_f
+			pep.probability = mzid_doc.get_cvParam(best_psm,"MS:1002466")['value'].to_f
+			pep.theoretical_neutral_mass = mzid_doc.get_cvParam(best_psm,"MS:1001117")['value'].to_f
 			pep.charge = best_psm.attributes['chargeState'].to_i
-			pep.protein_name = MzIdentMLDoc.get_dbsequence(xmlnode.parent,xmlnode.parent.attributes['dBSequence_ref']).attributes['accession']
+			pep.protein_name = mzid_doc.get_dbsequence(xmlnode.parent,xmlnode.parent.attributes['dBSequence_ref']).attributes['accession']
 
 			# pep.charge = MzIdentMLDoc.get_charge_for_psm(best_psm)
 

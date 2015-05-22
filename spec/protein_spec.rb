@@ -14,10 +14,6 @@ def parse_proteins(protxml_file)
   proteins
 end
 
-def parse_proteins_from_mzid(mzid_file)
-	MzIdentMLDoc.new(mzid_file).proteins
-end
-
 describe Protein do 
 
 	include_context :tmp_dir_with_fixtures, ["test.protXML","small.prot.xml","PeptideShaker_tiny.mzid"]
@@ -37,13 +33,20 @@ describe Protein do
 		xmlnodes		
 	}
 
+	let(:mzid_doc){
+		MzIdentMLDoc.new("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+	}
+
 	let(:basic_protein_from_mzid) {
-		Protein.from_mzid(peptideshaker_mzid[0])
+		Protein.from_mzid(mzid_doc.proteins[0],mzid_doc)
 	}
 
 	let(:basic_protein) { 
 		Protein.from_protxml(test_protxml[0])
 	}
+
+
+
 
 	describe "first protein from mzid" do
 		subject { basic_protein_from_mzid }

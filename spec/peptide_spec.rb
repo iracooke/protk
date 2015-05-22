@@ -13,11 +13,6 @@ def parse_peptides(protxml_file)
   peptides
 end
 
-
-def parse_peptides_from_mzid(mzid_file)
-	MzIdentMLDoc.new(mzid_file).peptides
-end
-
 describe Peptide do 
 
 	include_context :tmp_dir_with_fixtures, ["test.protXML","transdecoder_gff.gff3","augustus_sample.gff","sixframe.gff","braker_min.gff3","PeptideShaker_tiny.mzid"]
@@ -54,10 +49,13 @@ describe Peptide do
 
 	end
 
+	let(:mzid_doc){
+		MzIdentMLDoc.new("#{@tmp_dir}/PeptideShaker_tiny.mzid")
+	}
 
 	let(:first_peptide_from_mzid) { 
-		xmlnodes = parse_peptides_from_mzid("#{@tmp_dir}/PeptideShaker_tiny.mzid")
-		Peptide.from_mzid(xmlnodes[0])
+		xmlnodes = mzid_doc.peptides
+		Peptide.from_mzid(xmlnodes[0],mzid_doc)
 	}
 	
 	describe "peptide from mzid" do

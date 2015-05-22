@@ -86,12 +86,12 @@ class SpectrumQuery
 		#   unitAccession="UO:0000010" unitName="seconds" />
 		# </SpectrumIdentificationResult>
 
-		def from_mzid(query_node)
+		def from_mzid(query_node,mzid_doc)
 			query = new()
-			query.spectrum_title = MzIdentMLDoc.get_cvParam(query_node,"MS:1000796")['value'].to_s
-			query.retention_time = MzIdentMLDoc.get_cvParam(query_node,"MS:1000894")['value'].to_f
+			query.spectrum_title = mzid_doc.get_cvParam(query_node,"MS:1000796")['value'].to_s
+			query.retention_time = mzid_doc.get_cvParam(query_node,"MS:1000894")['value'].to_f
 			items = MzIdentMLDoc.find(query_node,"SpectrumIdentificationItem")
-			query.psms = items.collect { |item| PSM.from_mzid(item) }
+			query.psms = items.collect { |item| PSM.from_mzid(item,mzid_doc) }
 			query
 		end
 
