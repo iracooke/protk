@@ -68,15 +68,27 @@ By default protk will install tools and databases into `.protk` in your home dir
 
 Many protk tools have equivalent galaxy wrappers available on the [galaxy toolshed](http://toolshed.g2.bx.psu.edu/) with source code and development occuring in the [protk-galaxytools](github.com/iracooke/protk-galaxytools) repository on github.  In order for these tools to work you will also need to make sure that protk, as well as the necessary third party dependencies are available to galaxy during tool execution. 
 
-There are two ways to do this
+There are three ways to do this
 
 **Using Docker:**
 
 By far the easiest way to do this is to set up your Galaxy instance to run tools in Docker containers.  All the tools in the [protk-galaxytools](github.com/iracooke/protk-galaxytools) repository are designed to work with [this](https://github.com/iracooke/protk-dockerfile) docker image, and will download and use the image automatically on apprioriately configured Galaxy instances.
 
+**Using the Galaxy Tool Shed**
+
+An installation recipe of `protk` is available from the [Galaxy Tool Shed](https://testtoolshed.g2.bx.psu.edu/view/iuc/package_protk_1_4_2/). If you want to depend on protk for your own Galaxy wrapper create a `tool_dependencies.xml` file with the following content.
+
+```xml
+<tool_dependency>
+    <package name="protk" version="1.4.2">
+        <repository name="package_protk_1_4_2" owner="iuc"/>
+    </package>
+</tool_dependency>
+```
+
 **Manual Install**
 
-If your galaxy instance is unable to use Docker for some reason you will need to install `protk` and its dependencies manually. 
+If your galaxy instance is unable to use Docker or the Tool Shed for some reason you will need to install `protk` and its dependencies manually. 
 
 One way to install protk would be to just do `gem install protk` using the default system ruby (without rvm). This will probably just work, however you will lose the ability to run specific versions of tools against specific versions of protk.  The recommended method of installing protk for use with galaxy is as follows;
 
