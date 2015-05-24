@@ -98,13 +98,13 @@ One way to install protk would be to just do `gem install protk` using the defau
 
 4.  Install protk in an isolated gemset using rvm.
 
-	This sets up an isolated environment where only a specific version of protk is available.  We name the environment according to the protk intermediate version numer (1.4 in this example). Minor bugfixes will be released as 1.4.x and can be installed without updating the toolshed wrappers
+	This sets up an isolated environment where only a specific version of protk is available.  We name the environment according to the protk version number (1.4.2 in this example). 
 
 	```bash
 		rvm 2.1
-		rvm gemset create protk1.4
-		rvm use 2.1@protk1.4
-		gem install protk -v '~>1.4'
+		rvm gemset create protk1.4.2
+		rvm use 2.1@protk1.4.2
+		gem install protk -v '~>1.4.2'
 	```
 
 5. Configure Galaxy's tool dependency directory.
@@ -124,11 +124,11 @@ One way to install protk would be to just do `gem install protk` using the defau
 		cd <tool_dependency_dir>
 		mkdir protk
 		cd protk
-		mkdir 1.4
-		ln -s 1.4 default
-		rvm use 2.1@protk1.4
-		rvmenv=`rvm env --path 2.1@protk1.4`
-		echo ". $rvmenv" > 1.4/env.sh
+		mkdir 1.4.2
+		ln -s 1.4.2 default
+		rvm use 2.1@protk1.4.2
+		rvmenv=`rvm env --path 2.1@protk1.4.2`
+		echo ". $rvmenv" > 1.4.2/env.sh
 	```
 
 7. Keep things up to date
@@ -137,14 +137,14 @@ One way to install protk would be to just do `gem install protk` using the defau
 
 	```bash
 		rvm 2.1
-		rvm gemset create protk1.5
-		rvm use 2.1@protk1.5
-		gem install protk -v '~>1.5'
+		rvm gemset create protk1.5.0
+		rvm use 2.1@protk1.5.0
+		gem install protk -v '~>1.5.0'
 		cd <tool_dependency_dir>/protk/
-		mkdir 1.5
-		rvmenv=`rvm env --path 2.1@protk1.5`
-		echo ". $rvmenv" > 1.5/env.sh
-		ln -s 1.5 default
+		mkdir 1.5.0
+		rvmenv=`rvm env --path 2.1@protk1.5.0`
+		echo ". $rvmenv" > 1.5.0/env.sh
+		ln -s 1.5.0 default
 	```
 
 ## Sequence databases
