@@ -74,7 +74,7 @@ There are three ways to do this
 
 By far the easiest way to do this is to set up your Galaxy instance to run tools in Docker containers.  All the tools in the [protk-galaxytools](github.com/iracooke/protk-galaxytools) repository are designed to work with [this](https://github.com/iracooke/protk-dockerfile) docker image, and will download and use the image automatically on apprioriately configured Galaxy instances.
 
-**Using the Galaxy Tool Shed**
+**Using the Galaxy Tool Shed (Experimental)**
 
 An installation recipe of `protk` is available from the [Galaxy Tool Shed](https://testtoolshed.g2.bx.psu.edu/view/iuc/package_protk_1_4_2/). If you want to depend on protk for your own Galaxy wrapper create a `tool_dependencies.xml` file with the following content.
 
