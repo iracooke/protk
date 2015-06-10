@@ -63,9 +63,16 @@ class Tool
     end
   end
   
+  def add_default_to_help(default_value,opts)
+    if default_value!=nil && default_value!=" "
+      opts[-1] = "#{opts.last} [#{default_value.to_s}]"      
+    end
+    opts
+  end
   
   def add_value_option(symbol,default_value,opts)    
     @options[symbol]=default_value
+    opts=add_default_to_help(default_value,opts)
     @option_parser.on(*opts) do |val|
       @options[symbol]=val
       @options_defined_by_user[symbol]=opts
@@ -74,6 +81,7 @@ class Tool
   
   def add_boolean_option(symbol,default_value,opts)
     @options[symbol]=default_value
+    opts=add_default_to_help(default_value,opts)
     @option_parser.on(*opts) do 
       @options[symbol]=!default_value
       @options_defined_by_user[symbol]=opts
