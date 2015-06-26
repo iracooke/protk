@@ -34,13 +34,13 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :mass_tolerance_units )
-      add_value_option(:fragment_tolu,"Da",['--fragment-ion-tol-units tolu', 'Fragment ion mass tolerance units (Da or mmu). Default=Da'])      
-      add_value_option(:precursor_tolu,"ppm",['--precursor-ion-tol-units tolu', 'Precursor ion mass tolerance units (ppm or Da). Default=ppm'])
+      add_value_option(:fragment_tolu,"Da",['--fragment-ion-tol-units tolu', 'Fragment ion mass tolerance units (Da or mmu).'])      
+      add_value_option(:precursor_tolu,"ppm",['--precursor-ion-tol-units tolu', 'Precursor ion mass tolerance units (ppm or Da).'])
     end
 
     if ( option_support.include? :mass_tolerance )
-      add_value_option(:fragment_tol,0.65,['-f', '--fragment-ion-tol tol', 'Fragment ion mass tolerance (unit dependent). Default=0.65'])
-      add_value_option(:precursor_tol,200,['-p','--precursor-ion-tol tol', 'Precursor ion mass tolerance. Default=200'])
+      add_value_option(:fragment_tol,0.65,['-f', '--fragment-ion-tol tol', 'Fragment ion mass tolerance (unit dependent).'])
+      add_value_option(:precursor_tol,200,['-p','--precursor-ion-tol tol', 'Precursor ion mass tolerance.'])
     end
     
     if ( option_support.include? :precursor_search_type )
@@ -64,7 +64,7 @@ class SearchTool < Tool
     end
 
     if ( option_support.include? :searched_ions )
-      add_value_option(:searched_ions,"",['--searched-ions si', 'Ion series to search (default=b,y)'])
+      add_value_option(:searched_ions,"",['--searched-ions si', 'Ion series to search'])
     end
 
     if ( option_support.include? :multi_isotope_search )

@@ -26,8 +26,8 @@ class Tool
   # Options set from the command-line
   #
   attr :options, false
-  
-  # The option parser used to parse command-line options. 
+
+  # The option parser used to parse command-line options.
   #
   attr :option_parser
 
@@ -62,15 +62,15 @@ class Tool
       super
     end
   end
-  
+
   def add_default_to_help(default_value,opts)
-    if default_value!=nil && default_value!=" "
-      opts[-1] = "#{opts.last} [#{default_value.to_s}]"      
+    if default_value!=nil && default_value!=" " && default_value!=""
+      opts[-1] = "#{opts.last} [#{default_value.to_s}]"
     end
     opts
   end
-  
-  def add_value_option(symbol,default_value,opts)    
+
+  def add_value_option(symbol,default_value,opts)
     @options[symbol]=default_value
     opts=add_default_to_help(default_value,opts)
     @option_parser.on(*opts) do |val|
@@ -78,11 +78,11 @@ class Tool
       @options_defined_by_user[symbol]=opts
     end
   end
-  
+
   def add_boolean_option(symbol,default_value,opts)
     @options[symbol]=default_value
     opts=add_default_to_help(default_value,opts)
-    @option_parser.on(*opts) do 
+    @option_parser.on(*opts) do
       @options[symbol]=!default_value
       @options_defined_by_user[symbol]=opts
     end
@@ -100,10 +100,10 @@ class Tool
     options.encoding = "utf8"
     options.transfer_type = :auto
     options.verbose = false
-    
+
     @options_defined_by_user={}
 
-    @option_parser=OptionParser.new do |opts|      
+    @option_parser=OptionParser.new do |opts|
 
       opts.on( '-h', '--help', 'Display this screen' ) do
         puts opts
@@ -116,7 +116,7 @@ class Tool
     end
 
     if ( option_support.include? :over_write)
-      add_boolean_option(:over_write,false,['-r', '--replace-output', 'Dont skip analyses for which the output file already exists'])        
+      add_boolean_option(:over_write,false,['-r', '--replace-output', 'Dont skip analyses for which the output file already exists'])
     end
 
     if ( option_support.include? :explicit_output )
@@ -128,7 +128,7 @@ class Tool
     end
 
     if ( option_support.include? :database)
-      add_value_option(:database,"sphuman",['-d', '--database dbname', 'Specify the database to use for this search. Can be a named protk database or the path to a fasta file'])        
+      add_value_option(:database,"sphuman",['-d', '--database dbname', 'Specify the database to use for this search. Can be a named protk database or the path to a fasta file'])
     end
 
     if (option_support.include? :debug)
@@ -177,37 +177,37 @@ class Tool
         return true
       end
       missing = mandatory.select{ |param| self.send(param).nil? }
-      if not missing.empty?                                            
-        puts "Missing options: #{missing.join(', ')}"                  
-        puts self.option_parser                                                  
-        return false                                                        
-      end                                                              
-    rescue OptionParser::InvalidOption, OptionParser::MissingArgument      
-      puts $!.to_s                                                           
-      puts self.option_parser                                              
-      return false                                                         
+      if not missing.empty?
+        puts "Missing options: #{missing.join(', ')}"
+        puts self.option_parser
+        return false
+      end
+    rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+      puts $!.to_s
+      puts self.option_parser
+      return false
     end
 
     if ( require_input_file && ARGV[0].nil? )
       puts "You must supply an input file"
-      puts self.option_parser 
+      puts self.option_parser
       return false
     end
 
     return true
-   end   
-   
+   end
+
    # Run the search tool using the given command string and global environment
    #
    def run(cmd,genv,autodelete=true)
     cmd_runner=CommandRunner.new(genv)
     cmd_runner.run_local(cmd)
    end
-   
+
 
    def database_info
      case
-       when Pathname.new(@options.database).exist? # It's an explicitly named db  
+       when Pathname.new(@options.database).exist? # It's an explicitly named db
          db_path=Pathname.new(@options.database).expand_path.to_s
          db_name=Pathname.new(@options.database).basename.to_s
        else

@@ -41,17 +41,17 @@ search_tool.options.instrument=0
 
 # MS-GF+ doesnt support fragment tol so add this manually rather than via the SearchTool defaults
 search_tool.add_value_option(:precursor_tol,"20",['-p','--precursor-ion-tol tol', 'Precursor ion mass tolerance.'])
-search_tool.add_value_option(:precursor_tolu,"ppm",['--precursor-ion-tol-units tolu', 'Precursor ion mass tolerance units (ppm or Da). Default=ppm'])
+search_tool.add_value_option(:precursor_tolu,"ppm",['--precursor-ion-tol-units tolu', 'Precursor ion mass tolerance units (ppm or Da).'])
 
 search_tool.add_boolean_option(:pepxml,false,['--pepxml', 'Convert results to pepxml.'])
-search_tool.add_value_option(:isotope_error_range,"0,1",['--isotope-error-range range', 'Takes into account of the error introduced by chooosing a non-monoisotopic peak for fragmentation.(Default 0,1)'])
+search_tool.add_value_option(:isotope_error_range,"0,1",['--isotope-error-range range', 'Takes into account of the error introduced by chooosing a non-monoisotopic peak for fragmentation.'])
 search_tool.add_value_option(:fragment_method,0,['--fragment-method method', 'Fragment method 0: As written in the spectrum or CID if no info (Default), 1: CID, 2: ETD, 3: HCD, 4: Merge spectra from the same precursor'])
 search_tool.add_boolean_option(:decoy_search,false,['--decoy-search', 'Build and search a decoy database on the fly. Input db should not contain decoys if this option is used'])
 search_tool.add_value_option(:protocol,0,['--protocol p', '0: NoProtocol (Default), 1: Phosphorylation, 2: iTRAQ, 3: iTRAQPhospho'])
-search_tool.add_value_option(:min_pep_length,6,['--min-pep-length p', 'Minimum peptide length to consider, Default: 6'])
-search_tool.add_value_option(:max_pep_length,40,['--max-pep-length p', 'Maximum peptide length to consider, Default: 40'])
-search_tool.add_value_option(:min_pep_charge,2,['--min-pep-charge c', 'Minimum precursor charge to consider if charges are not specified in the spectrum file, Default: 2'])
-search_tool.add_value_option(:max_pep_charge,3,['--max-pep-charge c', 'Maximum precursor charge to consider if charges are not specified in the spectrum file, Default: 3'])
+search_tool.add_value_option(:min_pep_length,6,['--min-pep-length p', 'Minimum peptide length to consider'])
+search_tool.add_value_option(:max_pep_length,40,['--max-pep-length p', 'Maximum peptide length to consider'])
+search_tool.add_value_option(:min_pep_charge,2,['--min-pep-charge c', 'Minimum precursor charge to consider if charges are not specified in the spectrum file'])
+search_tool.add_value_option(:max_pep_charge,3,['--max-pep-charge c', 'Maximum precursor charge to consider if charges are not specified in the spectrum file'])
 search_tool.add_value_option(:num_reported_matches,1,['--num-reported-matches n', 'Number of matches per spectrum to be reported, Default: 1'])
 search_tool.add_boolean_option(:add_features,false,['--add-features', 'output additional features'])
 search_tool.add_value_option(:java_mem,"3500M",['--java-mem mem','Java memory limit when running the search (Default 3.5Gb)'])
