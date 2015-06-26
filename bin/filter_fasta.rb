@@ -30,12 +30,10 @@ if tool.id_filter && (File.exists?(tool.id_filter) || tool.id_filter=="-")
 		# require 'byebug';byebug
 		$filter_ids = $stdin.read.split("\n").collect { |e| e.chomp }
 	else
-		$filter_ids = File.read(tool.id_filter)
+		$filter_ids = File.readlines(tool.id_filter).collect { |e| e.chomp }
 	end
 	$filter_ids = Set.new($filter_ids) # Much faster set include than array include
 end
-
-
 
 def passes_filters(entry,tool)
 
@@ -48,6 +46,8 @@ def passes_filters(entry,tool)
 	end
 
 	if $filter_ids.length > 0
+		require 'byebug';byebug
+
 		if $filter_ids.include? entry.entry_id
 			return true
 		end
@@ -61,7 +61,7 @@ def passes_filters(entry,tool)
 end
 
 
-ARGV.each do |fasta_file|  
+ARGV.each do |fasta_file|
 
 	file = Bio::FastaFormat.open(fasta_file.chomp)
 	file.each do |entry|
