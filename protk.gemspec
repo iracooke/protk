@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.extensions = ['ext/decoymaker/extconf.rb']
 
   s.add_runtime_dependency 'open4', '~> 1.3' , '>= 1.3.0'
-  s.add_runtime_dependency 'bio', '~> 1.4', '>= 1.4.3'
+  s.add_runtime_dependency 'bio', '~> 1.4.3', '>= 1.4.3'
 
   s.add_runtime_dependency 'rest-client','~> 1.6.7', '>= 1.6.7'
   s.add_runtime_dependency 'net-ftp-list',"~>3.2.5" ,">=3.2.5"
