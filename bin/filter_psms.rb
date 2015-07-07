@@ -14,60 +14,67 @@ require 'libxml'
 
 include LibXML
 
-tool=Tool.new([:explicit_output])
+tool=Tool.new([:explicit_output,:debug])
 tool.option_parser.banner = "Filter psms in a pepxml file.\n\nUsage: filter_psms.rb [options] expression file.pepxml"
-tool.add_value_option(:keep_filter,"protein",['-A','--attribute name',"Match expression against a specific attribute"])
+tool.add_value_option(:filter,"protein",['-A','--attribute name',"Match expression against a specific attribute"])
+tool.add_boolean_option(:reject_mode,false,['-R','--reject',"Keep mismatches instead of matches"])
 
-exit unless tool.check_options(true,[:keep_filter])
+exit unless tool.check_options(true,[:filter])
 
 if ARGV.length!=2
   puts "Wrong number of arguments. You must supply a filter expression and a pepxml file"
   exit(1)
 end
 
-expression=ARGV[0]
+expressions=ARGV[0].split(",").map(&:strip)
 input_file=ARGV[1]
+
+$protk = Constants.instance
+log_level = tool.debug ? "info" : "warn"
+$protk.info_level= log_level
+
 
 output_fh = tool.explicit_output!=nil ? File.new("#{tool.explicit_output}",'w') : $stdout
 
 XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
-
 pepxml_parser=XML::Parser.file("#{input_file}")
-
 pepxml_ns_prefix="xmlns:"
 pepxml_ns="xmlns:http://regis-web.systemsbiology.net/pepXML"
+
+$protk.log "Parsing #{input_file}" , :info
+
 pepxml_doc=pepxml_parser.parse
 unless pepxml_doc.root.namespaces.default
   pepxml_ns_prefix=""
   pepxml_ns=nil
 end
 
+$protk.log "Finding search hits" , :info
 
-reader = XML::Reader.file(input_file)
+search_hits=pepxml_doc.find("//#{pepxml_ns_prefix}search_hit[@hit_rank=\"1\"]", pepxml_ns)
 
-while reader.read
+kept=0
+deleted=0
+scanned=0
+$protk.log "Filtering #{search_hits.length} hits" , :info
 
-    if reader.name=="msms_pipeline_analysis"
-      puts reader.name
-      reader.read_inner_xml()
-    else
-      require 'byebug';byebug
-      puts reader.name
-      output_fh.write reader.read_inner_xml()
-    end
+search_hits.each do |hit|
+
+  has_match = expressions.collect { |expression|   (hit.attributes[tool.filter] =~ /#{expression}/) }.any?
+
+  if (has_match && !tool.reject_mode) || (!has_match && tool.reject_mode)  #&& (hit.attributes['hit_rank']=="1")
+    kept+=1
+  else
+    hit.parent.parent.remove!
+    deleted+=1
+  end
+
+  scanned+=1
+  if (scanned % 1000 == 0) && tool.debug
+    $stdout.write "Kept #{kept} and deleted #{deleted}\n"
+  end
 end
 
-exit(1)
+output_fh.write pepxml_doc
 
-
-require 'byebug';byebug
-
-spectrum_queries=pepxml_doc.find("//#{pepxml_ns_prefix}search_hit[@hit_rank=\"1\"]", pepxml_ns)
-
-spectrum_queries.each do |query|
-  require 'byebug';byebug
-  puts query
-
-end
-
-output_fh.close
+$protk.log "Kept #{kept} and deleted #{deleted}" , :info
