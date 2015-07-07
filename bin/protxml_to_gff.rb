@@ -58,6 +58,15 @@ def protein_id_to_protdbid(protein_id)
 	return protein_id
 end
 
+def protein_is_included(protein,protein_probability_threshold,ignore_regex)
+	pass_probability_thresh = (protein.probability >= protein_probability_threshold) 
+	pass_regex = true
+	if ignore_regex && (protein.protein_name =~ /#{ignore_regex}/)
+		pass_regex=false
+	end
+	return (pass_regex && pass_probability_thresh)
+end
+
 def prepare_fasta(database_path,type)
   db_filename = nil
   case
@@ -91,6 +100,7 @@ tool.add_value_option(:peptide_probability_threshold,0.95,['--threshold prob','P
 tool.add_value_option(:protein_probability_threshold,0.99,['--prot-threshold prob','Protein Probability Threshold (Default 0.99)'])
 tool.add_value_option(:gff_idregex,nil,['--gff-idregex pre','Regex with capture group for parsing gff ids from protein ids'])
 tool.add_value_option(:genome_idregex,nil,['--genome-idregex pre','Regex with capture group for parsing genomic ids from protein ids'])
+tool.add_value_option(:ignore_regex,nil,['--ignore-regex pre','Regex to match protein ids that we should ignore completely'])
 
 exit unless tool.check_options(true,[:database,:coords_file])
 
@@ -126,7 +136,7 @@ num_missing_gff_entries = 0
 
 proteins.each do |protein|
 
-	if protein.probability >= tool.protein_probability_threshold
+	if protein_is_included(protein,tool.protein_probability_threshold,tool.ignore_regex)
 
 		begin
 			$protk.log "Mapping #{protein.protein_name}", :info
