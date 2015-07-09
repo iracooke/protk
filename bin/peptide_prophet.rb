@@ -44,6 +44,7 @@ prophet_tool.add_boolean_option(:force_fit,false,['--force-fit',"Force fitting o
 prophet_tool.add_boolean_option(:allow_alt_instruments,false,['--allow-alt-instruments',"Warning instead of exit with error if instrument types between runs is different"])
 prophet_tool.add_boolean_option(:one_ata_time,false,['-F', '--one-ata-time', 'Create a separate pproph output file for each analysis'])
 prophet_tool.add_value_option(:decoy_prefix,"decoy",['--decoy-prefix prefix', 'Prefix for decoy sequences'])
+prophet_tool.add_boolean_option(:use_non_parametric_model,false,['--use-non-parametric-model', 'Use Non-parametric model, can only be used with decoy option'])
 prophet_tool.add_boolean_option(:no_decoys,false,['--no-decoy', 'Don\'t use decoy sequences to pin down the negative distribution'])
 prophet_tool.add_value_option(:experiment_label,nil,['--experiment-label label','used to commonly label all spectra belonging to one experiment (required by iProphet)'])
 
@@ -194,7 +195,7 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine,enzyme)
   if prophet_tool.useicat
     cmd << " -Oi "
   else
-    cmd << " -Of"
+    cmd << " -Of "
   end
   
   if prophet_tool.maldi
@@ -209,6 +210,10 @@ def generate_command(genv,prophet_tool,inputs,output,database,engine,enzyme)
       cmd << " -d#{prophet_tool.decoy_prefix} -Od "
   end  
   
+  if prophet_tool.use_non_parametric_model
+    cmd << " -OP "
+  end
+
   cmd << " -p#{prophet_tool.probability_threshold}"
 
   if ( inputs.class==Array)
