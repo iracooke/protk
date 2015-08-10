@@ -16,7 +16,8 @@ include LibXML
 
 tool=Tool.new([:explicit_output,:debug])
 tool.option_parser.banner = "Filter psms in a pepxml file.\n\nUsage: filter_psms.rb [options] expression file.pepxml"
-tool.add_value_option(:filter,"protein",['-A','--attribute name',"Match expression against a specific attribute"])
+tool.add_value_option(:filter,"protein",['-A','--attribute name',"Match expression against a specific search_hit attribute"])
+tool.add_boolean_option(:check_alternative_proteins,false,['-C','--check-alternatives',"Also match expression against to alternative_proteins"])
 tool.add_boolean_option(:reject_mode,false,['-R','--reject',"Keep mismatches instead of matches"])
 
 exit unless tool.check_options(true,[:filter])
@@ -35,6 +36,8 @@ $protk.info_level= log_level
 
 
 output_fh = tool.explicit_output!=nil ? File.new("#{tool.explicit_output}",'w') : $stdout
+
+throw "Input file #{input_file} does not exist" unless File.exist? "#{input_file}"
 
 XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
 pepxml_parser=XML::Parser.file("#{input_file}")
@@ -61,6 +64,15 @@ $protk.log "Filtering #{search_hits.length} hits" , :info
 search_hits.each do |hit|
 
   has_match = expressions.collect { |expression|   (hit.attributes[tool.filter] =~ /#{expression}/) }.any?
+
+  if !has_match && tool.check_alternative_proteins
+    alts = hit.find("./#{pepxml_ns_prefix}alternative_protein",pepxml_ns)
+
+    # Check alternative proteins
+    alt_expr = alts.collect { |alt| expressions.collect { |expression| (alt.attributes[tool.filter] =~ /#{expression}/ )}}
+
+    has_match = alt_expr.flatten.any?
+  end
 
   if (has_match && !tool.reject_mode) || (!has_match && tool.reject_mode)  #&& (hit.attributes['hit_rank']=="1")
     kept+=1

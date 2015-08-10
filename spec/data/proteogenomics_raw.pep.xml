@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/home/iracooke/.protk/tools/tpp/schema/pepXML_std.xsl"?>
+<msms_pipeline_analysis xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" date="2015-07-28T08:01:28" xsi:schemaLocation="http://regis-web.systemsbiology.net/pepXML /home/iracooke/.protk/tools/tpp/schema/pepXML_v117.xsd" summary_xml="/home/iracooke/venturiapicompare/proteogenomics/msdata/Inequalis/Orbitrap/Vi_1_mascot2xml.pep.xml">
+  <msms_run_summary base_name="/home/iracooke/venturiapicompare/proteogenomics/msdata/Inequalis/Orbitrap/Vi_1.mgf" raw_data_type="raw" raw_data="mgf">
+<sample_enzyme name="trypsin">
+<specificity cut="KR" no_cut="P" sense="C"/>
+</sample_enzyme>
+<search_summary base_name="/home/iracooke/venturiapicompare/proteogenomics/msdata/Inequalis/Orbitrap/Vi_1_mascot2xml" search_engine="MASCOT" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" out_data_type="out" out_data=".tgz" search_id="1">
+<search_database local_path="/home/iracooke/venturiapicompare/proteogenomics/Inequalis/merged_decoy.fasta" type="AA"/>
+<enzymatic_search_constraint enzyme="trypsin" max_num_internal_cleavages="2" min_number_termini="1"/>
+<aminoacid_modification aminoacid="B" mass="114.534940" massdiff="114.534940" variable="N"/>
+<aminoacid_modification aminoacid="J" mass="0.000000" massdiff="0.000000" variable="N"/>
+<aminoacid_modification aminoacid="O" mass="0.000000" massdiff="0.000000" variable="N"/>
+<aminoacid_modification aminoacid="U" mass="150.953630" massdiff="150.953630" variable="N"/>
+<aminoacid_modification aminoacid="X" mass="111.000000" massdiff="111.000000" variable="N"/>
+<aminoacid_modification aminoacid="Z" mass="128.550590" massdiff="128.550590" variable="N"/>
+<aminoacid_modification aminoacid="C" mass="160.030649" massdiff="57.021464" variable="N"/>
+<terminal_modification terminus="n" mass="42.010565" massdiff="42.010565" variable="Y" protein_terminus="Y"/>
+<aminoacid_modification aminoacid="M" mass="147.035400" massdiff="15.994915" variable="Y"/>
+<parameter name="LICENSE" value="La Trobe University  (4UHH-A4DC-X7SK-VUDW-U2JF)"/>
+<parameter name="MP" value=""/>
+<parameter name="NM" value=""/>
+<parameter name="COM" value="Protk"/>
+<parameter name="IATOL" value=""/>
+<parameter name="IA2TOL" value=""/>
+<parameter name="IASTOL" value=""/>
+<parameter name="IBTOL" value=""/>
+<parameter name="IB2TOL" value=""/>
+<parameter name="IBSTOL" value=""/>
+<parameter name="IYTOL" value=""/>
+<parameter name="IY2TOL" value=""/>
+<parameter name="IYSTOL" value=""/>
+<parameter name="SEG" value=""/>
+<parameter name="SEGT" value=""/>
+<parameter name="SEGTU" value=""/>
+<parameter name="LTOL" value=""/>
+<parameter name="TOL" value="10"/>
+<parameter name="TOLU" value="ppm"/>
+<parameter name="ITH" value=""/>
+<parameter name="ITOL" value="0.5"/>
+<parameter name="ITOLU" value="Da"/>
+<parameter name="PFA" value="2"/>
+<parameter name="DB" value="vinequalis6frame"/>
+<parameter name="MODS" value="Carbamidomethyl (C),"/>
+<parameter name="MASS" value="Monoisotopic"/>
+<parameter name="CLE" value="semiTrypsin"/>
+<parameter name="FILE" value="Vi_1.mgf"/>
+<parameter name="PEAK" value=""/>
+<parameter name="QUE" value=""/>
+<parameter name="TWO" value=""/>
+<parameter name="SEARCH" value="MIS"/>
+<parameter name="USERNAME" value=""/>
+<parameter name="USEREMAIL" value=""/>
+<parameter name="CHARGE" value="2+,3+ and 4+"/>
+<parameter name="INTERMEDIATE" value=""/>
+<parameter name="REPORT" value="AUTO"/>
+<parameter name="OVERVIEW" value=""/>
+<parameter name="FORMAT" value=""/>
+<parameter name="FORMVER" value="1.01"/>
+<parameter name="FRAG" value=""/>
+<parameter name="IT_MODS" value="Acetyl (Protein N-term),Oxidation (M),"/>
+<parameter name="USER00" value=""/>
+<parameter name="USER01" value=""/>
+<parameter name="USER02" value=""/>
+<parameter name="USER03" value=""/>
+<parameter name="USER04" value=""/>
+<parameter name="USER05" value=""/>
+<parameter name="USER06" value=""/>
+<parameter name="USER07" value=""/>
+<parameter name="USER08" value=""/>
+<parameter name="USER09" value=""/>
+<parameter name="USER10" value=""/>
+<parameter name="USER11" value=""/>
+<parameter name="USER12" value=""/>
+<parameter name="PRECURSOR" value=""/>
+<parameter name="TAXONOMY" value="All entries"/>
+<parameter name="ACCESSION" value=""/>
+<parameter name="REPTYPE" value=""/>
+<parameter name="SUBCLUSTER" value=""/>
+<parameter name="ICAT" value=""/>
+<parameter name="INSTRUMENT" value="ESI-TRAP"/>
+<parameter name="ERRORTOLERANT" value=""/>
+<parameter name="FRAMES" value=""/>
+<parameter name="CUTOUT" value=""/>
+<parameter name="USERID" value="0"/>
+<parameter name="QUANTITATION" value=""/>
+<parameter name="DECOY" value=""/>
+<parameter name="PEP_ISOTOPE_ERROR" value=""/>
+<parameter name="MULTI_SITE_MODS" value=""/>
+<parameter name="RULES" value="1,2,8,9,10,13,14,15"/>
+<parameter name="INTERNALS" value="0.0,700.0"/>
+</search_summary>
+    <spectrum_query spectrum="Vi_1.5019.5019.2" start_scan="5019" end_scan="5019" precursor_neutral_mass="698.3664" assumed_charge="2" index="1">
+    <search_result>
+      <search_hit hit_rank="1" peptide="AVPVADQ" peptide_prev_aa="-" peptide_next_aa="Q" protein="decoy_novel_rp934922" num_tot_proteins="1" num_matched_ions="4" tot_num_ions="12" calc_neutral_pep_mass="698.3677" massdiff="-0.0014" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+        <search_score name="ionscore" value="19.29"/>
+        <search_score name="identityscore" value="43.92"/>
+        <search_score name="star" value="0"/>
+        <search_score name="homologyscore" value="26.28"/>
+        <search_score name="expect" value="14.5258"/>
+      </search_hit>
+    </search_result>
+    </spectrum_query>
+    <spectrum_query spectrum="Vi_1.4608.4608.2" start_scan="4608" end_scan="4608" precursor_neutral_mass="698.3669" assumed_charge="2" index="2">
+    <search_result>
+      <search_hit hit_rank="1" peptide="AAAHAKM" peptide_prev_aa="K" peptide_next_aa="G" protein="lcl|scaffold_619_fwd_g1957.t1 294312|296263" num_tot_proteins="2" num_matched_ions="3" tot_num_ions="12" calc_neutral_pep_mass="698.3612" massdiff="+0.0057" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+      <alternative_protein protein="lcl|scaffold_619_frame_2_orf_3522 scaffold_619 _length_450677_cov_19.676956" num_tol_term="1" peptide_prev_aa="K" peptide_next_aa="G"/>
+        <search_score name="ionscore" value="6.02"/>
+        <search_score name="identityscore" value="43.92"/>
+        <search_score name="star" value="0"/>
+        <search_score name="homologyscore" value="18.36"/>
+        <search_score name="expect" value="308.4176"/>
+      </search_hit>
+    </search_result>
+    </spectrum_query>
+    <spectrum_query spectrum="Vi_1.3537.3537.2" start_scan="3537" end_scan="3537" precursor_neutral_mass="698.3785" assumed_charge="2" index="3">
+    <search_result>
+      <search_hit hit_rank="1" peptide="SPSGVPR" peptide_prev_aa="C" peptide_next_aa="D" protein="lcl|scaffold_344_frame_2_orf_2014 scaffold_344 _length_179268_cov_20.365749" num_tot_proteins="2" num_matched_ions="4" tot_num_ions="12" calc_neutral_pep_mass="698.3790" massdiff="-0.0005" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+      <alternative_protein protein="lcl|scaffold_737_frame_1_orf_879 scaffold_737 _length_216817_cov_20.084135" num_tol_term="1" peptide_prev_aa="F" peptide_next_aa="Y"/>
+        <search_score name="ionscore" value="34.66"/>
+        <search_score name="identityscore" value="45.85"/>
+        <search_score name="star" value="0"/>
+        <search_score name="homologyscore" value="39.11"/>
+        <search_score name="expect" value="0.6583"/>
+      </search_hit>
+    </search_result>
+  </spectrum_query>
+  <spectrum_query spectrum="Vi_1.3284.3284.2" start_scan="3284" end_scan="3284" precursor_neutral_mass="699.3636" assumed_charge="2" index="14">
+  <search_result>
+    <search_hit hit_rank="1" peptide="GPEAAQK" peptide_prev_aa="T" peptide_next_aa="D" protein="decoy_known_rp1927" num_tot_proteins="1" num_matched_ions="3" tot_num_ions="12" calc_neutral_pep_mass="699.3630" massdiff="+0.0007" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+      <search_score name="ionscore" value="16.59"/>
+      <search_score name="identityscore" value="43.26"/>
+      <search_score name="star" value="0"/>
+      <search_score name="homologyscore" value="29.51"/>
+      <search_score name="expect" value="23.2426"/>
+    </search_hit>
+  </search_result>
+  </spectrum_query>
+  <spectrum_query spectrum="Vi_1.3690.3690.2" start_scan="3690" end_scan="3690" precursor_neutral_mass="826.4263" assumed_charge="2" index="550">
+  <search_result>
+    <search_hit hit_rank="1" peptide="GNPIPDSK" peptide_prev_aa="R" peptide_next_aa="F" protein="lcl|scaffold_840_frame_2_orf_322" num_tot_proteins="4" num_matched_ions="6" tot_num_ions="14" calc_neutral_pep_mass="826.4263" massdiff="-0.0000" num_tol_term="2" num_missed_cleavages="0" is_rejected="0">
+    <alternative_protein protein="lcl|scaffold_840_fwd_g9750.t1 5374|7722"/>
+    <alternative_protein protein="lcl|scaffold_840_fwd_g9753.t1 17217|19565" num_tol_term="2" peptide_prev_aa="R" peptide_next_aa="F"/>
+    <alternative_protein protein="lcl|scaffold_840_frame_3_orf_90 scaffold_840 _length_141142_cov_16.629606" num_tol_term="2" peptide_prev_aa="R" peptide_next_aa="F"/>
+      <search_score name="ionscore" value="16.82"/>
+      <search_score name="identityscore" value="44.63"/>
+      <search_score name="star" value="0"/>
+      <search_score name="homologyscore" value="26.07"/>
+      <search_score name="expect" value="30.1930"/>
+    </search_hit>
+  </search_result>
+  </spectrum_query>
+    <spectrum_query spectrum="Vi_1.3668.3668.2" start_scan="3668" end_scan="3668" precursor_neutral_mass="879.4522" assumed_charge="2" index="935">
+    <search_result>
+      <search_hit hit_rank="1" peptide="ISSTMTPK" peptide_prev_aa="S" peptide_next_aa="D" protein="lcl|scaffold_709_rev_g2429.t1 51695|53230" num_tot_proteins="4" num_matched_ions="7" tot_num_ions="14" calc_neutral_pep_mass="879.4450" massdiff="+0.0072" num_tol_term="1" num_missed_cleavages="0" is_rejected="0">
+      <alternative_protein protein="lcl|scaffold_587_fwd_g7431.t1 14482|16083" num_tol_term="1" peptide_prev_aa="S" peptide_next_aa="D"/>
+      <alternative_protein protein="lcl|scaffold_587_frame_1_orf_232 scaffold_587 _length_55956_cov_16.366198" num_tol_term="1" peptide_prev_aa="S" peptide_next_aa="D"/>
+      <alternative_protein protein="lcl|scaffold_709_frame_5_orf_845 scaffold_709 _length_110636_cov_18.253445" num_tol_term="1" peptide_prev_aa="S" peptide_next_aa="D"/>
+<modification_info>
+<mod_aminoacid_mass position="5" mass="147.035400"/>
+</modification_info>
+        <search_score name="ionscore" value="28.70"/>
+        <search_score name="identityscore" value="46.31"/>
+        <search_score name="star" value="0"/>
+        <search_score name="homologyscore" value="34.72"/>
+        <search_score name="expect" value="2.8862"/>
+      </search_hit>
+    </search_result>
+    </spectrum_query>
+  </msms_run_summary>
+</msms_pipeline_analysis>
