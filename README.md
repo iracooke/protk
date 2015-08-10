@@ -3,8 +3,6 @@
 
 # protk ( Proteomics toolkit )
 
-
-***
 ## What is it?
 
 Protk is a suite of tools for proteomics. It aims to present a simple and consistent command-line interface across otherwise disparate third party tools.  The following analysis tasks are currently supported; 
@@ -177,4 +175,5 @@ You should now be able to run database searches, specifying this database by usi
 ```sh
 manage_db.rb add --ftp-source 'ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/reldate.txt' --include-filters '/OS=Homo\ssapiens/' --id-regex 'sp\|.*\|(.*?)\s' --add-decoys --make-blast-index --archive-old sphuman
 ```
+
 

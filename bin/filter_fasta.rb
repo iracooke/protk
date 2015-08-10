@@ -27,7 +27,6 @@ output_fh = tool.explicit_output!=nil ? File.new("#{tool.explicit_output}",'w') 
 $filter_ids = Set.new()
 if tool.id_filter && (File.exists?(tool.id_filter) || tool.id_filter=="-")
 	if tool.id_filter=="-"
-		# require 'byebug';byebug
 		$filter_ids = $stdin.read.split("\n").collect { |e| e.chomp }
 	else
 		$filter_ids = File.readlines(tool.id_filter).collect { |e| e.chomp }
@@ -46,7 +45,6 @@ def passes_filters(entry,tool)
 	end
 
 	if $filter_ids.length > 0
-		require 'byebug';byebug
 
 		if $filter_ids.include? entry.entry_id
 			return true
