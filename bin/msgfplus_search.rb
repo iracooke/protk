@@ -208,23 +208,31 @@ ARGV.each do |filename|
       cmd << " -mod #{mods_path}"
     end
     
+
     # As a final part of the command we convert to pepxml
     if search_tool.pepxml
       #if search_tool.explicit_output
       cmd << ";ruby -pi.bak -e \"gsub('post=\\\"?','post=\\\"X')\" #{mzid_output_path}"
       cmd << ";ruby -pi.bak -e \"gsub('pre=\\\"?','pre=\\\"X')\" #{mzid_output_path}"
-      cmd << ";idconvert #{mzid_output_path} --pepXML -o #{Pathname.new(mzid_output_path).dirname}" 
+
+      idconvert_relative_output_dir = (0...10).map { ('a'..'z').to_a[rand(26)] }.join
+
+#      require 'byebug';byebug
+
+      idconvert_output_dir = "#{Pathname.new(mzid_output_path).dirname}/#{idconvert_relative_output_dir}"
+      cmd << ";idconvert #{mzid_output_path} --pepXML -o #{idconvert_output_dir}" 
 
  
-      pepxml_output_path = "#{mzid_output_path.chomp('.mzid')}.pepXML"
+      cmd << "; pep_xml_output_path=`ls #{idconvert_output_dir}/*.pepXML`; echo $pep_xml_output_path"
+      #"#{mzid_output_path.chomp('.mzid')}.pepXML"
 
       # Fix the msms_run_summary base_name attribute
       #
       if for_galaxy
-        cmd << ";ruby -pi.bak -e \"gsub(/ base_name=[^ ]+/,' base_name=\\\"#{original_input_file}\\\"')\" #{pepxml_output_path}"
+        cmd << ";ruby -pi.bak -e \"gsub(/ base_name=[^ ]+/,' base_name=\\\"#{original_input_file}\\\"')\" $pep_xml_output_path"
       end
       #Then copy the pepxml to the final output path
-      cmd << "; mv #{pepxml_output_path} #{output_path}"
+      cmd << "; mv ${pep_xml_output_path} '#{output_path}'"
     else
       cmd << "; mv #{mzid_output_path} #{output_path}"
     end
