@@ -86,6 +86,12 @@ while reader.read
 
     if (has_match && !tool.reject_mode) || (!has_match && tool.reject_mode)  #&& (hit.attributes['hit_rank']=="1")
       kept+=1
+
+      # Remove any lower ranked hits
+      #
+      secondary_hits = sq_node.find("./#{pepxml_ns_prefix}search_result/#{pepxml_ns_prefix}search_hit[@hit_rank!=\"1\"]",pepxml_ns)
+      secondary_hits.each { |sh| sh.remove!  }
+
       output_fh.write "#{sq_node}\n"
     else
       deleted+=1
