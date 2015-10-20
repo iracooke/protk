@@ -214,6 +214,7 @@ ARGV.each do |filename|
       #if search_tool.explicit_output
       cmd << ";ruby -pi.bak -e \"gsub('post=\\\"?','post=\\\"X')\" #{mzid_output_path}"
       cmd << ";ruby -pi.bak -e \"gsub('pre=\\\"?','pre=\\\"X')\" #{mzid_output_path}"
+      cmd << ";ruby -pi.bak -e \"gsub('id=\\\"UnspecificCleavage\\\"','id=\\\"UnspecificCleavage\\\" name=\\\"unspecific cleavage\\\"')\" #{mzid_output_path}"
 
       idconvert_relative_output_dir = (0...10).map { ('a'..'z').to_a[rand(26)] }.join
 
