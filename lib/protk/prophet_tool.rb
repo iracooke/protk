@@ -42,7 +42,9 @@ class ProphetTool < SearchTool
   		'cnbr' => 'M',
   		'elastase' => 'E',
   		'lysn' => 'L',
-  		'nonspecific' => 'N'
+  		'nonspecific' => 'N',
+      'no enzyme' => 'N',
+      'unspecific cleavage' => 'N'
   	}
   	codes[enzyme_name]
 
