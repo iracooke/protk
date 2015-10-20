@@ -45,7 +45,7 @@ def passes_filters(entry,tool)
 	end
 
 	if $filter_ids.length > 0
-
+		# require 'byebug';byebug
 		if $filter_ids.include? entry.entry_id
 			return true
 		end
