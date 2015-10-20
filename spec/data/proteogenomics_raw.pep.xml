@@ -167,5 +167,56 @@
       </search_hit>
     </search_result>
     </spectrum_query>
+  <spectrum_query spectrum="dataset_22618.dat.57840.57840.3" spectrumNativeID="index=57840" start_scan="57840" end_scan="57840" precursor_neutral_mass="2100.084554876704" assumed_charge="3" index="677">
+      <search_result>
+        <search_hit hit_rank="1" peptide="GHYTEGAELVDSVLDVLRK" peptide_prev_aa="K" peptide_next_aa="E" protein="lcl|comp8357_c0_seq1_m.7059" num_tot_proteins="2" calc_neutral_pep_mass="2100.084921087641" massdiff="3.662109375e-04" protein_descr="lcl|comp8357_c0_seq1_m.7059  Tubulin beta-4B chain; 9606" num_tol_term="2" num_missed_cleavages="1">
+          <alternative_protein protein="lcl|comp8357_c0_seq1_frame_1_orf_2" protein_descr="lcl|comp8357_c0_seq1_frame_1_orf_2 comp8357_c0_seq1 Tubulin beta-4 chain; Length: 8355        Identity: 96.74% EValue:0.0"/>
+          <search_score name="raw" value="193"/>
+          <search_score name="denovo" value="212"/>
+          <search_score name="SpecEValue" value="2.778453E-21"/>
+          <search_score name="EValue" value="4.2489813E-13"/>
+          <search_score name="IsotopeError" value="0"/>
+          <search_score name="ExplainedIonCurrentRatio" value="1.0696424"/>
+          <search_score name="NTermIonCurrentRatio" value="0.1872126"/>
+          <search_score name="CTermIonCurrentRatio" value="0.8824298"/>
+          <search_score name="MS2IonCurrent" value="507977.34"/>
+          <search_score name="NumMatchedMainIons" value="27"/>
+          <search_score name="MeanErrorAll" value="112.571236"/>
+          <search_score name="StdevErrorAll" value="66.64392"/>
+          <search_score name="MeanErrorTop7" value="60.67423"/>
+          <search_score name="StdevErrorTop7" value="67.260284"/>
+          <search_score name="MeanRelErrorAll" value="68.01594"/>
+          <search_score name="StdevRelErrorAll" value="111.747604"/>
+          <search_score name="MeanRelErrorTop7" value="17.309385"/>
+          <search_score name="StdevRelErrorTop7" value="88.91397"/>
+        </search_hit>
+        <search_hit hit_rank="2" peptide="GHYTEGAELVDSVLDVIRK" peptide_prev_aa="K" peptide_next_aa="E" protein="lcl|comp14624_c0_seq1_m.18120" num_tot_proteins="4" calc_neutral_pep_mass="2100.084921087641" massdiff="3.662109375e-04" protein_descr="lcl|comp14624_c0_seq1_m.18120  Tubulin beta chain; 7656" num_tol_term="2" num_missed_cleavages="1">
+          <alternative_protein protein="lcl|comp45133_c0_seq1_m.123370" protein_descr="lcl|comp45133_c0_seq1_m.123370  Tubulin beta-4B chain; 10036"/>
+          <alternative_protein protein="lcl|comp14624_c0_seq1_frame_6_orf_4" protein_descr="lcl|comp14624_c0_seq1_frame_6_orf_4 comp14624_c0_seq1 Tubulin beta chain; Length: 7656        Identity: 97.21% EValue:0.0"/>
+          <alternative_protein protein="lcl|comp45133_c0_seq1_frame_4_orf_1" protein_descr="lcl|comp45133_c0_seq1_frame_4_orf_1 comp45133_c0_seq1 Tubulin beta-4B chain; Length: 10036        Identity: 98.23% EValue:3.0e-78"/>
+          <search_score name="raw" value="193"/>
+          <search_score name="denovo" value="212"/>
+          <search_score name="SpecEValue" value="2.778453E-21"/>
+          <search_score name="EValue" value="4.2489813E-13"/>
+          <search_score name="IsotopeError" value="0"/>
+          <search_score name="ExplainedIonCurrentRatio" value="1.0696424"/>
+          <search_score name="NTermIonCurrentRatio" value="0.1872126"/>
+          <search_score name="CTermIonCurrentRatio" value="0.8824298"/>
+          <search_score name="MS2IonCurrent" value="507977.34"/>
+          <search_score name="NumMatchedMainIons" value="27"/>
+          <search_score name="MeanErrorAll" value="112.571236"/>
+          <search_score name="StdevErrorAll" value="66.64392"/>
+          <search_score name="MeanErrorTop7" value="60.67423"/>
+          <search_score name="StdevErrorTop7" value="67.260284"/>
+          <search_score name="MeanRelErrorAll" value="68.01594"/>
+          <search_score name="StdevRelErrorAll" value="111.747604"/>
+          <search_score name="MeanRelErrorTop7" value="17.309385"/>
+          <search_score name="StdevRelErrorTop7" value="88.91397"/>
+        </search_hit>
+      </search_result>
+    </spectrum_query>
+
+
+
   </msms_run_summary>
 </msms_pipeline_analysis>

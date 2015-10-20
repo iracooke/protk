@@ -90,6 +90,11 @@ RSpec.shared_examples "a protk tool that defaults to stdout" do
 		output=%x[#{@tool_name} #{extra_args} #{input_file}]
 		expect(output).to validator if defined? validator
 		expect(output).to validator1 if defined? validator1
+		expect(output).to validator2 if defined? validator2
+		expect(output).to validator3 if defined? validator3
+		expect(output).to validator4 if defined? validator4
+		expect(output).to validator5 if defined? validator5
+		expect(output).to validator6 if defined? validator6
 	end
 
 end

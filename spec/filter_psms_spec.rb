@@ -29,19 +29,19 @@ describe "The filter_psms command" do
     it_behaves_like "a protk tool that defaults to stdout" do
       let(:extra_args) { "'decoy_novel,frame'"}
       let(:validator) { have_lines_matching(1,"decoy_novel")}
-      let(:validator) { have_lines_matching(0,"decoy_known")}
-      let(:validator) { have_lines_matching(1,"Vi_1.3537.3537.2")}
-      let(:validator) { have_lines_matching(0,"Vi_1.4608.4608.2")}
-      let(:validator) { have_lines_matching(1,"Vi_1.3690.3690.2")}
+      let(:validator1) { have_lines_matching(0,"decoy_known")}
+      let(:validator2) { have_lines_matching(1,"Vi_1.3537.3537.2")}
+      let(:validator3) { have_lines_matching(0,"Vi_1.4608.4608.2")}
+      let(:validator4) { have_lines_matching(1,"Vi_1.3690.3690.2")}
     end
 
     it_behaves_like "a protk tool that defaults to stdout" do
       let(:extra_args) { "'decoy_novel,frame' -R"}
       let(:validator) { have_lines_matching(0,"decoy_novel")}
-      let(:validator) { have_lines_matching(1,"decoy_known")}
-      let(:validator) { have_lines_matching(0,"Vi_1.3537.3537.2")}
-      let(:validator) { have_lines_matching(1,"Vi_1.4608.4608.2")}
-      let(:validator) { have_lines_matching(0,"Vi_1.3690.3690.2")}
+      let(:validator1) { have_lines_matching(1,"decoy_known")}
+      let(:validator2) { have_lines_matching(0,"Vi_1.3537.3537.2")}
+      let(:validator3) { have_lines_matching(1,"Vi_1.4608.4608.2")}
+      let(:validator4) { have_lines_matching(0,"Vi_1.3690.3690.2")}
     end
 
     # Test the --check-alternatives functionality
@@ -50,11 +50,11 @@ describe "The filter_psms command" do
     it_behaves_like "a protk tool that defaults to stdout" do
       let(:extra_args) { "'decoy_known,[fr][we][dv]_g' -C"}
       let(:validator) { have_lines_matching(0,"decoy_novel")}
-      let(:validator) { have_lines_matching(1,"decoy_known")}
-      let(:validator) { have_lines_matching(0,"Vi_1.3537.3537.2")}
-      let(:validator) { have_lines_matching(1,"Vi_1.4608.4608.2")}
-      let(:validator) { have_lines_matching(1,"Vi_1.3690.3690.2")}
-      let(:validator) { have_lines_matching(1,"Vi_1.3668.3668.2")}
+      let(:validator1) { have_lines_matching(1,"decoy_known")}
+      let(:validator2) { have_lines_matching(0,"Vi_1.3537.3537.2")}
+      let(:validator3) { have_lines_matching(1,"Vi_1.4608.4608.2")}
+      let(:validator4) { have_lines_matching(1,"Vi_1.3690.3690.2")}
+      let(:validator5) { have_lines_matching(1,"Vi_1.3668.3668.2")}
     end
 
 
@@ -62,11 +62,18 @@ describe "The filter_psms command" do
     it_behaves_like "a protk tool that defaults to stdout" do
       let(:extra_args) { "'decoy_known,[fr][we][dv]_g' -C -R"}
       let(:validator) { have_lines_matching(1,"decoy_novel")}
-      let(:validator) { have_lines_matching(0,"decoy_known")}
-      let(:validator) { have_lines_matching(1,"Vi_1.3537.3537.2")}
-      let(:validator) { have_lines_matching(0,"Vi_1.4608.4608.2")}
-      let(:validator) { have_lines_matching(0,"Vi_1.3690.3690.2")}
-      let(:validator) { have_lines_matching(0,"Vi_1.3668.3668.2")}
+      let(:validator1) { have_lines_matching(0,"decoy_known")}
+      let(:validator2) { have_lines_matching(1,"Vi_1.3537.3537.2")}
+      let(:validator3) { have_lines_matching(0,"Vi_1.4608.4608.2")}
+      let(:validator4) { have_lines_matching(0,"Vi_1.3690.3690.2")}
+      let(:validator5) { have_lines_matching(0,"Vi_1.3668.3668.2")}
+    end
+
+    # Removes lower ranked hits properly
+    it_behaves_like "a protk tool that defaults to stdout" do
+      let(:extra_args) { "'seq[0-9]+\_m\.[0-9]+' -C"}
+      let(:validator) { have_lines_matching(0,"hit_rank=\"2\"")}
+      let(:validator1) { have_lines_matching(1,"hit_rank=\"1\"")}
     end
 
 
