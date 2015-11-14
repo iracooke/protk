@@ -49,7 +49,7 @@ class Peptide
 			pep=new()
 			pep.sequence=mzid_doc.get_sequence_for_peptide(xmlnode)
 			best_psm = mzid_doc.get_best_psm_for_peptide(xmlnode)
-			# require 'byebug';byebug
+			# require 'byebug';byebug if !best_psm
 			pep.probability = mzid_doc.get_cvParam(best_psm,"MS:1002466")['value'].to_f
 			pep.theoretical_neutral_mass = mzid_doc.get_cvParam(best_psm,"MS:1001117")['value'].to_f
 			pep.charge = best_psm.attributes['chargeState'].to_i

@@ -130,10 +130,7 @@ class MzIdentMLDoc < Object
 	# 	<SpectrumIdentificationItemRef spectrumIdentificationItem_ref="SII_1_1"/>
 	# </PeptideHypothesis>
 	def get_best_psm_for_peptide(peptide_node)
-
-
-
-		best_score=-1
+		best_score=nil
 		best_psm=nil
 		spectrumidrefs = self.find(peptide_node,"SpectrumIdentificationItemRef")
 		Constants.instance.log "Searching from among #{spectrumidrefs.length} for best psm" , :debug
@@ -143,7 +140,7 @@ class MzIdentMLDoc < Object
 			# psm_node = self.find(peptide_node,"SpectrumIdentificationItem[@id=\'#{id_ref}\']",true)[0]
 			psm_node = self.psms_cache[id_ref]
 			score = self.get_cvParam(psm_node,"MS:1002466")['value'].to_f
-			if score>best_score
+			if ( best_score == nil ) || ( score > best_score )
 				best_psm=psm_node
 				best_score=score
 			end
