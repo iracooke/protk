@@ -37,6 +37,21 @@ class MzIdentMLDoc < Object
 		@document=parser.parse
 	end
 
+	def source_files
+		@document.find("//#{MZID_NS_PREFIX}:SourceFile","#{MZID_NS_PREFIX}:#{MZID_NS}")
+	end
+
+	def search_databases
+		@document.find("//#{MZID_NS_PREFIX}:SearchDatabase","#{MZID_NS_PREFIX}:#{MZID_NS}")
+	end
+
+	def enzymes
+		@document.find("//#{MZID_NS_PREFIX}:Enzyme","#{MZID_NS_PREFIX}:#{MZID_NS}")
+	end
+
+	def analysis_software
+		@document.find("//#{MZID_NS_PREFIX}:AnalysisSoftware","#{MZID_NS_PREFIX}:#{MZID_NS}")
+	end
 
 	def spectrum_queries
 		@document.find("//#{MZID_NS_PREFIX}:SpectrumIdentificationResult","#{MZID_NS_PREFIX}:#{MZID_NS}")

@@ -12,6 +12,7 @@ require 'protk/constants'
 require 'protk/command_runner'
 require 'protk/mzidentml_doc'
 require 'protk/protein_group'
+require 'protk/protein_summary'
 require 'protk/tool'
 
 include LibXML
@@ -45,6 +46,10 @@ prot_xml_writer = ProtXMLWriter.new
 $protk.log "Parsing MzIdentML input file" , :info
 mzid_doc = MzIdentMLDoc.new(input_file)
 
+header = ProteinSummary.from_mzid(mzid_doc)
+
+prot_xml_writer.append_header(header)
+
 protein_groups = mzid_doc.protein_groups
 
 n_prots = protein_groups.length
@@ -76,5 +81,7 @@ protein_groups.each do |group_node|
 end
 
 $protk.log "Writing #{n_written} proteins to #{output_file_name}", :info
+
+prot_xml_writer.append_dataset_derivation
 
 prot_xml_writer.save(output_file_name)
