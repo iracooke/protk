@@ -29,7 +29,7 @@ describe MzIdentMLDoc do
     end
 
     it "has one analysis software" do
-      expect ( doc.analysis_software.length ).to eq(1)
+      expect( doc.analysis_software.length ).to eq(1)
     end
 
   end
