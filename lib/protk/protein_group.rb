@@ -68,7 +68,8 @@ class ProteinGroup
 	def as_protxml()
 		node = XML::Node.new('protein_group')
     	node["group_number"] = self.group_number.to_s
-    	node["group_probability"] = self.group_probability.to_s
+    	# require 'byebug';byebug
+    	node["group_probability"] = (self.group_probability * 0.01).to_s
     	self.proteins.each { |prot| node << prot.as_protxml }
     	node
 	end

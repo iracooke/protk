@@ -10,3 +10,4 @@ spec/data/id_AC.index
 spec/data/key_ID.key
 spec/data/config.dat
 spec/data/PeptideShaker.mzid
+spec/data/UF_DIA_Good.mzid

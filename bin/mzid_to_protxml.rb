@@ -71,7 +71,8 @@ protein_groups.each do |group_node|
 	if group_prob >= tool.minprob.to_f
 		$stdout.write "\n" if tool.debug
 		$protk.log "Writing group with probability #{group_prob}" , :info
-		group = ProteinGroup.from_mzid(group_node,mzid_doc,tool.minprob.to_f)		
+		group = ProteinGroup.from_mzid(group_node,mzid_doc,tool.minprob.to_f)	
+		# require 'byebug';byebug	
 		prot_xml_writer.append_protein_group(group.as_protxml)
 		n_written+=1
 	end

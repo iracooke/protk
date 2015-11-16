@@ -127,8 +127,9 @@ class MzIdentMLDoc < Object
 
 	# Memoized because it gets called for every protein in a group
 	def get_proteins_for_group(group_node)
+		# puts group_node.attributes['group_number']
 		@proteins_for_group_cache ||= Hash.new do |h,key|
-			h[key] = self.find(group_node,"ProteinDetectionHypothesis")
+			h[key] = self.find(key,"ProteinDetectionHypothesis")
 		end
 		@proteins_for_group_cache[group_node]
 	end

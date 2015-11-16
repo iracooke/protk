@@ -32,6 +32,26 @@ describe MzIdentMLDoc do
       expect( doc.analysis_software.length ).to eq(1)
     end
 
+    it "has two protein groups" do
+      expect(doc.protein_groups.length).to eq(2)
+    end
+
+    describe "protein group caching" do
+
+      let(:group_node0) { doc.protein_groups[0] }
+      let(:group_node1) { doc.protein_groups[1] }
+
+      it "works for two different nodes" do
+        protein_nodes0=doc.get_proteins_for_group(group_node0)
+        protein_nodes1=doc.get_proteins_for_group(group_node1)
+
+        expect(protein_nodes0[0].attributes['id']).to eq("PAG_0_1")
+        expect(protein_nodes1[0].attributes['id']).to eq("PAG_4_1")        
+
+      end
+
+    end
+
   end
 
 end
