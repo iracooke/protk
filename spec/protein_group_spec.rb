@@ -54,7 +54,7 @@ describe ProteinGroup do
 				end
 				it "it should have the correct attributes" do
 					expect(as_protxml.attributes['group_number']).to eq("5")
-					expect(as_protxml.attributes['group_probability']).to eq("100.0")
+					expect(as_protxml.attributes['group_probability']).to eq("1.0")
 				end
 
 				describe "child protein" do
