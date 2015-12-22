@@ -17,7 +17,7 @@ include LibXML
 
 describe ProteinGroup do 
 
-	include_context :tmp_dir_with_fixtures, ["PeptideShaker_tiny.mzid","UF_DIA_Good.mzid"]
+	include_context :tmp_dir_with_fixtures, ["PeptideShaker_tiny.mzid"]
 
 	describe "PeptideShaker_tiny.mzid" do
 		let("mzid_doc"){
