@@ -153,6 +153,12 @@ file tpp_installed_file => [@build_dir,tpp_download_file] do
 
 	sh %{cd #{@build_dir};tar -xvzf TPP-#{tpp_version}.tgz}
 
+	sh %{cp ~/Desktop/singleton.hpp #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src/../extern/ProteoWizard/pwiz/libraries/boost_aux/boost/utility/singleton.hpp}
+
+	sh %{cp ~/Desktop/MascotScoreParser.h #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src/Validation/DiscriminateFunction/Mascot/MascotScoreParser.h}
+	sh %{cp ~/Desktop/PTMProphetParser.cxx #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src/Validation/PTMProphetParser/PTMProphetParser.cxx}
+	sh %{cp ~/Desktop/RespectFilter.h #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src/Validation/Respect/RespectFilter.h} 
+
 	File.open("#{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src/Makefile.config.incl","wb") do |f|
 		f.write "TPP_ROOT=#{env.tpp_root}/\nTPP_WEB=/tpp/\nXSLT_PROC=/usr/bin/xsltproc\nCGI_USERS_DIR=${TPP_ROOT}cgi-bin/"
 	end
@@ -173,13 +179,18 @@ file tpp_installed_file => [@build_dir,tpp_download_file] do
 		makefile_text = File.read("#{makefile_path}")
 
 		File.open("#{makefile_path}","w+") do |f|
-			subs_text = makefile_text.gsub("cp -rfu","cp -rf")
+			subs_text = makefile_text.gsub("cp -rfu","cp -rf").gsub("-Werror","")
+#			subs_text = subs_text.gsub("-Werror","")
 			f.write subs_text
 		end
+
+
+
 	end
 	sh %{cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src;echo '' > ../perl/tpp_models.pl;echo '' > ../perl/exporTPP.pl;echo '' > ../CGI/show_nspbin.pl;echo '' > ../CGI/tpp_gui/tpp_gui.pl}
 
-	build_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make -s"
+#	build_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make -s"
+	build_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make"
 	install_cmd = "#{use_perl_locallib_cmd};cd #{@build_dir}/TPP-#{tpp_version}/trans_proteomic_pipeline/src ; make install"
 	env.log build_cmd, :info
 	sh %{#{build_cmd}}
