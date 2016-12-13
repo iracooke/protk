@@ -63,6 +63,18 @@ class Constants
     "#{@protk_dir}/tools/msgfplus"
   end
 
+  def get_path_for_executable(exec_name_list)
+    exec_name_list.each do |exec_name| 
+      exec_path=%x[which #{exec_name}].chomp
+      return exec_path unless !exec_path || exec_path.length==0
+    end
+    throw "Unable to locate #{exec_name_list}"
+  end
+
+  def tandem_bin
+    get_path_for_executable ["tandem","tandem.exe"]
+  end
+
   def msgfplusjar
     msgfplus_path=%x[which MSGFPlus.jar]
     msgfplus_path.chomp
