@@ -22,8 +22,10 @@ exit unless search_tool.check_options(true)
 
 # Our environment should be setup so that tandem or tandem.exe is on the path
 #
-tandem_bin=%x[which tandem].chomp
-tandem_bin=%x[which tandem.exe].chomp unless tandem_bin && tandem_bin.length>0
+# tandem_bin=%x[which tandem].chomp
+# tandem_bin=%x[which tandem.exe].chomp unless tandem_bin && tandem_bin.length>0
+
+# tandem_bin
 
 @output_suffix="_tandem"
 
@@ -70,7 +72,7 @@ ARGV.each do |filename|
 
     # The basic command
     #
-    cmd= "#{tandem_bin} #{params_path}"
+    cmd= "#{genv.tandem_bin} #{params_path}"
 
     # Add a cleanup command unless the user wants to keep params files
     #
