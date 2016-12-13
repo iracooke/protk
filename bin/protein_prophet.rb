@@ -54,6 +54,19 @@ else
   output_file=Tool.default_output_path(inputs,".prot.xml",prophet_tool.output_prefix,@output_suffix)
 end
 
+genv.log("Checking input files ...",:info)
+inputs.each {|file_name| 
+
+  throw "Missing input file #{file_name}" unless File.exist?(file_name)
+
+  file_pepxml = PepXML.new(file_name)
+
+  db_path=file_pepxml.extract_db()
+  throw "Unable to find database #{db_path} used for searching. Fix paths in input files first" unless File.exist?(db_path)
+}
+
+
+
 if ( !Pathname.new(output_file).exist? || prophet_tool.over_write )
 
   cmd="ProteinProphet "
