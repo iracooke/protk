@@ -1,0 +1,146 @@
+Only in TPP-4.8.0.patched: osx.patch
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/CGI/Makefile TPP-4.8.0.patched/trans_proteomic_pipeline/CGI/Makefile
+--- TPP-4.8.0/trans_proteomic_pipeline/CGI/Makefile	2013-11-20 09:43:31.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/CGI/Makefile	2016-10-30 10:09:06.000000000 +1000
+@@ -45,7 +45,7 @@
+ 	cp -f tpp_gui/*.gif ${CGI_DIR}/images
+ 	cp -f ../installer_win32/*.ico ${CGI_DIR}/images
+ 	mkdir -p ${CGI_USERS_DIR}
+-	cp -rfu tpp_gui/users/* ${CGI_USERS_DIR}
++	cp -rf tpp_gui/users/* ${CGI_USERS_DIR}
+ 	mkdir -p ${HTML_DIR}js
+ 	chmod a+x ${HTML_DIR}js
+ 	cp -f tpp_gui/js/*.js ${HTML_DIR}js
+\ No newline at end of file
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/extern/ProteoWizard/pwiz/libraries/boost_aux/boost/utility/singleton.hpp TPP-4.8.0.patched/trans_proteomic_pipeline/extern/ProteoWizard/pwiz/libraries/boost_aux/boost/utility/singleton.hpp
+--- TPP-4.8.0/trans_proteomic_pipeline/extern/ProteoWizard/pwiz/libraries/boost_aux/boost/utility/singleton.hpp	2014-01-29 06:26:02.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/extern/ProteoWizard/pwiz/libraries/boost_aux/boost/utility/singleton.hpp	2016-10-30 09:17:41.000000000 +1000
+@@ -22,7 +22,9 @@
+ #       include <boost/thread/once.hpp>
+ #   endif
+ 
+-#   if defined(__GNUC__) && __GNUC__ >= 4
++#   if defined(__clang__)
++#      define BOOST_UTILITY_SINGLETON_API
++#   elif defined(__GNUC__) && __GNUC__ >= 4
+ #     define BOOST_UTILITY_SINGLETON_API __attribute__ ((visibility("default")))
+ #     pragma GCC visibility push(hidden)
+ #   else
+@@ -204,7 +206,8 @@
+ 
+ } // namespace boost
+ 
+-#   if defined(__GNUC__) && __GNUC__ >= 4
++#   if defined(__clang__)
++#   elif defined(__GNUC__) && __GNUC__ >= 4
+ #     pragma GCC visibility pop
+ #   endif
+ 
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/src/Makefile TPP-4.8.0.patched/trans_proteomic_pipeline/src/Makefile
+--- TPP-4.8.0/trans_proteomic_pipeline/src/Makefile	2014-09-27 02:03:57.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/src/Makefile	2016-10-30 09:25:50.000000000 +1000
+@@ -109,7 +109,7 @@
+ NAIVE_CC += -DGNUPLOT_BINARY=\"${GNUPLOT_BINARY}\"
+ endif
+ 
+-CC=${NAIVE_CC} -Werror -Dlint -Wformat -Wstrict-aliasing  -Wno-deprecated -Wno-char-subscripts
++CC=${NAIVE_CC} -Dlint -Wformat -Wstrict-aliasing  -Wno-deprecated -Wno-char-subscripts
+ 
+ 
+ # put here the complete directory path for the include subdirectory
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/src/Parsers/mzParser/Makefile TPP-4.8.0.patched/trans_proteomic_pipeline/src/Parsers/mzParser/Makefile
+--- TPP-4.8.0/trans_proteomic_pipeline/src/Parsers/mzParser/Makefile	2012-04-03 05:24:25.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/src/Parsers/mzParser/Makefile	2016-10-30 09:25:59.000000000 +1000
+@@ -32,7 +32,7 @@
+ 
+ # other flags
+ MZPFLAGS= -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DGCC
+-WARNINGFLAGS = -Werror -Wformat -Wstrict-aliasing -Wno-deprecated -Wno-char-subscripts
++WARNINGFLAGS = -Wformat -Wstrict-aliasing -Wno-deprecated -Wno-char-subscripts
+ IFLAGS=  -I$(SRC_ROOT) -I$(EXPAT_INCL) -I$(HDF5_INCL)
+ 
+ CXX=g++
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/src/Search/SpectraST/Makefile TPP-4.8.0.patched/trans_proteomic_pipeline/src/Search/SpectraST/Makefile
+--- TPP-4.8.0/trans_proteomic_pipeline/src/Search/SpectraST/Makefile	2014-06-03 04:07:24.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/src/Search/SpectraST/Makefile	2016-10-30 09:26:06.000000000 +1000
+@@ -39,7 +39,7 @@
+ else
+ LFSFLAGS= -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DGCC -DGNUPLOT_BINARY=\"${GNUPLOT_BINARY}\"
+ endif
+-WARNINGFLAGS = -Werror -Wformat -Wstrict-aliasing -Wno-deprecated -Wno-char-subscripts
++WARNINGFLAGS = -Wformat -Wstrict-aliasing -Wno-deprecated -Wno-char-subscripts
+ #IFLAGS=  -I$(SRC_ROOT)/common  -I$(SRC_ROOT)/Parsers/ramp -I$(SRC_ROOT)/refresh_interact -I$(SRC_ROOT)../extern/pwiz $(BOOST_INCL)
+ IFLAGS=  -I$(SRC_ROOT) -I$(SRC_ROOT). -I$(TPP_MSDATA_READER_INCL) $(TPP_MSDATA_READER_SUPPORT_INCL) -I$(GSL_INCLDIR) -I$(HDF5_INCL) -I$(EXPAT_INCL) $(ZLIB_INCL)
+ 
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/src/Search/SpectraST/Makefile_STANDALONE_LINUX TPP-4.8.0.patched/trans_proteomic_pipeline/src/Search/SpectraST/Makefile_STANDALONE_LINUX
+--- TPP-4.8.0/trans_proteomic_pipeline/src/Search/SpectraST/Makefile_STANDALONE_LINUX	2013-11-14 19:16:32.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/src/Search/SpectraST/Makefile_STANDALONE_LINUX	2016-10-30 09:26:14.000000000 +1000
+@@ -31,7 +31,7 @@
+ 
+ # lfs support
+ LFSFLAGS= -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
+-WARNINGFLAGS = -Werror -Wformat -Wstrict-aliasing -Wno-deprecated -Wno-char-subscripts
++WARNINGFLAGS = -Wformat -Wstrict-aliasing -Wno-deprecated -Wno-char-subscripts
+ IFLAGS= -I/usr/include
+ 
+ ifeq (${LGPL},1)
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/src/Validation/DiscriminateFunction/Mascot/MascotScoreParser.h TPP-4.8.0.patched/trans_proteomic_pipeline/src/Validation/DiscriminateFunction/Mascot/MascotScoreParser.h
+--- TPP-4.8.0/trans_proteomic_pipeline/src/Validation/DiscriminateFunction/Mascot/MascotScoreParser.h	2014-08-23 06:21:52.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/src/Validation/DiscriminateFunction/Mascot/MascotScoreParser.h	2016-10-30 09:22:15.000000000 +1000
+@@ -1,5 +1,5 @@
+ #ifndef MASCOT_SCORE_PARSER_H
+-#define MASCOT_SCORE_UPDATE_PARSER_H
++#define MASCOT_SCORE_PARSER_H
+ /*
+ 
+ Program       : MascotScoreParser                                                      
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/src/Validation/PTMProphetParser/PTMProphetParser.cxx TPP-4.8.0.patched/trans_proteomic_pipeline/src/Validation/PTMProphetParser/PTMProphetParser.cxx
+--- TPP-4.8.0/trans_proteomic_pipeline/src/Validation/PTMProphetParser/PTMProphetParser.cxx	2014-11-20 08:24:25.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/src/Validation/PTMProphetParser/PTMProphetParser.cxx	2016-10-30 09:22:42.000000000 +1000
+@@ -2176,7 +2176,7 @@
+ 
+       new_mpep += tok;
+     }
+-    else if (pos >= 0 && (prob = proph->getProbAtPosition(pos)) < 0 || pos_rank_hash[pos] < mod_sites) {
++    else if ((pos >= 0 && (prob = proph->getProbAtPosition(pos)) < 0) || pos_rank_hash[pos] < mod_sites) {
+       new_mpep += tok;
+       if (prob >= 0 && tok.length() == 1) {
+ 
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/src/Validation/Respect/RespectFilter.h TPP-4.8.0.patched/trans_proteomic_pipeline/src/Validation/Respect/RespectFilter.h
+--- TPP-4.8.0/trans_proteomic_pipeline/src/Validation/Respect/RespectFilter.h	2014-08-23 06:21:52.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/src/Validation/Respect/RespectFilter.h	2016-10-30 09:22:58.000000000 +1000
+@@ -59,9 +59,13 @@
+ #include <pwiz/utility/misc/Std.hpp>
+ #include <pwiz/data/msdata/Serializer_mzML.hpp>
+ 
++
+ using namespace std;
+ using namespace pwiz::data;
+ using namespace pwiz::msdata;
++#include <boost/shared_ptr.hpp>
++using boost::shared_ptr;
++// using boost::shared_ptr
+ 
+ typedef TPP_STDSTRING_HASHMAP(string*) strp_hash;
+ typedef TPP_STDSTRING_HASHMAP(SpectrumPtr) spectptr_hash;
+@@ -154,7 +158,7 @@
+   //vector<MZIntensityPair*> all_peaks_;
+   pwiz::msdata::MSDataFile* inmsd_;
+   pwiz::msdata::MSDataFile* outmsd_;
+-  shared_ptr<SpectrumListSimple> spectrumList;// (new SpectrumListSimple);
++  boost::shared_ptr<SpectrumListSimple> spectrumList;// (new SpectrumListSimple);
+ 
+   //FullReaderList readers_;
+   //const ReaderList::Config readerConfig_;
+diff -ur TPP-4.8.0/trans_proteomic_pipeline/src/util/Makefile TPP-4.8.0.patched/trans_proteomic_pipeline/src/util/Makefile
+--- TPP-4.8.0/trans_proteomic_pipeline/src/util/Makefile	2014-02-11 08:40:44.000000000 +1000
++++ TPP-4.8.0.patched/trans_proteomic_pipeline/src/util/Makefile	2016-10-30 09:26:25.000000000 +1000
+@@ -12,7 +12,7 @@
+ EXE=$(OBJ_ARCH)/checkdb $(OBJ_ARCH)/digestdb $(OBJ_ARCH)/mzxml2dta $(OBJ_ARCH)/plottic $(OBJ_ARCH)/subsetdb  $(OBJ_ARCH)/prophet_png $(OBJ_ARCH)/getSpectrum $(OBJ_ARCH)/seeker $(OBJ_ARCH)/pep_dbcount $(OBJ_ARCH)/fdr_plot $(OBJ_ARCH)/translateDNA2AA-FASTA $(OBJ_ARCH)/calculate_pi $(OBJ_ARCH)/add_mz
+ 
+ # handle 2GB+ files
+-CCOPT= -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -Werror -Wformat -Wstrict-aliasing  -Wno-deprecated -Wno-char-subscripts
++CCOPT= -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -Wformat -Wstrict-aliasing  -Wno-deprecated -Wno-char-subscripts
+ 
+ 
+ # put here the name of c compiler
