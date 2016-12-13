@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="pepXML_std.xsl"?>
-<msms_pipeline_analysis date="2014-06-22T13:57:04" summary_xml="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem.pep.xml" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/pepXML/pepXML_v117.xsd">
+<msms_pipeline_analysis date="2014-06-22T13:57:04" summary_xml="/Users/iracooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem.pep.xml" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/pepXML/pepXML_v117.xsd">
    <msms_run_summary base_name="mr176-BSA100fmole_BA3_01_8167.d_tandem.tandem" search_engine="X! Tandem" raw_data_type="raw" raw_data=".?">
       <sample_enzyme name="trypsin">
 <specificity cut="KR" no_cut="P" sense="C"/>
 </sample_enzyme>
 <search_summary base_name="mr176-BSA100fmole_BA3_01_8167.d_tandem.tandem" search_engine="X! Tandem" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" search_id="1">
-         <search_database local_path="/Users/icooke/Desktop/iptest/AASequences.fasta" type="AA"/>
+         <search_database local_path="/Users/iracooke/Desktop/iptest/AASequences.fasta" type="AA"/>
          <enzymatic_search_constraint enzyme="trypsin" max_num_internal_cleavages="2" min_number_termini="1" />
          <aminoacid_modification aminoacid="E" massdiff="-18.0106" mass="111.0320" variable="Y" symbol="^" /><!--X! Tandem n-terminal AA variable modification-->
          <aminoacid_modification aminoacid="M" massdiff="15.9949" mass="147.0354" variable="Y" />
@@ -14,8 +14,8 @@
          <terminal_modification terminus="n" massdiff="42.0106" mass="43.0184" protein_terminus="N" variable="Y" symbol="^" /><!--X! Tandem n-terminal AA variable modification-->
          
          <!-- Input parameters -->
-         <parameter name="list path, default parameters" value="/Users/icooke/.rvm/gems/ruby-2.0.0-p353/gems/protk-1.2.6.pre6/lib/protk/data/tandem_isb_native_defaults.xml"/>
-         <parameter name="list path, taxonomy information" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem.tandem.taxonomy.xml"/>
+         <parameter name="list path, default parameters" value="/Users/iracooke/.rvm/gems/ruby-2.0.0-p353/gems/protk-1.2.6.pre6/lib/protk/data/tandem_isb_native_defaults.xml"/>
+         <parameter name="list path, taxonomy information" value="/Users/iracooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem.tandem.taxonomy.xml"/>
          <parameter name="output, histogram column width" value="30"/>
          <parameter name="output, histograms" value="no"/>
          <parameter name="output, log path" value=""/>
@@ -23,7 +23,7 @@
          <parameter name="output, message" value="1234567890"/>
          <parameter name="output, one sequence copy" value="no"/>
          <parameter name="output, parameters" value="yes"/>
-         <parameter name="output, path" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem.tandem"/>
+         <parameter name="output, path" value="/Users/iracooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_tandem.tandem"/>
          <parameter name="output, path hashing" value="no"/>
          <parameter name="output, performance" value="yes"/>
          <parameter name="output, proteins" value="yes"/>
@@ -72,7 +72,7 @@
          <parameter name="spectrum, parent monoisotopic mass error plus" value="100.0"/>
          <parameter name="spectrum, parent monoisotopic mass error units" value="Daltons"/>
          <parameter name="spectrum, parent monoisotopic mass isotope error" value="no"/>
-         <parameter name="spectrum, path" value="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d.mgf"/>
+         <parameter name="spectrum, path" value="/Users/iracooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d.mgf"/>
          <parameter name="spectrum, sequence batch size" value="1000"/>
          <parameter name="spectrum, threads" value="1"/>
          <parameter name="spectrum, total peaks" value="50"/>
@@ -92,7 +92,7 @@
          <parameter name="scoring, pluggable scoring" value="no"/>
          <parameter name="spectrum, maximum parent m+h" value="4000.0"/>
          <!-- Performance parameters -->
-         <parameter name="list path, sequence source #1" value="/Users/icooke/Desktop/iptest/AASequences.fasta"/>
+         <parameter name="list path, sequence source #1" value="/Users/iracooke/Desktop/iptest/AASequences.fasta"/>
          <parameter name="list path, sequence source description #1" value="no description"/>
          <parameter name="modelling, duplicate peptide ids" value="0"/>
          <parameter name="modelling, duplicate proteins" value="0"/>

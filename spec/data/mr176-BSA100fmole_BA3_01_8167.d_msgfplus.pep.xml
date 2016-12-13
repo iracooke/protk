@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<msms_pipeline_analysis date="2014-06-22T14:21:31" summary_xml="/Users/icooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_msgfplus.pep.xml.pepXML" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/pepXML/pepXML_v117.xsd">
+<msms_pipeline_analysis date="2014-06-22T14:21:31" summary_xml="/Users/iracooke/Desktop/iptest/mr176-BSA100fmole_BA3_01_8167.d_msgfplus.pep.xml.pepXML" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://sashimi.sourceforge.net/schema_revision/pepXML/pepXML_v117.xsd">
   <analysis_summary analysis="MS-GF+" version="Beta (v9949)" time="2014-06-22T19:21:32Z"/>
   <analysis_summary analysis="ProteoWizard software" version="3.0.5162" time="2014-06-22T19:21:32Z"/>
   <msms_run_summary base_name="mr176-BSA100fmole_BA3_01_8167.d" raw_data_type="" raw_data="">
@@ -7,7 +7,7 @@
       <specificity sense="C" cut="KR" no_cut="P" min_spacing="0"/>
     </sample_enzyme>
     <search_summary base_name="mr176-BSA100fmole_BA3_01_8167.d" search_engine="MS-GF+" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" out_data_type="" out_data="">
-      <search_database local_path="/Users/icooke/Desktop/iptest/AASequences.fasta" database_name="SearchDB_1" size_in_db_entries="33" type="NA"/>
+      <search_database local_path="/Users/iracooke/Desktop/iptest/AASequences.fasta" database_name="SearchDB_1" size_in_db_entries="33" type="NA"/>
       <enzymatic_search_constraint enzyme="Trypsin" max_num_internal_cleavages="1000" min_number_termini="2"/>
       <aminoacid_modification aminoacid="C" massdiff="57.021465" mass="160.0306494778" variable="N" description="Carbamidomethyl"/>
       <parameter name="TargetDecoyApproach" value="false"/>
