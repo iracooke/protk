@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'rest-client','~> 1.6.7', '>= 1.6.7'
   s.add_runtime_dependency 'net-ftp-list',"~>3.2.5" ,">=3.2.5"
-  s.add_runtime_dependency 'libxml-ruby',"~>2.7", ">=2.7.0"
+#  s.add_runtime_dependency 'libxml-ruby',"~>2.7", ">=2.7.0"
+  s.add_runtime_dependency 'libxml-ruby',"~>2.9", ">=2.9.0"
 
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-mocks', '~> 3.0'
