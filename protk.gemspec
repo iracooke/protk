@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['pepxml_to_table.rb']
   s.executables = s.executables + ['unimod_to_loc.rb']
   s.executables = s.executables + ['uniprot_mapper.rb']
-  s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb']
+  s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','maker_to_proteindb.rb','protxml_to_gff.rb']
   s.executables = s.executables + ['protxml_to_table.rb']
   s.executables = s.executables + ['swissprot_to_table.rb']
   s.executables = s.executables + ['protxml_to_psql.rb']
