@@ -21,7 +21,7 @@ describe FastaDB , :dependencies_installed => blast_installed do
     query_id = "tr|O70238|O70238_MOUSE"
     item = @testdb.get_by_id(query_id)
     expect(item).to be_instance_of(Bio::FastaFormat)
-    expect(item.entry_id).to eq(query_id)
+    expect(item.entry_id).to eq("O70238")
     expect(item.length).to eq(227)
   end
 
