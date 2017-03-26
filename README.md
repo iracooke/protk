@@ -20,10 +20,12 @@ Protk is a ruby gem and requires ruby 2.0 or higher with support for libxml2. To
     gem install protk
 ```
 
-On macOS you may need to do
+On macOS you may need to install libxml2 with homebrew first
 
 ```bash
+	brew install libxml2
 	brew install coreutils
+	gem install libxml-ruby -- --with-xml2-include=/usr/local/opt/libxml2/include/libxml2/ --with-xml2-lib=/usr/local/opt/libxml2/lib/
 ```
 
 ## Ruby Compatibility
