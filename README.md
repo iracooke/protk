@@ -25,7 +25,7 @@ On macOS you may need to install libxml2 with homebrew first
 ```bash
 	brew install libxml2
 	brew install coreutils
-	gem install libxml-ruby -- --with-xml2-include=/usr/local/opt/libxml2/include/libxml2/ --with-xml2-lib=/usr/local/opt/libxml2/lib/
+	gem install libxml-ruby -v '2.9.0' -- --with-xml2-include=/usr/local/opt/libxml2/include/libxml2/ --with-xml2-lib=/usr/local/opt/libxml2/lib/
 ```
 
 ## Ruby Compatibility
