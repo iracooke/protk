@@ -198,6 +198,8 @@ file tpp_installed_file => [@build_dir,tpp_download_file] do
 	env.log install_cmd, :info
 	sh %{#{install_cmd}}
 	env.log "Done Installing", :info
+        sh %{rm -r #{env.tpp_root}/cgi-bin #{env.tpp_root}/html}
+        env.log "Done removing web extras", :info
 end
 
 task :tpp => tpp_installed_file
