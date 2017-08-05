@@ -15,7 +15,7 @@ end
 
 describe Peptide do 
 
-	include_context :tmp_dir_with_fixtures, ["test.protXML","transdecoder_gff.gff3","augustus_sample.gff","sixframe.gff","braker_min.gff3","PeptideShaker_tiny.mzid"]
+	include_context :tmp_dir_with_fixtures, ["test.protXML","PNGaseF.protXML","transdecoder_gff.gff3","augustus_sample.gff","sixframe.gff","braker_min.gff3","PeptideShaker_tiny.mzid"]
 
 	let(:first_peptide) { 
 		xmlnodes = parse_peptides("#{@tmp_dir}/test.protXML")
@@ -28,6 +28,7 @@ describe Peptide do
 		its(:sequence) {should eq("SGELAVQALDQFATVVEAK")}
 		its(:probability) { should eq(0.9981)}
 		its(:charge) { should eq(1)}
+		its(:modifications) { should eq(nil)}
 
 		it "can map coordinates to protein" do
 			coords = first_peptide.coords_in_protein("LSRSGELAVQALDQFATVVEAKLVKHKKGIVN")
@@ -48,6 +49,69 @@ describe Peptide do
 		end
 
 	end
+
+
+	let(:modified_peptide) { 
+		xmlnodes = parse_peptides("#{@tmp_dir}/test.protXML")
+		Peptide.from_protxml(xmlnodes[5])
+	}
+
+	# <modification_info modified_peptide="LGEYGFQN[115]AILVR">
+	# <mod_aminoacid_mass position="8" mass="115.026930"/>
+	# </modification_info>
+
+	describe "modified peptide" do
+		subject { modified_peptide }
+		it { should be_a Peptide}
+		its(:sequence) {should eq("LGEYGFQNAILVR")}
+		its(:probability) { should eq(0.9955)}
+		its(:charge) { should eq(1)}
+		its(:modifications) { should be_a Array}
+		its(:modified_sequence) { should eq("LGEYGFQN[115]AILVR")}
+
+		it "should have correct modifications" do
+			modifications = modified_peptide.modifications
+			expect(modifications.length).to eq(1)
+			expect(modifications[0].position).to eq(8)
+			expect(modifications[0].mass).to eq(115.026930)
+		end
+	end
+
+
+	let(:modified_peptide_with_indistinguishables) { 
+		xmlnodes = parse_peptides("#{@tmp_dir}/PNGaseF.protXML")
+		Peptide.from_protxml(xmlnodes[9])
+	}
+
+#    <peptide peptide_sequence="MEYENTLTAAMK" charge="0" initial_probability="0.9988" nsp_adjusted_probability="0.9996" fpkm_adjusted_probability="0.9996" weight="1.00" group_weight="1.00" is_nondegenerate_evidence="Y" n_enzymatic_termini="2" n_sibling_peptides="5.47" n_sibling_peptides_bin="9" n_instances="7" exp_tot_instances="6.97" is_contributing_evidence="Y">
+#             <indistinguishable_peptide peptide_sequence="MEYENTLTAAMK" charge="2" calc_neutral_pep_mass="1400.63">
+#             </indistinguishable_peptide>
+#             <indistinguishable_peptide peptide_sequence="MEYENTLTAAMK" charge="2" calc_neutral_pep_mass="1416.63">
+#             <modification_info modified_peptide="M[147]EYENTLTAAMK"/>
+#             </indistinguishable_peptide>
+#     </peptide>
+
+	describe "modified peptide with indistinguishables" do
+		subject { modified_peptide_with_indistinguishables }
+		it { should be_a Peptide }
+		its(:sequence) {should eq("MEYENTLTAAMK")}
+		its(:probability) { should eq(0.9996)}
+		its(:charge) { should eq(0)}
+		its(:modifications) { should eq(nil)}
+		its(:modified_sequence) { should eq(nil)}
+
+		it "should have indistinguishables" do
+			indistinguishables = modified_peptide_with_indistinguishables.indistinguishable_peptides
+			expect(indistinguishables.length).to eq(2)
+			expect(indistinguishables[0].modifications).to eq(nil)
+			expect(indistinguishables[1].charge).to eq(2)
+			expect(indistinguishables[1].modified_sequence).to eq("M[147]EYENTLTAAMK")
+			expect(indistinguishables[1].modifications.length).to eq(1)
+			expect(indistinguishables[1].modifications[0].position).to eq(1)
+			expect(indistinguishables[1].modifications[0].mass).to eq(147)
+		end
+	end
+
 
 	let(:mzid_doc){
 		MzIdentMLDoc.new("#{@tmp_dir}/PeptideShaker_tiny.mzid")
@@ -76,11 +140,22 @@ describe Peptide do
 		it { should have_attribute_with_value("calc_neutral_pep_mass","1360.7615466836999")}
 	end
 
+
 	it "can be initialized just from a sequence" do
 		peptide = Peptide.from_sequence("WQCKLVAKPESLSTSPS")
 		expect(peptide).to be_a(Peptide)
 		expect(peptide.sequence).to eq("WQCKLVAKPESLSTSPS")
 		expect(peptide.charge).to eq(nil)
+
+		modified_peptide = Peptide.from_sequence("LGEYGFQN[115]AILVR")
+		expect(modified_peptide.sequence).to eq("LGEYGFQNAILVR")
+		expect(modified_peptide.modified_sequence).to eq("LGEYGFQN[115]AILVR")
+
+		modifications = modified_peptide.modifications
+		expect(modifications.length).to eq(1)
+		expect(modifications[0].position).to eq(8)
+		expect(modifications[0].mass).to eq(115)
+		expect(modifications[0].amino_acid).to eq("N")
 	end
 
 
@@ -110,6 +185,23 @@ describe Peptide do
 			expect(peptide_coords).to be_a(Array)
 			expect(peptide_coords[0].end).to eq(1269-3)
 			expect(peptide_coords[0].start).to eq(1269-3-peptide.sequence.length*3+1)
+		 end
+
+		 it "works for a sixframe translation on the positive strand with modification" do
+		 	prot_entry = orf_positive_strand
+			expect(prot_entry.feature_type).to eq("CDS")
+
+			peptide = Peptide.from_sequence("LPTN[115]TTLP")
+			peptide_coords = peptide.to_gff3_records(protein_orf_positive_strand,prot_entry,[prot_entry])
+
+			expect(peptide_coords).to be_a(Array)
+			expect(peptide_coords[0].end).to eq(1269-3*52)
+			expect(peptide_coords[0].start).to eq(1269-3*52-peptide.sequence.length*3+1)
+
+			mod_coords = peptide.mods_to_gff3_records(protein_orf_positive_strand,prot_entry,[prot_entry])
+			expect(mod_coords).to be_a(Array)
+			expect(mod_coords[0].start).to eq(1066+12*3)
+			expect(mod_coords[0].end).to eq(1066+12*3+2)
 		 end
 
 

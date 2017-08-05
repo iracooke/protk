@@ -93,11 +93,13 @@ if for_galaxy || Pathname.new(database_path).extname.to_s.downcase != ".fasta"
 #   database_path="#{database_path}.fasta"
 end
 
+db_noext = "#{Pathname.new(database_path).sub_ext('')}"
+
 # Database must be indexed
-unless FileTest.exists?("#{database_path}.canno")
-  # dbdir = Pathname.new(database_path).dirname.to_s
+unless FileTest.exists?("#{db_noext}.canno")
   tdavalue=search_tool.decoy_search ? 1 : 0;
-  make_msgfdb_cmd << "java -Xmx3500M -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{database_path} -tda #{tdavalue}; "
+  genv.log "Database index not found at #{db_noext}. Building new index" , :info
+  make_msgfdb_cmd << "java -Xmx#{search_tool.java_mem} -cp #{genv.msgfplusjar} edu.ucsd.msjava.msdbsearch.BuildSA -d #{database_path} -tda #{tdavalue}; "
 end
 
 

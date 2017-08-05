@@ -79,7 +79,7 @@
 </AnalysisProtocolCollection>
 <DataCollection xmlns="http://psidev.info/psi/pi/mzIdentML/1.1">
     <Inputs>
-        <SearchDatabase numDatabaseSequences="4" location="/Users/icooke/Sources/protk/spec/data/testdb.fasta" id="SearchDB_1">
+        <SearchDatabase numDatabaseSequences="4" location="/Users/iracooke/Sources/protk/spec/data/testdb.fasta" id="SearchDB_1">
             <FileFormat>
                 <cvParam accession="MS:1001348" cvRef="PSI-MS" name="FASTA format"/>
             </FileFormat>
@@ -87,7 +87,7 @@
                 <userParam name="testdb.fasta"/>
             </DatabaseName>
         </SearchDatabase>
-        <SpectraData location="/Users/icooke/Sources/protk/spec/data/tiny.mzML" name="tiny.mzML" id="SID_1">
+        <SpectraData location="/Users/iracooke/Sources/protk/spec/data/tiny.mzML" name="tiny.mzML" id="SID_1">
             <FileFormat>
                 <cvParam accession="MS:1000584" cvRef="PSI-MS" name="mzML file"/>
             </FileFormat>

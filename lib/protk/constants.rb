@@ -65,8 +65,7 @@ class Constants
 
   def get_path_for_executable(exec_name_list)
     exec_name_list.each do |exec_name| 
-      exec_path=%x[which #{exec_name}]
-      exec_path.chomp
+      exec_path=%x[which #{exec_name}].chomp
       return exec_path unless !exec_path || exec_path.length==0
     end
     throw "Unable to locate #{exec_name_list}"

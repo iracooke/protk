@@ -36,7 +36,7 @@ describe PepXML do
 
   it "should correctly extract the database from an input file" do
     dbname=PepXML.new(@omssa_pepxml).extract_db()
-    expect(dbname).to eq("/Users/icooke/Desktop/iptest/AASequences.fasta")
+    expect(dbname).to eq("/Users/iracooke/Desktop/iptest/AASequences.fasta")
   end
   
   it "should correctly extract the search engine name from an input file" do

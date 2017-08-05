@@ -16,8 +16,16 @@ Protk is a suite of tools for proteomics. It aims to present a simple and consis
  
 Protk is a ruby gem and requires ruby 2.0 or higher with support for libxml2. To avoid installation problems we recommend using [rvm](https://rvm.io) to install ruby.
 
-``` shell
+```shell
     gem install protk
+```
+
+On macOS you may need to install libxml2 with homebrew first
+
+```bash
+	brew install libxml2
+	brew install coreutils
+	gem install libxml-ruby -v '2.9.0' -- --with-xml2-include=/usr/local/opt/libxml2/include/libxml2/ --with-xml2-lib=/usr/local/opt/libxml2/lib/
 ```
 
 ## Ruby Compatibility

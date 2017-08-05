@@ -38,7 +38,7 @@ end
 
 def protein_id_to_gffid(protein_id,gff_idregex)
 	return protein_id if gff_idregex.nil?
-
+	# require 'byebug'; byebug
 	m = protein_id.match(/#{gff_idregex}/)
 	if m
 		return m.captures[0]		
@@ -77,7 +77,9 @@ def prepare_fasta(database_path,type)
   end
 
 
-  db_indexfilename = type=='prot' ? "#{db_filename}.pin" : "#{db_filename}.nhr"
+  db_indexfilename = type=='prot' ? "#{db_filename}.00.pin" : "#{db_filename}.nhr"
+
+#  require 'byebug';byebug
 
   if File.exist?(db_indexfilename)
     orf_lookup = FastaDB.new(db_filename)
@@ -101,6 +103,7 @@ tool.add_value_option(:protein_probability_threshold,0.99,['--prot-threshold pro
 tool.add_value_option(:gff_idregex,nil,['--gff-idregex pre','Regex with capture group for parsing gff ids from protein ids'])
 tool.add_value_option(:genome_idregex,nil,['--genome-idregex pre','Regex with capture group for parsing genomic ids from protein ids'])
 tool.add_value_option(:ignore_regex,nil,['--ignore-regex pre','Regex to match protein ids that we should ignore completely'])
+tool.add_value_option(:include_mods,false,['--include-mods','Output gff entries for peptide modification sites'])
 
 exit unless tool.check_options(true,[:database,:coords_file])
 
@@ -169,6 +172,12 @@ proteins.each do |protein|
 					peptide_entries = peptide.to_gff3_records(protein_entry.aaseq,gff_parent_entry,gff_cds_entries)
 					peptide_entries.each do |peptide_entry|
 						output_fh.write peptide_entry.to_s
+					end
+					if tool.include_mods
+						mod_entries = peptide.mods_to_gff3_records(protein_entry.aaseq,gff_parent_entry,gff_cds_entries)
+						mod_entries.each do |mod_entry|
+							output_fh.write mod_entry.to_s
+						end
 					end
 				end
 			end

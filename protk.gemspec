@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'protk'
-  s.version     = '1.4.4.beta2'
+  s.version     = '1.4.4'
   s.date        = '2015-10-21'
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Proteomics Toolkit"
@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'rest-client','~> 1.6.7', '>= 1.6.7'
   s.add_runtime_dependency 'net-ftp-list',"~>3.2.5" ,">=3.2.5"
-  s.add_runtime_dependency 'libxml-ruby',"~>2.7", ">=2.7.0"
+#  s.add_runtime_dependency 'libxml-ruby',"~>2.7", ">=2.7.0"
+  s.add_runtime_dependency 'libxml-ruby',"~>2.9", ">=2.9.0"
 
   s.add_development_dependency 'rspec', '~> 3.0'
   s.add_development_dependency 'rspec-mocks', '~> 3.0'
@@ -39,7 +40,7 @@ Gem::Specification.new do |s|
   s.executables = s.executables + ['pepxml_to_table.rb']
   s.executables = s.executables + ['unimod_to_loc.rb']
   s.executables = s.executables + ['uniprot_mapper.rb']
-  s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','protxml_to_gff.rb']
+  s.executables = s.executables + ['sixframe.rb','augustus_to_proteindb.rb','maker_to_proteindb.rb','protxml_to_gff.rb']
   s.executables = s.executables + ['protxml_to_table.rb']
   s.executables = s.executables + ['swissprot_to_table.rb']
   s.executables = s.executables + ['protxml_to_psql.rb']

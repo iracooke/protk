@@ -64,7 +64,12 @@ file.each do |entry|
   length = entry.naseq.length
 
   (1...7).each do |frame|
-    translated_seq= entry.naseq.translate(frame)
+    begin
+      translated_seq= entry.naseq.translate(frame)
+    rescue => exception
+      puts "#{entry}"
+      exit 1
+    end
     orfs=translated_seq.split("*")
     orf_index = 0
     position = ((frame - 1) % 3) + 1    
