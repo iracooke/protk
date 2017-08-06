@@ -31,7 +31,7 @@ else
   output_fh=$stdout
 end
 
-output_fh.write "protein\tpeptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\traw_score\tpeptideprophet_prob\tinterprophet_prob\texperiment_label\tspectrum\n"
+output_fh.write "protein\tpeptide\tmodified_peptide\tassumed_charge\tcalc_neutral_pep_mass\tneutral_mass\tretention_time\tstart_scan\tend_scan\tsearch_engine\traw_score\tpeptideprophet_prob\tinterprophet_prob\texperiment_label\tspectrum\n"
 
 XML::Error.set_handler(&XML::Error::QUIET_HANDLER)
 
@@ -64,6 +64,9 @@ spectrum_queries.each do |query|
   calc_neutral_pep_mass=top_search_hit.attributes['calc_neutral_pep_mass']
   start_scan=query.attributes['start_scan']
   end_scan=query.attributes['end_scan']
+
+  modification_info=top_search_hit.find("./#{pepxml_ns_prefix}modification_info",pepxml_ns)[0]
+  modified_peptide = modification_info!=nil ? modification_info.attributes['modified_peptide'] : ""
 
   run_summary_node=query.parent
   # puts run_summary_node
@@ -101,7 +104,7 @@ spectrum_queries.each do |query|
     interprophet_prob = (1.0 - interprophet_prob.to_f).round(3) if interprophet_prob!=""
   end
 
-  output_fh.write "#{protein}\t#{peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t\
+  output_fh.write "#{protein}\t#{peptide}\t#{modified_peptide}\t#{assumed_charge}\t#{calc_neutral_pep_mass}\t\
   #{neutral_mass}\t#{retention_time}\t#{start_scan}\t#{end_scan}\t#{search_engine}\t\
   #{raw_score}\t#{peptide_prophet_prob}\t#{interprophet_prob}\t#{experiment_label}\t#{spectrum}\n"
 
