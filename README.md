@@ -92,6 +92,16 @@ An installation recipe of `protk` is available from the [Galaxy Tool Shed](https
 </tool_dependency>
 ```
 
+**Installation via Conda**
+
+protk can be install via the Conda package manager and is part of the [Bioconda channel](https://anaconda.org/bioconda/protk). Simply run the following command to
+install the latest protk version:
+
+```bash
+conda create --name protk -c conda-forge -c bioconda protk 
+```
+
+
 **Manual Install**
 
 If your galaxy instance is unable to use Docker or the Tool Shed for some reason you will need to install `protk` and its dependencies manually. 
